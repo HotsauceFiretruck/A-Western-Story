@@ -1,11 +1,11 @@
-import { Player } from "./Player.js"
-import { Bullet } from "./Bullet.js"
+import { Player } from "../Player.js"
+import { Bullet } from "../Bullet.js"
 
-export class TutorialLevel extends Phaser.Scene
+export class LevelTutorial extends Phaser.Scene
 {
     constructor(width, height)
     {
-        super({key:"tutoriallevel"});
+        super({key:"level-tutorial"});
         this.width = width;
         this.height = height;
     }

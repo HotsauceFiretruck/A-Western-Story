@@ -1,4 +1,4 @@
- import { Bullet } from "./Bullet.js"
+import { Bullet } from "./Bullet.js"
 
 export class Player extends Phaser.GameObjects.Sprite
 {

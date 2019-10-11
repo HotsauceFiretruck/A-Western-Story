@@ -14,8 +14,9 @@ export class Bullet extends Phaser.GameObjects.Sprite
         //Uncomment this and commment the bottom one to get the deflecting bullet effect
         //scene.physics.add.collider(this, scene.platforms);
         //scene.physics.add.collider(this, scene.player);
-
-        scene.physics.add.collider(target, this, this.hit, null, this); //bottom one
+        if (target != null) {
+            scene.physics.add.collider(target, this, this.hit, null, this); //bottom one
+        }
     } 
       
     update()
@@ -27,8 +28,10 @@ export class Bullet extends Phaser.GameObjects.Sprite
 
     hit(target)
     {
-        target.changeHealth(-5);
-        this.destroy();
+        if (target != null) {
+            target.changeHealth(-5);
+            this.destroy();
+        }
     }
 
 
