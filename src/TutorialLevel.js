@@ -17,6 +17,7 @@ export class TutorialLevel extends Phaser.Scene
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
+        this.load.image('enemy', 'assets/Enemy.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
@@ -31,15 +32,14 @@ export class TutorialLevel extends Phaser.Scene
         }
 
         this.projectiles = this.add.group();
+        this.enemies = this.add.group();
 
         this.add.image(50, 503, 'house');
         this.player = new Player(this, 300, 100);
-        
     }
 
     update ()
     {  
-        
         for (let i = 0; i < this.projectiles.getLength(); i++)
         {
             this.projectiles.getChildren()[i].update();

@@ -26,7 +26,7 @@ export class Player extends Phaser.GameObjects.Sprite
 
         scene.input.keyboard.on('keydown-L', (event) =>
         {
-            new Bullet(this.scene, 700, 500, -200, 0);
+            new Bullet(this.scene, 700, 500, -200, 0, this);
         });
 
         //Health
@@ -87,6 +87,6 @@ export class Player extends Phaser.GameObjects.Sprite
     
     shoot()
     {
-        new Bullet(this.scene, this.x, this.y, 200, 0);
+        new Bullet(this.scene, this.x, this.y, 200, 0, null);
     }
 }
