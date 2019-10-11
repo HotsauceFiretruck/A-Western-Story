@@ -40,10 +40,13 @@ export class TutorialLevel extends Phaser.Scene
 
     update ()
     {  
+        let bullets = this.projectiles.getChildren();
+
         for (let i = 0; i < this.projectiles.getLength(); i++)
         {
-            this.projectiles.getChildren()[i].update();
+            bullets[i].update();
         }
+        
         this.player.update();
     }
 }
