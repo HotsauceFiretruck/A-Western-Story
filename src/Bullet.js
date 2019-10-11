@@ -11,11 +11,11 @@ export class Bullet extends Phaser.GameObjects.Sprite
         this.body.velocity.y = vY;
 
 
-        //Comment this out and uncommment the bottom one to get the health reduce effect
-        scene.physics.add.collider(this, scene.platforms);
-        scene.physics.add.collider(this, scene.player);
+        //Uncomment this and commment the bottom one to get the deflecting bullet effect
+        //scene.physics.add.collider(this, scene.platforms);
+        //scene.physics.add.collider(this, scene.player);
 
-       // scene.physics.add.collider(target, this, this.hit, null, this); //bottom one
+        scene.physics.add.collider(target, this, this.hit, null, this); //bottom one
     } 
       
     update()
