@@ -1,5 +1,6 @@
 import { Player } from "../Player.js"
-import { Bullet } from "../Bullet.js"
+import { Enemy } from "../Enemy.js"
+import { Platform } from "../Platform.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -17,36 +18,49 @@ export class LevelTutorial extends Phaser.Scene
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Enemy.png');
+        this.load.image('enemy', 'assets/Outlaw.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
     create()
     {
         this.add.image(400, 300, 'background').setScale(2);
-        
-        this.platforms = this.physics.add.staticGroup();
+        this.add.image(50, 503, 'house');
+
+        this.platformGroup = this.add.group();
         for (let i = 0; i < this.width/36; i++)
         {
-            this.platforms.create((this.width-790)+36*i, this.height-12.5, 'grass');
+            new Platform(this, (this.width-790)+36*i, this.height-12.5);
         }
 
-        this.projectiles = this.add.group();
-        this.enemies = this.add.group();
+        this.projectileGroup = this.add.group();
+        this.enemyGroup = this.add.group();
 
-        this.add.image(50, 503, 'house');
         this.player = new Player(this, 300, 100);
+        this.basicEnemy = new Enemy(this, 600, 100);  
     }
 
     update ()
     {  
-        let bullets = this.projectiles.getChildren();
-
-        for (let i = 0; i < this.projectiles.getLength(); i++)
+        //Update bullets
+        let bullets = this.projectileGroup.getChildren();
+        for (let i = 0; i < bullets.length; i++)
         {
             bullets[i].update();
         }
+
+        //Update enemies
+        let enemies = this.enemyGroup.getChildren();
+        for (let i = 0; i < enemies.length; i++)
+        {
+            enemies[i].update();
+        }
         
+        if (this.enemyGroup.getLength() == 0)
+        {
+            new Enemy(this, 600, 100);
+        }
+
         this.player.update();
     }
 }
