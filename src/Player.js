@@ -1,4 +1,4 @@
- import { Bullet } from "./Bullet.js"
+import { Bullet } from "./Bullet.js"
 
 export class Player extends Phaser.GameObjects.Sprite
 {
@@ -8,25 +8,33 @@ export class Player extends Phaser.GameObjects.Sprite
         this.scene = scene;
         scene.add.existing(this);
         
+        //Status
+        this.status = {
+            health: 20
+        };
+
         //Settings
         scene.physics.world.enableBody(this);
-        this.body.setSize(24, 21, true);
-        this.body.setOffset(6, 7);
-        scene.physics.add.collider(this, scene.platforms);
+        //this.body.setSize(24, 21, true);
+        //this.body.setOffset(6, 7);
+        scene.physics.add.collider(this, scene.platformGroup);
         this.body.setCollideWorldBounds(true);
-        this.scale = 2;
+        this.body.drag.setTo(120, 30);
+        this.body.setMaxVelocity(160, 250);
+        this.body.setMass(10);
+        this.setScale(2);
 
         //Cursors
-        this.cursors = scene.input.keyboard.createCursorKeys();
-    
-        scene.input.keyboard.on('keydown-SPACE', (event) =>
-        {
-            this.shoot();
-        });
+        this.cursors = scene.input.keyboard.addKeys
+                    ({
+                        up: 'W',
+                        left: 'A',
+                        right: 'D'
+                    });
 
-        scene.input.keyboard.on('keydown-L', (event) =>
+        scene.input.on('pointerdown', (pointer) => 
         {
-            new Bullet(this.scene, 700, 500, -200, 0, this);
+            this.shoot(pointer.x, pointer.y);
         });
 
         //Health
@@ -34,14 +42,7 @@ export class Player extends Phaser.GameObjects.Sprite
         scene.add.existing(this.healthSprite);
         this.healthSprite.setFrame(0);
 
-        this.status = {
-            health: 20
-        };
-
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
-
-        // Testing Health
-        this.keyObj =  scene.input.keyboard.addKey('H');
     }
 
     update()
@@ -49,25 +50,22 @@ export class Player extends Phaser.GameObjects.Sprite
         //Update Controls/Cursors
         if (this.cursors.left.isDown)
         {
-            this.body.setVelocityX(-160);
+            this.body.setAccelerationX(-100);
         }
         else if (this.cursors.right.isDown)
         {
-            this.body.setVelocityX(160);
+            this.body.setAccelerationX(100);
         }
         else
         {
-            this.body.setVelocityX(0);
+            this.body.setAccelerationX(0)
         }
         if (this.cursors.up.isDown && this.body.touching.down)
         {
-            this.body.setVelocityY(-200);
+            this.body.setVelocityY(-250);
         }
-
-        if (this.keyObj.isDown)
-        {
-            this.changeHealth(-1);
-        }
+        
+       // console.log("x: " + this.body.velocity.x + ", y: " + this.body.velocity.y);
     }
 
     changeHealth(changeHealthBy)
@@ -85,8 +83,8 @@ export class Player extends Phaser.GameObjects.Sprite
         this.displayHealth.setText(this.status.health);
     }
     
-    shoot()
+    shoot(x, y)
     {
-        new Bullet(this.scene, this.x, this.y, 200, 0, null);
+        new Bullet(this.scene, this.scene.enemyGroup, this.x, this.y, x, y);
     }
 }
