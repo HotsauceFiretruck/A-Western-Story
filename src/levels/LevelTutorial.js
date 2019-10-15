@@ -29,15 +29,15 @@ export class LevelTutorial extends Phaser.Scene
     {
         console.log("Create Function Initialized!");
 
+        this.add.image(400, 300, 'background').setScale(2);
+        this.add.image(50, 503, 'house');
+
         let level = 
-        [
-            [0, 0, 1, 1, 1, 1, 1]
+        [   [0, 0, 0, 1, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 1, 1, 0]
         ];
 
         this.map = new TileMap(this, level, 32, 32, 'grass');
-
-        this.add.image(400, 300, 'background').setScale(2);
-        this.add.image(50, 503, 'house');
 
         //this.testSprite = this.matter.add.sprite(200, 200, 'grass');
 
