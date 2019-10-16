@@ -23,7 +23,7 @@ export class Game
                     debug: true
                 }
             },
-            scene: [levelTutorial]
+            scene: [alexlevel]
         };
 
         let game = new Phaser.Game(this.config);

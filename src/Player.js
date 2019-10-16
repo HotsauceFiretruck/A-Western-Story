@@ -42,7 +42,8 @@ export class Player
         this.cursors = scene.input.keyboard.addKeys ({
             up: 'W',
             left: 'A',
-            right: 'D'
+            right: 'D',
+            down: 'S'
         });
 
         scene.input.on('pointerdown', (pointer) => {
@@ -80,7 +81,12 @@ export class Player
 
         if (this.cursors.up.isDown)
         {
-            this.sprite.setVelocityY(-5);
+            this.sprite.setVelocityY(-6);
+        }
+        
+        if (this.cursors.down.isDown)
+        {
+            this.sprite.setVelocityY(5);
         }
         
         //Set Maximum Velocity
