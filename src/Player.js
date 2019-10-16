@@ -58,11 +58,6 @@ export class Player
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
     }
 
-    preload()
-    {
-        this.load.image('Skull', 'assets/Skull.png');
-    }
-
     update()
     {
         const moveForce = 0.01;
@@ -116,14 +111,6 @@ export class Player
         }
         this.displayHealth.setText(this.status.health);
         
-    }
-    
-    create()
-    {
-        if (this.status.health == 0)
-        {
-            this.add.image(400, 300, 'Skull');
-        }
     }
 
     shoot(x, y)
