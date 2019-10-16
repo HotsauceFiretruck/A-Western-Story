@@ -1,43 +1,55 @@
 import { Bullet } from "./Bullet.js"
 
-export class Player extends Phaser.GameObjects.Sprite
+export class Player
 {
     constructor(scene, x, y)
     {
-        super(scene, x, y, 'player');
-        this.scene = scene;
-        scene.add.existing(this);
+        this.sprite = scene.matter.add.sprite(x, y, 'player');
         
         //Status
         this.status = {
             health: 20
         };
 
-        //Settings
-        scene.physics.world.enableBody(this);
-        //this.body.setSize(24, 21, true);
-        //this.body.setOffset(6, 7);
-        scene.physics.add.collider(this, scene.platformGroup);
-        this.body.setCollideWorldBounds(true);
-        this.body.drag.setTo(120, 30);
-        this.body.setMaxVelocity(160, 250);
-        this.body.setMass(10);
-        this.setScale(2);
+        //Creating Collision Body
+        let { Body, Bodies} = scene.PhaserGame.MatterPhysics
 
-        //Cursors
-        this.cursors = scene.input.keyboard.addKeys
-                    ({
-                        up: 'W',
-                        left: 'A',
-                        right: 'D'
-                    });
+        let mainBody = Bodies.rectangle
+            (0, 0, this.sprite.width * 0.7, this.sprite.height, {chamfer: 10});
+        
+        this.sensors = {
+            bottom: Bodies.rectangle(0, this.sprite.height * 0.5, this.sprite.width * 0.25, 2, { isSensor: true }),
+            left: Bodies.rectangle(-this.sprite.width * 0.35, 0, 2, this.sprite.height * 0.5, { isSensor: true }),
+            right: Bodies.rectangle(this.sprite.width * 0.35, 0, 2, this.sprite.height * 0.5, { isSensor: true })
+        };
 
-        scene.input.on('pointerdown', (pointer) => 
-        {
+        const compoundBody = Body.create({
+            parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
+            frictionStatic: 0,
+            frictionAir: 0.02,
+            friction: .1
+        });
+        
+        //Setting Sprite
+        this.sprite
+            .setExistingBody(compoundBody)
+            .setPosition(x, y)
+           // .setMass(2)
+            .setScale(2)
+            .setFixedRotation();
+
+        // Creating Controls/Cursors
+        this.cursors = scene.input.keyboard.addKeys ({
+            up: 'W',
+            left: 'A',
+            right: 'D'
+        });
+
+        scene.input.on('pointerdown', (pointer) => {
             this.shoot(pointer.x, pointer.y);
         });
 
-        //Health
+        //Creating Health Display
         this.healthSprite = scene.add.sprite(20, 20, 'hearts'); 
         scene.add.existing(this.healthSprite);
         this.healthSprite.setFrame(0);
@@ -45,27 +57,43 @@ export class Player extends Phaser.GameObjects.Sprite
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
     }
 
+    preload()
+    {
+        this.load.image('Skull', 'assets/Skull.png');
+    }
+
     update()
     {
+        const moveForce = 0.01;
+
         //Update Controls/Cursors
         if (this.cursors.left.isDown)
         {
-            this.body.setAccelerationX(-100);
+            this.sprite.setFlipX(true);
+            this.sprite.applyForce({ x: -moveForce, y: 0 });
         }
         else if (this.cursors.right.isDown)
         {
-            this.body.setAccelerationX(100);
+            this.sprite.setFlipX(false);
+            this.sprite.applyForce({ x: moveForce, y: 0 });
         }
-        else
+
+        if (this.cursors.up.isDown)
         {
-            this.body.setAccelerationX(0)
-        }
-        if (this.cursors.up.isDown && this.body.touching.down)
-        {
-            this.body.setVelocityY(-250);
+            this.sprite.setVelocityY(-5);
         }
         
-       // console.log("x: " + this.body.velocity.x + ", y: " + this.body.velocity.y);
+        //Set Maximum Velocity
+        if (this.sprite.body.velocity.x > 5) this.sprite.setVelocityX(5);
+        else if (this.sprite.body.velocity.x < -5) this.sprite.setVelocityX(-5);
+
+        //this.sprite.body.velocity.y = 0;
+        if (this.sprite.body.velocity.y < 0)
+        {
+            //this.sprite.body.velocity.y = 0;
+            console.log(this.sprite.body.velocity.y + "--- x: " +  this.sprite.x + ", y: " +  this.sprite.y);
+        }
+
     }
 
     changeHealth(changeHealthBy)
@@ -81,10 +109,19 @@ export class Player extends Phaser.GameObjects.Sprite
             this.healthSprite.setFrame(2);
         }
         this.displayHealth.setText(this.status.health);
+        
     }
     
+    create()
+    {
+        if (this.status.health == 0)
+        {
+            this.add.image(400, 300, 'Skull');
+        }
+    }
+
     shoot(x, y)
     {
-        new Bullet(this.scene, this.scene.enemyGroup, this.x, this.y, x, y);
+        // new Bullet(this.scene, this.scene.enemyGroup, this.x, this.y, x, y);
     }
 }

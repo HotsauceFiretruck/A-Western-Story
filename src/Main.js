@@ -1,3 +1,3 @@
 import { Game } from "./Game.js";
 
-var startGame = new Game(800, 600);
+let A_Western_Story = new Game();

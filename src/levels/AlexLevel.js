@@ -1,16 +1,11 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
-import { Platform } from "../Platform.js";
 import { TileMap } from "./TileMap.js";
+import { Player } from "../Player.js";
 
-export class LevelTutorial extends Phaser.Scene
+export class AlexLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-tutorial"});
-        
-        console.log("Tutorial Level Created!");
-
+        super({key:"level1"});
         this.PhaserGame = PhaserGame;
     }
 
@@ -21,20 +16,14 @@ export class LevelTutorial extends Phaser.Scene
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.image('enemy', 'assets/Enemy.png');
+        this.load.spritesheet('hearts', 'assets/Hearts.png', {frameWidth: 50/3, frameHeight: 16});
     }
 
     create()
     {
-        console.log("Create Function Initialized!");
-
         this.add.image(400, 300, 'background').setScale(2);
         this.add.image(50, 503, 'house');
-
-        //Creating Level using an Array + Tile Map
-        //1 is for block/tile; 0 is for empty space
-        //25 wide by 19 long
         let level = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -53,40 +42,24 @@ export class LevelTutorial extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
-        
         this.map = new TileMap(this, level, 32, 32, 'grass');
+        //this.projectiles = this.add.group();
+        //this.enemies = this.add.group();
+        this.player = new Player(this, 200, 100);
 
-        //this.projectileGroup = this.add.group();
-        //this.enemyGroup = this.add.group();
-
-        this.player = new Player(this, 300, 100);
-       // this.basicEnemy = new Enemy(this, 600, 100);  
     }
 
-    update ()
-    {  
-        //Update bullets
-        // let bullets = this.projectileGroup.getChildren();
-        // for (let i = 0; i < bullets.length; i++)
+    update()
+    {
+        // let bullets = this.projectiles.getChildren();
+        // for (let i = 0; i < this.projectiles.getLength(); i++)
         // {
         //     bullets[i].update();
         // }
-
-        // //Update enemies
-        // let enemies = this.enemyGroup.getChildren();
-        // for (let i = 0; i < enemies.length; i++)
-        // {
-        //     enemies[i].update();
-        // }
-        
-        // if (this.enemyGroup.getLength() == 0)
-        // {
-        //     new Enemy(this, 600, 100);
-        // }
-
-        this.player.update();
     }
+
+    
 }
