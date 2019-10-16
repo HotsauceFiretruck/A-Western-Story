@@ -1,14 +1,17 @@
 import { Player } from "../Player.js"
 import { Enemy } from "../Enemy.js"
 import { Platform } from "../Platform.js";
+import { TileMap } from "./TileMap.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
-    constructor(width, height)
+    constructor(PhaserGame)
     {
         super({key:"level-tutorial"});
-        this.width = width;
-        this.height = height;
+        
+        console.log("Tutorial Level Created!");
+
+        this.PhaserGame = PhaserGame;
     }
 
     preload()
@@ -24,42 +27,65 @@ export class LevelTutorial extends Phaser.Scene
 
     create()
     {
+        console.log("Create Function Initialized!");
+
         this.add.image(400, 300, 'background').setScale(2);
         this.add.image(50, 503, 'house');
 
-        this.platformGroup = this.add.group();
-        for (let i = 0; i < this.width/36; i++)
-        {
-            new Platform(this, (this.width-790)+36*i, this.height-12.5);
-        }
+        //Creating Level using an Array + Tile Map
+        //1 is for block/tile; 0 is for empty space
+        //25 wide by 19 long
+        let level = 
+        [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
+        ];
+        
+        this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        this.projectileGroup = this.add.group();
-        this.enemyGroup = this.add.group();
+        //this.projectileGroup = this.add.group();
+        //this.enemyGroup = this.add.group();
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);  
+       // this.basicEnemy = new Enemy(this, 600, 100);  
     }
 
     update ()
     {  
         //Update bullets
-        let bullets = this.projectileGroup.getChildren();
-        for (let i = 0; i < bullets.length; i++)
-        {
-            bullets[i].update();
-        }
+        // let bullets = this.projectileGroup.getChildren();
+        // for (let i = 0; i < bullets.length; i++)
+        // {
+        //     bullets[i].update();
+        // }
 
-        //Update enemies
-        let enemies = this.enemyGroup.getChildren();
-        for (let i = 0; i < enemies.length; i++)
-        {
-            enemies[i].update();
-        }
+        // //Update enemies
+        // let enemies = this.enemyGroup.getChildren();
+        // for (let i = 0; i < enemies.length; i++)
+        // {
+        //     enemies[i].update();
+        // }
         
-        if (this.enemyGroup.getLength() == 0)
-        {
-            new Enemy(this, 600, 100);
-        }
+        // if (this.enemyGroup.getLength() == 0)
+        // {
+        //     new Enemy(this, 600, 100);
+        // }
 
         this.player.update();
     }
