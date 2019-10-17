@@ -1,5 +1,6 @@
 import { Player } from "./Player.js";
 import { LevelTutorial } from "./levels/LevelTutorial.js";
+import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 
@@ -11,6 +12,7 @@ export class Game
         let levelTutorial = new LevelTutorial(this);
         let alexlevel = new AlexLevel(this);
         let ethanlevel = new EthanLevel(this);
+        let dustinlevel = new DustinLevel(this);
 
         this.config = {
             type: Phaser.AUTO,
