@@ -22,6 +22,7 @@ export class Game
                     debug: true
                 }
             },
+
             plugins: {
                 scene: [
                   {
@@ -32,6 +33,7 @@ export class Game
                 ]
             },
             scene: [levelTutorial]
+
         };
 
         let game = new Phaser.Game(this.config);
