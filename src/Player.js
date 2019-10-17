@@ -1,42 +1,68 @@
 import { Bullet } from "./Bullet.js"
 
-export class Player
+export class Player extends Phaser.Physics.Matter.Sprite
 {
     constructor(scene, x, y)
     {
-        this.sprite = scene.matter.add.sprite(x, y, 'player');
-        
+        super(scene.matter.world, x, y, 'player')
+        scene.add.existing(this);
+        scene.cameras.main.startFollow(this, false, 0.5, 0.5);
+        scene.cameras.main.setBounds(0, 0, 1000, 600);
+    
         //Status
         this.status = {
-            health: 20
+            health: 20,
+            maxVelocityX: 4,
+            maxVelocityY: 8,
+            moveForce: 0.01,
+            isTouching: { left: false, right: false, down: false },
+            canJump: true,
+            jumpCooldownTimer: null
         };
 
-        //Creating Collision Body
+        //Creating Collision Body and Sensors
         let { Body, Bodies} = scene.PhaserGame.MatterPhysics
 
         let mainBody = Bodies.rectangle
-            (0, 0, this.sprite.width * 0.7, this.sprite.height, {chamfer: 10});
+            (0, 0, this.width * 0.7, this.height, {chamfer: 10});
         
         this.sensors = {
-            bottom: Bodies.rectangle(0, this.sprite.height * 0.5, this.sprite.width * 0.25, 2, { isSensor: true }),
-            left: Bodies.rectangle(-this.sprite.width * 0.35, 0, 2, this.sprite.height * 0.5, { isSensor: true }),
-            right: Bodies.rectangle(this.sprite.width * 0.35, 0, 2, this.sprite.height * 0.5, { isSensor: true })
+            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.6, 2, { isSensor: true }),
+            left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
+            right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
         };
 
-        const compoundBody = Body.create({
+        let compoundBody = Body.create({
             parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
             frictionStatic: 0,
             frictionAir: 0.02,
-            friction: .1
+            friction: .005
+        });
+
+        this.category = 1;
+
+        //Add Events
+        scene.matter.world.on("beforeupdate", this.resetTouching, this);
+
+        scene.matterCollision.addOnCollideStart({
+            objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
+            callback: this.onSensorCollide,
+            context: this
+        });
+
+        scene.matterCollision.addOnCollideActive({
+            objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
+            callback: this.onSensorCollide,
+            context: this
         });
         
         //Setting Sprite
-        this.sprite
-            .setExistingBody(compoundBody)
+        this.setExistingBody(compoundBody)
             .setPosition(x, y)
-           // .setMass(2)
+            .setMass(2)
             .setScale(2)
-            .setFixedRotation();
+            .setFixedRotation()
+            .setCollisionCategory(this.category);
 
         // Creating Controls/Cursors
         this.cursors = scene.input.keyboard.addKeys ({
@@ -46,7 +72,7 @@ export class Player
         });
 
         scene.input.on('pointerdown', (pointer) => {
-            this.shoot(pointer.x, pointer.y);
+            this.shoot(pointer.worldX, pointer.worldY);
         });
 
         //Creating Health Display
@@ -59,36 +85,58 @@ export class Player
 
     update()
     {
-        const moveForce = 0.01;
-
         //Update Controls/Cursors
-        if (this.cursors.left.isDown)
+        if (this.cursors.left.isDown && this.body.velocity.x > -this.status.maxVelocityX)
         {
-            this.sprite.setFlipX(true);
-            this.sprite.applyForce({ x: -moveForce, y: 0 });
+            this.setFlipX(false);
+            if (!this.status.isTouching.left) {
+                this.applyForce({ x: -this.status.moveForce, y: 0 });
+            }
         }
-        else if (this.cursors.right.isDown)
+        else if (this.cursors.right.isDown && this.body.velocity.x < this.status.maxVelocityX)
         {
-            this.sprite.setFlipX(false);
-            this.sprite.applyForce({ x: moveForce, y: 0 });
+            this.setFlipX(true);
+
+            if (!this.status.isTouching.right) {
+                this.applyForce({ x: this.status.moveForce, y: 0 });
+            }
         }
 
-        if (this.cursors.up.isDown)
+        if (this.cursors.up.isDown && this.status.canJump && this.status.isTouching.down)
         {
-            this.sprite.setVelocityY(-5);
+            this.setVelocityY(-this.status.maxVelocityY);
+            this.canJump = false;
+            this.jumpCooldownTimer = this.scene.time.addEvent({
+                delay: 250,
+                callback: () => (this.canJump = true)
+            });
         }
         
-        //Set Maximum Velocity
-        if (this.sprite.body.velocity.x > 5) this.sprite.setVelocityX(5);
-        else if (this.sprite.body.velocity.x < -5) this.sprite.setVelocityX(-5);
+        //Update health label position
+        this.healthSprite.setPosition(20 + this.scene.cameras.main.worldView.x, 
+                                      20 + this.scene.cameras.main.worldView.y);
 
-        //this.sprite.body.velocity.y = 0;
-        if (this.sprite.body.velocity.y < 0)
-        {
-            //this.sprite.body.velocity.y = 0;
-            console.log(this.sprite.body.velocity.y + "--- x: " +  this.sprite.x + ", y: " +  this.sprite.y);
+        this.displayHealth.setPosition(30 + this.scene.cameras.main.worldView.x,
+                                       12 + this.scene.cameras.main.worldView.y);
+    }
+
+    onSensorCollide({ bodyA, bodyB, pair }) {
+        if (bodyB.isSensor) return;
+        if (bodyA === this.sensors.left) {
+          this.status.isTouching.left = true;
+          if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+        } else if (bodyA === this.sensors.right) {
+          this.status.isTouching.right = true;
+          if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+        } else if (bodyA === this.sensors.bottom) {
+          this.status.isTouching.down = true;
         }
-
+    }
+    
+    resetTouching() {
+        this.status.isTouching.left = false;
+        this.status.isTouching.right = false;
+        this.status.isTouching.down = false;
     }
 
     changeHealth(changeHealthBy)
@@ -105,9 +153,25 @@ export class Player
         }
         this.displayHealth.setText(this.status.health);
     }
+
+    death() {
+        // Event listeners
+        if (this.scene.matter.world) {
+            this.scene.matter.world.off("beforeupdate", this.resetTouching, this);
+        }
+
+        // Matter collision plugin
+        const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
+        this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+        this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
+
+        if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
+
+        // this.destroy();
+    }
     
     shoot(x, y)
     {
-        // new Bullet(this.scene, this.scene.enemyGroup, this.x, this.y, x, y);
+        new Bullet(this.scene, this.scene.enemies, this.x, this.y, x, y);
     }
 }
