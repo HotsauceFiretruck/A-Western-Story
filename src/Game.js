@@ -10,24 +10,16 @@ export class Game
 
         this.config = {
             type: Phaser.AUTO,
+            //game: 'game',
             width: 800,
             height: 600,
             pixelArt: true,
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: .5},
+                    gravity: { y: .1},
                     debug: true
                 }
-            },
-            plugins: {
-                scene: [
-                  {
-                    plugin: PhaserMatterCollisionPlugin,
-                    key: "matterCollision",
-                    mapping: "matterCollision"
-                  }
-                ]
             },
             scene: [levelTutorial]
         };

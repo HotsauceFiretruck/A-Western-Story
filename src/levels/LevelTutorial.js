@@ -1,5 +1,6 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
+import { Player } from "../Player.js"
+import { Enemy } from "../Enemy.js"
+import { Platform } from "../Platform.js";
 import { TileMap } from "./TileMap.js";
 
 export class LevelTutorial extends Phaser.Scene
@@ -27,7 +28,6 @@ export class LevelTutorial extends Phaser.Scene
     create()
     {
         console.log("Create Function Initialized!");
-        
 
         this.add.image(400, 300, 'background').setScale(2);
         this.add.image(50, 503, 'house');
@@ -56,41 +56,36 @@ export class LevelTutorial extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
         ];
-
+        
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        this.projectiles = {
-            category: 2, //telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
+        //this.projectileGroup = this.add.group();
+        //this.enemyGroup = this.add.group();
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);  
+       // this.basicEnemy = new Enemy(this, 600, 100);  
     }
 
     update ()
     {  
         //Update bullets
-        for (let i = 0; i < this.projectiles.list.length; i++)
-        {
-            this.projectiles.list[i].update();
-        }
+        // let bullets = this.projectileGroup.getChildren();
+        // for (let i = 0; i < bullets.length; i++)
+        // {
+        //     bullets[i].update();
+        // }
 
-        //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
-            this.enemies.list[i].update();
-        }
+        // //Update enemies
+        // let enemies = this.enemyGroup.getChildren();
+        // for (let i = 0; i < enemies.length; i++)
+        // {
+        //     enemies[i].update();
+        // }
         
-        if (this.enemies.list.length == 0)
-        {
-            new Enemy(this, 600, 100);
-        }
+        // if (this.enemyGroup.getLength() == 0)
+        // {
+        //     new Enemy(this, 600, 100);
+        // }
 
         this.player.update();
     }
