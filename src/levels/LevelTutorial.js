@@ -1,5 +1,5 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
+import { Player } from "../Player.js"
+import { Enemy } from "../Enemy.js"
 import { Platform } from "../Platform.js";
 import { TileMap } from "./TileMap.js";
 
