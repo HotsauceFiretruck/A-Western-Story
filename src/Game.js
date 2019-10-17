@@ -1,25 +1,43 @@
 import { Player } from "./Player.js";
-import { TutorialLevel } from "./TutorialLevel.js";
+import { LevelTutorial } from "./levels/LevelTutorial.js";
+import { AlexLevel } from "./levels/AlexLevel.js";
+import { EthanLevel } from "./levels/EthanLevel.js";
 
-const WIDTH = 800;
-const HEIGHT = 600;
+export class Game 
+{
+    constructor() {
+        this.MatterPhysics = Phaser.Physics.Matter.Matter;
 
-let tutorial = new TutorialLevel(WIDTH, HEIGHT);
+        let levelTutorial = new LevelTutorial(this);
+        let alexlevel = new AlexLevel(this);
+        let ethanlevel = new EthanLevel(this);
 
-var config = {
-    type: Phaser.AUTO,
-    width: WIDTH,
-    height: HEIGHT,
-    pixelArt: true,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 200},
-            debug: true
-        }
-    },
-    scene: [tutorial]
-};
+        this.config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            pixelArt: true,
+            physics: {
+                default: 'matter',
+                matter: {
+                    gravity: { y: .5},
+                    debug: true
+                }
+            },
 
-let game = new Phaser.Game(config);
+            plugins: {
+                scene: [
+                  {
+                    plugin: PhaserMatterCollisionPlugin,
+                    key: "matterCollision",
+                    mapping: "matterCollision"
+                  }
+                ]
+            },
+            scene: [levelTutorial]
 
+        };
+
+        let game = new Phaser.Game(this.config);
+    }
+}
