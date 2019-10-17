@@ -1,5 +1,6 @@
 import { Player } from "./Player.js";
 import { LevelTutorial } from "./levels/LevelTutorial.js";
+import { AlexLevel } from "./levels/AlexLevel.js";
 
 export class Game 
 {
@@ -7,6 +8,7 @@ export class Game
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
 
         let levelTutorial = new LevelTutorial(this);
+        let alexlevel = new AlexLevel(this);
 
         this.config = {
             type: Phaser.AUTO,
