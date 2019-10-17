@@ -34,7 +34,7 @@ export class Game
                   }
                 ]
             },
-            scene: [levelTutorial]
+            scene: [ethanlevel]
 
         };
 
