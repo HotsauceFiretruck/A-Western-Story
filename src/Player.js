@@ -7,7 +7,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         super(scene.matter.world, x, y, 'player')
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, 1000, 600);
+        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
     
         //Status
         this.status = {
@@ -68,7 +68,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.cursors = scene.input.keyboard.addKeys ({
             up: 'W',
             left: 'A',
-            right: 'D'
+            right: 'D',
+            down: 'S'
         });
 
         scene.input.on('pointerdown', (pointer) => {
@@ -81,11 +82,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.healthSprite.setFrame(0);
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
-    }
-
-    preload()
-    {
-        this.load.image('Skull', 'assets/Skull.png');
     }
 
     update()
@@ -109,12 +105,14 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         if (this.cursors.up.isDown && this.status.canJump && this.status.isTouching.down)
         {
+
             this.setVelocityY(-this.status.maxVelocityY);
             this.canJump = false;
             this.jumpCooldownTimer = this.scene.time.addEvent({
                 delay: 250,
                 callback: () => (this.canJump = true)
             });
+
         }
         
         //Update health label position
@@ -183,6 +181,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             this.add.image(400, 300, 'Skull');
         }
     }
+
 
     shoot(x, y)
     {
