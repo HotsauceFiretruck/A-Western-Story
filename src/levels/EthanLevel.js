@@ -75,6 +75,22 @@ export class EthanLevel extends Phaser.Scene
 
     update ()
     {  
+        for (let i = 0; i < this.projectiles.list.length; i++)
+        {
+            this.projectiles.list[i].update();
+        }
+
+        //Update enemies
+        for (let i = 0; i < this.enemies.list.length; i++)
+        {
+            this.enemies.list[i].update();
+        }
+        
+        if (this.enemies.list.length == 0)
+        {
+            new Enemy(this, 600, 100);
+        }
+        
         this.player.update();
     }
 }

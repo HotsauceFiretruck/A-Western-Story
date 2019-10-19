@@ -49,7 +49,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             this.status.isPlayerInRange = false;
         }
 
-        // console.log(this.status.distanceFromPlayer + " " + this.status.isPlayerInRange);
+        //console.log(this.status.distanceFromPlayer + " " + this.status.isPlayerInRange);
     }
 
     reloadGun()
