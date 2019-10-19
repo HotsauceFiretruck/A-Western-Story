@@ -21,7 +21,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         };
 
         //Creating Collision Body and Sensors
-        let { Body, Bodies} = scene.PhaserGame.MatterPhysics
+        let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
         let mainBody = Bodies.rectangle
             (0, 0, this.width * 0.7, this.height, {chamfer: 10});
