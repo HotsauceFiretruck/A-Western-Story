@@ -22,7 +22,7 @@ export class Game
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: 1.5},
+                    gravity: { y: 1.3},
                     debug: true
                 }
             },
