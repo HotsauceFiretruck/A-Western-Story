@@ -36,7 +36,7 @@ export class Game
                   }
                 ]
             },
-            scene: [levelTutorial]
+            scene: [alexlevel]
 
         };
 
