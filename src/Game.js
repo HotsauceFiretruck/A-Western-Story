@@ -38,7 +38,7 @@ export class Game
                     mapping: "matterCollision"
                   }
                 ]
-            }
+            },
             scene: [loganlevel]
 
 

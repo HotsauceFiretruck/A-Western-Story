@@ -12,7 +12,7 @@ export class LoganLevel extends Phaser.Scene
     }
     preload()
     {
-        this.load.image('background', 'assets/Background.png');
+        this.load.image('background', 'assets/Background2.png');
         this.load.image('grass', 'assets/Grass.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('player', 'assets/Player.png');
