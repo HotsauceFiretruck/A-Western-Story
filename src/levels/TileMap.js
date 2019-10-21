@@ -98,7 +98,7 @@ export class TileMap
         // const {Bodies, Body} = this.scene.PhaserGame.MatterPhysics;
 
         let plat = this.scene.matter.add.rectangle(centerX, centerY, bodyWidth, bodyHeight, { isStatic: true});
-        // plat.collisionFilter.category = this.platforms.category;
+        plat.collisionFilter.category = this.platforms.category;
         // //plat.collisionFilter.mask |= 8;
         // plat.ignoreGravity = true;
         // Body.setInertia(plat, Infinity);

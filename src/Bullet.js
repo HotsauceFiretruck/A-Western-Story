@@ -173,7 +173,9 @@ export class Bullet
 
         if (target != null) {
             this.sprite.setCollidesWith([2, target.category]);
+            console.log("HELLOOOOOO");
         }
+       // console.log(target.category);
     } 
       
     update()
@@ -192,6 +194,7 @@ export class Bullet
         if (target != null && (target instanceof Enemy || target instanceof Player)) {
             target.changeHealth(-5);
         }
+        console.log("COLLIDE");
         this.destroy();
     }
 
