@@ -60,7 +60,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.setExistingBody(compoundBody)
             .setPosition(x, y)
             .setMass(2)
-            .setScale(1.7)
+            .setScale(1.5)
             .setFixedRotation()
             .setCollisionCategory(this.category);
 
