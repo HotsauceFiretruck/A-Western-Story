@@ -1,3 +1,5 @@
+import { Platform } from "./Platform.js";
+
 export class TileMap
 {
     constructor(scene, levelArray, tileWidth, tileHeight, imageKey)
@@ -95,16 +97,25 @@ export class TileMap
         let centerX = fromX + (bodyWidth / 2);
         let centerY = fromY + (bodyHeight / 2);
 
-        let plat = this.scene.matter.add.rectangle(centerX, centerY, bodyWidth, bodyHeight, { isStatic: true});
-        plat.collisionFilter.category = this.platforms.category;
-        this.platforms.list.push(plat);
+        let platf = new Platform(this.scene, centerX, centerY, bodyWidth, bodyHeight, this.platforms.category);
+        platf.addSprite(this.tileWidth, this.tileHeight, fromTileX, fromTileY, toTileX, toTileY, this.imageKey);
+        
+        this.platforms.list.push(platf);
+    }
 
-        for (let y = fromTileY; y <= toTileY; y++)
+    enableKinematicAll(vX, vY)
+    {
+        for(let i = 0; i < this.platforms.list.length; ++i)
         {
-            for (let x = fromTileX; x <= toTileX; x++)
-            {
-                this.scene.add.image(this.tileWidth * (x + 1/2), this.tileHeight * (y + 1/2), this.imageKey);
-            }
+            this.platforms.list[i].enableKinematic(vX, vY);
+        }
+    }
+
+    disableKinematicAll()
+    {
+        for(let i = 0; i < this.platforms.list.length; ++i)
+        {
+            this.platforms.list[i].disableKinematic();
         }
     }
 
