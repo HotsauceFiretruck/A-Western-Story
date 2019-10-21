@@ -3,6 +3,7 @@ import { LevelTutorial } from "./levels/LevelTutorial.js";
 import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
+import { LoganLevel } from "./levels/LoganLevel.js";
 
 export class Game 
 {
@@ -13,6 +14,8 @@ export class Game
         let alexlevel = new AlexLevel(this);
         let ethanlevel = new EthanLevel(this);
         let dustinlevel = new DustinLevel(this);
+        let loganlevel = new LoganLevel(this);
+
 
         this.config = {
             type: Phaser.AUTO,
@@ -35,8 +38,10 @@ export class Game
                     mapping: "matterCollision"
                   }
                 ]
-            },
-            scene: [levelTutorial]
+            }
+            scene: [loganlevel]
+
+
         };
 
         let game = new Phaser.Game(this.config);
