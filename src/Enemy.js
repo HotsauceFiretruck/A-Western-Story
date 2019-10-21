@@ -30,7 +30,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
          //Setting Sprite
         this.setExistingBody(mainBody)
             .setMass(2)
-            .setScale(2)
+            .setScale(1.7)
             .setPosition(x, y)
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category);
@@ -49,7 +49,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             this.status.isPlayerInRange = false;
         }
 
-        // console.log(this.status.distanceFromPlayer + " " + this.status.isPlayerInRange);
+        //console.log(this.status.distanceFromPlayer + " " + this.status.isPlayerInRange);
     }
 
     reloadGun()

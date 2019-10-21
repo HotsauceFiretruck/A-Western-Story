@@ -95,9 +95,18 @@ export class TileMap
         let centerX = fromX + (bodyWidth / 2);
         let centerY = fromY + (bodyHeight / 2);
 
+        // const {Bodies, Body} = this.scene.PhaserGame.MatterPhysics;
+
         let plat = this.scene.matter.add.rectangle(centerX, centerY, bodyWidth, bodyHeight, { isStatic: true});
-        plat.collisionFilter.category = this.platforms.category;
+        // plat.collisionFilter.category = this.platforms.category;
+        // //plat.collisionFilter.mask |= 8;
+        // plat.ignoreGravity = true;
+        // Body.setInertia(plat, Infinity);
         this.platforms.list.push(plat);
+
+        //const v = new Phaser.Math.Vector2(-20, 0);
+
+        //Body.setVelocity(plat, v);
 
         for (let y = fromTileY; y <= toTileY; y++)
         {

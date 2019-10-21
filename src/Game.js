@@ -22,7 +22,7 @@ export class Game
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: .5},
+                    gravity: { y: 1.3},
                     debug: true
                 }
             },
@@ -36,7 +36,7 @@ export class Game
                   }
                 ]
             },
-            scene: [ethanlevel]
+            scene: [levelTutorial]
 
         };
 

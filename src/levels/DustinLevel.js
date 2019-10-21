@@ -2,7 +2,7 @@ import { Player } from "../Player.js";
 import { Enemy } from "../Enemy.js";
 import { TileMap } from "./TileMap.js";
 
-export class LevelTutorial extends Phaser.Scene
+export class DustinLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
