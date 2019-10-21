@@ -30,7 +30,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
          //Setting Sprite
         this.setExistingBody(mainBody)
             .setMass(2)
-            .setScale(1.7)
+            .setScale(1.5)
             .setPosition(x, y)
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category);

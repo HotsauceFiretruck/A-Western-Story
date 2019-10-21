@@ -36,8 +36,7 @@ export class Game
                   }
                 ]
             },
-          
-            scene: [ethanlevel]
+            scene: [levelTutorial]
         };
 
         let game = new Phaser.Game(this.config);
