@@ -6,10 +6,8 @@ export class DustinLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level2"});
-        
-        console.log("Tutorial Level Created!");
-
+        super({key:"level-2"});
+ 
         this.PhaserGame = PhaserGame;
     }
 

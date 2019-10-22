@@ -6,9 +6,7 @@ export class AlexLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"alex-level"});
-        
-        //console.log("Tutorial Level Created!");
+        super({key:"level-1"});
 
         this.PhaserGame = PhaserGame;
     }
