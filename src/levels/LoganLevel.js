@@ -7,8 +7,8 @@ export class LoganLevel extends Phaser.Scene
     
     constructor(PhaserGame)
     {
-    super({key:"loganlevel"});
-    this.PhaserGame = PhaserGame;
+        super({key:"level-3"});
+        this.PhaserGame = PhaserGame;
     }
     preload()
     {

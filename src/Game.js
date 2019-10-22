@@ -38,10 +38,8 @@ export class Game
                     mapping: "matterCollision"
                   }
                 ]
-            }
-            scene: [loganlevel]
-
-
+            },
+            scene: [levelTutorial]
         };
 
         let game = new Phaser.Game(this.config);
