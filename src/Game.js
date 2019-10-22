@@ -43,5 +43,19 @@ export class Game
         };
 
         let game = new Phaser.Game(this.config);
+
+        if (game.device.os.desktop)
+        {
+            console.log("Desktop Detected! Configuring Game Window...");
+        }
+        if (game.device.os.iPad)
+        {
+            console.log("iPad Detected! Configuring Game Window...");
+        }
+        if (game.device.os.iPhone)
+        {
+            console.log("iPhone Detected! Configuring Game Window...");
+        }
+
     }
 }
