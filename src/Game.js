@@ -1,5 +1,6 @@
 import { Player } from "./Player.js";
 import { LevelTutorial } from "./levels/LevelTutorial.js";
+import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
@@ -12,7 +13,9 @@ export class Game
         let levelTutorial = new LevelTutorial(this);
         let alexlevel = new AlexLevel(this);
         let ethanlevel = new EthanLevel(this);
+        let dustinlevel = new DustinLevel(this);
         let loganlevel = new LoganLevel(this);
+
 
         this.config = {
             type: Phaser.AUTO,
@@ -22,7 +25,7 @@ export class Game
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: .5},
+                    gravity: { y: 1.3},
                     debug: true
                 }
             },
@@ -37,6 +40,7 @@ export class Game
                 ]
             },
             scene: [loganlevel]
+
 
         };
 

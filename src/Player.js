@@ -7,12 +7,12 @@ export class Player extends Phaser.Physics.Matter.Sprite
         super(scene.matter.world, x, y, 'player')
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, 1000, 600);
+        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
     
         //Status
         this.status = {
             health: 20,
-            maxVelocityX: 4,
+            maxVelocityX: 3,
             maxVelocityY: 8,
             moveForce: 0.01,
             isTouching: { left: false, right: false, down: false },
@@ -21,7 +21,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         };
 
         //Creating Collision Body and Sensors
-        let { Body, Bodies} = scene.PhaserGame.MatterPhysics
+        let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
         let mainBody = Bodies.rectangle
             (0, 0, this.width * 0.7, this.height, {chamfer: 10});
@@ -60,7 +60,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.setExistingBody(compoundBody)
             .setPosition(x, y)
             .setMass(2)
-            .setScale(2)
+            .setScale(1.5)
             .setFixedRotation()
             .setCollisionCategory(this.category);
 
