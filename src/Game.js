@@ -19,8 +19,9 @@ export class Game
 
         this.config = {
             type: Phaser.AUTO,
-            width: 800,
+            width:  800,
             height: 600,
+            resolution: window.devicePixelRatio,
             pixelArt: true,
             physics: {
                 default: 'matter',
@@ -40,10 +41,14 @@ export class Game
                 ]
             },
             scene: [loganlevel]
-
-
         };
 
         let game = new Phaser.Game(this.config);
+
+        game.scale.scaleMode = Phaser.Scale.ScaleManager.SHOW_ALL;
+        game.scale.pageAlignHorizontally = true;
+        game.scale.pageAlignVertically = true;
+        game.scale.updateLayout(true);
+        game.scale.refresh();
     }
 }
