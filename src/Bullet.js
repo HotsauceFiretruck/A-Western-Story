@@ -8,6 +8,7 @@ export class Bullet
         this.scene = scene;
         this.target = target;
         this.sprite = scene.matter.add.sprite(fromX, fromY, 'bullet');
+        
 
         //Add to Group
         scene.projectiles.list.push(this);

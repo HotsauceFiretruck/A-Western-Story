@@ -2,14 +2,12 @@ import { Player } from "../Player.js";
 import { Enemy } from "../Enemy.js";
 import { TileMap } from "./TileMap.js";
 
-export class LevelTutorial extends Phaser.Scene
+export class DustinLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level2"});
-        
-        console.log("Tutorial Level Created!");
-
+        super({key:"level-2"});
+ 
         this.PhaserGame = PhaserGame;
     }
 

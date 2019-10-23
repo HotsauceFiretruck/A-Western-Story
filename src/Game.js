@@ -1,18 +1,21 @@
-import { Player } from "./Player.js";
 import { LevelTutorial } from "./levels/LevelTutorial.js";
 import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
+import { LoganLevel } from "./levels/LoganLevel.js";
 
 export class Game 
 {
-    constructor() {
+    constructor() 
+    {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
 
         let levelTutorial = new LevelTutorial(this);
-        let alexlevel = new AlexLevel(this);
-        let ethanlevel = new EthanLevel(this);
-        let dustinlevel = new DustinLevel(this);
+        let level1 = new AlexLevel(this);
+        let level4 = new EthanLevel(this);
+        let level2 = new DustinLevel(this);
+        let level3 = new LoganLevel(this);
+
 
         this.config = {
             type: Phaser.AUTO,
@@ -22,7 +25,7 @@ export class Game
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: .5},
+                    gravity: { y: 1.3},
                     debug: true
                 }
             },
@@ -37,9 +40,22 @@ export class Game
                 ]
             },
             scene: [levelTutorial]
-
         };
 
         let game = new Phaser.Game(this.config);
+
+        if (game.device.os.desktop)
+        {
+            console.log("Desktop Detected! Configuring Game Window...");
+        }
+        if (game.device.os.iPad)
+        {
+            console.log("iPad Detected! Configuring Game Window...");
+        }
+        if (game.device.os.iPhone)
+        {
+            console.log("iPhone Detected! Configuring Game Window...");
+        }
+
     }
 }
