@@ -69,6 +69,7 @@ export class Game
         let game = new Phaser.Game(this.config);
 
         //If game is played on mobile devices -> lock screen orientation to landscape.
+        //Need further testings
         if (game.device.os.android || 
             game.device.os.iOS || 
             game.device.os.iPad || 
@@ -77,7 +78,7 @@ export class Game
         {
             console.log("Mobile Detected! Configuring Game Window...");
             game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-			game.scale.forceOrientation(false, true);
+			game.scale.forceOrientation(true, false);
             game.scale.enterIncorrectOrientation.add(handleIncorrect);
             game.scale.leaveIncorrectOrientation.add(handleCorrect);
         }
@@ -85,6 +86,13 @@ export class Game
             document.getElementById("playlandscape").style.display="block";
         }
         function handleCorrect(){
+            if(!game.device.desktop){
+                if(game.scale.isGameLandscape){		
+                    game.width = maxWidth;
+                    game.height = maxHeight;
+                    game.renderer.resize(game.width,game.height);
+                }
+            }
             document.getElementById("playlandscape").style.display="none";
         }
     }
