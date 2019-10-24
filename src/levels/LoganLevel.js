@@ -14,6 +14,7 @@ export class LoganLevel extends Phaser.Scene
     {
         this.load.image('background', 'assets/Background2.png');
         this.load.image('grass', 'assets/Grass.png');
+        this.load.image('sand', 'assets/Sand.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
@@ -55,7 +56,7 @@ export class LoganLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         ];
-        this.map = new TileMap(this, groundLayer, 32, 32, 'grass'); 
+        this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
         let obstacleLayer = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -78,7 +79,7 @@ export class LoganLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
-        this.movingObstacles = new TileMap(this, obstacleLayer, 32, 32, 'grass');
+        this.movingObstacles = new TileMap(this, obstacleLayer, 32, 32, 'sand');
         this.movingObstacles.enableKinematicAll(-1, 0) ;
 
 
