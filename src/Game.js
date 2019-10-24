@@ -30,6 +30,8 @@ export class Game
         let modifiedWidth = maxWidth / setScale;
         let modifiedHeight = maxHeight / setScale;
 
+        console.log(modifiedWidth + " " + modifiedHeight + " " + setScale);
+
         if (modifiedHeight < maxHeight && modifiedWidth < maxWidth) 
         {
             maxHeight = modifiedHeight;

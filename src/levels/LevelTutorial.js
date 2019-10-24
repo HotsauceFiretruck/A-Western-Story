@@ -55,38 +55,13 @@ export class LevelTutorial extends Phaser.Scene
         ];
 
         //Looping background with level
-        let backgroundWidth = 720; //Background image size
-        let backgroundHeight = 420;
-        let levelWidth = level[0].length * 32; //32 comes from a tile's width in pixels
-        let levelHeight = level.length * 32; //32 comes from a tile's height in pixels
-
-        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
-        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
-
-        let widthRatio = maxWidth / (backgroundWidth * 2); //Getting the ratio between level size and background image size
-        let heightRatio = maxHeight / (backgroundHeight * 2);
-
-        let numberOfWidth = Math.ceil(widthRatio);
-        let numberOfHeight = Math.ceil(heightRatio);
-        console.log(this.cameras.main.worldView.height + " " + maxHeight + " " + widthRatio + " " + heightRatio);
-        var counterDebug = 0;
-        for (let w = 1; w <= numberOfWidth; ++w)
-        {
-            for (let h = 1; h <= numberOfHeight; ++h)
-            {
-                this.add.image((backgroundWidth / 2) * w, (backgroundHeight / 2) * h, 'background').setScale(2);
-                counterDebug++;
-            }
-        }
-        console.log(counterDebug);
+        this.loopImage('background', 720, 420, level[0].length * 32, level.length * 32, 1.45);
 
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
         //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
 
-        /* These lists are important because when you create
-         * a bullet or enemy, these lists are called to add and update them.
-         */
+        // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
             category: 2, //Telling what collision category these objects belong in
             list: [] 
@@ -129,5 +104,28 @@ export class LevelTutorial extends Phaser.Scene
 
         //Update player
         this.player.update();
+    }
+
+    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
+    {
+        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+
+        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (imageHeight * scale);
+
+        let numberOfWidth = Math.ceil(widthRatio);
+        let numberOfHeight = Math.ceil(heightRatio);
+        //console.log("levelWidth: " + levelWidth + " levelHeight: " + levelHeight + " cameraWidth: " +  
+        //            this.cameras.main.worldView.width + " cameraHeight: " + this.cameras.main.worldView.height);d
+        for (let w = 0; w < numberOfWidth; ++w)
+        {
+            for (let h = 0; h < numberOfHeight; ++h)
+            {
+                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
+                this.add.existing(bgImage);
+            }
+        }
     }
 }
