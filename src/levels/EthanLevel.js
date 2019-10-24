@@ -6,7 +6,7 @@ export class EthanLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level4"});
+        super({key:"level-4"});
         this.PhaserGame = PhaserGame;
     }
 

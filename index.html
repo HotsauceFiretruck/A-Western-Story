@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head> 
+    <title>A Western Story</title>
+
+    <!--Setting up Game-->
     <script src="./lib/phaser.js"></script>
     <script src="./lib/phaser-matter-collision-plugin.min.js"></script>
     
@@ -9,13 +12,35 @@
     <script type="module" src="./src/levels/EthanLevel.js"></script>
     <script type="module" src="./src/levels/DustinLevel.js"></script>
     <script type="module" scr="./src/levels/TileMap.js"></script>
+    <script type="module" scr="./src/levels/Platform.js"></script>
 
     <script type="module" src="./src/Bullet.js"></script>
     <script type="module" src="./src/Player.js"></script>
     <script type="module" src="./src/Enemy.js"></script>
     <script type="module" src="./src/Game.js"></script>
     <script type="module" src="./src/Main.js"></script>
+
+    <!--Orientation IMAGE set up-->
+    <style>
+        body{
+            margin:0px;
+            padding:0px;
+        }
+        #playlandscape{
+            width:100%;
+            height:100%;
+            position:fixed;
+            top:0px;
+            left:0px;
+            background-color:white;
+            background-image:url('assets/playlandscape.png');
+            background-repeat:no-repeat;
+            background-position: center center;
+            display:none;
+        }
+    </style>
 </head>
 <body>
+    <div id = "playlandscape"></div>
 </body>
 </html>

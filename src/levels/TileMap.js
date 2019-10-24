@@ -1,3 +1,5 @@
+import { Platform } from "./Platform.js";
+
 export class TileMap
 {
     constructor(scene, levelArray, tileWidth, tileHeight, imageKey)
@@ -7,6 +9,9 @@ export class TileMap
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         this.imageKey = imageKey;
+
+        this.levelWidth = levelArray[0].length * tileWidth;
+        this.levelHeight = levelArray.length * tileHeight;
 
         this.platforms = {
             category: 2,
@@ -86,25 +91,29 @@ export class TileMap
 
     generateBounds(fromTileX, fromTileY, toTileX, toTileY)
     {
-        let fromX = (fromTileX) *  this.tileWidth;
-        let fromY = (fromTileY) * this.tileHeight;
-        let toX = (toTileX + 1) * this.tileWidth;
-        let toY = (toTileY + 1) * this.tileHeight; 
-        let bodyWidth = toX - fromX;
-        let bodyHeight = toY - fromY;
-        let centerX = fromX + (bodyWidth / 2);
-        let centerY = fromY + (bodyHeight / 2);
+        let platf = new Platform(this.scene, this.platforms.category, 
+                                 fromTileX, fromTileY, 
+                                 toTileX - fromTileX, toTileY - fromTileY,
+                                 this.tileWidth, this.tileHeight);
 
-        let plat = this.scene.matter.add.rectangle(centerX, centerY, bodyWidth, bodyHeight, { isStatic: true});
-        plat.collisionFilter.category = this.platforms.category;
-        this.platforms.list.push(plat);
+        platf.addSprite(this.imageKey);
+        
+        this.platforms.list.push(platf);
+    }
 
-        for (let y = fromTileY; y <= toTileY; y++)
+    enableKinematicAll(vX, vY)
+    {
+        for(let i = 0; i < this.platforms.list.length; ++i)
         {
-            for (let x = fromTileX; x <= toTileX; x++)
-            {
-                this.scene.add.image(this.tileWidth * (x + 1/2), this.tileHeight * (y + 1/2), this.imageKey);
-            }
+            this.platforms.list[i].enableKinematic(vX, vY);
+        }
+    }
+
+    disableKinematicAll()
+    {
+        for(let i = 0; i < this.platforms.list.length; ++i)
+        {
+            this.platforms.list[i].disableKinematic();
         }
     }
 
