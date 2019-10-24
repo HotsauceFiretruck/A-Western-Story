@@ -1,10 +1,21 @@
 export class Platform
 {
+    /* scene: Scene (Level)
+       collisionCategory: collision category (Always set to 2 please)
+       fromTileX: Top-Left X Position of the Platform (In TILE UNITS)
+       fromTileY: Top-Left Y Position of the Platform (In TILE UNITS)
+       tileBodyWidth: The Width of the Platform (In TILE UNITS)
+       tileBodyHeight: The Height of the Platform (In TILE UNITS)
+       pixelWidthPerTile: The width of a single tile (In PIXEL UNITS) (Always set to 32 please)
+       pixelHeightPerTile: The height of a single tile (In PIXEL UNITS) (Always set to 32 please)
+    */
     constructor(scene, collisionCategory, 
                 fromTileX, fromTileY, 
                 tileBodyWidth, tileBodyHeight, 
                 pixelWidthPerTile, pixelHeightPerTile)
     {
+        //Doing maths to get the centerX, centerY, bodyWidth, bodyHeight IN PIXELS of the platform
+        //This is to create the collision body of the platform in Phaser.Matter engine
         let fromX = (fromTileX) * pixelWidthPerTile;
         let fromY = (fromTileY) * pixelHeightPerTile; 
         let bodyWidth = (tileBodyWidth + 1) * pixelWidthPerTile;
@@ -24,12 +35,16 @@ export class Platform
         this.scene = scene;
         this.image = []
 
+        //Creating Collision Body in Phaser.Matter engine using the maths above
         this.MatterBody = scene.PhaserGame.MatterPhysics.Body;
         this.body = scene.matter.add.rectangle(centerX, centerY, bodyWidth, bodyHeight, { isStatic: true});
         this.body.collisionFilter.category = collisionCategory;
+
+        //In case of using a moving platform, use .enableKinematic(vX, vY)
         this.status = {vX: 0, vY: 0, kinematic: false};
     }
 
+    //Add tile images to fill the collision body ("image" refers to the image key)
     addSprite(image)
     {
         for (let y = this.fromTileY; y <= this.toTileY; y++)
@@ -42,6 +57,9 @@ export class Platform
         }
     }
 
+    //Enable one-way kinematic movements
+    //If you want to simulate two-way kinematic body movements, 
+    //disable kinematic body and enable it in the other direction.
     enableKinematic(vX, vY)
     {
         if (!this.status.kinematic)
@@ -53,6 +71,7 @@ export class Platform
         }
     }
 
+    //Disable all movements
     disableKinematic()
     {
         if (this.status.kinematic)

@@ -2,6 +2,10 @@ import { Bullet } from "./Bullet.js"
 
 export class Player extends Phaser.Physics.Matter.Sprite
 {
+    /* scene: Scene (Level)
+       x: X position of player in level (pixel unit)
+       y: Y position of player in level (pixel unit)
+    */
     constructor(scene, x, y)
     {
         super(scene.matter.world, x, y, 'player')
@@ -20,12 +24,15 @@ export class Player extends Phaser.Physics.Matter.Sprite
             jumpCooldownTimer: null
         };
 
-        //Creating Collision Body and Sensors
+        //Creating Collision Body and Sensors using Phaser.Matter engine
         let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
+        //Bodies.rectangle(x position IN the sprite, y position IN the sprite, 
+        //                 width of the collision body, height of the collision body, {options});
         let mainBody = Bodies.rectangle
-            (0, 0, this.width * 0.7, this.height, {chamfer: 10});
+            (0, 0, this.width * 0.7, this.height, /*{chamfer: 10}*/);
         
+        //Sensors: only for detecting, not for collision
         this.sensors = {
             bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.6, 2, { isSensor: true }),
             left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
@@ -39,9 +46,10 @@ export class Player extends Phaser.Physics.Matter.Sprite
             friction: .02
         });
 
+        //Set collision category
         this.category = 1;
 
-        //Add Events
+        //Add Collision Events
         scene.matter.world.on("beforeupdate", this.resetTouching, this);
 
         scene.matterCollision.addOnCollideStart({
@@ -115,7 +123,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         }
         
-        //Update health label position
+        //Update health label's position
         this.healthSprite.setPosition(20 + this.scene.cameras.main.worldView.x, 
                                       20 + this.scene.cameras.main.worldView.y);
 
@@ -123,6 +131,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
                                        12 + this.scene.cameras.main.worldView.y);
     }
 
+    //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
         if (bodyA === this.sensors.left) {
@@ -142,13 +151,14 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.status.isTouching.down = false;
     }
 
+    //Important for entities
     changeHealth(changeHealthBy)
     {
         this.status.health += changeHealthBy;
         if (this.status.health < 0)
         {
             this.status.health = 0;
-            //game over
+            //death() // game over
         }
         if (this.status.health < 10)
         {
@@ -158,6 +168,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         
     }
 
+    //Initializing death sequence
     death() {
         // Event listeners
         if (this.scene.matter.world) {
