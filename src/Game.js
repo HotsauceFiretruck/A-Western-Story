@@ -41,10 +41,12 @@ export class Game
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
+
             width: maxWidth,
             height: maxHeight,
             parent: 'phaser-game',
             autoCenter: Phaser.Scale.CENTER_BOTH,
+
             pixelArt: true,
             physics: {
                 default: 'matter',
@@ -63,9 +65,8 @@ export class Game
                   }
                 ]
             },
-          
-            scene: [levelTutorial]
 
+            scene: [loganlevel]
         };
 
         let game = new Phaser.Game(this.config);
@@ -89,5 +90,7 @@ export class Game
         function handleCorrect(){
             document.getElementById("playlandscape").style.display="none";
         }
+
+
     }
 }
