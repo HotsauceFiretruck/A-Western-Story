@@ -76,7 +76,16 @@ export class Game
             game.device.os.windowsPhone)
         {
             console.log("Mobile Detected! Configuring Game Window...");
-            screen.lockOrientation('landscape');
+            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+			game.scale.forceOrientation(false, true);
+            game.scale.enterIncorrectOrientation.add(handleIncorrect);
+            game.scale.leaveIncorrectOrientation.add(handleCorrect);
+        }
+        function handleIncorrect(){
+            document.getElementById("playlandscape").style.display="block";
+        }
+        function handleCorrect(){
+            document.getElementById("playlandscape").style.display="none";
         }
     }
 }
