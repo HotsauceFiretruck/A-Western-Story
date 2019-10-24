@@ -60,19 +60,25 @@ export class LevelTutorial extends Phaser.Scene
         let levelWidth = level[0].length * 32; //32 comes from a tile's width in pixels
         let levelHeight = level.length * 32; //32 comes from a tile's height in pixels
 
-        let widthRatio = levelWidth / backgroundWidth; //Getting the ratio between level size and background image size
-        let heightRatio = levelHeight / backgroundHeight;
+        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+
+        let widthRatio = maxWidth / (backgroundWidth * 2); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (backgroundHeight * 2);
 
         let numberOfWidth = Math.ceil(widthRatio);
         let numberOfHeight = Math.ceil(heightRatio);
-        console.log(widthRatio + " " + heightRatio);
-        for (let w = 0; w <= numberOfWidth; ++w)
+        console.log(this.cameras.main.worldView.height + " " + maxHeight + " " + widthRatio + " " + heightRatio);
+        var counterDebug = 0;
+        for (let w = 1; w <= numberOfWidth; ++w)
         {
-            for (let h = 0; h <= numberOfHeight; ++h)
+            for (let h = 1; h <= numberOfHeight; ++h)
             {
-                this.add.image((backgroundWidth / 2) * w, (backgroundHeight / 2) * h, 'background');
+                this.add.image((backgroundWidth / 2) * w, (backgroundHeight / 2) * h, 'background').setScale(2);
+                counterDebug++;
             }
         }
+        console.log(counterDebug);
 
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');

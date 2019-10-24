@@ -70,30 +70,30 @@ export class Game
 
         //If game is played on mobile devices -> lock screen orientation to landscape.
         //Need further testings
-        if (game.device.os.android || 
-            game.device.os.iOS || 
-            game.device.os.iPad || 
-            game.device.os.iPhone ||
-            game.device.os.windowsPhone)
-        {
-            console.log("Mobile Detected! Configuring Game Window...");
-            game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-			game.scale.forceOrientation(true, false);
-            game.scale.enterIncorrectOrientation.add(handleIncorrect);
-            game.scale.leaveIncorrectOrientation.add(handleCorrect);
-        }
-        function handleIncorrect(){
-            document.getElementById("playlandscape").style.display="block";
-        }
-        function handleCorrect(){
-            if(!game.device.desktop){
-                if(game.scale.isGameLandscape){		
-                    game.width = maxWidth;
-                    game.height = maxHeight;
-                    game.renderer.resize(game.width,game.height);
-                }
-            }
-            document.getElementById("playlandscape").style.display="none";
-        }
+        // if (game.device.os.android || 
+        //     game.device.os.iOS || 
+        //     game.device.os.iPad || 
+        //     game.device.os.iPhone ||
+        //     game.device.os.windowsPhone)
+        // {
+        //     console.log("Mobile Detected! Configuring Game Window...");
+        //     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+		// 	game.scale.forceOrientation(true, false);
+        //     game.scale.enterIncorrectOrientation.add(handleIncorrect);
+        //     game.scale.leaveIncorrectOrientation.add(handleCorrect);
+        // }
+        // function handleIncorrect(){
+        //     document.getElementById("playlandscape").style.display="block";
+        // }
+        // function handleCorrect(){
+        //     if(!game.device.desktop){
+        //         if(game.scale.isGameLandscape){		
+        //             game.width = maxWidth;
+        //             game.height = maxHeight;
+        //             game.renderer.resize(game.width,game.height);
+        //         }
+        //     }
+        //     document.getElementById("playlandscape").style.display="none";
+        // }
     }
 }
