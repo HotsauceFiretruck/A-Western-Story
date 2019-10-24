@@ -24,12 +24,14 @@ export class LevelTutorial extends Phaser.Scene
 
     create()
     {
-        this.add.image(400, 300, 'background').setScale(2);
         this.add.image(50, 503, 'house');
 
-        //Creating Level using an Array + Tile Map
-        //1 is for block/tile; 0 is for empty space
-        //25 wide by 19 long
+        /* Creating Level using an Array + Tile Map
+           1 is for block/tile; 0 is for empty space
+           Note: Each block/tile is 32 pixels wide and 32 pixels long
+           This level is 25 tiles wide by 19 tiles long
+           Therefore, this level is 800 pixels wide and 600 pixels long
+        */
         let level = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -52,12 +54,41 @@ export class LevelTutorial extends Phaser.Scene
             [1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
         ];
 
-        this.map = new TileMap(this, level, 32, 32, 'grass');
-        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic //vX = moving in the x PIXELS PER FRAME.
-                                                                //vY = moving in the y PIXELS PER FRAME.
+        //Looping background with level
+        let backgroundWidth = 720; //Background image size
+        let backgroundHeight = 420;
+        let levelWidth = level[0].length * 32; //32 comes from a tile's width in pixels
+        let levelHeight = level.length * 32; //32 comes from a tile's height in pixels
 
+        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+
+        let widthRatio = maxWidth / (backgroundWidth * 2); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (backgroundHeight * 2);
+
+        let numberOfWidth = Math.ceil(widthRatio);
+        let numberOfHeight = Math.ceil(heightRatio);
+        console.log(this.cameras.main.worldView.height + " " + maxHeight + " " + widthRatio + " " + heightRatio);
+        var counterDebug = 0;
+        for (let w = 1; w <= numberOfWidth; ++w)
+        {
+            for (let h = 1; h <= numberOfHeight; ++h)
+            {
+                this.add.image((backgroundWidth / 2) * w, (backgroundHeight / 2) * h, 'background').setScale(2);
+                counterDebug++;
+            }
+        }
+        console.log(counterDebug);
+
+        // Create map
+        this.map = new TileMap(this, level, 32, 32, 'grass');
+        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
+
+        /* These lists are important because when you create
+         * a bullet or enemy, these lists are called to add and update them.
+         */
         this.projectiles = {
-            category: 2, //telling what collision category these objects belong in
+            category: 2, //Telling what collision category these objects belong in
             list: [] 
         };
 
@@ -90,11 +121,13 @@ export class LevelTutorial extends Phaser.Scene
             this.enemies.list[i].update();
         }
         
-        if (this.enemies.list.length == 0)
+        //When there are no more enemies in the level, add a new one at that position
+        if (this.enemies.list.length == 0) 
         {
             new Enemy(this, 600, 100);
         }
 
+        //Update player
         this.player.update();
     }
 }
