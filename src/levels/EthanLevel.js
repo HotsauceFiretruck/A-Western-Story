@@ -20,6 +20,8 @@ export class EthanLevel extends Phaser.Scene
         this.load.image('enemy', 'assets/Outlaw.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sand', 'assets/Sand.png');
+        this.load.image('cactus', 'assets/Cactus.png');
+        this.load.image('crate', 'assets/Crate.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
@@ -27,9 +29,12 @@ export class EthanLevel extends Phaser.Scene
     {
         this.add.image(300, 275, 'background2').setScale(2);
         this.add.image(1740, 275, 'background2').setScale(2);
+        this.add.image(1000, 530, 'cactus');
+        this.add.image(800, 530, 'cactus');
+        this.add.image(700, 527, 'crate');
         this.add.image(500,200, 'cloud');
         this.add.image(470,175, 'cloud');
-        this.add.image(600,210, 'cloud');
+        this.add.image(1100,250, 'cloud');
         this.add.image(600,200, 'cloud');
         this.add.image(5770,175, 'cloud');
         this.add.image(800,210, 'cloud');
@@ -60,7 +65,7 @@ export class EthanLevel extends Phaser.Scene
         ];
         
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 100, 100);
+        this.player = new Player(this, 100, 550);
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -72,7 +77,8 @@ export class EthanLevel extends Phaser.Scene
             list: []
         };
         
-        this.basicEnemy = new Enemy(this, 850, 100); 
+        this.basicEnemy = new Enemy(this, 850, 550); 
+        this.basicEnemy = new Enemy(this, 1600, 550)
     }
 
     update ()
@@ -90,7 +96,7 @@ export class EthanLevel extends Phaser.Scene
         
         if (this.enemies.list.length == 0)
         {
-            new Enemy(this, 850, 100);
+            new Enemy(this, 1800, 100);
         }
         
         this.player.update();
