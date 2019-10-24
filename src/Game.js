@@ -67,5 +67,16 @@ export class Game
         };
 
         let game = new Phaser.Game(this.config);
+
+        //If game is played on mobile devices -> lock screen orientation to landscape.
+        if (game.device.os.android || 
+            game.device.os.iOS || 
+            game.device.os.iPad || 
+            game.device.os.iPhone ||
+            game.device.os.windowsPhone)
+        {
+            console.log("Mobile Detected! Configuring Game Window...");
+            screen.lockOrientation('landscape');
+        }
     }
 }
