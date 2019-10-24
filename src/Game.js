@@ -36,7 +36,7 @@ export class Game
             maxWidth = modifiedWidth;
         }
 
-        console.log(modifiedWidth + " " + modifiedHeight + " " + scaleWidth + " " + scaleHeight + " " + window.innerWidth + " " + window.innerHeight);
+        //console.log(modifiedWidth + " " + modifiedHeight + " " + scaleWidth + " " + scaleHeight + " " + window.innerWidth + " " + window.innerHeight);
 
         //Initializing Config
         this.config = {
