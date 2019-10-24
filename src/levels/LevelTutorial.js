@@ -7,8 +7,6 @@ export class LevelTutorial extends Phaser.Scene
     constructor(PhaserGame)
     {
         super({key:"level-tutorial"});
-        
-        //console.log("Tutorial Level Created!");
 
         this.PhaserGame = PhaserGame;
     }
@@ -26,9 +24,6 @@ export class LevelTutorial extends Phaser.Scene
 
     create()
     {
-        console.log("Create Function Initialized!");
-        
-
         this.add.image(400, 300, 'background').setScale(2);
         this.add.image(50, 503, 'house');
 
@@ -54,11 +49,11 @@ export class LevelTutorial extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
+            [1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
         ];
 
         this.map = new TileMap(this, level, 32, 32, 'grass');
-        this.map.enableKinematicAll(-.5, 0); //Enable kinematic //vX = moving in the x PIXELS PER FRAME.
+        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic //vX = moving in the x PIXELS PER FRAME.
                                                                 //vY = moving in the y PIXELS PER FRAME.
 
         this.projectiles = {
