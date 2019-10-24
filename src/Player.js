@@ -13,7 +13,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.status = {
             health: 20,
             maxVelocityX: 3,
-            maxVelocityY: 8,
+            maxVelocityY: 9,
             moveForce: 0.01,
             isTouching: { left: false, right: false, down: false },
             canJump: true,
@@ -35,8 +35,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
         let compoundBody = Body.create({
             parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
             frictionStatic: 0,
-            frictionAir: 0.02,
-            friction: .005
+            frictionAir: 0.03,
+            friction: .02
         });
 
         this.category = 1;

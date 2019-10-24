@@ -53,7 +53,7 @@ export class LevelTutorial extends Phaser.Scene
         ];
 
         this.map = new TileMap(this, level, 32, 32, 'grass');
-        this.map.enableKinematicAll(-.5, 0); //Enable kinematic //vX = moving in the x PIXELS PER FRAME.
+        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic //vX = moving in the x PIXELS PER FRAME.
                                                                 //vY = moving in the y PIXELS PER FRAME.
 
         this.projectiles = {

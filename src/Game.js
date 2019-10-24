@@ -10,17 +10,41 @@ export class Game
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
 
+
+
+        //Initializing Levels
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
         let level4 = new EthanLevel(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
 
+        //Detecting the Device's Size and Set Max
+        let maxWidth = 1200;
+        let maxHeight = 600;
+        
+        let scaleWidth = maxWidth / window.innerWidth;
+        let scaleHeight = maxHeight / window.innerHeight;
+        let setScale = Math.max(scaleWidth, scaleHeight);
+        
+        let modifiedWidth = maxWidth / setScale;
+        let modifiedHeight = maxHeight / setScale;
 
+        if (modifiedHeight < maxHeight && modifiedWidth < maxWidth) 
+        {
+            maxHeight = modifiedHeight;
+            maxWidth = modifiedWidth;
+        }
+
+        console.log(modifiedWidth + " " + modifiedHeight + " " + scaleWidth + " " + scaleHeight + " " + window.innerWidth + " " + window.innerHeight);
+
+        //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-            width: 800,
-            height: 600,
+            width: maxWidth,
+            height: maxHeight,
+            parent: 'phaser-game',
+            autoCenter: Phaser.Scale.CENTER_BOTH,
             pixelArt: true,
             physics: {
                 default: 'matter',
@@ -43,19 +67,5 @@ export class Game
         };
 
         let game = new Phaser.Game(this.config);
-
-        if (game.device.os.desktop)
-        {
-            console.log("Desktop Detected! Configuring Game Window...");
-        }
-        if (game.device.os.iPad)
-        {
-            console.log("iPad Detected! Configuring Game Window...");
-        }
-        if (game.device.os.iPhone)
-        {
-            console.log("iPhone Detected! Configuring Game Window...");
-        }
-
     }
 }
