@@ -66,7 +66,7 @@ export class Game
                 ]
             },
 
-            scene: [loganlevel]
+            scene: [level3]
         };
 
         let game = new Phaser.Game(this.config);
