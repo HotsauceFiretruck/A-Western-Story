@@ -143,7 +143,7 @@ export class Bullet
     destroy()
     {   
         //Setting the conditions of destruction (removing the collision detectors and removing from scene list)
-        console.log("Bullet Destroyed!");
+        //console.log("Bullet Destroyed!");
         this.scene.matterCollision.removeOnCollideStart();
         this.scene.projectiles.list.splice(this.scene.projectiles.list.indexOf(this), 1);
         this.sprite.destroy();
