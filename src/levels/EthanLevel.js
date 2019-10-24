@@ -21,7 +21,8 @@ export class EthanLevel extends Phaser.Scene
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sand', 'assets/Sand.png');
         this.load.image('cactus', 'assets/Cactus.png');
-        this.load.image('crate', 'assets/Crate.png');
+        this.load.image('bigCrate', 'assets/Crate.png');
+        this.load.image('deadTree', 'assets/deadtree.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
@@ -31,7 +32,8 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(1740, 275, 'background2').setScale(2);
         this.add.image(1000, 530, 'cactus');
         this.add.image(800, 530, 'cactus');
-        this.add.image(700, 527, 'crate');
+        this.add.image(700, 532, 'bigCrate').setScale(.9);
+        this.add.image(370, 425, 'deadTree').setScale(1.75);
         this.add.image(500,200, 'cloud');
         this.add.image(470,175, 'cloud');
         this.add.image(1100,250, 'cloud');
