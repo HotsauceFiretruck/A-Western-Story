@@ -10,6 +10,9 @@ export class TileMap
         this.tileHeight = tileHeight;
         this.imageKey = imageKey;
 
+        this.levelWidth = levelArray[0].length * tileWidth;
+        this.levelHeight = levelArray.length * tileHeight;
+
         this.platforms = {
             category: 2,
             collision: [1, 4],
@@ -88,17 +91,12 @@ export class TileMap
 
     generateBounds(fromTileX, fromTileY, toTileX, toTileY)
     {
-        let fromX = (fromTileX) *  this.tileWidth;
-        let fromY = (fromTileY) * this.tileHeight;
-        let toX = (toTileX + 1) * this.tileWidth;
-        let toY = (toTileY + 1) * this.tileHeight; 
-        let bodyWidth = toX - fromX;
-        let bodyHeight = toY - fromY;
-        let centerX = fromX + (bodyWidth / 2);
-        let centerY = fromY + (bodyHeight / 2);
+        let platf = new Platform(this.scene, this.platforms.category, 
+                                 fromTileX, fromTileY, 
+                                 toTileX - fromTileX, toTileY - fromTileY,
+                                 this.tileWidth, this.tileHeight);
 
-        let platf = new Platform(this.scene, centerX, centerY, bodyWidth, bodyHeight, this.platforms.category);
-        platf.addSprite(this.tileWidth, this.tileHeight, fromTileX, fromTileY, toTileX, toTileY, this.imageKey);
+        platf.addSprite(this.imageKey);
         
         this.platforms.list.push(platf);
     }

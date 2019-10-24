@@ -78,12 +78,44 @@ export class Bullet
       
     update()
     {
-        let xCamera = this.sprite.x - this.scene.cameras.main.worldView.x;
-        let yCamera = this.sprite.y - this.scene.cameras.main.worldView.y;
-
-        if(xCamera > 800 || yCamera > 600 || yCamera < 0 || xCamera < 0)
+        if (this.scene.cameras.main.worldView.width > this.scene.map.levelWidth &&
+            this.sprite.x > this.scene.cameras.main.worldView.width)
         {
             this.destroy();
+            return;
+        } 
+        else if (this.scene.cameras.main.worldView.width < this.scene.map.levelWidth)
+        { 
+            let xBound = this.sprite.x - this.scene.cameras.main.worldView.x;
+
+            if(xBound > this.scene.map.levelWidth)
+            {
+                this.destroy();
+                return;
+            }
+        }
+
+        if (this.scene.cameras.main.worldView.height > this.scene.map.levelHeight &&
+            this.sprite.y > this.scene.cameras.main.worldView.height)
+        {
+            this.destroy();
+            return;
+        }
+        else if (this.scene.cameras.main.worldView.height < this.scene.map.levelHeight)
+        {
+            let yBound = this.sprite.y - this.scene.cameras.main.worldView.y;
+
+            if(yBound > this.scene.map.levelHeight)
+            {
+                this.destroy();
+                return;
+            }
+        }
+
+        if(this.sprite.y < 0 || this.sprite.x < 0)
+        {
+            this.destroy();
+            return;
         }
     }
 
@@ -97,6 +129,7 @@ export class Bullet
 
     destroy()
     {   
+        console.log("Bullet Destroyed!");
         this.scene.matterCollision.removeOnCollideStart();
         this.scene.projectiles.list.splice(this.scene.projectiles.list.indexOf(this), 1);
         this.sprite.destroy();

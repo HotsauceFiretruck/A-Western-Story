@@ -1,22 +1,43 @@
 export class Platform
 {
-    constructor(scene, centerX, centerY, bodyWidth, bodyHeight, category)
+    constructor(scene, collisionCategory, 
+                fromTileX, fromTileY, 
+                tileBodyWidth, tileBodyHeight, 
+                pixelWidthPerTile, pixelHeightPerTile)
     {
+        let fromX = (fromTileX) * pixelWidthPerTile;
+        let fromY = (fromTileY) * pixelHeightPerTile; 
+        let bodyWidth = (tileBodyWidth + 1) * pixelWidthPerTile;
+        let bodyHeight = (tileBodyHeight + 1) * pixelHeightPerTile;
+        let centerX = fromX + (bodyWidth / 2);
+        let centerY = fromY + (bodyHeight / 2);
+
+        this.pixelWidthPerTile = pixelWidthPerTile;
+        this.pixelHeightPerTile = pixelHeightPerTile;
+        this.fromTileY = fromTileY;
+        this.fromTileX = fromTileX;
+        this.toTileY = fromTileY + tileBodyHeight;
+        this.toTileX = fromTileX + tileBodyWidth;
+
+        //console.log("platform: " + bodyHeight + " " + bodyWidth + " " + centerX + " " + centerY);
+        
         this.scene = scene;
         this.image = []
+
         this.MatterBody = scene.PhaserGame.MatterPhysics.Body;
         this.body = scene.matter.add.rectangle(centerX, centerY, bodyWidth, bodyHeight, { isStatic: true});
-        this.body.collisionFilter.category = category;
+        this.body.collisionFilter.category = collisionCategory;
         this.status = {vX: 0, vY: 0, kinematic: false};
     }
 
-    addSprite(width, height, fromTileX, fromTileY, toTileX, toTileY, image)
+    addSprite(image)
     {
-        for (let y = fromTileY; y <= toTileY; y++)
+        for (let y = this.fromTileY; y <= this.toTileY; y++)
         {
-            for (let x = fromTileX; x <= toTileX; x++)
+            for (let x = this.fromTileX; x <= this.toTileX; x++)
             {
-                this.image.push(this.scene.add.image(width * (x + 1/2), height * (y + 1/2), image));
+                this.image.push(this.scene.add.image(this.pixelWidthPerTile * (x + 1/2), 
+                                                     this.pixelHeightPerTile * (y + 1/2), image));
             }
         }
     }
