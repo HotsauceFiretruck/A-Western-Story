@@ -68,7 +68,7 @@ export class Game
                 ]
             },
           
-            scene: [level1]
+            scene: [level4]
           
         };
 
