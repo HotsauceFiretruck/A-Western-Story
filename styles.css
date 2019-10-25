@@ -4,7 +4,7 @@ body {
 }
 
 /* button styling */
-#buttonWrap {
+.buttonWrap {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@ body {
   font-size: 3vw;
   font-family: lato;
   font-style: bold;
-  border-color: red;
+  border-color: black;
   border-right: rgba(0,0,0,0); 
   border-left: rgba(0,0,0,0);
   border-top: rgba(0,0,0,0);
@@ -32,5 +32,6 @@ body {
   border-radius: .5vw; 
 }
 .button:hover {
-  font-family: Aclonica;
+  border-color: white;
+  font-weight: bold;
 }

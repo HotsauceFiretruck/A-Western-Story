@@ -24,6 +24,7 @@ export class EthanLevel extends Phaser.Scene
         this.load.image('bigCrate', 'assets/Crate.png');
         this.load.image('deadTree', 'assets/deadtree.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.audio('music', 'assets/Car-Theft-101.mp3');
     }
 
     create()
