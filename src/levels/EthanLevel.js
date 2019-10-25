@@ -44,6 +44,8 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(900,200, 'cloud');
         this.add.image(750,175, 'cloud');
         this.add.image(200,210, 'cloud');
+        this.sound.add('music').play();
+        this.sound.play('music', { loop: -1 });
 
         let level = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
