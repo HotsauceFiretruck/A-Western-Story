@@ -42,14 +42,6 @@ export class StoryMode
             create: bootCreate
         };
 
-        function bootCreate()
-        {
-            this.add.text(0, 200, "modW: " + modifiedWidth + "; modH: " + modifiedHeight + 
-                          "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
-                          "; mW: " + maxWidth + "; mH: " + maxHeight, 
-                          { fontFamily: '"Roboto Condensed"' });
-        }
-
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
@@ -82,6 +74,24 @@ export class StoryMode
         };
 
         let game = new Phaser.Game(this.config);
+
+        function bootCreate()
+        {
+            if(game.device.os.iPhone)
+            {
+                this.add.text(0, 300, "Mobile Detected!", 
+                { fontFamily: '"Roboto Condensed"' })
+            }
+            if(game.device.os.desktop)
+            {
+                this.add.text(0, 300, "Desktop Detected!", 
+                { fontFamily: '"Roboto Condensed"' })
+            }
+            this.add.text(0, 200, "modW: " + modifiedWidth + "; modH: " + modifiedHeight + 
+                          "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
+                          "; mW: " + maxWidth + "; mH: " + maxHeight, 
+                          { fontFamily: '"Roboto Condensed"' });
+        }
 
         //If game is played on mobile devices -> lock screen orientation to landscape.
         //Need further testings
