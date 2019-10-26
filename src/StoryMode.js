@@ -4,13 +4,11 @@ import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
 
-export class Game 
+export class StoryMode 
 {
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-
-
 
         //Initializing Levels
         let levelTutorial = new LevelTutorial(this);
@@ -104,3 +102,5 @@ export class Game
         // }
     }
 }
+
+let A_Western_Story = new StoryMode();
