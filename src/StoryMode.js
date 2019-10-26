@@ -4,13 +4,11 @@ import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
 
-export class Game 
+export class StoryMode 
 {
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-
-
 
         //Initializing Levels
         let levelTutorial = new LevelTutorial(this);
@@ -68,15 +66,15 @@ export class Game
                 ]
             },
           
-            scene: [level4]
+            scene: [levelTutorial]
           
         };
 
         let game = new Phaser.Game(this.config);
 
         //If game is played on mobile devices -> lock screen orientation to landscape.
-
         //Need further testings
+
         // if (game.device.os.android || 
         //     game.device.os.iOS || 
         //     game.device.os.iPad || 
@@ -104,3 +102,5 @@ export class Game
         // }
     }
 }
+
+let A_Western_Story = new StoryMode();
