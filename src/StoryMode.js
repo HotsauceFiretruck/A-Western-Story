@@ -28,8 +28,6 @@ export class StoryMode
         let modifiedWidth = maxWidth / setScale;
         let modifiedHeight = maxHeight / setScale;
 
-        console.log(modifiedWidth + " " + modifiedHeight + " " + setScale);
-
         if (modifiedHeight < maxHeight && modifiedWidth < maxWidth) 
         {
             maxHeight = modifiedHeight;
@@ -46,7 +44,7 @@ export class StoryMode
 
         function bootCreate()
         {
-            this.add.text(0, 0, "modW: " + modifiedWidth + "; modH: " + modifiedHeight + 
+            this.add.text(0, 200, "modW: " + modifiedWidth + "; modH: " + modifiedHeight + 
                           "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
                           "; mW: " + maxWidth + "; mH: " + maxHeight, 
                           { fontFamily: '"Roboto Condensed"' });
