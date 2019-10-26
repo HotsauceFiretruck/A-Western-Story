@@ -45,8 +45,7 @@ export class StoryMode
             width: maxWidth,
             height: maxHeight,
             parent: 'phaser-game',
-            autoCenter: Phaser.Scale.CENTER_BOTH,
-
+            autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
             physics: {
                 default: 'matter',
