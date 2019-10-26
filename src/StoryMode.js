@@ -66,15 +66,15 @@ export class StoryMode
                 ]
             },
           
-            scene: [level4]
+            scene: [levelTutorial]
           
         };
 
         let game = new Phaser.Game(this.config);
 
         //If game is played on mobile devices -> lock screen orientation to landscape.
-
         //Need further testings
+
         // if (game.device.os.android || 
         //     game.device.os.iOS || 
         //     game.device.os.iPad || 

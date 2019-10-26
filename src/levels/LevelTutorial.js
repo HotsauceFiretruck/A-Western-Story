@@ -74,6 +74,12 @@ export class LevelTutorial extends Phaser.Scene
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);  
+
+        this.testButton = this.add.sprite(100, 100, 'grass').setInteractive();
+        this.testButton.on('pointerdown', function (event) { 
+            console.log("Button Clicked!");
+            //
+        });
     }
 
     update ()
