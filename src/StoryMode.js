@@ -38,6 +38,20 @@ export class StoryMode
 
         //console.log(modifiedWidth + " " + modifiedHeight + " " + scaleWidth + " " + scaleHeight + " " + window.innerWidth + " " + window.innerHeight);
 
+        var loaderSceneConfig = {
+            key: 'loader',
+            active: true,
+            create: bootCreate
+        };
+
+        function bootCreate()
+        {
+            this.add.text(0, 0, "modW: " + modifiedWidth + "; modH: " + modifiedHeight + 
+                          "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
+                          "; mW: " + maxWidth + "; mH: " + maxHeight, 
+                          { fontFamily: '"Roboto Condensed"' });
+        }
+
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
@@ -65,7 +79,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [levelTutorial]
+            scene: [loaderSceneConfig]
           
         };
 
