@@ -1,6 +1,7 @@
 /* gradient background */
 body {
-  background-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0), rgba(0,0,0,1))
+  background-image: url("assets/menuScreen.png");
+  background-size: 100vw 100vh;
 }
 
 /* button styling */
@@ -9,29 +10,36 @@ body {
   align-items: center;
   justify-content: center;
 }
-#title {
-  padding: 6vw;
-  background-color: rgba(0,0,0,0);
-  font-size: 4vw;
-  font-family: 'Actor';
-  font-style: bold;
-  text-align: center;
-  font-weight: bolder;
-}
+
 .button {
-  padding-top: 2vw;
+  margin: .5vw;
   background-color: rgba(0,0,0,0);
-  font-size: 3vw;
-  font-family: lato;
-  font-style: bold;
+  font-size: 2vw;
+  font-family: 'Ewert';
+  font-weight: normal;
   border-color: black;
   border-right: rgba(0,0,0,0); 
   border-left: rgba(0,0,0,0);
   border-top: rgba(0,0,0,0);
-  border-bottom-width: .3vw;
-  border-radius: .5vw; 
+  border-bottom-width: .4vw;
+  border-radius: .3vw; 
 }
 .button:hover {
-  border-color: white;
-  font-weight: bold;
+  border-color: gold;
+  font-weight: bolder;
+}
+
+/* title text styles */
+#title {
+  margin: 6vw;
+  margin-bottom: 3vw;
+  /*background-color: rgba(51,26,0,0);*/
+  background-color: rgba(255,255,255,0.5);
+  border-style: inset;
+  border-width: .75vw;
+  font-size: 7vw;
+  font-family: 'Ewert', 'Actor';
+  font-style: bold;
+  text-align: center;
+  font-weight: bolder;
 }
