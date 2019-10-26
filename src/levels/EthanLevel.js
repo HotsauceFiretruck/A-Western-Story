@@ -12,7 +12,7 @@ export class EthanLevel extends Phaser.Scene
 
     preload()
     {
-        this.load.image('background2', 'assets/Background2.png');
+        this.load.image('bg', 'assets/newBG.png');
         this.load.image('grass', 'assets/Grass2.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
@@ -29,21 +29,12 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        this.add.image(300, 275, 'background2').setScale(2);
-        this.add.image(1740, 275, 'background2').setScale(2);
+        this.add.image(512, 290, 'bg').setScale(4);
+        this.add.image(1536, 290, 'bg').setScale(4);
         this.add.image(1100, 500, 'cactus');
         this.add.image(800, 530, 'cactus');
-        this.add.image(700, 532, 'bigCrate').setScale(.9);
+        this.add.image(200, 532, 'bigCrate').setScale(.9);
         this.add.image(370, 425, 'deadTree').setScale(1.75);
-        this.add.image(500,200, 'cloud');
-        this.add.image(470,175, 'cloud');
-        this.add.image(1100,250, 'cloud');
-        this.add.image(600,200, 'cloud');
-        this.add.image(5770,175, 'cloud');
-        this.add.image(800,210, 'cloud');
-        this.add.image(900,200, 'cloud');
-        this.add.image(750,175, 'cloud');
-        this.add.image(200,210, 'cloud');
         this.sound.add('music').play();
         this.sound.play('music', { loop: -1 });
 

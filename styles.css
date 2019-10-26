@@ -17,7 +17,7 @@ body {
   font-size: 2vw;
   font-family: 'Ewert';
   font-weight: normal;
-  border-color: black;
+  border-color: gray;
   border-right: rgba(0,0,0,0); 
   border-left: rgba(0,0,0,0);
   border-top: rgba(0,0,0,0);
@@ -34,7 +34,9 @@ body {
   margin: 6vw;
   margin-bottom: 3vw;
   /*background-color: rgba(51,26,0,0);*/
-  background-color: rgba(255,255,255,0.5);
+  /*background-color: rgba(255,255,255,0.5);*/
+  background-color: rgba(64,47,18,.7);
+  border-color: rgba(64,47,18,1);
   border-style: inset;
   border-width: .75vw;
   font-size: 7vw;
