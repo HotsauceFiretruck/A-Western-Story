@@ -24,8 +24,6 @@ export class LevelTutorial extends Phaser.Scene
 
     create()
     {
-        this.add.image(50, 503, 'house');
-
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -51,7 +49,7 @@ export class LevelTutorial extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1],
         ];
 
         //Looping background with level
@@ -60,6 +58,9 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
         //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
+        
+        //Adding static images
+        this.add.image(50, 503, 'house');
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
