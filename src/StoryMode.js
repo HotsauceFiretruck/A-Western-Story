@@ -95,27 +95,18 @@ export class StoryMode
                           "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
                           "; mW: " + maxWidth + "; mH: " + maxHeight, 
                           { fontFamily: '"Roboto Condensed"' });
-            this.add.text(0, 400, "Test 1", { fontFamily: '"Roboto Condensed"' });
+            this.add.text(0, 400, "Test 2", { fontFamily: '"Roboto Condensed"' });
         }
-
-        //If game is played on mobile devices -> lock screen orientation to landscape.
-        //Need further testings
 
         // if (game.device.os.android || 
         //     game.device.os.iOS || 
         //     game.device.os.iPad || 
         //     game.device.os.iPhone ||
         //     game.device.os.windowsPhone)
-        // {
-        //     console.log("Mobile Detected! Configuring Game Window...");
-        //     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		// 	game.scale.forceOrientation(true, false);
-        //     game.scale.enterIncorrectOrientation.add(handleIncorrect);
-        //     game.scale.leaveIncorrectOrientation.add(handleCorrect);
-        // }
+
         function handleIncorrect()
         {
-            document.getElementById("playlandscape").style.display="block";
+            //document.getElementById("playlandscape").style.display="block";
             this.add.text(400, 400, "In Incorrect!", { fontFamily: '"Roboto Condensed"' });
         }
         function handleCorrect(){
@@ -127,7 +118,7 @@ export class StoryMode
                     game.renderer.resize(game.width,game.height);
                 }
             }
-            document.getElementById("playlandscape").style.display="none";
+            //document.getElementById("playlandscape").style.display="none";
         }
     }
 }
