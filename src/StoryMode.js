@@ -81,6 +81,10 @@ export class StoryMode
             {
                 this.add.text(0, 300, "Mobile Detected!", 
                 { fontFamily: '"Roboto Condensed"' })
+                game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+                game.scale.forceOrientation(true, false);
+                game.scale.enterIncorrectOrientation.add(handleIncorrect);
+                game.scale.leaveIncorrectOrientation.add(handleCorrect);
             }
             if(game.device.os.desktop)
             {
@@ -91,6 +95,7 @@ export class StoryMode
                           "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
                           "; mW: " + maxWidth + "; mH: " + maxHeight, 
                           { fontFamily: '"Roboto Condensed"' });
+            this.add.text(0, 400, "Test 1", { fontFamily: '"Roboto Condensed"' });
         }
 
         //If game is played on mobile devices -> lock screen orientation to landscape.
@@ -108,19 +113,22 @@ export class StoryMode
         //     game.scale.enterIncorrectOrientation.add(handleIncorrect);
         //     game.scale.leaveIncorrectOrientation.add(handleCorrect);
         // }
-        // function handleIncorrect(){
-        //     document.getElementById("playlandscape").style.display="block";
-        // }
-        // function handleCorrect(){
-        //     if(!game.device.desktop){
-        //         if(game.scale.isGameLandscape){		
-        //             game.width = maxWidth;
-        //             game.height = maxHeight;
-        //             game.renderer.resize(game.width,game.height);
-        //         }
-        //     }
-        //     document.getElementById("playlandscape").style.display="none";
-        // }
+        function handleIncorrect()
+        {
+            document.getElementById("playlandscape").style.display="block";
+            this.add.text(400, 400, "In Incorrect!", { fontFamily: '"Roboto Condensed"' });
+        }
+        function handleCorrect(){
+            if(!game.device.desktop)
+            {
+                if(game.scale.isGameLandscape){		
+                    game.width = maxWidth;
+                    game.height = maxHeight;
+                    game.renderer.resize(game.width,game.height);
+                }
+            }
+            document.getElementById("playlandscape").style.display="none";
+        }
     }
 }
 
