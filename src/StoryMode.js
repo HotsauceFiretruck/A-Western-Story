@@ -37,7 +37,6 @@ export class StoryMode
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-
             width: maxWidth,
             height: maxHeight,
             parent: 'phaser-game',
@@ -75,7 +74,6 @@ export class StoryMode
         {
             ScreenOrientation.lock("landscape");
         }
-
     }
 }
 

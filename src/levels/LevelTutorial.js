@@ -75,11 +75,12 @@ export class LevelTutorial extends Phaser.Scene
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);  
 
-        this.testButton = this.add.sprite(100, 100, 'grass').setInteractive();
-        this.testButton.on('pointerdown', function (event) { 
-            console.log("Button Clicked!");
-            //
-        });
+        // Testing Buttons
+        // this.testButton = this.add.sprite(100, 100, 'grass').setInteractive();
+        // this.testButton.on('pointerdown', function (event) { 
+        //     console.log("Button Clicked!");
+        //     //
+        // });
     }
 
     update ()
@@ -112,6 +113,15 @@ export class LevelTutorial extends Phaser.Scene
         this.player.update();
     }
 
+    //Load in image to fill in the level
+    /*
+        imageKey: the image key
+        imageWidth: the width of the image in pixels
+        imageHeight: the height of the image in pixels
+        levelWidth: the width of the level in pixels
+        levelHeight: the height of the level in pixels
+        scale: how large you what the image to be display onscreen
+    */
     loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
     {
         let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
@@ -122,8 +132,7 @@ export class LevelTutorial extends Phaser.Scene
 
         let numberOfWidth = Math.ceil(widthRatio);
         let numberOfHeight = Math.ceil(heightRatio);
-        //console.log("levelWidth: " + levelWidth + " levelHeight: " + levelHeight + " cameraWidth: " +  
-        //            this.cameras.main.worldView.width + " cameraHeight: " + this.cameras.main.worldView.height);d
+
         for (let w = 0; w < numberOfWidth; ++w)
         {
             for (let h = 0; h < numberOfHeight; ++h)
