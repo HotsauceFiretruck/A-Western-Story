@@ -28,25 +28,19 @@ export class StoryMode
         let modifiedWidth = maxWidth / setScale;
         let modifiedHeight = maxHeight / setScale;
 
-        console.log(modifiedWidth + " " + modifiedHeight + " " + setScale);
-
         if (modifiedHeight < maxHeight && modifiedWidth < maxWidth) 
         {
             maxHeight = modifiedHeight;
             maxWidth = modifiedWidth;
         }
 
-        //console.log(modifiedWidth + " " + modifiedHeight + " " + scaleWidth + " " + scaleHeight + " " + window.innerWidth + " " + window.innerHeight);
-
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-
             width: maxWidth,
             height: maxHeight,
             parent: 'phaser-game',
-            autoCenter: Phaser.Scale.CENTER_BOTH,
-
+            autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
             physics: {
                 default: 'matter',
@@ -72,34 +66,14 @@ export class StoryMode
 
         let game = new Phaser.Game(this.config);
 
-        //If game is played on mobile devices -> lock screen orientation to landscape.
-        //Need further testings
-
-        // if (game.device.os.android || 
-        //     game.device.os.iOS || 
-        //     game.device.os.iPad || 
-        //     game.device.os.iPhone ||
-        //     game.device.os.windowsPhone)
-        // {
-        //     console.log("Mobile Detected! Configuring Game Window...");
-        //     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-		// 	game.scale.forceOrientation(true, false);
-        //     game.scale.enterIncorrectOrientation.add(handleIncorrect);
-        //     game.scale.leaveIncorrectOrientation.add(handleCorrect);
-        // }
-        // function handleIncorrect(){
-        //     document.getElementById("playlandscape").style.display="block";
-        // }
-        // function handleCorrect(){
-        //     if(!game.device.desktop){
-        //         if(game.scale.isGameLandscape){		
-        //             game.width = maxWidth;
-        //             game.height = maxHeight;
-        //             game.renderer.resize(game.width,game.height);
-        //         }
-        //     }
-        //     document.getElementById("playlandscape").style.display="none";
-        // }
+        if (game.device.os.android || 
+            game.device.os.iOS || 
+            game.device.os.iPad || 
+            game.device.os.iPhone ||
+            game.device.os.windowsPhone)
+        {
+            ScreenOrientation.lock("landscape");
+        }
     }
 }
 
