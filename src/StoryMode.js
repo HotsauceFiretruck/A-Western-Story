@@ -34,14 +34,6 @@ export class StoryMode
             maxWidth = modifiedWidth;
         }
 
-        //console.log(modifiedWidth + " " + modifiedHeight + " " + scaleWidth + " " + scaleHeight + " " + window.innerWidth + " " + window.innerHeight);
-
-        var loaderSceneConfig = {
-            key: 'loader',
-            active: true,
-            create: bootCreate
-        };
-
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
@@ -69,57 +61,21 @@ export class StoryMode
                 ]
             },
           
-            scene: [loaderSceneConfig]
+            scene: [levelTutorial]
           
         };
 
         let game = new Phaser.Game(this.config);
 
-        function bootCreate()
+        if (game.device.os.android || 
+            game.device.os.iOS || 
+            game.device.os.iPad || 
+            game.device.os.iPhone ||
+            game.device.os.windowsPhone)
         {
-            if(game.device.os.iPhone)
-            {
-                this.add.text(0, 300, "Mobile Detected!", 
-                { fontFamily: '"Roboto Condensed"' })
-                game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-                game.scale.forceOrientation(true, false);
-                game.scale.enterIncorrectOrientation.add(handleIncorrect);
-                game.scale.leaveIncorrectOrientation.add(handleCorrect);
-            }
-            if(game.device.os.desktop)
-            {
-                this.add.text(0, 300, "Desktop Detected!", 
-                { fontFamily: '"Roboto Condensed"' })
-            }
-            this.add.text(0, 200, "modW: " + modifiedWidth + "; modH: " + modifiedHeight + 
-                          "; wW: " + window.innerWidth + "; wH: " + window.innerHeight +
-                          "; mW: " + maxWidth + "; mH: " + maxHeight, 
-                          { fontFamily: '"Roboto Condensed"' });
-            this.add.text(0, 400, "Test 2", { fontFamily: '"Roboto Condensed"' });
+            ScreenOrientation.lock("landscape");
         }
 
-        // if (game.device.os.android || 
-        //     game.device.os.iOS || 
-        //     game.device.os.iPad || 
-        //     game.device.os.iPhone ||
-        //     game.device.os.windowsPhone)
-
-        function handleIncorrect()
-        {
-            //document.getElementById("playlandscape").style.display="block";
-            this.add.text(400, 400, "In Incorrect!", { fontFamily: '"Roboto Condensed"' });
-        }
-        function handleCorrect(){
-            if(!game.device.desktop)
-            {
-                if(game.scale.isGameLandscape){		
-                    game.width = maxWidth;
-                    game.height = maxHeight;
-                    game.renderer.resize(game.width,game.height);
-                }
-            }
-            //document.getElementById("playlandscape").style.display="none";
-        }
     }
 }
 
