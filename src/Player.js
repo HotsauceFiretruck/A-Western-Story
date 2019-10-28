@@ -1,4 +1,6 @@
-import { Bullet } from "./Bullet.js"
+import { Bullet } from "./Bullet.js";
+import { DesktopController } from "./controllers/DesktopController.js";
+import { MobileController } from "./controllers/MobileController.js";
 
 export class Player extends Phaser.Physics.Matter.Sprite
 {
@@ -27,14 +29,14 @@ export class Player extends Phaser.Physics.Matter.Sprite
         //Creating Collision Body and Sensors using Phaser.Matter engine
         let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
-        //Bodies.rectangle(x position IN the sprite, y position IN the sprite, 
+        //Bodies.rectangle(centerX position IN the sprite, centerY position IN the sprite, 
         //                 width of the collision body, height of the collision body, {options});
         let mainBody = Bodies.rectangle
-            (0, 0, this.width * 0.7, this.height, /*{chamfer: 10}*/);
+            (0, 0, this.width * 0.7, this.height, {chamfer: 1});
         
         //Sensors: only for detecting, not for collision
         this.sensors = {
-            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.6, 2, { isSensor: true }),
+            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
             left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
             right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
         };
@@ -73,62 +75,21 @@ export class Player extends Phaser.Physics.Matter.Sprite
             .setCollisionCategory(this.category);
 
         // Creating Controls/Cursors
-        this.cursors = scene.input.keyboard.addKeys ({
-            up: 'W',
-            left: 'A',
-            right: 'D',
-            down: 'S'
-        });
-
-        scene.input.on('pointerdown', (pointer) => {
-            this.shoot(pointer.worldX, pointer.worldY);
-        });
+        this.controller = scene.PhaserGame.isMobile ? new MobileController(scene, this) : new DesktopController(scene, this);
 
         //Creating Health Display
         this.healthSprite = scene.add.sprite(20, 20, 'hearts'); 
         scene.add.existing(this.healthSprite);
-        this.healthSprite.setFrame(0);
+        this.healthSprite.setFrame(0).setScrollFactor(0, 0);
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
+        this.displayHealth.setScrollFactor(0, 0);
     }
 
     update()
     {
         //Update Controls/Cursors
-        if (this.cursors.left.isDown && this.body.velocity.x > -this.status.maxVelocityX)
-        {
-            this.setFlipX(false);
-            if (!this.status.isTouching.left) {
-                this.applyForce({ x: -this.status.moveForce, y: 0 });
-            }
-        }
-        else if (this.cursors.right.isDown && this.body.velocity.x < this.status.maxVelocityX)
-        {
-            this.setFlipX(true);
-
-            if (!this.status.isTouching.right) {
-                this.applyForce({ x: this.status.moveForce, y: 0 });
-            }
-        }
-
-        if (this.cursors.up.isDown && this.status.canJump && this.status.isTouching.down)
-        {
-
-            this.setVelocityY(-this.status.maxVelocityY);
-            this.canJump = false;
-            this.jumpCooldownTimer = this.scene.time.addEvent({
-                delay: 250,
-                callback: () => (this.canJump = true)
-            });
-
-        }
-        
-        //Update health label's position
-        this.healthSprite.setPosition(20 + this.scene.cameras.main.worldView.x, 
-                                      20 + this.scene.cameras.main.worldView.y);
-
-        this.displayHealth.setPosition(30 + this.scene.cameras.main.worldView.x,
-                                       12 + this.scene.cameras.main.worldView.y);
+        this.controller.update();
     }
 
     //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
