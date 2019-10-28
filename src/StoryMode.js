@@ -66,7 +66,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [levelTutorial]
+            scene: [level3]
           
         };
 
