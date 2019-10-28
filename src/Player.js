@@ -1,7 +1,13 @@
-import { Bullet } from "./Bullet.js"
+import { Bullet } from "./Bullet.js";
+import { DesktopController } from "./controllers/DesktopController.js";
+import { MobileController } from "./controllers/MobileController.js";
 
 export class Player extends Phaser.Physics.Matter.Sprite
 {
+    /* scene: Scene (Level)
+       x: X position of player in level (pixel unit)
+       y: Y position of player in level (pixel unit)
+    */
     constructor(scene, x, y)
     {
         super(scene.matter.world, x, y, 'player')
@@ -13,21 +19,24 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.status = {
             health: 20,
             maxVelocityX: 3,
-            maxVelocityY: 8,
+            maxVelocityY: 9,
             moveForce: 0.01,
             isTouching: { left: false, right: false, down: false },
             canJump: true,
             jumpCooldownTimer: null
         };
 
-        //Creating Collision Body and Sensors
+        //Creating Collision Body and Sensors using Phaser.Matter engine
         let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
+        //Bodies.rectangle(centerX position IN the sprite, centerY position IN the sprite, 
+        //                 width of the collision body, height of the collision body, {options});
         let mainBody = Bodies.rectangle
-            (0, 0, this.width * 0.7, this.height, {chamfer: 10});
+            (0, 0, this.width * 0.7, this.height, {chamfer: 1});
         
+        //Sensors: only for detecting, not for collision
         this.sensors = {
-            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.6, 2, { isSensor: true }),
+            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
             left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
             right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
         };
@@ -35,13 +44,14 @@ export class Player extends Phaser.Physics.Matter.Sprite
         let compoundBody = Body.create({
             parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
             frictionStatic: 0,
-            frictionAir: 0.02,
-            friction: .005
+            frictionAir: 0.03,
+            friction: .02
         });
 
+        //Set collision category
         this.category = 1;
 
-        //Add Events
+        //Add Collision Events
         scene.matter.world.on("beforeupdate", this.resetTouching, this);
 
         scene.matterCollision.addOnCollideStart({
@@ -65,64 +75,24 @@ export class Player extends Phaser.Physics.Matter.Sprite
             .setCollisionCategory(this.category);
 
         // Creating Controls/Cursors
-        this.cursors = scene.input.keyboard.addKeys ({
-            up: 'W',
-            left: 'A',
-            right: 'D',
-            down: 'S'
-        });
-
-        scene.input.on('pointerdown', (pointer) => {
-            this.shoot(pointer.worldX, pointer.worldY);
-        });
+        this.controller = scene.PhaserGame.isMobile ? new MobileController(scene, this) : new DesktopController(scene, this);
 
         //Creating Health Display
         this.healthSprite = scene.add.sprite(20, 20, 'hearts'); 
         scene.add.existing(this.healthSprite);
-        this.healthSprite.setFrame(0);
+        this.healthSprite.setFrame(0).setScrollFactor(0, 0);
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
+        this.displayHealth.setScrollFactor(0, 0);
     }
 
     update()
     {
         //Update Controls/Cursors
-        if (this.cursors.left.isDown && this.body.velocity.x > -this.status.maxVelocityX)
-        {
-            this.setFlipX(false);
-            if (!this.status.isTouching.left) {
-                this.applyForce({ x: -this.status.moveForce, y: 0 });
-            }
-        }
-        else if (this.cursors.right.isDown && this.body.velocity.x < this.status.maxVelocityX)
-        {
-            this.setFlipX(true);
-
-            if (!this.status.isTouching.right) {
-                this.applyForce({ x: this.status.moveForce, y: 0 });
-            }
-        }
-
-        if (this.cursors.up.isDown && this.status.canJump && this.status.isTouching.down)
-        {
-
-            this.setVelocityY(-this.status.maxVelocityY);
-            this.canJump = false;
-            this.jumpCooldownTimer = this.scene.time.addEvent({
-                delay: 250,
-                callback: () => (this.canJump = true)
-            });
-
-        }
-        
-        //Update health label position
-        this.healthSprite.setPosition(20 + this.scene.cameras.main.worldView.x, 
-                                      20 + this.scene.cameras.main.worldView.y);
-
-        this.displayHealth.setPosition(30 + this.scene.cameras.main.worldView.x,
-                                       12 + this.scene.cameras.main.worldView.y);
+        this.controller.update();
     }
 
+    //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
         if (bodyA === this.sensors.left) {
@@ -142,13 +112,14 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.status.isTouching.down = false;
     }
 
+    //Important for entities
     changeHealth(changeHealthBy)
     {
         this.status.health += changeHealthBy;
         if (this.status.health < 0)
         {
             this.status.health = 0;
-            //game over
+            //death() // game over
         }
         if (this.status.health < 10)
         {
@@ -158,6 +129,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         
     }
 
+    //Initializing death sequence
     death() {
         // Event listeners
         if (this.scene.matter.world) {

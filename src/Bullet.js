@@ -3,32 +3,42 @@ import { Player } from "./Player.js";
 
 export class Bullet
 {
+    /* scene: Scene (Level) (To add the bullet to the projectiles List)
+       target: The target that this bullet meant for (Enemies/Other Players)
+       fromX, fromY: Create bullet at this position
+       toX, toY: The mouse position (This is only to set the velocity of the bullet.
+                                     It is not for the bullet to be destroyed when it 
+                                     reached the position)
+     */
     constructor(scene, target, fromX, fromY, toX, toY)
     {
         this.scene = scene;
         this.target = target;
         this.sprite = scene.matter.add.sprite(fromX, fromY, 'bullet');
         
-
         //Add to Group
         scene.projectiles.list.push(this);
 
-        //Add Collision Body
+        //Add Collision Body using Phaser.Matter engine.
         let { Bodies} = scene.PhaserGame.MatterPhysics
 
+        //Bodies.rectangle(x position IN the sprite, y position IN the sprite, 
+        //                 width of the collision body, height of the collision body, {options});
         let mainBody = Bodies.rectangle
             (0, 0, this.sprite.width, this.sprite.height, {frictionAir: 0});
 
-        //Add Events
+        //Add Collision Events
         scene.matterCollision.addOnCollideStart({
             objectA: this.sprite,
-            objectB: this.scene.map.platforms.list,
+            // If it collides with the platforms -> destroy it immediately
+            objectB: this.scene.map.platforms.list, 
             callback: this.destroy,
             context: this
         });
 
         scene.matterCollision.addOnCollideStart({
             objectA: this.sprite,
+            // If it collides with anything else -> call the method hit
             callback: eventData => {
                 this.hit(eventData.gameObjectB);
             },
@@ -72,23 +82,58 @@ export class Bullet
             .setCollidesWith([2]);
 
         if (target != null) {
-            this.sprite.setCollidesWith([2, target.category]);
+            //Setting the collision category that this bullet will interacts with
+            this.sprite.setCollidesWith([2, target.category]); 
         }
     } 
       
     update()
     {
-        let xCamera = this.sprite.x - this.scene.cameras.main.worldView.x;
-        let yCamera = this.sprite.y - this.scene.cameras.main.worldView.y;
-
-        if(xCamera > 800 || yCamera > 600 || yCamera < 0 || xCamera < 0)
+        //Checking if the bullet is out of level. If it is -> destroy it
+        if (this.scene.cameras.main.worldView.width > this.scene.map.levelWidth &&
+            this.sprite.x > this.scene.cameras.main.worldView.width)
         {
             this.destroy();
+            return;
+        } 
+        else if (this.scene.cameras.main.worldView.width < this.scene.map.levelWidth)
+        { 
+            let xBound = this.sprite.x - this.scene.cameras.main.worldView.x;
+
+            if(xBound > this.scene.map.levelWidth)
+            {
+                this.destroy();
+                return;
+            }
+        }
+
+        if (this.scene.cameras.main.worldView.height > this.scene.map.levelHeight &&
+            this.sprite.y > this.scene.cameras.main.worldView.height)
+        {
+            this.destroy();
+            return;
+        }
+        else if (this.scene.cameras.main.worldView.height < this.scene.map.levelHeight)
+        {
+            let yBound = this.sprite.y - this.scene.cameras.main.worldView.y;
+
+            if(yBound > this.scene.map.levelHeight)
+            {
+                this.destroy();
+                return;
+            }
+        }
+
+        if(this.sprite.y < 0 || this.sprite.x < 0)
+        {
+            this.destroy();
+            return;
         }
     }
 
     hit(target)
     {
+        //If the bullet hits any collision targets -> destroy
         if (target != null && (target instanceof Enemy || target instanceof Player)) {
             target.changeHealth(-5);
         }
@@ -97,6 +142,8 @@ export class Bullet
 
     destroy()
     {   
+        //Setting the conditions of destruction (removing the collision detectors and removing from scene list)
+        //console.log("Bullet Destroyed!");
         this.scene.matterCollision.removeOnCollideStart();
         this.scene.projectiles.list.splice(this.scene.projectiles.list.indexOf(this), 1);
         this.sprite.destroy();
