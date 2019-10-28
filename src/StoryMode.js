@@ -9,6 +9,7 @@ export class StoryMode
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
+        this.isMobile = false;
 
         //Initializing Levels
         let levelTutorial = new LevelTutorial(this);
@@ -52,16 +53,20 @@ export class StoryMode
 
             plugins: {
                 scene: [
-                  {
-                    plugin: PhaserMatterCollisionPlugin,
-                    key: "matterCollision",
-                    mapping: "matterCollision"
-                  }
+                    {
+                        plugin: rexvirtualjoystickplugin,
+                        key: "rexVirtualJoyStick",
+                        mapping: "rexVirtualJoyStick"
+                    },
+                    {
+                        plugin: PhaserMatterCollisionPlugin,
+                        key: "matterCollision",
+                        mapping: "matterCollision"
+                    }
                 ]
             },
           
             scene: [levelTutorial]
-          
         };
 
         let game = new Phaser.Game(this.config);
@@ -72,6 +77,7 @@ export class StoryMode
             game.device.os.iPhone ||
             game.device.os.windowsPhone)
         {
+            this.isMobile = true;
             ScreenOrientation.lock("landscape");
         }
     }
