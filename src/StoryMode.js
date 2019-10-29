@@ -43,6 +43,7 @@ export class StoryMode
             parent: 'phaser-game',
             autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
+            activePointers: 3,
             physics: {
                 default: 'matter',
                 matter: {
@@ -50,7 +51,6 @@ export class StoryMode
                     debug: true
                 }
             },
-
             plugins: {
                 scene: [
                     {
