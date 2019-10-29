@@ -9,7 +9,27 @@ export class StoryMode
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-        this.isMobile = false;
+        this.isMobile = true;
+
+        //Detecting the Device's Size and Set Max
+        let maxWidth = 1200;
+        let maxHeight = 600;
+        
+        let scaleWidth = window.innerWidth / maxWidth;
+        let scaleHeight = window.innerHeight / maxHeight;
+        this.scale = Math.min(scaleWidth, scaleHeight);
+        
+        let modifiedWidth = maxWidth * this.scale;
+        let modifiedHeight = maxHeight * this.scale;
+
+        if (this.scale < 1) 
+        {
+            maxHeight = modifiedHeight;
+            maxWidth = modifiedWidth;
+        } else 
+        {
+            this.scale = 1;
+        }
 
         //Initializing Levels
         let levelTutorial = new LevelTutorial(this);
@@ -17,23 +37,6 @@ export class StoryMode
         let level4 = new EthanLevel(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
-
-        //Detecting the Device's Size and Set Max
-        let maxWidth = 1200;
-        let maxHeight = 600;
-        
-        let scaleWidth = maxWidth / window.innerWidth;
-        let scaleHeight = maxHeight / window.innerHeight;
-        let setScale = Math.max(scaleWidth, scaleHeight);
-        
-        let modifiedWidth = maxWidth / setScale;
-        let modifiedHeight = maxHeight / setScale;
-
-        if (modifiedHeight < maxHeight && modifiedWidth < maxWidth) 
-        {
-            maxHeight = modifiedHeight;
-            maxWidth = modifiedWidth;
-        }
 
         //Initializing Config
         this.config = {
@@ -43,7 +46,7 @@ export class StoryMode
             parent: 'phaser-game',
             autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
-            activePointers: 3,
+            activePointers: 4,
             physics: {
                 default: 'matter',
                 matter: {
