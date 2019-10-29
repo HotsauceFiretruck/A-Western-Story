@@ -16,12 +16,12 @@ export class Joystick
         this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size * scale, size * scale);
         this.base.setScrollFactor(0, 0).setInteractive();
         this.base.on('pointerdown', () => {this.isBaseTouched = true});
-        this.base.on('pointerup', () => {this.isBaseTouched = false});;
+        //this.base.on('pointerup', () => {this.isBaseTouched = true});;
 
         this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize((size / 2) * scale, (size / 2) * scale);
         this.thumb.setScrollFactor(0, 0).setInteractive();
         this.thumb.on('pointerdown', () => {this.isThumbTouched = true});
-        this.thumb.on('pointerup', () => {this.isThumbTouched = false});
+        //this.thumb.on('pointerup', () => {this.isThumbTouched = true});
 
         this.joystick = scene.rexVirtualJoyStick.add(scene, {
             x: this.centerX,
