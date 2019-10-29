@@ -119,7 +119,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
         if (this.status.health < 0)
         {
             this.status.health = 0;
-            window.alert("Game Over");
             //death() // game over
         }
         if (this.status.health < 10)
