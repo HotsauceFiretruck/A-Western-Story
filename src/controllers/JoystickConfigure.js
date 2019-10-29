@@ -5,19 +5,20 @@ export class Joystick
         this.centerX = x;
         this.centerY = y; //scene.cameras.main.height - 150;
         this.rad = rad;
+        this.pointer = pointer;
 
         this.isThumbTouched = false;
         this.isBaseTouched = false;
 
         this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size, size);
         this.base.setScrollFactor(0, 0).setInteractive();
-        this.base.on('pointerdown', (pointer) => {this.isBaseTouched = true});
-        this.base.on('pointerup', (pointer) => {this.isBaseTouched = false});;
+        this.base.on(pointer.isDown, () => { this.isBaseTouched = true});
+        this.base.on(pointer.isUp, () => { this.isBaseTouched = false});;
 
         this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize(size / 2, size / 2);
         this.thumb.setScrollFactor(0, 0).setInteractive();
-        this.thumb.on('pointerdown', (pointer) => {this.isThumbTouched = true});
-        this.thumb.on('pointerup', (pointer) => {this.isThumbTouched = false});
+        this.thumb.on(pointer.isDown, () => { this.isThumbTouched = true});
+        this.thumb.on(pointer.isUp, () => { this.isThumbTouched = false});
 
         this.joystick = scene.rexVirtualJoyStick.add(scene, {
             x: this.centerX,
@@ -30,6 +31,7 @@ export class Joystick
 
     checkState()
     {
+        //console.log(this.pointer.isDown);
         if (!this.isThumbTouched && !this.isBaseTouched) 
         {
             this.thumb.x = this.centerX;
