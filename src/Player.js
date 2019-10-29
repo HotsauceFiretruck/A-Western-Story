@@ -119,7 +119,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         if (this.status.health < 0)
         {
             this.status.health = 0;
-            //death() // game over
+            window.location.assign('https://hotsaucefiretruck.github.io/A-Western-Story/index.html');
         }
         if (this.status.health < 10)
         {

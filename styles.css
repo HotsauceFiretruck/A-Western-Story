@@ -1,6 +1,6 @@
 /* gradient background */
 body {
-  background-image: url("assets/menuScreen.png");
+  /*background-image: url("assets/menuScreen.png");*/
   background-size: 100vw 100vh;
 }
 
