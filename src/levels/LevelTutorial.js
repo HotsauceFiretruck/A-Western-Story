@@ -84,7 +84,7 @@ export class LevelTutorial extends Phaser.Scene
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);  
 
-        this.input.on('pointerdown', (pointer) => 
+        this.input.on(this.input.pointer1.isDown, (pointer) => 
         {
             this.add.image(pointer.x, pointer.y, 'sun', 0);
         });
