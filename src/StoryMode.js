@@ -9,7 +9,7 @@ export class StoryMode
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-        this.isMobile = false;
+        this.isMobile = true;
 
         //Initializing Levels
         let levelTutorial = new LevelTutorial(this);
