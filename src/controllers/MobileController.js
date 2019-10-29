@@ -7,8 +7,8 @@ export class MobileController
         this.scene = scene;
         this.player = player;
 
-        this.moveControls = new Joystick(scene, 'base', 'thumb', 150, scene.cameras.main.height - 150, 90, 240);
-        this.fireControl = new Joystick(scene, 'gunbase', 'thumb', scene.cameras.main.width - 150, scene.cameras.main.height - 150, 90, 240);
+        this.moveControls = new Joystick(scene, 'base', 'thumb', 150, scene.cameras.main.height - 150, 90, 240, pointer1);
+        this.fireControl = new Joystick(scene, 'gunbase', 'thumb', scene.cameras.main.width - 150, scene.cameras.main.height - 150, 90, 240, pointer2);
     }
 
     update()

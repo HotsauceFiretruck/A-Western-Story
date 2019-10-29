@@ -1,6 +1,6 @@
 export class Joystick
 {
-    constructor(scene, baseImageKey, thumbImageKey, x, y, rad, size)
+    constructor(scene, baseImageKey, thumbImageKey, x, y, rad, size, pointer)
     {
         this.centerX = x;
         this.centerY = y; //scene.cameras.main.height - 150;
@@ -11,13 +11,13 @@ export class Joystick
 
         this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size, size);
         this.base.setScrollFactor(0, 0).setInteractive();
-        this.base.on('pointerdown', () => {this.isBaseTouched = true});
-        this.base.on('pointerup', () => {this.isBaseTouched = false});;
+        this.base.on('pointerdown', (pointer) => {this.isBaseTouched = true});
+        this.base.on('pointerup', (pointer) => {this.isBaseTouched = false});;
 
         this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize(size / 2, size / 2);
         this.thumb.setScrollFactor(0, 0).setInteractive();
-        this.thumb.on('pointerdown', () => {this.isThumbTouched = true});
-        this.thumb.on('pointerup', () => {this.isThumbTouched = false});
+        this.thumb.on('pointerdown', (pointer) => {this.isThumbTouched = true});
+        this.thumb.on('pointerup', (pointer) => {this.isThumbTouched = false});
 
         this.joystick = scene.rexVirtualJoyStick.add(scene, {
             x: this.centerX,
