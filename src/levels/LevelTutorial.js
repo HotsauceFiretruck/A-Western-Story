@@ -17,6 +17,7 @@ export class LevelTutorial extends Phaser.Scene
         {
             this.load.image('thumb', 'assets/joystickthumb.png');
             this.load.image('base', 'assets/joystickbase.png');
+            this.load.image('gunbase', 'assets/joystickgunbase.png');
         }
         this.load.image('background', 'assets/Background.png');
         this.load.image('grass', 'assets/Grass.png');
