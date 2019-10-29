@@ -26,6 +26,7 @@ export class LevelTutorial extends Phaser.Scene
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.image('sun', 'assets/Sun1.png');
     }
 
     create()
@@ -83,12 +84,10 @@ export class LevelTutorial extends Phaser.Scene
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);  
 
-        // Testing Buttons
-        // this.testButton = this.add.sprite(100, 100, 'grass').setInteractive();
-        // this.testButton.on('pointerdown', function (event) { 
-        //     console.log("Button Clicked!");
-        //     //
-        // });
+        this.input.on('pointerdown', (pointer) => 
+        {
+            this.add.image(pointer.x, pointer.y, 'sun', 0);
+        });
     }
 
     update ()
