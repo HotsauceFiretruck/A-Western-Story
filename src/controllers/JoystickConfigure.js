@@ -1,8 +1,10 @@
 export class Joystick
 {
-    constructor(scene, baseImageKey, thumbImageKey, x, y, rad, size)
+    constructor(scene, baseImageKey, thumbImageKey, x, y, rad, size, pointer)
     {
         let scale = scene.PhaserGame.scale;
+
+        this.pointer = pointer;
 
         this.centerX = x;
         this.centerY = y; //scene.cameras.main.height - 150;
@@ -18,8 +20,8 @@ export class Joystick
 
         this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize((size / 2) * scale, (size / 2) * scale);
         this.thumb.setScrollFactor(0, 0).setInteractive();
-        this.thumb.on('pointerdown', (pointer) => {this.isThumbTouched = true});
-        this.thumb.on('pointerup', (pointer) => {this.isThumbTouched = false});
+        this.thumb.on('pointerdown', () => {this.isThumbTouched = true});
+        this.thumb.on('pointerup', () => {this.isThumbTouched = false});
 
         this.joystick = scene.rexVirtualJoyStick.add(scene, {
             x: this.centerX,
@@ -45,6 +47,8 @@ export class Joystick
         return (this.distanceFrom(this.thumb.x, this.thumb.y, 
             this.base.x, this.base.y) >= this.rad - 5 && this.isThumbTouched);
     }
+
+
 
     distanceFrom(tx, ty, fx, fy)
     {
