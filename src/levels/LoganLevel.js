@@ -14,11 +14,13 @@ export class LoganLevel extends Phaser.Scene
     preload()
     {
         this.load.image('background', 'assets/Background2.png');
+        this.load.image('cactus', 'assets/Cactus.png');
         this.load.image('grass', 'assets/Grass.png');
         this.load.image('sand', 'assets/Sand.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
+        this.load.image('barrel', 'assets/Barrel.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
@@ -63,6 +65,12 @@ export class LoganLevel extends Phaser.Scene
 
         let platform = new Platform(this, 2, 10, 1, 0, 0, 32, 32);
         platform.addSprite('sand');
+        platform.enableKinematic(-.5, 0);
+        let platform = new Platform(this, 2, 15, 1, 0, 0, 32, 32);
+        platform.addSprite('sand');
+        platform.enableKinematic(-.5, 0);
+        let platform = new Platform(this, 2, 20, 1, 0, 0, 32, 32);
+        platform.addSprite('barrel');
         platform.enableKinematic(-.5, 0);
 
 
