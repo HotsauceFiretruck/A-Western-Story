@@ -26,13 +26,14 @@ export class MobileController
         {
             let normalizedY = Math.sin(this.moveControls.getRotation());
             let normalizedX = Math.cos(this.moveControls.getRotation());
+            let speedScale = this.moveControls.getDistScale();
             
             //If normalizedY is negative => jump
             if (normalizedY < 0 && 
                 this.player.status.canJump && 
                 this.player.status.isTouching.down)
             {
-                this.player.setVelocityY(-this.player.status.maxVelocityY);
+                this.player.setVelocityY(-this.player.status.maxVelocityY * speedScale);
                 this.player.canJump = false;
                 this.jumpCooldownTimer = this.scene.time.addEvent({
                     delay: 250,
@@ -45,7 +46,7 @@ export class MobileController
             {
                 this.player.setFlipX(false);
                 if (!this.player.status.isTouching.left) {
-                    this.player.applyForce({ x: -this.player.status.moveForce, y: 0 });
+                    this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
                 }
             }
             //If normalizedX is positive => right
@@ -54,7 +55,7 @@ export class MobileController
             {
                 this.player.setFlipX(true);
                 if (!this.player.status.isTouching.right) {
-                    this.player.applyForce({ x: this.player.status.moveForce, y: 0 });
+                    this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
                 }
             }
         }

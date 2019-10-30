@@ -83,6 +83,16 @@ export class Platform
         }
     }
 
+    enableDamage(changeHealthBy, target)
+    {
+        this.scene.matterCollision.addOnCollideStart({
+            objectA: this.body,
+            objectB: target,
+            callback: () => target.changeHealth(changeHealthBy),
+            context: this
+        });
+    }
+
     update()
     {
         this.MatterBody.setVelocity(this.body, { x: this.status.vX, y: this.status.vY });
