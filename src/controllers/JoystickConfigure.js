@@ -44,10 +44,8 @@ export class Joystick
         }
 
         return (this.distanceFrom(this.thumb.x, this.thumb.y, 
-            this.base.x, this.base.y) >= this.rad - 5 && this.isThumbTouched);
+            this.base.x, this.base.y) >= this.rad - (this.rad / 1.1) && this.isThumbTouched);
     }
-
-
 
     distanceFrom(tx, ty, fx, fy)
     {
@@ -57,5 +55,10 @@ export class Joystick
     getRotation()
     {
         return this.joystick.rotation;
+    }
+
+    getDistScale()
+    {
+        return this.distanceFrom(this.thumb.x, this.thumb.y, this.centerX, this.centerY) / this.rad;
     }
 }

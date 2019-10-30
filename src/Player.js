@@ -21,6 +21,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             maxVelocityX: 3,
             maxVelocityY: 9,
             moveForce: 0.01,
+            nodamage: false,
             isTouching: { left: false, right: false, down: false },
             canJump: true,
             fireRate: .3, // 1 bullet every [fireRate] seconds
@@ -118,6 +119,16 @@ export class Player extends Phaser.Physics.Matter.Sprite
     changeHealth(changeHealthBy)
     {
         this.status.health += changeHealthBy;
+        if (changeHealthBy < 0 && this.status.nodamage)
+        {
+            this.status.health -= changeHealthBy;
+        }
+        if (changeHealthBy < 0 && !this.status.nodamage)
+        {
+            this.damagedEffects();
+        }
+        
+        
         if (this.status.health < 0)
         {
             this.status.health = 0;
@@ -128,6 +139,23 @@ export class Player extends Phaser.Physics.Matter.Sprite
             this.healthSprite.setFrame(2);
         }
         this.displayHealth.setText(this.status.health);
+    }
+
+    damagedEffects()
+    {
+        this.alpha = .5;
+        this.status.nodamage = true;
+        let timer = this.scene.time.addEvent({
+            delay: 1000,
+            callback: () => 
+            {
+                this.alpha = 1;
+                this.status.nodamage = false;
+            },
+            callbackScope: this,
+            loop: false
+        });
+        
     }
 
     reloadGun()
