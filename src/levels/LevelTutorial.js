@@ -1,7 +1,6 @@
 import { Player } from "../Player.js";
 import { Enemy } from "../Enemy.js";
-import { TileMap } from "./TileMap.js";
-import { Platform } from "./Platform.js";
+import { TileMap } from "../components/TileMap.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -66,8 +65,9 @@ export class LevelTutorial extends Phaser.Scene
 
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
-        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
-        this.testPlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
+
+        //Creating a damage platform --> enable damage after player is initialized
+        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
         
 
         //Adding static images
@@ -87,8 +87,8 @@ export class LevelTutorial extends Phaser.Scene
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
         
-        //Platform can damage player
-        //this.testPlatform.enableDamage(-1, this.player);
+        //Enable platform to damage player
+        //this.testDamagePlatform.enableDamage(-1, this.player);
     }
 
     update ()

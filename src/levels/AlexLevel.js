@@ -1,6 +1,6 @@
 import { Player } from "../Player.js";
 import { Enemy } from "../Enemy.js";
-import { TileMap } from "./TileMap.js";
+import { TileMap } from "../components/TileMap.js";
 
 export class AlexLevel extends Phaser.Scene
 {
