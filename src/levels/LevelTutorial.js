@@ -83,15 +83,6 @@ export class LevelTutorial extends Phaser.Scene
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
-
-        this.input.addPointer(3);
-        let sun = this.add.image(400, 400, 'sun').setInteractive();
-        sun.on('pointerdown', (pointer) => { sun.setTintFill(0xffff00, 0xffff00, 0xff0000, 0xff0000)});
-        sun.on('pointerup', (pointer) => { sun.clearTint()});
-        let rand = this.add.image(450, 450, 'grass').setInteractive();
-        rand.on('pointerdown', (pointer) => { rand.setTintFill(0xffff00, 0xffff00, 0xff0000, 0xff0000)});
-        rand.on('pointerup', (pointer) => { rand.clearTint()});
-
     }
 
     update ()
