@@ -1,3 +1,5 @@
+import { Joystick } from "./JoystickConfigure.js";
+
 export class MobileController
 {
     constructor(scene, player)
@@ -5,34 +7,25 @@ export class MobileController
         this.scene = scene;
         this.player = player;
 
-        this.isThumbTouched = false;
+        scene.input.addPointer(3);
 
-        this.baseObject = scene.add.image(0, 0, 'base').setDisplaySize(90, 90);
-        this.baseObject.setScrollFactor(0, 0);
-
-        this.thumbObject = scene.add.image(0, 0, 'thumb').setDisplaySize(45, 45);
-        this.thumbObject.setScrollFactor(0, 0).setInteractive();
-        this.thumbObject.on('pointerdown', () => {this.isThumbTouched = true});
-        this.thumbObject.on('pointerup', () => {this.isThumbTouched = false});
-
-        this.joystick = scene.rexVirtualJoyStick.add(scene, {
-            x: 90,
-            y: scene.cameras.main.height - 90,
-            radius: 30,
-            base: this.baseObject,
-            thumb: this.thumbObject,
-            dir: '8dir'
-        });
-
-        //this.cursors = this.joystick.createCursorKeys();
+        this.moveControls = new Joystick(scene, 'base', 'thumb', 
+                                        (150 * scene.PhaserGame.scale), 
+                                        scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
+                                        90, 240);
+        this.fireControl = new Joystick(scene, 'gunbase', 'thumb', 
+                                        scene.cameras.main.width - (150 * scene.PhaserGame.scale), 
+                                        scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
+                                        90, 240);
     }
 
     update()
     {
-        if (this.isThumbActive())
+        //Update Movements
+        if (this.moveControls.checkState())
         {
-            let normalizedY = Math.sin(this.joystick.rotation);
-            let normalizedX = Math.cos(this.joystick.rotation);
+            let normalizedY = Math.sin(this.moveControls.getRotation());
+            let normalizedX = Math.cos(this.moveControls.getRotation());
             
             //If normalizedY is negative => jump
             if (normalizedY < 0 && 
@@ -64,19 +57,18 @@ export class MobileController
                     this.player.applyForce({ x: this.player.status.moveForce, y: 0 });
                 }
             }
-            //console.log(normalizedX + ' ' + normalizedY);
         }
-    }
 
-    distanceFrom(tx, ty, fx, fy)
-    {
-        return Math.sqrt((ty - fy)*(ty - fy) + (tx - fx)*(tx - fx));
-    }
+        //Update Shooting
+        if (this.fireControl.checkState())
+        {
+            let normalizedY = Math.sin(this.fireControl.getRotation());
+            let normalizedX = Math.cos(this.fireControl.getRotation());
 
-    isThumbActive()
-    {
-        return (this.distanceFrom(this.thumbObject.x, this.thumbObject.y, 
-                this.baseObject.x, this.baseObject.y) >= 28 && this.isThumbTouched);
+            //console.log(normalizedX + " " + normalizedY);
+
+            this.player.shoot(normalizedX + this.player.x, normalizedY + this.player.y);
+        }
     }
 }
 
