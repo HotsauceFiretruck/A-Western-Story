@@ -83,6 +83,7 @@ export class LevelTutorial extends Phaser.Scene
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
+        this.input.pointer1.active = true;
     }
 
     update ()
