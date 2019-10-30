@@ -18,8 +18,7 @@ export class Joystick
 
         this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize((size / 2) * scale, (size / 2) * scale);
         this.thumb.setScrollFactor(0, 0).setInteractive();
-        this.thumb.on('pointerdown', (pointer) => { this.isThumbTouched = true;
-        scene.add.text(10, 10, "OI")});
+        this.thumb.on('pointerdown', (pointer) => { this.isThumbTouched = true});
         this.thumb.on('pointerup', (pointer) => { this.isThumbTouched = false});
 
         this.joystick = scene.rexVirtualJoyStick.add(scene, {
@@ -29,7 +28,6 @@ export class Joystick
             base: this.base,
             thumb: this.thumb,
         });
-        scene.add.text(100, 100, "HELOO");
     }
 
     checkState()
