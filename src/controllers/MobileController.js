@@ -7,6 +7,8 @@ export class MobileController
         this.scene = scene;
         this.player = player;
 
+        scene.input.addPointer(3);
+
         this.moveControls = new Joystick(scene, 'base', 'thumb', 
                                         (150 * scene.PhaserGame.scale), 
                                         scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
