@@ -83,22 +83,12 @@ export class LevelTutorial extends Phaser.Scene
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
-        this.input.pointer1.active = true;
-        console.log(this.input.pointer1);
+        //this.input.pointer1.active = true;
+        //console.log(this.input.pointer1);
     }
 
     update ()
-    {  
-        if (this.input.pointer1.isDown)
-        {
-            this.add.text(this.input.pointer1.x, this.input.pointer1.y, "PLEASE 1");
-        }
-
-        if (this.input.pointer1.isDown)
-        {
-            this.add.image(pointer.x, pointer.y, 'sun', 0);
-        }
-
+    { 
         //Update platforms
         for (let i = 0; i < this.map.platforms.list.length; ++i)
         {
