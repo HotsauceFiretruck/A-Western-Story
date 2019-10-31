@@ -1,7 +1,7 @@
 import { Player } from "../Player.js";
 import { Enemy } from "../Enemy.js";
-import { TileMap } from "./TileMap.js";
-import { Platform } from "./Platform.js";
+import { TileMap } from "../components/TileMap.js";
+import { Platform } from "../components/Platform.js";
 
 export class LoganLevel extends Phaser.Scene
 {
