@@ -93,6 +93,16 @@ export class Player extends Phaser.Physics.Matter.Sprite
     {
         //Update Controls/Cursors
         this.controller.update();
+
+        if (this.y > 600)
+        {
+            this.death();
+        }
+        
+        if (this.status.health <= 0) 
+        {
+            this.death();
+        }
     }
 
     //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
@@ -192,7 +202,9 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
-        // this.destroy();
+        this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
+
+        //this.destroy();da
     }
 
     
