@@ -20,22 +20,33 @@ export class StoryMode
         let level3 = new LoganLevel(this);
         let death = new DeathScene(this);
 
+
         //Detecting the Device's Size and Set Max
         let maxWidth = 1200;
         let maxHeight = 600;
         
-        let scaleWidth = maxWidth / window.innerWidth;
-        let scaleHeight = maxHeight / window.innerHeight;
-        let setScale = Math.max(scaleWidth, scaleHeight);
+        let scaleWidth = window.innerWidth / maxWidth;
+        let scaleHeight = window.innerHeight / maxHeight;
+        this.scale = Math.min(scaleWidth, scaleHeight);
         
-        let modifiedWidth = maxWidth / setScale;
-        let modifiedHeight = maxHeight / setScale;
+        let modifiedWidth = maxWidth * this.scale;
+        let modifiedHeight = maxHeight * this.scale;
 
-        if (modifiedHeight < maxHeight && modifiedWidth < maxWidth) 
+        if (this.scale < 1) 
         {
             maxHeight = modifiedHeight;
             maxWidth = modifiedWidth;
+        } else 
+        {
+            this.scale = 1;
         }
+
+        //Initializing Levels
+        let levelTutorial = new LevelTutorial(this);
+        let level1 = new AlexLevel(this);
+        let level4 = new EthanLevel(this);
+        let level2 = new DustinLevel(this);
+        let level3 = new LoganLevel(this);
 
         //Initializing Config
         this.config = {
@@ -45,6 +56,7 @@ export class StoryMode
             parent: 'phaser-game',
             autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
+            activePointers: 4,
             physics: {
                 default: 'matter',
                 matter: {
@@ -52,7 +64,6 @@ export class StoryMode
                     debug: true
                 }
             },
-
             plugins: {
                 scene: [
                     {
