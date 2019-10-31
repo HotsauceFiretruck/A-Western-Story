@@ -3,6 +3,7 @@ import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
+import { DeathScene } from "./levels/DeathScene.js";
 
 export class StoryMode 
 {
@@ -17,6 +18,7 @@ export class StoryMode
         let level4 = new EthanLevel(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
+        let death = new DeathScene(this);
 
         //Detecting the Device's Size and Set Max
         let maxWidth = 1200;
@@ -66,7 +68,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [levelTutorial]
+            scene: [death]
         };
 
         let game = new Phaser.Game(this.config);
