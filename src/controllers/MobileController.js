@@ -7,9 +7,9 @@ export class MobileController
         this.scene = scene;
         this.player = player;
 
-        scene.input.addPointer(3);
+        scene.input.addPointer(4);
 
-        this.moveControls = new Joystick(scene, 'base', 'thumb', 
+        this.horizontalControls = new Joystick(scene, 'base', 'thumb', 
                                         (150 * scene.PhaserGame.scale), 
                                         scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
                                         90, 240);
@@ -17,31 +17,39 @@ export class MobileController
                                         scene.cameras.main.width - (150 * scene.PhaserGame.scale), 
                                         scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
                                         90, 240);
+        this.jumpButton = scene.add.image(scene.cameras.main.width - (350 * scene.PhaserGame.scale), 
+                          scene.cameras.main.height - (90 * scene.PhaserGame.scale), 'jump')
+                          .setDisplaySize(120 * scene.PhaserGame.scale, 120 * scene.PhaserGame.scale).setScrollFactor(0, 0).setAlpha(.9)
+                          .setInteractive();
+        this.jumpButton.on('pointerdown', () => {this.jump(player)});
+    }
+
+    jump(player)
+    {
+        if (player.status.canJump && 
+            player.status.isTouching.down)
+        {
+            player.setVelocityY(-player.status.maxVelocityY);
+            player.canJump = false;
+            this.jumpCooldownTimer = this.scene.time.addEvent({
+                delay: 250,
+                callback: () => (player.canJump = true)
+            });
+        }
     }
 
     update()
     {
         //Update Movements
-        if (this.moveControls.checkState())
+        if (this.horizontalControls.checkState())
         {
-            let normalizedY = Math.sin(this.moveControls.getRotation());
-            let normalizedX = Math.cos(this.moveControls.getRotation());
-            let speedScale = this.moveControls.getDistScale();
+            let normalizedX = Math.cos(this.horizontalControls.getRotation());
+            let speedScale = this.horizontalControls.getDistScale();
             
-            //If normalizedY is negative => jump
-            if (normalizedY < 0 && 
-                this.player.status.canJump && 
-                this.player.status.isTouching.down)
-            {
-                this.player.setVelocityY(-this.player.status.maxVelocityY * speedScale);
-                this.player.canJump = false;
-                this.jumpCooldownTimer = this.scene.time.addEvent({
-                    delay: 250,
-                    callback: () => (this.player.canJump = true)
-                });
-            }
+            //
+
             //If normalizedX is negative => left
-            if (normalizedY > -(Math.sqrt(3))/2 && normalizedX <= 0 &&
+            if (normalizedX <= 0 &&
                 this.player.body.velocity.x > -this.player.status.maxVelocityX)
             {
                 this.player.setFlipX(false);
@@ -50,7 +58,7 @@ export class MobileController
                 }
             }
             //If normalizedX is positive => right
-            if (normalizedY > -(Math.sqrt(3))/2 && normalizedX > 0 &&
+            if (normalizedX > 0 &&
                 this.player.body.velocity.x < this.player.status.maxVelocityX)
             {
                 this.player.setFlipX(true);
