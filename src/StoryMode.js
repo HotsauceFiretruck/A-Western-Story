@@ -9,7 +9,7 @@ export class StoryMode
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-        this.isMobile = false;
+        this.isMobile = true;
 
         //Detecting the Device's Size and Set Max
         let maxWidth = 1200;
@@ -46,7 +46,7 @@ export class StoryMode
             parent: 'phaser-game',
             autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
-            activePointers: 3,
+            activePointers: 4,
             physics: {
                 default: 'matter',
                 matter: {

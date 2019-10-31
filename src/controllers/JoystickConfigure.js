@@ -11,7 +11,7 @@ export class Joystick
         this.isThumbTouched = false;
         this.isBaseTouched = false;
 
-        this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size * scale, size * scale);
+        this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size * scale, size * scale).setAlpha(.85);
         this.base.setScrollFactor(0, 0).setInteractive();
         this.base.on('pointerdown', (pointer) => { this.isBaseTouched = true});
         this.base.on('pointerup', (pointer) => { this.isBaseTouched = false});;
