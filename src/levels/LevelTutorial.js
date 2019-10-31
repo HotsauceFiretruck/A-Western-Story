@@ -24,6 +24,7 @@ export class LevelTutorial extends Phaser.Scene
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
+        this.load.image('nxtLvlBtn', 'assets/nextLevelBTN.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
@@ -67,6 +68,12 @@ export class LevelTutorial extends Phaser.Scene
         
         //Adding static images
         this.add.image(50, 503, 'house');
+
+        //Testing next level button
+        this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtLvlBtn').setScale(.5).setInteractive();
+        this.lvlSwitchBtn.on('pointerdown', (event) => {
+            this.scene.start('level-2');
+        });
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
