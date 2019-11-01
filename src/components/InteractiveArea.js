@@ -1,4 +1,4 @@
-export class InteractiveCollider
+export class InteractiveArea
 {
     constructor(scene, imageKey, centerX, centerY, bodyWidth, bodyHeight)
     {
