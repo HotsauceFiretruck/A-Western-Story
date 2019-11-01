@@ -16,11 +16,9 @@ export class DeathScene extends Phaser.Scene
 
     preload()
     {
-        
         this.load.image('death', 'assets/gameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
-        
     }
 
     create()
@@ -40,7 +38,7 @@ export class DeathScene extends Phaser.Scene
 
     returnToMenu()
     {
-
+        //Add menu
     }
 
     respawn()

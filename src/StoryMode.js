@@ -3,7 +3,7 @@ import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
-import { DeathScene } from "./levels/DeathScene.js";
+import { DeathScene } from "./interfaces/DeathScene.js";
 
 export class StoryMode 
 {
