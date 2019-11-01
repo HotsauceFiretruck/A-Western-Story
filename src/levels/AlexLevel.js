@@ -20,6 +20,13 @@ export class AlexLevel extends Phaser.Scene
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        if(this.PhaserGame.isMobile)
+        {
+            this.load.image('thumb', 'assets/joystickthumb.png');
+            this.load.image('base', 'assets/joystickbase.png');
+            this.load.image('gunbase', 'assets/joystickgunbase.png');
+            this.load.image('jump', 'assets/jumpbutton.png');
+        }
     }
 
     create()
@@ -65,9 +72,24 @@ export class AlexLevel extends Phaser.Scene
             list: []
         };
 
-        this.player = new Player(this, 300, 500);
+        
+        this.player = new Player(this, 750, 540);
+        this.basicEnemy = new Enemy(this, 276, 500);
+        this.basicEnemy = new Enemy(this, 308, 500);
+        this.basicEnemy = new Enemy(this, 340, 500);
+        this.basicEnemy = new Enemy(this, 372, 500);
+        this.basicEnemy = new Enemy(this, 404, 500);
+        this.basicEnemy = new Enemy(this, 436, 500);
+        this.basicEnemy = new Enemy(this, 468, 500);
+        this.basicEnemy = new Enemy(this, 500, 500);
         this.basicEnemy = new Enemy(this, 1000, 500);
-        this.basicEnemy = new Enemy(this, 1032, 500)
+        this.basicEnemy = new Enemy(this, 1032, 500);
+        this.basicEnemy = new Enemy(this, 1064, 500);
+        this.basicEnemy = new Enemy(this, 1096, 500);
+        this.basicEnemy = new Enemy(this, 1128, 500);
+        this.basicEnemy = new Enemy(this, 1156, 500);
+        this.basicEnemy = new Enemy(this, 1188, 500);
+        this.basicEnemy = new Enemy(this, 1220, 500);
     }
 
     update ()
