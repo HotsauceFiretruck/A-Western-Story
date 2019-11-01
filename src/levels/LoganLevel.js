@@ -58,12 +58,8 @@ export class LoganLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         ];
+
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
-
-        let platform = new Platform(this, 2, 10, 1, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
-
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -77,6 +73,13 @@ export class LoganLevel extends Phaser.Scene
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100); 
+
+        // scene, collisionCategory, fromTileX, fromTileY, tileBodyWidth, tileBodyHeight, pixelWidthPerTile, pixelHeightPerTile
+        let platform = new Platform(this, 2, 10, 10, 0, 0, 32, 32);
+        platform.addSprite('sand');
+        platform.enableKinematic(-.5, 0);
+        //Add damage enable
+        platform.enableDamage(-5, this.player);
     }
 
     update ()
