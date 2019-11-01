@@ -1,6 +1,6 @@
 import { Bullet } from "./Bullet.js";
-import { DesktopController } from "./controllers/DesktopController.js";
-import { MobileController } from "./controllers/MobileController.js";
+import { DesktopController } from "../controllers/DesktopController.js";
+import { MobileController } from "../controllers/MobileController.js";
 
 export class Player extends Phaser.Physics.Matter.Sprite
 {

@@ -1,5 +1,5 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
+import { Player } from "../entities/Player.js";
+import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 
 export class AlexLevel extends Phaser.Scene
@@ -25,7 +25,6 @@ export class AlexLevel extends Phaser.Scene
     create()
     {
         console.log("Create Function Initialized!");
-        
 
         this.add.image(0, -100, 'background2').setScale(10);
         this.add.image(50, 503, 'house');
