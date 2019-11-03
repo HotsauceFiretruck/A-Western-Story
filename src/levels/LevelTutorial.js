@@ -54,7 +54,7 @@ export class LevelTutorial extends Phaser.Scene
         this.add.image(50, 503, 'house');
 
         //Testing next level button
-        this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtLvlBtn').setScale(.5).setInteractive();
+        this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtlvlbtn').setScale(.5).setInteractive();
         this.lvlSwitchBtn.on('pointerdown', (event) => {
             this.scene.start('level-2');
         });

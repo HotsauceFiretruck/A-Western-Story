@@ -1,16 +1,8 @@
-export class Menu extends Phaser.Scene {
+export class MenuScene extends Phaser.Scene {
     constructor(PhaserGame)
     {
-        super({key:"menu"});
+        super({key:"menu-scene"});
         this.PhaserGame = PhaserGame;
-    }
-
-    preload()
-    {
-        this.load.image('title', 'assets/title.png');
-        this.load.image('bg', 'assets/menuScreen.png');
-        this.load.image('playbtn', 'assets/playButton.png');
-        this.load.image('arenabtn', 'assets/playArenaButton.png');
     }
 
     create()

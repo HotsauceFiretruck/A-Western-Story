@@ -31,11 +31,15 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('cactus', 'assets/Cactus.png');
         this.load.image('crate', 'assets/Crate.png');
         this.load.image('deadtree', 'assets/DeadTree.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.image('title', 'assets/Title.png');
+        this.load.image('bg', 'assets/MenuScreen.png');
+        this.load.image('playbtn', 'assets/PlayButton.png');
+        this.load.image('arenabtn', 'assets/PlayArenaButton.png');
+        this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
     }
 
     create()
     {
-        this.scene.start('level-4');
+        this.scene.start('menu-scene');
     }
 }
