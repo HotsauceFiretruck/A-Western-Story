@@ -50,13 +50,24 @@ export class LoganLevel extends Phaser.Scene
         this.loopImage('background', 720, 420, groundLayer[0].length * 32, groundLayer.length * 32, 1.45);
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
+        this.backBtn = this.add.sprite(1100,50, 'backbtn').setScale(.3).setInteractive();
+        this.backBtn.on('pointerdown', (event) => {
+            this.scene.start('menu-scene');
+        })
+        this.backBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        this.backBtn.on('pointerout', function (event) {
+            this.clearTint();
+        })
+
         let platform1 = new Platform(this, 2, 15, 1, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
+        platform1.addSprite('sand');
+        platform1.enableKinematic(-.5, 0);
 
         let platform2 = new Platform(this, 2, 20, 1, 0, 0, 32, 32);
-        platform.addSprite('barrel');
-        platform.enableKinematic(-.5, 0);
+        platform2.addSprite('barrel');
+        platform2.enableKinematic(-.5, 0);
 
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 

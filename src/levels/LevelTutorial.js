@@ -1,6 +1,7 @@
 import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
+import { InteractiveArea } from "../components/InteractiveArea.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -13,6 +14,16 @@ export class LevelTutorial extends Phaser.Scene
 
     create()
     {
+        this.projectiles = {
+            category: 2,
+            list: [] 
+        };
+
+        this.enemies = {
+            category: 4,
+            list: []
+        };
+
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -48,62 +59,22 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        
-
         //Adding static images
-        this.add.image(50, 503, 'house');
-
-        //Testing next level button
-        this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtlvlbtn').setScale(.5).setInteractive();
-        this.lvlSwitchBtn.on('pointerdown', (event) => {
-            this.scene.start('level-2');
-        });
-
-        // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
-        this.projectiles = {
-            category: 2, //Telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
+        this.add.image(50, 525, 'house');
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
-        
 
+        //Add an InteractiveArea Example
+        //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
+        let nextLevelGoal = new InteractiveArea(this, 'house', 200, 525, 75, 104);
+        nextLevelGoal.whenTouched(this.player, this.nextLevel);
     }
 
-    update ()
-    { 
-        //Update platforms
-        for (let i = 0; i < this.map.platforms.list.length; ++i)
-        {
-            this.map.platforms.list[i]
-        }
-
-        //Update bullets
-        for (let i = 0; i < this.projectiles.list.length; i++)
-        {
-            this.projectiles.list[i].update();
-        }
-
-        //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
-            this.enemies.list[i].update();
-        }
-        
-        //When there are no more enemies in the level, add a new one at that position
-        if (this.enemies.list.length == 0) 
-        {
-            new Enemy(this, 600, 100);
-        }
-
-        //Update player
-        this.player.update();
+    //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
+    nextLevel()
+    {
+        this.scene.start('level-1');
     }
 
     //Load in image to fill in the level
@@ -135,5 +106,35 @@ export class LevelTutorial extends Phaser.Scene
                 this.add.existing(bgImage);
             }
         }
+    }
+
+    update ()
+    { 
+        //Update platforms
+        for (let i = 0; i < this.map.platforms.list.length; ++i)
+        {
+            this.map.platforms.list[i]
+        }
+
+        //Update bullets
+        for (let i = 0; i < this.projectiles.list.length; i++)
+        {
+            this.projectiles.list[i].update();
+        }
+
+        //Update enemies
+        for (let i = 0; i < this.enemies.list.length; i++)
+        {
+            this.enemies.list[i].update();
+        }
+        
+        //When there are no more enemies in the level, add a new one at that position
+        if (this.enemies.list.length == 0) 
+        {
+            new Enemy(this, 600, 100);
+        }
+
+        //Update player
+        this.player.update();
     }
 }

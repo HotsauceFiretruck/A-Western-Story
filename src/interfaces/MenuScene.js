@@ -7,26 +7,31 @@ export class MenuScene extends Phaser.Scene {
 
     create()
     {
-        this.add.image(600, 300, 'bg').setScale(.4);
-        this.add.image(600,200, 'title').setScale(.5);
+        let scale = this.PhaserGame.scale;
 
-        this.testButton = this.add.sprite(600, 300, 'playbtn').setScale(.6).setInteractive();
-        this.testButton2 = this.add.sprite(600, 390, 'arenabtn').setScale(.4).setInteractive();
+        this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
+        this.add.image(600 * scale, 150 * scale, 'title').setDisplaySize(900 * scale, 100 * scale);
 
-        this.testButton.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
-            this.scene.start('level-tutorial');
+        this.playbtn = this.add.sprite(600, 300, 'playbtn').setScale(.4).setInteractive();
+        this.tutorialBtn = this.add.sprite(600, 390, 'tutorialbtn').setScale(.3).setInteractive();
+
+        this.playbtn.on('pointerdown', (event) => {
+            this.scene.start('lvl-select');
         });
-        this.testButton.on('pointerover', function (event) {
+        this.playbtn.on('pointerover', function (event) {
             this.setTint(616161);
         })
-        this.testButton.on('pointerout', function (event) {
+        this.playbtn.on('pointerout', function (event) {
             this.clearTint();
         })
-        this.testButton2.on('pointerover', function (event) {
+
+        this.tutorialBtn.on('pointerdown', (event) => { 
+            this.scene.start('level-tutorial');
+        })
+        this.tutorialBtn.on('pointerover', function (event) {
             this.setTint(616161);
         })
-        this.testButton2.on('pointerout', function (event) {
+        this.tutorialBtn.on('pointerout', function (event) {
             this.clearTint();
         })
     }
