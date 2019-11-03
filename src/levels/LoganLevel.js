@@ -1,7 +1,7 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
-import { TileMap } from "./TileMap.js";
-import { Platform } from "./Platform.js";
+import { Player } from "../entities/Player.js";
+import { Enemy } from "../entities/Enemy.js";
+import { TileMap } from "../components/TileMap.js";
+import { Platform } from "../components/Platform.js";
 
 export class LoganLevel extends Phaser.Scene
 {
@@ -60,6 +60,7 @@ export class LoganLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         ];
+
         this.loopImage('background', 720, 420, groundLayer[0].length * 32, groundLayer.length * 32, 1.45);
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
@@ -73,6 +74,7 @@ export class LoganLevel extends Phaser.Scene
         platform.addSprite('barrel');
         platform.enableKinematic(-.5, 0);
 
+        this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -86,6 +88,13 @@ export class LoganLevel extends Phaser.Scene
 
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100); 
+
+        // scene, collisionCategory, fromTileX, fromTileY, tileBodyWidth, tileBodyHeight, pixelWidthPerTile, pixelHeightPerTile
+        let platform = new Platform(this, 2, 10, 10, 0, 0, 32, 32);
+        platform.addSprite('sand');
+        platform.enableKinematic(-.5, 0);
+        //Add damage enable
+        platform.enableDamage(-5, this.player);
     }
 
     update ()

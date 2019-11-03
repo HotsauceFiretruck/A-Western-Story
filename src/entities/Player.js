@@ -1,6 +1,6 @@
 import { Bullet } from "./Bullet.js";
-import { DesktopController } from "./controllers/DesktopController.js";
-import { MobileController } from "./controllers/MobileController.js";
+import { DesktopController } from "../controllers/DesktopController.js";
+import { MobileController } from "../controllers/MobileController.js";
 
 export class Player extends Phaser.Physics.Matter.Sprite
 {
@@ -21,8 +21,11 @@ export class Player extends Phaser.Physics.Matter.Sprite
             maxVelocityX: 3,
             maxVelocityY: 9,
             moveForce: 0.01,
+            nodamage: false,
             isTouching: { left: false, right: false, down: false },
             canJump: true,
+            fireRate: .3, // 1 bullet every [fireRate] seconds
+            isFireReloaded: true,
             jumpCooldownTimer: null
         };
 
@@ -90,6 +93,16 @@ export class Player extends Phaser.Physics.Matter.Sprite
     {
         //Update Controls/Cursors
         this.controller.update();
+
+        if (this.y > 600)
+        {
+            this.death();
+        }
+        
+        if (this.status.health <= 0) 
+        {
+            this.death();
+        }
     }
 
     //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
@@ -116,6 +129,16 @@ export class Player extends Phaser.Physics.Matter.Sprite
     changeHealth(changeHealthBy)
     {
         this.status.health += changeHealthBy;
+        if (changeHealthBy < 0 && this.status.nodamage)
+        {
+            this.status.health -= changeHealthBy;
+        }
+        if (changeHealthBy < 0 && !this.status.nodamage)
+        {
+            this.damagedEffects();
+        }
+        
+        
         if (this.status.health < 0)
         {
             this.status.health = 0;
@@ -126,7 +149,43 @@ export class Player extends Phaser.Physics.Matter.Sprite
             this.healthSprite.setFrame(2);
         }
         this.displayHealth.setText(this.status.health);
+    }
+
+    damagedEffects()
+    {
+        this.alpha = .5;
+        this.status.nodamage = true;
+        let timer = this.scene.time.addEvent({
+            delay: 1000,
+            callback: () => 
+            {
+                this.alpha = 1;
+                this.status.nodamage = false;
+            },
+            callbackScope: this,
+            loop: false
+        });
         
+    }
+
+    reloadGun()
+    {
+        this.status.isFireReloaded = false;
+        let timer = this.scene.time.addEvent({
+            delay: this.status.fireRate * 1000,
+            callback: () => this.status.isFireReloaded = true,
+            callbackScope: this,
+            loop: false
+        });
+    }
+
+    shoot(x, y)
+    {
+        if (this.status.isFireReloaded)
+        {
+            new Bullet(this.scene, this.scene.enemies, this.x, this.y, x, y);
+            this.reloadGun();
+        }
     }
 
     //Initializing death sequence
@@ -143,20 +202,10 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
-        // this.destroy();
+        this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
+
+        //this.destroy();da
     }
+
     
-    create()
-    {
-        if (this.status.health == 0)
-        {
-            this.add.image(400, 300, 'Skull');
-        }
-    }
-
-
-    shoot(x, y)
-    {
-        new Bullet(this.scene, this.scene.enemies, this.x, this.y, x, y);
-    }
 }
