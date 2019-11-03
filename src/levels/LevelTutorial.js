@@ -11,26 +11,6 @@ export class LevelTutorial extends Phaser.Scene
         this.PhaserGame = PhaserGame;
     }
 
-    preload()
-    {
-        if(this.PhaserGame.isMobile)
-        {
-            this.load.image('thumb', 'assets/joystickthumb.png');
-            this.load.image('base', 'assets/joystickbase.png');
-            this.load.image('gunbase', 'assets/joystickgunbase.png');
-            this.load.image('jump', 'assets/jumpbutton.png');
-        }
-        this.load.image('background', 'assets/Background.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('player', 'assets/Player.png');
-        this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.image('nxtLvlBtn', 'assets/nextLevelBTN.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
-        this.load.image('sun', 'assets/Sun1.png');
-    }
-
     create()
     {
         /* Creating Level using an Array + Tile Map
@@ -68,8 +48,6 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        //Creating a damage platform --> enable damage after player is initialized
-        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
         
 
         //Adding static images
@@ -95,8 +73,7 @@ export class LevelTutorial extends Phaser.Scene
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
         
-        //Enable platform to damage player
-        //this.testDamagePlatform.enableDamage(-1, this.player);
+
     }
 
     update ()
