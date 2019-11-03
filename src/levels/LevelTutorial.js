@@ -53,6 +53,12 @@ export class LevelTutorial extends Phaser.Scene
         //Adding static images
         this.add.image(50, 503, 'house');
 
+        //Testing next level button
+        this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtLvlBtn').setScale(.5).setInteractive();
+        this.lvlSwitchBtn.on('pointerdown', (event) => {
+            this.scene.start('level-2');
+        });
+
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
             category: 2, //Telling what collision category these objects belong in

@@ -12,8 +12,8 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        this.add.image(300, 275, 'background2').setScale(2);
-        this.add.image(1740, 275, 'background2').setScale(2);
+        this.add.image(512, 290, 'bg').setScale(4);
+        this.add.image(1536, 290, 'bg').setScale(4);
         this.add.image(1100, 500, 'cactus');
         this.add.image(800, 530, 'cactus');
         this.add.image(700, 532, 'crate').setScale(.9);
@@ -29,6 +29,11 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(200,210, 'cloud');
         //this.sound.add('cartheftmusic').play();
         //this.sound.play('cartheftmusic', { loop: -1 });
+
+        this.testButton = this.add.sprite(200, 250, 'grass').setInteractive();
+        this.testButton.on('pointerdown', (event) => {
+            console.log("Button Clicked!");
+        });
 
         let level = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
