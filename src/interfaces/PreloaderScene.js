@@ -32,7 +32,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('crate', 'assets/Crate.png');
         this.load.image('deadtree', 'assets/DeadTree.png');
         this.load.image('barrel', 'assets/Barrel.png');
-        this.load.image('title', 'assets/title.png');
+        this.load.image('title', 'assets/title.PNG');
         this.load.image('bg', 'assets/menuScreen.png');
         this.load.image('playbtn', 'assets/playButton.png');
         this.load.image('tutorialbtn', 'assets/tutorialButton.png');
