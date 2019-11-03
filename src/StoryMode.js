@@ -70,8 +70,11 @@ export class StoryMode
                     }
                 ]
             },
-          
+        
+            scene: [level3]
+         
             scene: [level1, death]
+
         };
 
         let game = new Phaser.Game(this.config);

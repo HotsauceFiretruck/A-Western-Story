@@ -14,11 +14,13 @@ export class LoganLevel extends Phaser.Scene
     preload()
     {
         this.load.image('background', 'assets/Background2.png');
+        this.load.image('cactus', 'assets/Cactus.png');
         this.load.image('grass', 'assets/Grass.png');
         this.load.image('sand', 'assets/Sand.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
+        this.load.image('barrel', 'assets/Barrel.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
@@ -58,6 +60,19 @@ export class LoganLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         ];
+
+        this.loopImage('background', 720, 420, groundLayer[0].length * 32, groundLayer.length * 32, 1.45);
+        this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
+
+        let platform = new Platform(this, 2, 10, 1, 0, 0, 32, 32);
+        platform.addSprite('sand');
+        platform.enableKinematic(-.5, 0);
+        let platform = new Platform(this, 2, 15, 1, 0, 0, 32, 32);
+        platform.addSprite('sand');
+        platform.enableKinematic(-.5, 0);
+        let platform = new Platform(this, 2, 20, 1, 0, 0, 32, 32);
+        platform.addSprite('barrel');
+        platform.enableKinematic(-.5, 0);
 
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
@@ -104,5 +119,28 @@ export class LoganLevel extends Phaser.Scene
 
         this.player.update();
     }
-    
+
+    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
+    {
+        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+
+        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (imageHeight * scale);
+
+        let numberOfWidth = Math.ceil(widthRatio);
+        let numberOfHeight = Math.ceil(heightRatio);
+        //console.log("levelWidth: " + levelWidth + " levelHeight: " + levelHeight + " cameraWidth: " +  
+        //            this.cameras.main.worldView.width + " cameraHeight: " + this.cameras.main.worldView.height);d
+        for (let w = 0; w < numberOfWidth; ++w)
+        {
+            for (let h = 0; h < numberOfHeight; ++h)
+            {
+                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
+                this.add.existing(bgImage);
+            }
+        }
+    }
 }
+
