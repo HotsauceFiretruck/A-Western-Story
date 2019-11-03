@@ -30,17 +30,12 @@ export class DeathScene extends Phaser.Scene
         let returnToMenu = this.add.image(600 * scale, 370 * scale, 'returnButton')
                         .setDisplaySize(360 * scale, 90 * scale)
                         .setInteractive();
-        returnToMenu.on('pointerdown', () => {this.returnToMenu()});
+        returnToMenu.on('pointerdown', () => {this.scene.start('menu-scene');});
 
         let respawn = this.add.image(600 * scale, 230 * scale, 'respawnButton')
                         .setDisplaySize(360 * scale, 90 * scale)
                         .setInteractive();
         respawn.on('pointerdown', () => {this.respawn()});
-    }
-
-    returnToMenu()
-    {
-        //Add menu
     }
 
     respawn()
