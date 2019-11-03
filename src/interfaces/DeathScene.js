@@ -23,7 +23,7 @@ export class DeathScene extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale
+        let scale = this.PhaserGame.scale;
 
         this.add.image(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale);
 
