@@ -7,7 +7,9 @@ export class LevelSelect extends Phaser.Scene {
 
     create()
     {
-        this.add.image(600, 300, 'bg').setScale(.4);
+        let scale = this.PhaserGame.scale;
+
+        this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
 
         // Creating buttons on screen
         this.lvl1Btn = this.add.sprite(300, 300, 'lvl1btn').setScale(.4).setInteractive();

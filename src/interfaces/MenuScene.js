@@ -7,8 +7,10 @@ export class MenuScene extends Phaser.Scene {
 
     create()
     {
-        this.add.image(600, 300, 'bg').setScale(.4);
-        this.add.image(600,200, 'title').setScale(.5);
+        let scale = this.PhaserGame.scale;
+
+        this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
+        this.add.image(600 * scale, 150 * scale, 'title').setDisplaySize(900 * scale, 100 * scale);
 
         this.playbtn = this.add.sprite(600, 300, 'playbtn').setScale(.4).setInteractive();
         this.tutorialBtn = this.add.sprite(600, 390, 'tutorialbtn').setScale(.3).setInteractive();
