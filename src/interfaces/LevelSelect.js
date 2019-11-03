@@ -58,6 +58,7 @@ export class LevelSelect extends Phaser.Scene {
         this.lvl4Btn.on('pointerout', function (event) {
             this.clearTint();
         })
+
         this.backBtn.on('pointerdown', (event) => {
             this.scene.start('menu-scene');
         })

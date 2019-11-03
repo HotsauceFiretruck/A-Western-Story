@@ -14,7 +14,6 @@ export class MenuScene extends Phaser.Scene {
         this.tutorialBtn = this.add.sprite(600, 390, 'tutorialbtn').setScale(.3).setInteractive();
 
         this.playbtn.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
             this.scene.start('lvl-select');
         });
         this.playbtn.on('pointerover', function (event) {
