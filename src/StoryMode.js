@@ -3,6 +3,7 @@ import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
+import { Menu } from "./levels/Menu.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
 
 export class StoryMode 
@@ -11,6 +12,14 @@ export class StoryMode
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
+
+        //Initializing Levels
+        let levelTutorial = new LevelTutorial(this);
+        let level1 = new AlexLevel(this);
+        let level4 = new EthanLevel(this);
+        let level2 = new DustinLevel(this);
+        let level3 = new LoganLevel(this);
+        let menu = new Menu(this);
 
         //Detecting the Device's Size and Set Max
         let maxWidth = 1200;
