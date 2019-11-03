@@ -53,7 +53,8 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             .setScale(1.5)
             .setPosition(x, y)
             .setFixedRotation()
-            .setCollisionCategory(scene.enemies.category);
+            .setCollisionCategory(scene.enemies.category)
+            .setDepth(1);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
