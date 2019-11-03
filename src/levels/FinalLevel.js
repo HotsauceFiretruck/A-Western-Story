@@ -6,7 +6,7 @@ export class FinalLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-1"});
+        super({key:"level-5"});
 
         this.PhaserGame = PhaserGame;
     }
