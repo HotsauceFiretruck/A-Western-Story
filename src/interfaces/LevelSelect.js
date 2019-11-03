@@ -25,47 +25,61 @@ export class LevelSelect extends Phaser.Scene {
         });
         this.lvl1Btn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         this.lvl1Btn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
+
         this.lvl2Btn.on('pointerdown', (event) => {
             this.scene.start('level-2');
         });
         this.lvl2Btn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         this.lvl2Btn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
+
         this.lvl3Btn.on('pointerdown', (event) => {
-            this.scene.start('level-tutorial');
+            this.scene.start('level-3');
         });
         this.lvl3Btn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         this.lvl3Btn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
+
         this.lvl4Btn.on('pointerdown', (event) => {
             this.scene.start('level-4');
         });
         this.lvl4Btn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         this.lvl4Btn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
+
+        this.lvl5Btn.on('pointerdown', (event) => {
+            console.log("Button Clicked!");
+            this.scene.start('level-5');
+        });
+        this.lvl5Btn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.lvl5Btn.on('pointerout', function (event) {
+            this.clearTint();
+        });
 
         this.backBtn.on('pointerdown', (event) => {
             this.scene.start('menu-scene');
-        })
+        });
         this.backBtn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         this.backBtn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
     }
 
 }

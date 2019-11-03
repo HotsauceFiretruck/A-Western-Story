@@ -1,10 +1,10 @@
 import { Bullet } from "./Bullet.js"
 
-export class Enemy extends Phaser.Physics.Matter.Sprite
+export class FinalEnemy extends Phaser.Physics.Matter.Sprite
 {
     constructor(scene, x, y)
     {
-        super(scene.matter.world, x, y, 'enemy');
+        super(scene.matter.world, x, y, 'sheriff');
         this.player = scene.player;
 
         //Add to Group
@@ -53,8 +53,15 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             .setScale(1.5)
             .setPosition(x, y)
             .setFixedRotation()
-            .setCollisionCategory(scene.enemies.category)
-            .setDepth(1);
+            .setCollisionCategory(scene.enemies.category);
+
+        this.healthSpriteback = scene.add.sprite(400, 150, 'healthbarback'); 
+        scene.add.existing(this.healthSpriteback);
+        this.healthSpriteback.setFrame(0).setScrollFactor(0, 0);
+
+        this.healthSpritefront = scene.add.sprite(401, 38, 'healthbarfront'); 
+        scene.add.existing(this.healthSpritefront);
+        this.healthSpritefront.setFrame(0).setScrollFactor(0, 0);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
