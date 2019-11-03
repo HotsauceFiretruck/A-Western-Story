@@ -36,6 +36,8 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('playbtn', 'assets/PlayButton.png');
         this.load.image('arenabtn', 'assets/PlayArenaButton.png');
         this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
+        this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
+        this.load.image('healthbarfront', 'assets/BossHealthBar.png');
     }
 
     create()
