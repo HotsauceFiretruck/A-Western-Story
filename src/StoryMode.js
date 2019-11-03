@@ -3,6 +3,7 @@ import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
+import { FinalLevel } from "./levels/FinalLevel.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderScene } from "./interfaces/PreloaderScene.js";
 import { MenuScene } from "./interfaces/MenuScene.js";
@@ -43,6 +44,7 @@ export class StoryMode
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
         let level4 = new EthanLevel(this);
+        let level5 = new FinalLevel(this);
         let death = new DeathScene(this);
 
         //Initializing Config
