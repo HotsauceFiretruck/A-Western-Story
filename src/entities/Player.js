@@ -75,7 +75,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
             .setMass(2)
             .setScale(1.5)
             .setFixedRotation()
-            .setCollisionCategory(this.category);
+            .setCollisionCategory(this.category)
+            .setDepth(1);
 
         // Creating Controls/Cursors
         this.controller = scene.PhaserGame.isMobile ? new MobileController(scene, this) : new DesktopController(scene, this);
