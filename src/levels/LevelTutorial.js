@@ -48,8 +48,6 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        
-
         //Adding static images
         this.add.image(50, 503, 'house');
 
