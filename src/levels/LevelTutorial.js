@@ -1,7 +1,7 @@
 import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
-import { InteractiveArea } from "../components/InteractiveArea.js";
+import { Area } from "../components/Area.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -63,12 +63,12 @@ export class LevelTutorial extends Phaser.Scene
         this.add.image(50, 525, 'house');
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);
+        this.basicEnemy = new Enemy(this, 210, 100);
 
-        //Add an InteractiveArea Example
+        //Add an Area Example
         //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
-        let nextLevelGoal = new InteractiveArea(this, 'house', 200, 525, 75, 104);
-        nextLevelGoal.whenTouched(this.player, this.nextLevel);
+        let nextLevelGoal = new Area(this, 'house', 1150, 525, 75, 104);
+        nextLevelGoal.whenTouched(this.player, () => {this.nextLevel()});
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)

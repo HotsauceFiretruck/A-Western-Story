@@ -34,8 +34,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         //Bodies.rectangle(centerX position IN the sprite, centerY position IN the sprite, 
         //                 width of the collision body, height of the collision body, {options});
-        let mainBody = Bodies.rectangle
-            (0, 0, this.width * 0.7, this.height, {chamfer: 1});
+        let mainBody = Bodies.rectangle(0, 0, this.width * 0.7, this.height, {chamfer: 1});
         
         //Sensors: only for detecting, not for collision
         this.sensors = {

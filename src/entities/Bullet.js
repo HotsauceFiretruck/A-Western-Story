@@ -39,8 +39,9 @@ export class Bullet
         scene.matterCollision.addOnCollideStart({
             objectA: this.sprite,
             // If it collides with anything else -> call the method hit
-            callback: eventData => {
-                this.hit(eventData.gameObjectB);
+            callback: ({gameObjectB, bodyB}) => {
+                if (bodyB.isSensor) return;
+                this.hit(gameObjectB);
             },
             context: this
         });

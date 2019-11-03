@@ -80,8 +80,7 @@ export class StoryMode
                 ]
             },
           
-
-            scene: [preloader, menu, levelTutorial, levelSelect, level1, level2, level3, level4, level5 death]
+            scene: [preloader, menu, levelTutorial, levelSelect, level1, level2, level3, level4, level5, death]
         };
 
         let game = new Phaser.Game(this.config);
