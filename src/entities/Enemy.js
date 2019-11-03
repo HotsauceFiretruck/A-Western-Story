@@ -18,22 +18,64 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             fireRate: .9, // 1 bullet every [fireRate] seconds
             isFireReloaded: true,
             distanceFromPlayer: 0,
-            isPlayerInRange: false
+            isPlayerInRange: false,
+            isTouching: { left: false, right: false, down: false }
         };
 
         //Add Collision Body
-        let { Bodies} = scene.PhaserGame.MatterPhysics
+        let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
         let mainBody = Bodies.rectangle
             (0, 0, this.width * 0.7, this.height, {chamfer: 10});
-        
-         //Setting Sprite
-        this.setExistingBody(mainBody)
+
+        this.sensors = {
+                bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
+                left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
+                right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
+        };
+
+        let compoundBody = Body.create({
+            parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
+            frictionStatic: 0,
+            frictionAir: 0.03,
+            friction: .02
+        });
+
+        scene.matterCollision.addOnCollideStart({
+            objectA: [this.sensors.bottom, this.sensors.left, this.sensors.right],
+            callback: this.onSensorCollide,
+            context: this
+        });
+
+        //Setting Sprite
+        this.setExistingBody(compoundBody)
             .setMass(2)
             .setScale(1.5)
             .setPosition(x, y)
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category);
+    }
+
+    onSensorCollide({ bodyA, bodyB, pair }) {
+        if (bodyB.isSensor) return;
+
+        if (bodyB.category == 2)
+        {
+            if (bodyA === this.sensors.left) 
+            {
+                this.status.isTouching.left = true;
+                if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+            } 
+            else if (bodyA === this.sensors.right) 
+            {
+                this.status.isTouching.right = true;
+                if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+            } 
+            else if (bodyA === this.sensors.bottom) 
+            {
+                this.status.isTouching.down = true;
+            }
+        }
     }
     
     statusUpdate()
@@ -63,6 +105,20 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         });
     }
 
+    moveAI()
+    {
+        if(!this.status.isTouching.left)
+        {
+            this.body.velocity.x = -5;
+        }
+        else if(!this.status.isTouching.right)
+        {
+            this.body.velocity.x = 5;
+        }
+        
+        //console.log(this.body);
+    }
+
     update()
     {
         this.statusUpdate();
@@ -73,6 +129,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             this.shoot();
             this.reloadGun();
         }
+        this.moveAI();
     }
 
     changeHealth(changeHealthBy)

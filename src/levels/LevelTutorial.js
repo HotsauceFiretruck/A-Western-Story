@@ -1,6 +1,6 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
-import { TileMap } from "./TileMap.js";
+import { Player } from "../entities/Player.js";
+import { Enemy } from "../entities/Enemy.js";
+import { TileMap } from "../components/TileMap.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -17,6 +17,8 @@ export class LevelTutorial extends Phaser.Scene
         {
             this.load.image('thumb', 'assets/joystickthumb.png');
             this.load.image('base', 'assets/joystickbase.png');
+            this.load.image('gunbase', 'assets/joystickgunbase.png');
+            this.load.image('jump', 'assets/jumpbutton.png');
         }
         this.load.image('background', 'assets/Background.png');
         this.load.image('grass', 'assets/Grass.png');
@@ -26,6 +28,7 @@ export class LevelTutorial extends Phaser.Scene
         this.load.image('enemy', 'assets/Outlaw.png');
         this.load.image('nxtLvlBtn', 'assets/nextLevelBTN.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.image('sun', 'assets/Sun1.png');
     }
 
     create()
@@ -64,8 +67,11 @@ export class LevelTutorial extends Phaser.Scene
 
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
-        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
+
+        //Creating a damage platform --> enable damage after player is initialized
+        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
         
+
         //Adding static images
         this.add.image(50, 503, 'house');
 
@@ -87,18 +93,14 @@ export class LevelTutorial extends Phaser.Scene
         };
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);  
-
-        // Testing Buttons
-        // this.testButton = this.add.sprite(100, 100, 'grass').setInteractive();
-        // this.testButton.on('pointerdown', function (event) { 
-        //     console.log("Button Clicked!");
-        //     //
-        // });
+        this.basicEnemy = new Enemy(this, 600, 100);
+        
+        //Enable platform to damage player
+        //this.testDamagePlatform.enableDamage(-1, this.player);
     }
 
     update ()
-    {  
+    { 
         //Update platforms
         for (let i = 0; i < this.map.platforms.list.length; ++i)
         {

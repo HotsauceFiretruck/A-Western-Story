@@ -78,7 +78,7 @@ export class Bullet
             .setVelocity(vX, vY)
             .setRotation(radians)
             .setFixedRotation()
-            .setCollisionCategory(2)
+            .setCollisionCategory(8)
             .setCollidesWith([2]);
 
         if (target != null) {
