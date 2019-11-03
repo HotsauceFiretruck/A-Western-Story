@@ -11,25 +11,6 @@ export class LevelTutorial extends Phaser.Scene
         this.PhaserGame = PhaserGame;
     }
 
-    preload()
-    {
-        if(this.PhaserGame.isMobile)
-        {
-            this.load.image('thumb', 'assets/joystickthumb.png');
-            this.load.image('base', 'assets/joystickbase.png');
-            this.load.image('gunbase', 'assets/joystickgunbase.png');
-            this.load.image('jump', 'assets/jumpbutton.png');
-        }
-        this.load.image('background', 'assets/Background.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('player', 'assets/Player.png');
-        this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
-        this.load.image('sun', 'assets/Sun1.png');
-    }
-
     create()
     {
         /* Creating Level using an Array + Tile Map

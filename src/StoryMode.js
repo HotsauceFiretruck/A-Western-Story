@@ -4,6 +4,7 @@ import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
+import { PreloaderScene } from "./interfaces/PreloaderScene.js";
 
 export class StoryMode 
 {
@@ -33,6 +34,8 @@ export class StoryMode
         }
 
         //Initializing Levels
+        let preloader = new PreloaderScene(this);
+
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
         let level4 = new EthanLevel(this);
@@ -71,7 +74,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [levelTutorial, death]
+            scene: [preloader, level4, death]
         };
 
         let game = new Phaser.Game(this.config);
