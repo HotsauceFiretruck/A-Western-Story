@@ -53,11 +53,17 @@ export class LevelTutorial extends Phaser.Scene
         //Adding static images
         this.add.image(50, 503, 'house');
 
-        //Testing next level button
-        this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtlvlbtn').setScale(.5).setInteractive();
-        this.lvlSwitchBtn.on('pointerdown', (event) => {
-            this.scene.start('level-2');
-        });
+        //Back Button
+        this.backBtn = this.add.sprite(1100,50, 'backbtn').setScale(.3).setInteractive();
+        this.backBtn.on('pointerdown', (event) => {
+            this.scene.start('menu-scene');
+        })
+        this.backBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        this.backBtn.on('pointerout', function (event) {
+            this.clearTint();
+        })
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {

@@ -12,28 +12,8 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        this.add.image(512, 290, 'bg').setScale(4);
-        this.add.image(1536, 290, 'bg').setScale(4);
-        this.add.image(1100, 500, 'cactus');
-        this.add.image(800, 530, 'cactus');
-        this.add.image(700, 532, 'crate').setScale(.9);
-        this.add.image(370, 425, 'deadtree').setScale(1.75);
-        this.add.image(500,200, 'cloud');
-        this.add.image(470,175, 'cloud');
-        this.add.image(1100,250, 'cloud');
-        this.add.image(600,200, 'cloud');
-        this.add.image(5770,175, 'cloud');
-        this.add.image(800,210, 'cloud');
-        this.add.image(900,200, 'cloud');
-        this.add.image(750,175, 'cloud');
-        this.add.image(200,210, 'cloud');
         //this.sound.add('cartheftmusic').play();
         //this.sound.play('cartheftmusic', { loop: -1 });
-
-        this.testButton = this.add.sprite(200, 250, 'grass').setInteractive();
-        this.testButton.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
-        });
 
         let level = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -56,6 +36,32 @@ export class EthanLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
+
+        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
+        this.add.image(1100, 500, 'cactus');
+        this.add.image(800, 530, 'cactus');
+        this.add.image(700, 532, 'crate').setScale(.9);
+        this.add.image(370, 425, 'deadtree').setScale(1.75);
+        this.add.image(500,200, 'cloud');
+        this.add.image(470,175, 'cloud');
+        this.add.image(1100,250, 'cloud');
+        this.add.image(600,200, 'cloud');
+        this.add.image(5770,175, 'cloud');
+        this.add.image(800,210, 'cloud');
+        this.add.image(900,200, 'cloud');
+        this.add.image(750,175, 'cloud');
+        this.add.image(200,210, 'cloud');
+        
+        this.backBtn = this.add.sprite(1100,50, 'backbtn').setScale(.3).setInteractive();
+        this.backBtn.on('pointerdown', (event) => {
+            this.scene.start('menu-scene');
+        })
+        this.backBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        this.backBtn.on('pointerout', function (event) {
+            this.clearTint();
+        })
         
         this.map = new TileMap(this, level, 32, 32, 'sand');
         this.player = new Player(this, 100, 550);
@@ -93,5 +99,27 @@ export class EthanLevel extends Phaser.Scene
         }
         
         this.player.update();
+    }
+
+    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
+    {
+        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+
+        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (imageHeight * scale);
+
+        let numberOfWidth = Math.ceil(widthRatio);
+        let numberOfHeight = Math.ceil(heightRatio);
+
+        for (let w = 0; w < numberOfWidth; ++w)
+        {
+            for (let h = 0; h < numberOfHeight; ++h)
+            {
+                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
+                this.add.existing(bgImage);
+            }
+        }
     }
 }
