@@ -67,8 +67,6 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        //Creating a damage platform --> enable damage after player is initialized
-        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
         
 
         //Adding static images
@@ -88,8 +86,7 @@ export class LevelTutorial extends Phaser.Scene
         this.player = new Player(this, 300, 100);
         this.basicEnemy = new Enemy(this, 600, 100);
         
-        //Enable platform to damage player
-        //this.testDamagePlatform.enableDamage(-1, this.player);
+
     }
 
     update ()
