@@ -50,13 +50,11 @@ export class LoganLevel extends Phaser.Scene
         this.loopImage('background', 720, 420, groundLayer[0].length * 32, groundLayer.length * 32, 1.45);
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
-        let platform = new Platform(this, 2, 10, 1, 0, 0, 32, 32);
+        let platform1 = new Platform(this, 2, 15, 1, 0, 0, 32, 32);
         platform.addSprite('sand');
         platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 15, 1, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 20, 1, 0, 0, 32, 32);
+
+        let platform2 = new Platform(this, 2, 20, 1, 0, 0, 32, 32);
         platform.addSprite('barrel');
         platform.enableKinematic(-.5, 0);
 

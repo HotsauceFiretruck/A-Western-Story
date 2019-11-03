@@ -3,9 +3,9 @@ import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
-import { Menu } from "./levels/Menu.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderScene } from "./interfaces/PreloaderScene.js";
+import { MenuScene } from "./interfaces/MenuScene.js";
 
 export class StoryMode 
 {
@@ -13,14 +13,6 @@ export class StoryMode
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
-
-        //Initializing Levels
-        let levelTutorial = new LevelTutorial(this);
-        let level1 = new AlexLevel(this);
-        let level4 = new EthanLevel(this);
-        let level2 = new DustinLevel(this);
-        let level3 = new LoganLevel(this);
-        let menu = new Menu(this);
 
         //Detecting the Device's Size and Set Max
         let maxWidth = 1200;
@@ -44,12 +36,13 @@ export class StoryMode
 
         //Initializing Levels
         let preloader = new PreloaderScene(this);
+        let menu = new MenuScene(this);
 
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
-        let level4 = new EthanLevel(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
+        let level4 = new EthanLevel(this);
         let death = new DeathScene(this);
 
         //Initializing Config
@@ -83,7 +76,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [preloader, levelTutorial, death]
+            scene: [preloader, menu, levelTutorial, level1, level2, level3, level4, death]
         };
 
         let game = new Phaser.Game(this.config);
