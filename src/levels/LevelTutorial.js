@@ -48,15 +48,13 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        
-
         //Adding static images
         this.add.image(50, 503, 'house');
 
         //Testing next level button
         this.lvlSwitchBtn = this.add.sprite(1100,50, 'nxtlvlbtn').setScale(.5).setInteractive();
         this.lvlSwitchBtn.on('pointerdown', (event) => {
-            this.scene.start('level-2');
+            this.scene.start('level-3');
         });
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
