@@ -1,38 +1,18 @@
 import { Player } from "../entities/Player.js";
-import { Enemy } from "../entities/Enemy.js";
+import { FinalEnemy } from "../entities/FinalEnemy.js";
 import { TileMap } from "../components/TileMap.js";
 
 export class FinalLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-1"});
+        super({key:"level-5"});
 
         this.PhaserGame = PhaserGame;
     }
 
-    preload()
-    {
-        this.load.image('background2', 'assets/Background2.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('player', 'assets/Player.png');
-        this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
-        if(this.PhaserGame.isMobile)
-        {
-            this.load.image('thumb', 'assets/joystickthumb.png');
-            this.load.image('base', 'assets/joystickbase.png');
-            this.load.image('gunbase', 'assets/joystickgunbase.png');
-            this.load.image('jump', 'assets/jumpbutton.png');
-        }
-    }
-
     create()
     {
-        this.add.image(50, 503, 'house');
-
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long
@@ -73,8 +53,8 @@ export class FinalLevel extends Phaser.Scene
         };
 
         
-        this.player = new Player(this, 250, 540);
-        this.basicEnemy = new Enemy(this, 500, 500).setScale(5);
+        this.player = new Player(this, 250, 500);
+        this.finalBoss = new FinalEnemy(this, 500, 500).setScale(5);
     }
 
     update ()
@@ -99,7 +79,7 @@ export class FinalLevel extends Phaser.Scene
         
         if (this.enemies.list.length == 0)
         {
-            new Enemy(this, 500, 500).setScale(5);
+            new FinalEnemy(this, 500, 300).setScale(5);
         }
 
         this.player.update();
