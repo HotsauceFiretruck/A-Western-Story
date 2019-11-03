@@ -11,24 +11,6 @@ export class AlexLevel extends Phaser.Scene
         this.PhaserGame = PhaserGame;
     }
 
-    preload()
-    {
-        this.load.image('background2', 'assets/Background2.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('player', 'assets/Player.png');
-        this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
-        if(this.PhaserGame.isMobile)
-        {
-            this.load.image('thumb', 'assets/joystickthumb.png');
-            this.load.image('base', 'assets/joystickbase.png');
-            this.load.image('gunbase', 'assets/joystickgunbase.png');
-            this.load.image('jump', 'assets/jumpbutton.png');
-        }
-    }
-
     create()
     {
         this.add.image(50, 503, 'house');

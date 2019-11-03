@@ -58,14 +58,23 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
-        if (bodyA === this.sensors.left) {
-          this.status.isTouching.left = true;
-          if (pair.separation > 0.5) this.x += pair.separation - 0.5;
-        } else if (bodyA === this.sensors.right) {
-          this.status.isTouching.right = true;
-          if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
-        } else if (bodyA === this.sensors.bottom) {
-          this.status.isTouching.down = true;
+
+        if (bodyB.category == 2)
+        {
+            if (bodyA === this.sensors.left) 
+            {
+                this.status.isTouching.left = true;
+                if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+            } 
+            else if (bodyA === this.sensors.right) 
+            {
+                this.status.isTouching.right = true;
+                if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+            } 
+            else if (bodyA === this.sensors.bottom) 
+            {
+                this.status.isTouching.down = true;
+            }
         }
     }
     
