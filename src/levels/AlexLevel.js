@@ -68,21 +68,21 @@ export class AlexLevel extends Phaser.Scene
         
         this.player = new Player(this, 750, 540);
         this.basicEnemy = new Enemy(this, 276, 500);
-        this.basicEnemy = new Enemy(this, 308, 500);
-        this.basicEnemy = new Enemy(this, 340, 500);
-        this.basicEnemy = new Enemy(this, 372, 500);
-        this.basicEnemy = new Enemy(this, 404, 500);
-        this.basicEnemy = new Enemy(this, 436, 500);
-        this.basicEnemy = new Enemy(this, 468, 500);
-        this.basicEnemy = new Enemy(this, 500, 500);
-        this.basicEnemy = new Enemy(this, 1000, 500);
-        this.basicEnemy = new Enemy(this, 1032, 500);
-        this.basicEnemy = new Enemy(this, 1064, 500);
-        this.basicEnemy = new Enemy(this, 1096, 500);
-        this.basicEnemy = new Enemy(this, 1128, 500);
-        this.basicEnemy = new Enemy(this, 1156, 500);
-        this.basicEnemy = new Enemy(this, 1188, 500);
-        this.basicEnemy = new Enemy(this, 1220, 500);
+        this.basicEnemy1 = new Enemy(this, 308, 500);
+        this.basicEnemy2 = new Enemy(this, 340, 500);
+        this.basicEnemy3 = new Enemy(this, 372, 500);
+        this.basicEnemy4 = new Enemy(this, 404, 500);
+        this.basicEnemy5 = new Enemy(this, 436, 500);
+        this.basicEnemy6 = new Enemy(this, 468, 500);
+        this.basicEnemy7 = new Enemy(this, 500, 500);
+        this.basicEnemy8 = new Enemy(this, 1000, 500);
+        this.basicEnemy9 = new Enemy(this, 1032, 500);
+        this.basicEnemy10 = new Enemy(this, 1064, 500);
+        this.basicEnemy11 = new Enemy(this, 1096, 500);
+        this.basicEnemy12 = new Enemy(this, 1128, 500);
+        this.basicEnemy13 = new Enemy(this, 1156, 500);
+        this.basicEnemy14 = new Enemy(this, 1188, 500);
+        this.basicEnemy15 = new Enemy(this, 1220, 500);
     }
 
     update ()
