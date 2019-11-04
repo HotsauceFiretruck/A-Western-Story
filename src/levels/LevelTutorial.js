@@ -1,6 +1,7 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
+import { Player } from "../entities/Player.js";
+import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
+import { Area } from "../components/Area.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -11,27 +12,18 @@ export class LevelTutorial extends Phaser.Scene
         this.PhaserGame = PhaserGame;
     }
 
-    preload()
-    {
-        if(this.PhaserGame.isMobile)
-        {
-            this.load.image('thumb', 'assets/joystickthumb.png');
-            this.load.image('base', 'assets/joystickbase.png');
-            this.load.image('gunbase', 'assets/joystickgunbase.png');
-            this.load.image('jump', 'assets/jumpbutton.png');
-        }
-        this.load.image('background', 'assets/Background.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('player', 'assets/Player.png');
-        this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
-        this.load.image('sun', 'assets/Sun1.png');
-    }
-
     create()
     {
+        this.projectiles = {
+            category: 2,
+            list: [] 
+        };
+
+        this.enemies = {
+            category: 4,
+            list: []
+        };
+
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -67,59 +59,22 @@ export class LevelTutorial extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
-        //Creating a damage platform --> enable damage after player is initialized
-        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
-        
-
         //Adding static images
-        this.add.image(50, 503, 'house');
-
-        // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
-        this.projectiles = {
-            category: 2, //Telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
+        this.add.image(50, 525, 'house');
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);
-        
-        //Enable platform to damage player
-        //this.testDamagePlatform.enableDamage(-1, this.player);
+        this.basicEnemy = new Enemy(this, 210, 100);
+
+        //Add an Area Example
+        //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
+        let nextLevelGoal = new Area(this, 'house', 1150, 525, 75, 104);
+        nextLevelGoal.whenTouched(this.player, () => {this.nextLevel()});
     }
 
-    update ()
-    { 
-        //Update platforms
-        for (let i = 0; i < this.map.platforms.list.length; ++i)
-        {
-            this.map.platforms.list[i]
-        }
-
-        //Update bullets
-        for (let i = 0; i < this.projectiles.list.length; i++)
-        {
-            this.projectiles.list[i].update();
-        }
-
-        //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
-            this.enemies.list[i].update();
-        }
-        
-        //When there are no more enemies in the level, add a new one at that position
-        if (this.enemies.list.length == 0) 
-        {
-            new Enemy(this, 600, 100);
-        }
-
-        //Update player
-        this.player.update();
+    //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
+    nextLevel()
+    {
+        this.scene.start('level-1');
     }
 
     //Load in image to fill in the level
@@ -151,5 +106,35 @@ export class LevelTutorial extends Phaser.Scene
                 this.add.existing(bgImage);
             }
         }
+    }
+
+    update ()
+    { 
+        //Update platforms
+        for (let i = 0; i < this.map.platforms.list.length; ++i)
+        {
+            this.map.platforms.list[i]
+        }
+
+        //Update bullets
+        for (let i = 0; i < this.projectiles.list.length; i++)
+        {
+            this.projectiles.list[i].update();
+        }
+
+        //Update enemies
+        for (let i = 0; i < this.enemies.list.length; i++)
+        {
+            this.enemies.list[i].update();
+        }
+        
+        //When there are no more enemies in the level, add a new one at that position
+        if (this.enemies.list.length == 0) 
+        {
+            new Enemy(this, 600, 100);
+        }
+
+        //Update player
+        this.player.update();
     }
 }

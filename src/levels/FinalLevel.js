@@ -1,20 +1,18 @@
 import { Player } from "../entities/Player.js";
-import { Enemy } from "../entities/Enemy.js";
+import { FinalEnemy } from "../entities/FinalEnemy.js";
 import { TileMap } from "../components/TileMap.js";
 
-export class AlexLevel extends Phaser.Scene
+export class FinalLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-1"});
+        super({key:"level-5"});
 
         this.PhaserGame = PhaserGame;
     }
 
     create()
     {
-        this.add.image(50, 503, 'house');
-
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long
@@ -42,17 +40,6 @@ export class AlexLevel extends Phaser.Scene
 
         this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
 
-        this.backBtn = this.add.sprite(1225,50, 'backbtn').setScale(.3).setInteractive();
-        this.backBtn.on('pointerdown', (event) => {
-            this.scene.start('menu-scene');
-        })
-        this.backBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        })
-        this.backBtn.on('pointerout', function (event) {
-            this.clearTint();
-        })
-
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
         this.projectiles = {
@@ -66,23 +53,8 @@ export class AlexLevel extends Phaser.Scene
         };
 
         
-        this.player = new Player(this, 750, 540);
-        this.basicEnemy = new Enemy(this, 276, 500);
-        this.basicEnemy1 = new Enemy(this, 308, 500);
-        this.basicEnemy2 = new Enemy(this, 340, 500);
-        this.basicEnemy3 = new Enemy(this, 372, 500);
-        this.basicEnemy4 = new Enemy(this, 404, 500);
-        this.basicEnemy5 = new Enemy(this, 436, 500);
-        this.basicEnemy6 = new Enemy(this, 468, 500);
-        this.basicEnemy7 = new Enemy(this, 500, 500);
-        this.basicEnemy8 = new Enemy(this, 1000, 500);
-        this.basicEnemy9 = new Enemy(this, 1032, 500);
-        this.basicEnemy10 = new Enemy(this, 1064, 500);
-        this.basicEnemy11 = new Enemy(this, 1096, 500);
-        this.basicEnemy12 = new Enemy(this, 1128, 500);
-        this.basicEnemy13 = new Enemy(this, 1156, 500);
-        this.basicEnemy14 = new Enemy(this, 1188, 500);
-        this.basicEnemy15 = new Enemy(this, 1220, 500);
+        this.player = new Player(this, 250, 500);
+        this.finalBoss = new FinalEnemy(this, 500, 500).setScale(5);
     }
 
     update ()
@@ -107,7 +79,7 @@ export class AlexLevel extends Phaser.Scene
         
         if (this.enemies.list.length == 0)
         {
-            new Enemy(this, 200, 200);
+            new FinalEnemy(this, 500, 300).setScale(5);
         }
 
         this.player.update();

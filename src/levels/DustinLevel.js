@@ -1,5 +1,5 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
+import { Player } from "../entities/Player.js";
+import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 
 export class DustinLevel extends Phaser.Scene
@@ -9,22 +9,6 @@ export class DustinLevel extends Phaser.Scene
         super({key:"level-2"});
 
         this.PhaserGame = PhaserGame;
-    }
-
-    preload()
-    {
-        if(this.PhaserGame.isMobile)
-        {
-            this.load.image('thumb', 'assets/joystickthumb.png');
-            this.load.image('base', 'assets/joystickbase.png');
-        }
-        this.load.image('background', 'assets/Background.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('player', 'assets/Player.png');
-        this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
     create()
@@ -58,9 +42,21 @@ export class DustinLevel extends Phaser.Scene
             [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
+
         //Looping background with level
         this.loopImage('background', 720, 420, level[0].length * 32, level.length * 32, 1.45);
-
+        
+        this.backBtn = this.add.sprite(1100,50, 'backbtn').setScale(.3).setInteractive();
+        this.backBtn.on('pointerdown', (event) => {
+            this.scene.start('menu-scene');
+        })
+        this.backBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        this.backBtn.on('pointerout', function (event) {
+            this.clearTint();
+        })
+        
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
         //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles

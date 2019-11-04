@@ -85,7 +85,7 @@ export class Platform
 
     enableDamage(changeHealthBy, target)
     {
-        this.scene.matterCollision.addOnCollideStart({
+        this.scene.matterCollision.addOnCollideActive({
             objectA: this.body,
             objectB: target,
             callback: () => target.changeHealth(changeHealthBy),

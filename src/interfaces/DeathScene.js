@@ -16,31 +16,26 @@ export class DeathScene extends Phaser.Scene
 
     preload()
     {
-        
         this.load.image('death', 'assets/gameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
-        
     }
 
     create()
     {
-        this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
+        let scale = this.PhaserGame.scale;
 
-        let returnToMenu = this.add.image(600, 370, 'returnButton')
-                        .setDisplaySize(360, 90)
+        this.add.image(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale);
+
+        let returnToMenu = this.add.image(600 * scale, 370 * scale, 'returnButton')
+                        .setDisplaySize(360 * scale, 90 * scale)
                         .setInteractive();
-        returnToMenu.on('pointerdown', () => {this.returnToMenu()});
+        returnToMenu.on('pointerdown', () => {this.scene.start('menu-scene');});
 
-        let respawn = this.add.image(600, 230, 'respawnButton')
-                        .setDisplaySize(360, 90)
+        let respawn = this.add.image(600 * scale, 230 * scale, 'respawnButton')
+                        .setDisplaySize(360 * scale, 90 * scale)
                         .setInteractive();
         respawn.on('pointerdown', () => {this.respawn()});
-    }
-
-    returnToMenu()
-    {
-
     }
 
     respawn()
