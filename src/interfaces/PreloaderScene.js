@@ -98,10 +98,10 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('crate', 'assets/Crate.png');
         this.load.image('deadtree', 'assets/DeadTree.png');
         this.load.image('barrel', 'assets/Barrel.png');
-        this.load.image('title', 'assets/title.PNG');
-        this.load.image('bg', 'assets/menuScreen.png');
-        this.load.image('playbtn', 'assets/playButton.png');
-        this.load.image('tutorialbtn', 'assets/tutorialButton.png');
+        this.load.image('title', 'assets/Title.PNG');
+        this.load.image('bg', 'assets/MenuScreen.png');
+        this.load.image('playbtn', 'assets/PlayButton.png');
+        this.load.image('tutorialbtn', 'assets/TutorialButton.png');
         this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
         this.load.image('backbtn', 'assets/BackButton.png');
         this.load.image('lvl1btn', 'assets/lvl1.png');
