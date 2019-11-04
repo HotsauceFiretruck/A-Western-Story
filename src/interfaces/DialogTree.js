@@ -14,7 +14,7 @@ export class DialogTree
 
         if (scene.player != undefined && scene.PhaserGame.isMobile)
         {
-            scene.player.controller.setBackStage();
+            scene.player.controller.setBackStage(); // player set on stage --> disable everything.
         }
 
         // let option1Image = this.add.sprite(20, 20, 'dialogoptions');
