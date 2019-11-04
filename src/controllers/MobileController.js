@@ -41,29 +41,30 @@ export class MobileController
     update()
     {
         //Update Movements
-        if (this.horizontalControls.checkState())
+        if (this.player.status.allowHorizontal)
         {
-            let normalizedX = Math.cos(this.horizontalControls.getRotation());
-            let speedScale = this.horizontalControls.getDistScale();
-            
-            //
+            if (this.horizontalControls.checkState())
+            {
+                let normalizedX = Math.cos(this.horizontalControls.getRotation());
+                let speedScale = this.horizontalControls.getDistScale();
 
-            //If normalizedX is negative => left
-            if (normalizedX <= 0 &&
-                this.player.body.velocity.x > -this.player.status.maxVelocityX)
-            {
-                this.player.setFlipX(false);
-                if (!this.player.status.isTouching.left) {
-                    this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                //If normalizedX is negative => left
+                if (normalizedX <= 0 &&
+                    this.player.body.velocity.x > -this.player.status.maxVelocityX)
+                {
+                    this.player.setFlipX(false);
+                    if (!this.player.status.isTouching.left) {
+                        this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                    }
                 }
-            }
-            //If normalizedX is positive => right
-            if (normalizedX > 0 &&
-                this.player.body.velocity.x < this.player.status.maxVelocityX)
-            {
-                this.player.setFlipX(true);
-                if (!this.player.status.isTouching.right) {
-                    this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                //If normalizedX is positive => right
+                if (normalizedX > 0 &&
+                    this.player.body.velocity.x < this.player.status.maxVelocityX)
+                {
+                    this.player.setFlipX(true);
+                    if (!this.player.status.isTouching.right) {
+                        this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                    }
                 }
             }
         }

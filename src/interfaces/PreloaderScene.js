@@ -90,7 +90,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
@@ -112,7 +111,9 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('lvl5btn', 'assets/lvl5.png');
         this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
         this.load.image('healthbarfront', 'assets/BossHealthBar.png');
-
+        this.load.image('dialogbg', 'assets/DialogBackground.png');
+        this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
     create()
