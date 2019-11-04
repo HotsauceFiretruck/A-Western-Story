@@ -26,7 +26,7 @@ export class PreloaderScene extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        loadingText.setOrigin(0.5, 0.5);
+        loadingText.setOrigin(0.5, 0.5).setScale(scale);
         
         let percentText = this.make.text({
             x: width / 2,
@@ -37,7 +37,7 @@ export class PreloaderScene extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        percentText.setOrigin(0.5, 0.5);
+        percentText.setOrigin(0.5, 0.5).setScale(scale);
         
         let assetText = this.make.text({
             x: width / 2,
@@ -49,7 +49,7 @@ export class PreloaderScene extends Phaser.Scene
             }
         });
 
-        assetText.setOrigin(0.5, 0.5);
+        assetText.setOrigin(0.5, 0.5).setScale(scale);
 
         this.load.on('progress', function (value) {
             percentText.setText(parseInt(value * 100) + '%');
@@ -112,6 +112,9 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
         this.load.image('healthbarfront', 'assets/BossHealthBar.png');
         this.load.image('dialogbg', 'assets/DialogBackground.png');
+        this.load.image('death', 'assets/GameOver.png');
+        this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
+        this.load.image('respawnButton', 'assets/RespawnButton.png');
         this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }

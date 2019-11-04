@@ -20,7 +20,7 @@ export class MobileController
         this.jumpButton = scene.add.image(scene.cameras.main.width - (350 * scene.PhaserGame.scale), 
                           scene.cameras.main.height - (90 * scene.PhaserGame.scale), 'jump')
                           .setDisplaySize(120 * scene.PhaserGame.scale, 120 * scene.PhaserGame.scale).setScrollFactor(0, 0).setAlpha(.9)
-                          .setInteractive();
+                          .setInteractive().setDepth(10);
         this.jumpButton.on('pointerdown', () => {this.jump(player)});
     }
 
@@ -79,6 +79,13 @@ export class MobileController
 
             this.player.shoot(normalizedX + this.player.x, normalizedY + this.player.y);
         }
+    }
+
+    setBackStage()
+    {
+        this.horizontalControls.setDepth(-1);
+        this.fireControl.setDepth(-1);
+        this.jumpButton.setDepth(-1);
     }
 }
 
