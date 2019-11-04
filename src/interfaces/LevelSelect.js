@@ -21,7 +21,6 @@ export class LevelSelect extends Phaser.Scene {
 
         // Adding functionality to buttons. Like click events and color change on hover.
         this.lvl1Btn.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
             this.scene.start('level-1');
         });
         this.lvl1Btn.on('pointerover', function (event) {
@@ -32,7 +31,6 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl2Btn.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
             this.scene.start('level-2');
         });
         this.lvl2Btn.on('pointerover', function (event) {
@@ -43,7 +41,6 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl3Btn.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
             this.scene.start('level-3');
         });
         this.lvl3Btn.on('pointerover', function (event) {
@@ -54,7 +51,6 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl4Btn.on('pointerdown', (event) => {
-            console.log("Button Clicked!");
             this.scene.start('level-4');
         });
         this.lvl4Btn.on('pointerover', function (event) {
