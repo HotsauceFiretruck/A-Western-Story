@@ -26,7 +26,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
             canJump: true,
             fireRate: .3, // 1 bullet every [fireRate] seconds
             isFireReloaded: true,
-            jumpCooldownTimer: null
+            jumpCooldownTimer: null,
+            allowHorizontal: true
         };
 
         //Creating Collision Body and Sensors using Phaser.Matter engine
@@ -138,7 +139,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
             this.damagedEffects();
         }
         
-        
         if (this.status.health < 0)
         {
             this.status.health = 0;
@@ -186,6 +186,16 @@ export class Player extends Phaser.Physics.Matter.Sprite
             new Bullet(this.scene, this.scene.enemies, this.x, this.y, x, y);
             this.reloadGun();
         }
+    }
+
+    disableHorizontalMovement()
+    {
+        this.status.allowHorizontal = false;
+    }
+
+    enableHorizontalMovement()
+    {
+        this.status.allowHorizontal = true;
     }
 
     //Initializing death sequence

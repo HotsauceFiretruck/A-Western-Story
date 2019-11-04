@@ -17,21 +17,24 @@ export class DesktopController
 
     update()
     {
-        if (this.cursors.left.isDown && 
-            this.player.body.velocity.x > -this.player.status.maxVelocityX)
+        if (this.player.status.allowHorizontal)
         {
-            this.player.setFlipX(false);
-            if (!this.player.status.isTouching.left) {
-                this.player.applyForce({ x: -this.player.status.moveForce, y: 0 });
+            if (this.cursors.left.isDown && 
+                this.player.body.velocity.x > -this.player.status.maxVelocityX)
+            {
+                this.player.setFlipX(false);
+                if (!this.player.status.isTouching.left) {
+                    this.player.applyForce({ x: -this.player.status.moveForce, y: 0 });
+                }
             }
-        }
-        else if (this.cursors.right.isDown &&
-                 this.player.body.velocity.x < this.player.status.maxVelocityX)
-        {
-            this.player.setFlipX(true);
+            else if (this.cursors.right.isDown &&
+                    this.player.body.velocity.x < this.player.status.maxVelocityX)
+            {
+                this.player.setFlipX(true);
 
-            if (!this.player.status.isTouching.right) {
-                this.player.applyForce({ x: this.player.status.moveForce, y: 0 });
+                if (!this.player.status.isTouching.right) {
+                    this.player.applyForce({ x: this.player.status.moveForce, y: 0 });
+                }
             }
         }
 
