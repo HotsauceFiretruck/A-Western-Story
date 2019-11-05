@@ -214,7 +214,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
 
-        this.destroy();
+        //this.destroy();
     }
 
     
