@@ -70,10 +70,8 @@ export class StoryMode
                     }
                 ]
             },
-        
-            scene: [level3]
          
-            scene: [level1, death]
+            scene: [level3, death]
 
         };
 
