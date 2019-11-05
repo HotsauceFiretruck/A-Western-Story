@@ -15,7 +15,7 @@ export class StoryMode
     {
         
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-        this.isMobile = true;
+        this.isMobile = false;
 
         //Detecting the Device's Size and Set Max
         let maxWidth = 1200;
