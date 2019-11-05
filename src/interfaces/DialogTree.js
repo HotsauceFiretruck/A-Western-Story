@@ -10,7 +10,12 @@ export class DialogTree
         this.seqQueue = [];
 
         this.dialogBackground = scene.add.image(centerX, centerY, 'dialogbg');
-        dialogBackground.setScale(4 * scene.PhaserGame.scale).setScrollFactor(0, 0);
+        this.dialogBackground.setScale(4 * scene.PhaserGame.scale).setScrollFactor(0, 0);
+
+        if (scene.player != undefined && scene.PhaserGame.isMobile)
+        {
+            scene.player.controller.setBackStage(); // player set on stage --> disable everything.
+        }
 
         // let option1Image = this.add.sprite(20, 20, 'dialogoptions');
         // option1Image.setFrame(0);

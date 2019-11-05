@@ -2,9 +2,9 @@ import { Bullet } from "./Bullet.js"
 
 export class Enemy extends Phaser.Physics.Matter.Sprite
 {
-    constructor(scene, x, y)
+    constructor(scene, x, y, key, health, scale)
     {
-        super(scene.matter.world, x, y, 'enemy');
+        super(scene.matter.world, x, y, key == undefined ? 'enemy' : key);
         this.player = scene.player;
 
         //Add to Group
@@ -13,7 +13,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
         //Status
         this.status = {
-            health: 20,
+            health: health == undefined ? 20 : health,
             fireRange: 200,
             fireRate: .9, // 1 bullet every [fireRate] seconds
             isFireReloaded: true,
@@ -29,9 +29,9 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             (0, 0, this.width * 0.7, this.height, {chamfer: 10});
 
         this.sensors = {
-                bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
-                left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
-                right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
+            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
+            left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
+            right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
         };
 
         let compoundBody = Body.create({

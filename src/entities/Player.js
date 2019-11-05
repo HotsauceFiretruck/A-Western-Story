@@ -14,7 +14,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
-    
+
         //Status
         this.status = {
             health: 20,
@@ -48,7 +48,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
             frictionStatic: 0,
             frictionAir: 0.03,
-            friction: .02
+            friction: .012
         });
 
         //Set collision category
@@ -214,7 +214,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
 
-        //this.destroy();da
+        //this.destroy();
     }
 
     
