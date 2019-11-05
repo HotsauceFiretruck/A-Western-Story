@@ -71,7 +71,8 @@ export class LevelTutorial extends Phaser.Scene
         let nextLevelGoal = new Area(this, 'house', 1150, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.nextLevel()});
 
-        let dialogTree = new DialogTree(this, 600, 500);
+        //Enable Dialog Tree: Dialog Tree should be the last thing to load.
+        let dialogTree = new DialogTree(this, 600, 100);
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)

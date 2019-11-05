@@ -62,9 +62,19 @@ export class Joystick
         return this.distanceFrom(this.thumb.x, this.thumb.y, this.centerX, this.centerY) / this.rad;
     }
 
-    setDepth(number)
+    disable()
     {
-        this.base.setDepth(number);
-        this.thumb.setDepth(number);
+        this.base.setVisibility(false);
+        this.thumb.setVisibility(false);
+        this.base.setEnable(false);
+        this.thumb.setEnable(false);
+    }
+
+    enable()
+    {
+        this.base.setVisibility(true);
+        this.thumb.setVisibility(true);
+        this.base.setEnable(true);
+        this.thumb.setEnable(true);
     }
 }

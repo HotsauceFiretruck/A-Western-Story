@@ -81,11 +81,20 @@ export class MobileController
         }
     }
 
-    setBackStage()
+    disable()
     {
-        this.horizontalControls.setDepth(-1);
-        this.fireControl.setDepth(-1);
-        this.jumpButton.setDepth(-1);
+        this.horizontalControls.disable();
+        this.fireControl.disable();
+        this.jumpButton.setVisibility(false);
+        this.jumpButton.shutdown();
+    }
+
+    enable()
+    {
+        this.horizontalControls.enable();
+        this.fireControl.enable();
+        this.jumpButton.setVisibility(true);
+        this.jumpButton.on('pointerdown');
     }
 }
 

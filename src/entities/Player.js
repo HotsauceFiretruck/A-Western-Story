@@ -10,7 +10,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
     */
     constructor(scene, x, y)
     {
-        super(scene.matter.world, x, y, 'player')
+        super(scene.matter.world, x, y, 'player');
+        this.scene = scene;
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
@@ -27,7 +28,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
             fireRate: .3, // 1 bullet every [fireRate] seconds
             isFireReloaded: true,
             jumpCooldownTimer: null,
-            allowHorizontal: true
+            allowHorizontal: true,
+            allowMove: true,
         };
 
         //Creating Collision Body and Sensors using Phaser.Matter engine
@@ -92,15 +94,13 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
     update()
     {
-        //Update Controls/Cursors
-        this.controller.update();
-
-        if (this.y > 600)
+        if (this.status.allowMove)
         {
-            this.death();
+            //Update Controls/Cursors
+            this.controller.update();
         }
         
-        if (this.status.health <= 0) 
+        if (this.y > 600)
         {
             this.death();
         }
@@ -109,13 +109,18 @@ export class Player extends Phaser.Physics.Matter.Sprite
     //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
-        if (bodyA === this.sensors.left) {
+        if (bodyA === this.sensors.left) 
+        {
           this.status.isTouching.left = true;
           if (pair.separation > 0.5) this.x += pair.separation - 0.5;
-        } else if (bodyA === this.sensors.right) {
+        } 
+        else if (bodyA === this.sensors.right) 
+        {
           this.status.isTouching.right = true;
           if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
-        } else if (bodyA === this.sensors.bottom) {
+        } 
+        else if (bodyA === this.sensors.bottom) 
+        {
           this.status.isTouching.down = true;
         }
     }
@@ -149,6 +154,10 @@ export class Player extends Phaser.Physics.Matter.Sprite
             this.healthSprite.setFrame(2);
         }
         this.displayHealth.setText(this.status.health);
+        if (this.status.health <= 0) 
+        {
+            this.death();
+        }
     }
 
     damagedEffects()
@@ -196,6 +205,47 @@ export class Player extends Phaser.Physics.Matter.Sprite
     enableHorizontalMovement()
     {
         this.status.allowHorizontal = true;
+    }
+
+    disableAllMovement()
+    {
+        this.status.allowMove = false;
+    }
+
+    enableAllMovement()
+    {
+        this.status.allowMove = true;
+    }
+
+    stageMode()
+    {
+        this.scene.cameras.main.stopFollow();
+        this.disableAllMovement();
+        this.healthSprite.setVisible(false);
+        this.displayHealth.setVisible(false);
+        if (this.scene.PhaserGame.isMobile)
+        {
+            this.controller.disable();
+        } 
+        else
+        {
+            this.controller.disableShoot();
+        }
+    }
+
+    playMode()
+    {
+        this.enableAllMovement();
+        this.healthSprite.setVisible(true);
+        this.displayHealth.setVisible(true);
+        if (this.scene.PhaserGame.isMobile)
+        {
+            this.controller.enable();
+        } 
+        else
+        {
+            this.controller.enableShoot();
+        }
     }
 
     //Initializing death sequence
