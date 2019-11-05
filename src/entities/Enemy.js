@@ -19,7 +19,8 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             isFireReloaded: true,
             distanceFromPlayer: 0,
             isPlayerInRange: false,
-            isTouching: { left: false, right: false, down: false }
+            isTouching: { left: false, right: false, down: false },
+            isOnStage: false
         };
 
         //Add Collision Body
@@ -116,21 +117,32 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         {
             this.body.velocity.x = 5;
         }
-        
-        //console.log(this.body);
     }
 
     update()
     {
-        this.statusUpdate();
-        // console.log(this.status.isFireReloaded);
-        // console.log(this.status.isPlayerInRange + " " + this.status.isFireReloaded);
-        if (this.status.isPlayerInRange && this.status.isFireReloaded)
+        if (!this.status.isOnStage)
         {
-            this.shoot();
-            this.reloadGun();
+            this.statusUpdate();
+            // console.log(this.status.isFireReloaded);
+            // console.log(this.status.isPlayerInRange + " " + this.status.isFireReloaded);
+            if (this.status.isPlayerInRange && this.status.isFireReloaded)
+            {
+                this.shoot();
+                this.reloadGun();
+            }
+            this.moveAI();
         }
-        this.moveAI();
+    }
+
+    stageMode()
+    {
+        this.status.isOnStage = true;
+    }
+
+    playMode()
+    {
+        this.status.isOnStage = false;
     }
 
     changeHealth(changeHealthBy)
@@ -151,6 +163,9 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
     death()
     {
         this.scene.matterCollision.removeOnCollideStart();
+        const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
+        this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+        this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
         this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
         this.destroy();
     }

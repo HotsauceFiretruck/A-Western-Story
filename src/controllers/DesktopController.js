@@ -51,4 +51,14 @@ export class DesktopController
             });
         }
     }
+
+    disableShoot()
+    {
+        this.scene.input.off('pointerdown');
+    }
+
+    enableShoot()
+    {
+        this.scene.input.on('pointerdown', (pointer) => { this.player.shoot(pointer.worldX, pointer.worldY)});
+    }
 }

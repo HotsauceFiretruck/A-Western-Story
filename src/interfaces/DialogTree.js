@@ -9,12 +9,29 @@ export class DialogTree
         this.sequences = [];
         this.seqQueue = [];
 
+        //Play Dialog ----
         this.dialogBackground = scene.add.image(centerX, centerY, 'dialogbg');
         this.dialogBackground.setScale(4 * scene.PhaserGame.scale).setScrollFactor(0, 0);
 
-        if (scene.player != undefined && scene.PhaserGame.isMobile)
+        if (scene.projectiles != undefined)
         {
-            scene.player.controller.setBackStage(); // player set on stage --> disable everything.
+            for (let i = 0; i < scene.projectiles.list.length; i++)
+            {
+                scene.projectiles.list[i].destroy();
+            }
+        }
+
+        if (scene.enemies != undefined)
+        {
+            for (let i = 0; i < scene.enemies.list.length; i++)
+            {
+                scene.enemies.list[i].stageMode();
+            }
+        }
+
+        if (scene.player != undefined)
+        {
+            scene.player.stageMode(); // player set on stage --> disable everything.
         }
 
         // let option1Image = this.add.sprite(20, 20, 'dialogoptions');
@@ -61,6 +78,22 @@ export class DialogTree
     play()
     {
 
+    }
+
+    endTree()
+    {
+        if (this.scene.enemies != undefined)
+        {
+            for (let i = 0; i < this.scene.enemies.list.length; i++)
+            {
+                this.scene.enemies.list[i].playMode();
+            }
+        }
+
+        if (this.scene.player != undefined)
+        {
+            this.scene.player.stageMode(); // player set on stage --> disable everything.
+        }
     }
 }
 
