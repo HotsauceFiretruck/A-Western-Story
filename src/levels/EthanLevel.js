@@ -52,17 +52,6 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(750,175, 'cloud');
         this.add.image(200,210, 'cloud');
         
-        this.backBtn = this.add.sprite(1100,50, 'backbtn').setScale(.3).setInteractive();
-        this.backBtn.on('pointerdown', (event) => {
-            this.scene.start('menu-scene');
-        })
-        this.backBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        })
-        this.backBtn.on('pointerout', function (event) {
-            this.clearTint();
-        })
-        
         this.map = new TileMap(this, level, 32, 32, 'sand');
         this.player = new Player(this, 100, 550);
 
