@@ -3,15 +3,17 @@ export class DialogTree
     constructor(scene, centerX, centerY)
     {
         this.scene = scene;
-        this.centerX = centerX * scene.PhaserGame.scale;
-        this.centerY = centerY * scene.PhaserGame.scale;
+        this.scale = scene.PhaserGame.scale;
+        this.centerX = centerX * this.scale;
+        this.centerY = centerY * this.scale;
+        
 
         this.sequences = [];
         this.seqQueue = [];
 
         //Play Dialog ----
-        this.dialogBackground = scene.add.image(centerX, centerY, 'dialogbg');
-        this.dialogBackground.setScale(4 * scene.PhaserGame.scale).setScrollFactor(0, 0);
+        this.dialogBackground = scene.add.image(this.centerX, this.centerY, 'dialogbg');
+        this.dialogBackground.setScale(4 * this.scale).setScrollFactor(0, 0);
 
         if (scene.projectiles != undefined)
         {
@@ -34,6 +36,22 @@ export class DialogTree
             scene.player.stageMode(); // player set on stage --> disable everything.
         }
 
+        this.pressAnyKeyToContinueText = scene.add.text(
+            0, 
+            0, 
+            "Press Any Key To Continue...",
+            {
+                fontFamily: 'Courier',
+                fontSize: Math.floor(16 * this.scale) + 'px',
+                fontStyle: "bold"
+            }
+        ).setScrollFactor(0, 0);
+        this.pressAnyKeyToContinueText.setPosition(
+            this.centerX + 270 * this.scale,
+            this.centerY + 50 * this.scale
+        );
+
+
         // let option1Image = this.add.sprite(20, 20, 'dialogoptions');
         // option1Image.setFrame(0);
     }
@@ -55,16 +73,12 @@ export class DialogTree
     //stop and progress
     playSequence(sequenceId)
     {
-
-        //Foreach Dialog 
-        //Display it
-        //Wait for the signal
         this.sequences[sequenceId].playSequence();
-        //Loop
     }
 
     currentSequenceEnded()
     {
+        //if there is no more sequences, activate things
 
     }
 
@@ -113,19 +127,29 @@ class Sequence
 
     playSequence()
     {
-        //When signaled, play next dialog
+        console.log("Playing Sequence...");
+        // if (!this.isNextDialogPossible)
+        // {
+        //     this.dialogTree.scene.input.keyboard.once("keydown", () => {this.nextDialog();});
+        // }
         this.nextDialog();
+        this.dialogTree.scene.input.keyboard.on("keydown", () => {this.nextDialog();});
     }
 
     endSequence()
     {
         this.onDialogNumber = 0;
+        this.dialogTree.scene.input.keyboard.off("keydown");
         this.dialogTree.currentSequenceEnded();
     }
 
     nextDialog()
     {
-        this.onDialogNumber++;
+        console.log("Finding Next Dialog...");
+        if (this.onDialogNumber != 0)
+        {
+            this.dialogs[this.onDialogNumber - 1].endDialog();
+        }
         if (this.onDialogNumber < this.dialogs.length)
         {
             this.dialogs[this.onDialogNumber].displayDialog();
@@ -134,6 +158,7 @@ class Sequence
         {
             this.endSequence();
         }
+        this.onDialogNumber++;
     }
 }
 
@@ -144,13 +169,8 @@ class Dialog
 {
     constructor(dialogTree, dialogSequenceId, text)
     {
-        this.textObject = this.dialogTree.scene.add.text( 0, 0, text,
-            {
-                fontFamily: 'Courier',
-                fontSize: '18px',
-            }
-        );
-        this.textObject.setVisible(false);
+        this.textObject = null;
+        this.text = text;
         this.dialogTree = dialogTree;
         this.dialogSequenceId = dialogSequenceId;
     }
@@ -165,11 +185,28 @@ class Dialog
 
     displayDialog()
     {
-        this.textObject.setVisible(true);
+        let scaleSize = Math.floor(20 * this.dialogTree.scale);
+        this.textObject = this.dialogTree.scene.add.text(
+            0, 
+            0, 
+            this.text,
+            {
+                fontFamily: 'Courier',
+                fontSize: scaleSize + 'px',
+                fontStyle: "bold"
+            }
+        ).setScrollFactor(0, 0);
+        this.textObject.setPosition(this.dialogTree.centerX - this.textObject.displayWidth / 2,
+                                    this.dialogTree.centerY - this.textObject.displayHeight / 2);
     }
 
     endDialog()
     {
-        this.textObject.setVisible(false);
+        if (this.textObject != null)
+        {
+            let temp = this.textObject;
+            this.textObject = null;
+            temp.destroy();
+        }
     }
 }
