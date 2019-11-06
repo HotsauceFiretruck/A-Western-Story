@@ -44,10 +44,10 @@ export class DustinLevel extends Phaser.Scene
 
 
         //Looping background with level
-        this.loopImage('background', 720, 420, level[0].length * 32, level.length * 32, 1.45);
+        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
         
         // Create map
-        this.map = new TileMap(this, level, 32, 32, 'grass');
+        this.map = new TileMap(this, level, 32, 32, 'sand');
         //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
         
         //Adding static images
