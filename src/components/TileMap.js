@@ -89,6 +89,13 @@ export class TileMap
         return width;
     }
 
+    deleteAllPlatforms() {
+        for(let i = 0; i < this.platforms.list.length; ++i) {
+            this.platforms.list[i].destroy();
+        }
+        this.platforms.list = [];
+    }
+
     generateBounds(fromTileX, fromTileY, toTileX, toTileY)
     {
         let platf = new Platform(this.scene, this.platforms.category, 

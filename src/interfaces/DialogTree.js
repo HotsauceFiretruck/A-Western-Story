@@ -73,13 +73,29 @@ export class DialogTree
     //stop and progress
     playSequence(sequenceId)
     {
+        this.dialogBackground.setVisible(true);
+        this.pressAnyKeyToContinueText.setVisible(true);
         this.sequences[sequenceId].playSequence();
     }
 
     currentSequenceEnded()
     {
-        //if there is no more sequences, activate things
+        this.dialogBackground.setVisible(false);
+        this.pressAnyKeyToContinueText.setVisible(false);
 
+        //if there is no more sequences, activate things
+        if (this.scene.enemies != undefined)
+        {
+            for (let i = 0; i < this.scene.enemies.list.length; i++)
+            {
+                this.scene.enemies.list[i].playMode();
+            }
+        }
+
+        if (this.scene.player != undefined)
+        {
+            this.scene.player.playMode(); // player set on stage --> disable everything.
+        }
     }
 
     //Signal activate
