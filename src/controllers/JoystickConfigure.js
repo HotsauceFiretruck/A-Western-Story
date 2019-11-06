@@ -64,17 +64,13 @@ export class Joystick
 
     disable()
     {
-        this.base.setVisibility(false);
-        this.thumb.setVisibility(false);
-        this.base.setEnable(false);
-        this.thumb.setEnable(false);
+        this.base.setVisible(false);
+        this.thumb.setVisible(false);
     }
 
     enable()
     {
-        this.base.setVisibility(true);
-        this.thumb.setVisibility(true);
-        this.base.setEnable(true);
-        this.thumb.setEnable(true);
+        this.base.setVisible(true);
+        this.thumb.setVisible(true);
     }
 }

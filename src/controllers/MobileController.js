@@ -85,16 +85,16 @@ export class MobileController
     {
         this.horizontalControls.disable();
         this.fireControl.disable();
-        this.jumpButton.setVisibility(false);
-        this.jumpButton.shutdown();
+        this.jumpButton.setVisible(false);
+        this.jumpButton.removeAllListeners();
     }
 
     enable()
     {
         this.horizontalControls.enable();
         this.fireControl.enable();
-        this.jumpButton.setVisibility(true);
-        this.jumpButton.on('pointerdown');
+        this.jumpButton.setVisible(true);
+        this.jumpButton.on('pointerdown', () => {this.jump(player)});
     }
 }
 

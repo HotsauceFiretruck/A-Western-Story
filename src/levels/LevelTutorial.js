@@ -63,7 +63,7 @@ export class LevelTutorial extends Phaser.Scene
         //Adding static images
         this.add.image(50, 525, 'house');
 
-        this.player = new Player(this, 300, 100);
+        this.player = new Player(this, 600, 0);
         this.basicEnemy = new Enemy(this, 750, 100);
 
         //Add an Area Example
@@ -73,6 +73,14 @@ export class LevelTutorial extends Phaser.Scene
 
         //Enable Dialog Tree: Dialog Tree should be the last thing to load.
         let dialogTree = new DialogTree(this, 600, 100);
+        let sequence1 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence1, "Welcome to this game.");
+        dialogTree.addDialog(sequence1, "Press A to go right.");
+        dialogTree.addDialog(sequence1, "Press D to go left.");
+        dialogTree.addDialog(sequence1, "Press W to jump.");
+        dialogTree.addDialog(sequence1, "Right click to shoot.");
+        dialogTree.addDialog(sequence1, "Have fun, bye.");
+        dialogTree.playSequence(sequence1);
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
