@@ -3,12 +3,18 @@ import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
+import { FinalLevel } from "./levels/FinalLevel.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
+import { PreloaderScene } from "./interfaces/PreloaderScene.js";
+import { MenuScene } from "./interfaces/MenuScene.js";
+import { LevelSelect } from "./interfaces/LevelSelect.js";
+import { BonusLevel } from "./levels/BonusLevel.js";
 
 export class StoryMode 
 {
     constructor() 
     {
+        
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
 
@@ -33,11 +39,17 @@ export class StoryMode
         }
 
         //Initializing Levels
+        let preloader = new PreloaderScene(this);
+        let menu = new MenuScene(this);
+        let levelSelect = new LevelSelect(this);
+
+        let levelBonus = new BonusLevel(this);
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
-        let level4 = new EthanLevel(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
+        let level4 = new EthanLevel(this);
+        let level5 = new FinalLevel(this);
         let death = new DeathScene(this);
 
         //Initializing Config
@@ -70,8 +82,8 @@ export class StoryMode
                     }
                 ]
             },
-         
-            scene: [level3, death]
+          
+            scene: [preloader, menu, levelTutorial, levelSelect, level1, level2, level3, level4, level5, levelBonus, death]
 
         };
 

@@ -2,9 +2,9 @@ import { Bullet } from "./Bullet.js"
 
 export class Enemy extends Phaser.Physics.Matter.Sprite
 {
-    constructor(scene, x, y)
+    constructor(scene, x, y, key, health, scale)
     {
-        super(scene.matter.world, x, y, 'enemy');
+        super(scene.matter.world, x, y, key == undefined ? 'enemy' : key);
         this.player = scene.player;
 
         //Add to Group
@@ -13,13 +13,14 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
         //Status
         this.status = {
-            health: 20,
+            health: health == undefined ? 20 : health,
             fireRange: 200,
             fireRate: .9, // 1 bullet every [fireRate] seconds
             isFireReloaded: true,
             distanceFromPlayer: 0,
             isPlayerInRange: false,
-            isTouching: { left: false, right: false, down: false }
+            isTouching: { left: false, right: false, down: false },
+            isOnStage: false
         };
 
         //Add Collision Body
@@ -29,9 +30,9 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             (0, 0, this.width * 0.7, this.height, {chamfer: 10});
 
         this.sensors = {
-                bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
-                left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
-                right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
+            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
+            left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
+            right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
         };
 
         let compoundBody = Body.create({
@@ -53,7 +54,8 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             .setScale(1.5)
             .setPosition(x, y)
             .setFixedRotation()
-            .setCollisionCategory(scene.enemies.category);
+            .setCollisionCategory(scene.enemies.category)
+            .setDepth(1);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
@@ -115,21 +117,32 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         {
             this.body.velocity.x = 5;
         }
-        
-        //console.log(this.body);
     }
 
     update()
     {
-        this.statusUpdate();
-        // console.log(this.status.isFireReloaded);
-        // console.log(this.status.isPlayerInRange + " " + this.status.isFireReloaded);
-        if (this.status.isPlayerInRange && this.status.isFireReloaded)
+        if (!this.status.isOnStage)
         {
-            this.shoot();
-            this.reloadGun();
+            this.statusUpdate();
+            // console.log(this.status.isFireReloaded);
+            // console.log(this.status.isPlayerInRange + " " + this.status.isFireReloaded);
+            if (this.status.isPlayerInRange && this.status.isFireReloaded)
+            {
+                this.shoot();
+                this.reloadGun();
+            }
+            this.moveAI();
         }
-        this.moveAI();
+    }
+
+    stageMode()
+    {
+        this.status.isOnStage = true;
+    }
+
+    playMode()
+    {
+        this.status.isOnStage = false;
     }
 
     changeHealth(changeHealthBy)
@@ -150,6 +163,9 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
     death()
     {
         this.scene.matterCollision.removeOnCollideStart();
+        const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
+        this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+        this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
         this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
         this.destroy();
     }

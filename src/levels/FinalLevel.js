@@ -1,20 +1,21 @@
 import { Player } from "../entities/Player.js";
-import { Enemy } from "../entities/Enemy.js";
+import { FinalEnemy } from "../entities/FinalEnemy.js";
 import { TileMap } from "../components/TileMap.js";
 
-export class EthanLevel extends Phaser.Scene
+export class FinalLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-4"});
+        super({key:"level-5"});
+
         this.PhaserGame = PhaserGame;
     }
 
     create()
     {
-        //this.sound.add('cartheftmusic').play();
-        //this.sound.play('cartheftmusic', { loop: -1 });
-
+        //Creating Level using an Array + Tile Map
+        //1 is for block/tile; 0 is for empty space
+        //25 wide by 19 long
         let level = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -31,29 +32,15 @@ export class EthanLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
         this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
-        this.add.image(1100, 500, 'cactus');
-        this.add.image(800, 530, 'cactus');
-        this.add.image(700, 532, 'crate').setScale(.9);
-        this.add.image(370, 425, 'deadtree').setScale(1.75);
-        this.add.image(500,200, 'cloud');
-        this.add.image(470,175, 'cloud');
-        this.add.image(1100,250, 'cloud');
-        this.add.image(600,200, 'cloud');
-        this.add.image(5770,175, 'cloud');
-        this.add.image(800,210, 'cloud');
-        this.add.image(900,200, 'cloud');
-        this.add.image(750,175, 'cloud');
-        this.add.image(200,210, 'cloud');
-        
-        this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 100, 550);
+
+        this.map = new TileMap(this, level, 32, 32, 'grass');
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -64,13 +51,21 @@ export class EthanLevel extends Phaser.Scene
             category: 4,
             list: []
         };
+
         
-        this.basicEnemy = new Enemy(this, 850, 550); 
-        this.basicEnemy = new Enemy(this, 1600, 550)
+        this.player = new Player(this, 250, 500);
+        this.finalBoss = new FinalEnemy(this, 500, 500).setScale(5);
     }
 
     update ()
     {  
+        //Update platforms
+        for (let i = 0; i < this.map.platforms.list.length; ++i)
+        {
+            this.map.platforms.list[i]
+        }
+
+        //Update bullets
         for (let i = 0; i < this.projectiles.list.length; i++)
         {
             this.projectiles.list[i].update();
@@ -84,9 +79,9 @@ export class EthanLevel extends Phaser.Scene
         
         if (this.enemies.list.length == 0)
         {
-            new Enemy(this, 1800, 100);
+            new FinalEnemy(this, 500, 300).setScale(5);
         }
-        
+
         this.player.update();
     }
 

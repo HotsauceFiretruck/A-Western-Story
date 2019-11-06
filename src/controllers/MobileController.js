@@ -20,7 +20,7 @@ export class MobileController
         this.jumpButton = scene.add.image(scene.cameras.main.width - (350 * scene.PhaserGame.scale), 
                           scene.cameras.main.height - (90 * scene.PhaserGame.scale), 'jump')
                           .setDisplaySize(120 * scene.PhaserGame.scale, 120 * scene.PhaserGame.scale).setScrollFactor(0, 0).setAlpha(.9)
-                          .setInteractive();
+                          .setInteractive().setDepth(10);
         this.jumpButton.on('pointerdown', () => {this.jump(player)});
     }
 
@@ -41,29 +41,30 @@ export class MobileController
     update()
     {
         //Update Movements
-        if (this.horizontalControls.checkState())
+        if (this.player.status.allowHorizontal)
         {
-            let normalizedX = Math.cos(this.horizontalControls.getRotation());
-            let speedScale = this.horizontalControls.getDistScale();
-            
-            //
+            if (this.horizontalControls.checkState())
+            {
+                let normalizedX = Math.cos(this.horizontalControls.getRotation());
+                let speedScale = this.horizontalControls.getDistScale();
 
-            //If normalizedX is negative => left
-            if (normalizedX <= 0 &&
-                this.player.body.velocity.x > -this.player.status.maxVelocityX)
-            {
-                this.player.setFlipX(false);
-                if (!this.player.status.isTouching.left) {
-                    this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                //If normalizedX is negative => left
+                if (normalizedX <= 0 &&
+                    this.player.body.velocity.x > -this.player.status.maxVelocityX)
+                {
+                    this.player.setFlipX(false);
+                    if (!this.player.status.isTouching.left) {
+                        this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                    }
                 }
-            }
-            //If normalizedX is positive => right
-            if (normalizedX > 0 &&
-                this.player.body.velocity.x < this.player.status.maxVelocityX)
-            {
-                this.player.setFlipX(true);
-                if (!this.player.status.isTouching.right) {
-                    this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                //If normalizedX is positive => right
+                if (normalizedX > 0 &&
+                    this.player.body.velocity.x < this.player.status.maxVelocityX)
+                {
+                    this.player.setFlipX(true);
+                    if (!this.player.status.isTouching.right) {
+                        this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                    }
                 }
             }
         }
@@ -78,6 +79,22 @@ export class MobileController
 
             this.player.shoot(normalizedX + this.player.x, normalizedY + this.player.y);
         }
+    }
+
+    disable()
+    {
+        this.horizontalControls.disable();
+        this.fireControl.disable();
+        this.jumpButton.setVisible(false);
+        this.jumpButton.removeAllListeners();
+    }
+
+    enable()
+    {
+        this.horizontalControls.enable();
+        this.fireControl.enable();
+        this.jumpButton.setVisible(true);
+        this.jumpButton.on('pointerdown', () => {this.jump(player)});
     }
 }
 
