@@ -26,7 +26,7 @@ export class PreloaderScene extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        loadingText.setOrigin(0.5, 0.5);
+        loadingText.setOrigin(0.5, 0.5).setScale(scale);
         
         let percentText = this.make.text({
             x: width / 2,
@@ -37,7 +37,7 @@ export class PreloaderScene extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        percentText.setOrigin(0.5, 0.5);
+        percentText.setOrigin(0.5, 0.5).setScale(scale);
         
         let assetText = this.make.text({
             x: width / 2,
@@ -49,7 +49,7 @@ export class PreloaderScene extends Phaser.Scene
             }
         });
 
-        assetText.setOrigin(0.5, 0.5);
+        assetText.setOrigin(0.5, 0.5).setScale(scale);
 
         this.load.on('progress', function (value) {
             percentText.setText(parseInt(value * 100) + '%');
@@ -90,7 +90,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
         this.load.image('enemy', 'assets/Outlaw.png');
-        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
@@ -99,10 +98,10 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('crate', 'assets/Crate.png');
         this.load.image('deadtree', 'assets/DeadTree.png');
         this.load.image('barrel', 'assets/Barrel.png');
-        this.load.image('title', 'assets/title.PNG');
-        this.load.image('bg', 'assets/menuScreen.png');
-        this.load.image('playbtn', 'assets/playButton.png');
-        this.load.image('tutorialbtn', 'assets/tutorialButton.png');
+        this.load.image('title', 'assets/Title.PNG');
+        this.load.image('bg', 'assets/MenuScreen.png');
+        this.load.image('playbtn', 'assets/PlayButton.png');
+        this.load.image('tutorialbtn', 'assets/TutorialButton.png');
         this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
         this.load.image('backbtn', 'assets/BackButton.png');
         this.load.image('lvl1btn', 'assets/lvl1.png');
@@ -112,7 +111,13 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('lvl5btn', 'assets/lvl5.png');
         this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
         this.load.image('healthbarfront', 'assets/BossHealthBar.png');
-
+        this.load.image('dialogbg', 'assets/DialogBackground.png');
+        this.load.image('death', 'assets/GameOver.png');
+        this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
+        this.load.image('respawnButton', 'assets/RespawnButton.png');
+        this.load.image('bonuslvlbtn', 'assets/bonuslvlbtn.png')
+        this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
     create()
