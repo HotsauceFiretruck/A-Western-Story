@@ -42,17 +42,6 @@ export class AlexLevel extends Phaser.Scene
 
         this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
 
-        this.backBtn = this.add.sprite(1225,50, 'backbtn').setScale(.3).setInteractive();
-        this.backBtn.on('pointerdown', (event) => {
-            this.scene.start('menu-scene');
-        })
-        this.backBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        })
-        this.backBtn.on('pointerout', function (event) {
-            this.clearTint();
-        })
-
         this.map = new TileMap(this, level, 32, 32, 'grass');
 
         this.projectiles = {

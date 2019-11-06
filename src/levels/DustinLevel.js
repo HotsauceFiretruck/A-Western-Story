@@ -46,17 +46,6 @@ export class DustinLevel extends Phaser.Scene
         //Looping background with level
         this.loopImage('background', 720, 420, level[0].length * 32, level.length * 32, 1.45);
         
-        this.backBtn = this.add.sprite(1100,50, 'backbtn').setScale(.3).setInteractive();
-        this.backBtn.on('pointerdown', (event) => {
-            this.scene.start('menu-scene');
-        })
-        this.backBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        })
-        this.backBtn.on('pointerout', function (event) {
-            this.clearTint();
-        })
-        
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'grass');
         //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
