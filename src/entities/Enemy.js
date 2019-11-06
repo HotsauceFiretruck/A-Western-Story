@@ -111,11 +111,11 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
     {
         if(!this.status.isTouching.left)
         {
-            this.body.velocity.x = -5;
+            this.applyForce(-.000000005);
         }
         else if(!this.status.isTouching.right)
         {
-            this.body.velocity.x = 5;
+            this.applyForce(.0000000005);
         }
     }
 
