@@ -1,18 +1,29 @@
 import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
+import { Area } from "../components/Area.js";
 
-export class DustinLevel extends Phaser.Scene
+export class BonusLevel extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-2"});
+        super({key:"bonus-level"});
 
         this.PhaserGame = PhaserGame;
     }
 
     create()
     {
+        this.projectiles = {
+            category: 2,
+            list: [] 
+        };
+
+        this.enemies = {
+            category: 4,
+            list: []
+        };
+
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -31,48 +42,39 @@ export class DustinLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-
         //Looping background with level
-        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
-        
+        this.loopImage('background', 720, 420, level[0].length * 32, level.length * 32, 1.45);
+
         // Create map
-        this.map = new TileMap(this, level, 32, 32, 'sand');
-        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
-        
+        this.map = new TileMap(this, level, 32, 32, 'grass');
+
         //Adding static images
-        
-
-        // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
-        this.projectiles = {
-            category: 2, //Telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
+        this.add.image(50, 525, 'house');
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);  
+        this.basicEnemy = new Enemy(this, 750, 100);
 
-        // Testing Buttons
-        // this.testButton = this.add.sprite(100, 100, 'grass').setInteractive();
-        // this.testButton.on('pointerdown', function (event) { 
-        //     console.log("Button Clicked!");
-        //     //
-        // });
+        //Add an Area Example
+        //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
+        let nextLevelGoal = new Area(this, 'house', 1150, 525, 75, 104);
+        nextLevelGoal.whenTouched(this.player, () => {this.nextLevel()});
+    }
+
+    //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
+    nextLevel()
+    {
+        this.scene.start('level-1');
     }
 
     update ()
@@ -95,25 +97,14 @@ export class DustinLevel extends Phaser.Scene
             this.enemies.list[i].update();
         }
         
-        //When there are no more enemies in the level, add a new one at that position
-        if (this.enemies.list.length == 0) 
+        if (this.enemies.list.length == 0)
         {
-            new Enemy(this, 600, 100);
+            new FinalEnemy(this, 500, 300).setScale(5);
         }
 
-        //Update player
         this.player.update();
     }
 
-    //Load in image to fill in the level
-    /*
-        imageKey: the image key
-        imageWidth: the width of the image in pixels
-        imageHeight: the height of the image in pixels
-        levelWidth: the width of the level in pixels
-        levelHeight: the height of the level in pixels
-        scale: how large you what the image to be display onscreen
-    */
     loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
     {
         let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);

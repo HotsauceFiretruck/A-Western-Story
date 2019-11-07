@@ -1,7 +1,8 @@
 import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
-import { InteractiveArea } from "../components/InteractiveArea.js";
+import { Area } from "../components/Area.js";
+import { DialogTree } from "../interfaces/DialogTree.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -49,8 +50,8 @@ export class LevelTutorial extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
         //Looping background with level
@@ -62,13 +63,24 @@ export class LevelTutorial extends Phaser.Scene
         //Adding static images
         this.add.image(50, 525, 'house');
 
-        this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100);
+        this.player = new Player(this, 600, 0);
+        this.basicEnemy = new Enemy(this, 750, 100);
 
-        //Add an InteractiveArea Example
+        //Add an Area Example
         //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
-        let nextLevelGoal = new InteractiveArea(this, 'house', 200, 525, 75, 104);
-        nextLevelGoal.whenTouched(this.player, this.nextLevel);
+        let nextLevelGoal = new Area(this, 'house', 1150, 525, 75, 104);
+        nextLevelGoal.whenTouched(this.player, () => {this.nextLevel()});
+
+        //Enable Dialog Tree: Dialog Tree should be the last thing to load.
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence1 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence1, "Welcome to this game.");
+        dialogTree.addDialog(sequence1, "Press A to go right.");
+        dialogTree.addDialog(sequence1, "Press D to go left.");
+        dialogTree.addDialog(sequence1, "Press W to jump.");
+        dialogTree.addDialog(sequence1, "Right click to shoot.");
+        dialogTree.addDialog(sequence1, "Have fun, bye.");
+        dialogTree.playSequence(sequence1);
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
