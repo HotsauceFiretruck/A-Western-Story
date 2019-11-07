@@ -1,4 +1,5 @@
 import { ArenaPlayer } from "../entities/ArenaPlayer.js";
+import { OtherPlayer } from "../entities/OtherPlayer.js";
 import { TileMap } from "../components/TileMap.js";
 
 
@@ -57,9 +58,9 @@ export class ArenaLevel extends Phaser.Scene
         //Adding static images
         this.add.image(50, 525, 'house');
 
-        this.player = new ArenaPlayer(this, 600, 0, this.connection.getSocket());
+        this.player = new ArenaPlayer(this, 600, 0, this.connection);
 
-        this.connection.connection(this.player, this);
+        this.connection.reload(this.player, this);
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
@@ -113,5 +114,6 @@ export class ArenaLevel extends Phaser.Scene
 
         //Update player
         this.player.update();
+        this.connection.updateMovement(this.player);
     }
 }
