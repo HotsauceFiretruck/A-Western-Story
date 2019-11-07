@@ -62,7 +62,9 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
-        if (bodyB.collisionFilter.category == 2 || bodyB.collisionFilter.category == 1)
+        if (bodyB.collisionFilter.category == 2 || 
+            bodyB.collisionFilter.category == 1 ||
+            bodyB.collisionFilter.category == 4)
         {
             if (bodyA === this.sensors.left) 
             {

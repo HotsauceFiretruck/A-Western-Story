@@ -79,8 +79,6 @@ export class EthanLevel extends Phaser.Scene
         
         this.basicEnemy = new Enemy(this, 850, 550); 
         this.basicEnemy2 = new Enemy(this, 1850, 550)
-
-        
     }
 
     switchToTown()
@@ -117,8 +115,8 @@ export class EthanLevel extends Phaser.Scene
         this.cactus2.destroy();
         this.deadTree.destroy();
         this.bigcrate.destroy();
-        this.basicEnemy.destroy();
-        this.basicEnemy2.destroy();
+        this.basicEnemy.death();
+        this.basicEnemy2.death();
 
     }
 
