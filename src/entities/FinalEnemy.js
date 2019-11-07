@@ -22,7 +22,14 @@ export class FinalEnemy extends Enemy
 
     moveAI()
     {
-        console.log("child!");
+        //console.log(this.status.isTouching.left);
+        if(this.status.isTouching.left || this.status.isTouching.right)
+        {
+            this.status.maxVelocityX = -this.status.maxVelocityX;
+            this.status.isTouching.left = false;
+            this.status.isTouching.right = false;
+        }
+        this.setVelocityX(this.status.maxVelocityX);
     }
 
     changeHealth(changeHealthBy)
