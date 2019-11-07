@@ -22,6 +22,7 @@ export class Area extends Phaser.Physics.Matter.Sprite
     // target: The object that this InteractiveCollider is listening for collision (IF the target have a collision body)
     whenTouched(byTarget, activateMethod)
     {
+        this.body.collisionFilter.mask = byTarget.category;
         this.scene.matterCollision.addOnCollideStart({
             objectA: this,
             objectB: byTarget,
@@ -36,7 +37,7 @@ export class Area extends Phaser.Physics.Matter.Sprite
     //When not touched by the target -> activate method
     whenNotTouched(byTarget, activateMethod)
     {
-        this.matterBody.collisionFilter.mask = byTarget.category;
+        this.body.collisionFilter.mask = byTarget.category;
         this.scene.matterCollision.addOnCollideEnd({
             objectA: this,
             objectB: byTarget,
