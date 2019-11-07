@@ -58,7 +58,7 @@ export class ArenaLevel extends Phaser.Scene
         //Adding static images
         this.add.image(50, 525, 'house');
 
-        this.player = new ArenaPlayer(this, 600, 0);
+        this.player = new ArenaPlayer(this, 600, 0, this.connection);
 
         this.connection.reload(this.player, this);
     }

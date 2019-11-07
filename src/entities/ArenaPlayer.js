@@ -8,10 +8,11 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
        x: X position of player in level (pixel unit)
        y: Y position of player in level (pixel unit)
     */
-    constructor(scene, x, y)
+    constructor(scene, x, y, connection)
     {
         super(scene.matter.world, x, y, 'player');
         this.scene = scene;
+        this.connection = connection;
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
@@ -192,7 +193,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     {
         if (this.status.isFireReloaded)
         {
-            new Bullet(this.scene, this, this.x+20, this.y+20, x, y);
+            this.scene.connection.sendBullet(this.x, this.y, x, y)
+            //new Bullet(this.scene, this, this.x, this.y, x, y);
             this.reloadGun();
         }
     }
@@ -262,8 +264,9 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
         if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
+        this.connection.socket.close();
         this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
-
+        
         //this.destroy();
     }
 

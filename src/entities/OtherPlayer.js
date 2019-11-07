@@ -53,21 +53,6 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
         {
             this.damagedEffects();
         }
-        
-        if (this.status.health < 0)
-        {
-            this.status.health = 0;
-            //death() // game over
-        }
-        if (this.status.health < 10)
-        {
-            this.healthSprite.setFrame(2);
-        }
-        this.displayHealth.setText(this.status.health);
-        if (this.status.health <= 0) 
-        {
-            this.death();
-        }
     }
 
     damagedEffects()
@@ -85,14 +70,5 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
             loop: false
         });
         
-    }
-
-    shoot(x, y)
-    {
-        if (this.status.isFireReloaded)
-        {
-            new Bullet(this.scene, this, this.x+20, this.y+20, x, y);
-            this.reloadGun();
-        }
     }
 }

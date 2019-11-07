@@ -1,4 +1,5 @@
 import { OtherPlayer } from "../entities/OtherPlayer.js";
+import { Bullet } from "../entities/Bullet.js";
 
 export class Connection {
 
@@ -37,6 +38,11 @@ export class Connection {
             })
         })
 
+        socket.on('send-bullet', data => {
+            const { x, y, to } = data;
+            new Bullet(scene, player, x, y, to.x, to.y);
+        })
+
         socket.on('update-players', playersData => {
             let playersFound = {}
             // Iterate over all players
@@ -68,6 +74,19 @@ export class Connection {
                     otherPlayers[id].destroy();
                     delete otherPlayers[id];
                 }
+            }
+        })
+    }
+
+    sendBullet(fromX, fromY, toX, toY) {
+        let socket = this.socket;
+
+        socket.emit('new-bullet', {
+            x: fromX,
+            y: fromY,
+            to: {
+                x: toX,
+                y: toY
             }
         })
     }
