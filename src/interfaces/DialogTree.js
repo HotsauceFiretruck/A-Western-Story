@@ -80,22 +80,7 @@ export class DialogTree
 
     currentSequenceEnded()
     {
-        this.dialogBackground.setVisible(false);
-        this.pressAnyKeyToContinueText.setVisible(false);
-
-        //if there is no more sequences, activate things
-        if (this.scene.enemies != undefined)
-        {
-            for (let i = 0; i < this.scene.enemies.list.length; i++)
-            {
-                this.scene.enemies.list[i].playMode();
-            }
-        }
-
-        if (this.scene.player != undefined)
-        {
-            this.scene.player.playMode(); // player set on stage --> disable everything.
-        }
+        this.endTree();
     }
 
     //Signal activate
@@ -112,6 +97,10 @@ export class DialogTree
 
     endTree()
     {
+        this.dialogBackground.setVisible(false);
+        this.pressAnyKeyToContinueText.setVisible(false);
+
+        //if there is no more sequences, activate things
         if (this.scene.enemies != undefined)
         {
             for (let i = 0; i < this.scene.enemies.list.length; i++)
@@ -122,7 +111,7 @@ export class DialogTree
 
         if (this.scene.player != undefined)
         {
-            this.scene.player.stageMode(); // player set on stage --> disable everything.
+            this.scene.player.playMode(); // player set on stage --> disable everything.
         }
     }
 }
@@ -144,10 +133,6 @@ class Sequence
     playSequence()
     {
         console.log("Playing Sequence...");
-        // if (!this.isNextDialogPossible)
-        // {
-        //     this.dialogTree.scene.input.keyboard.once("keydown", () => {this.nextDialog();});
-        // }
         this.nextDialog();
         this.dialogTree.scene.input.keyboard.on("keydown", () => {this.nextDialog();});
     }
