@@ -21,6 +21,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             distanceFromPlayer: 0,
             isPlayerInRange: false,
             isTouching: { left: false, right: false, down: false },
+            toggleSensors: false,
             isOnStage: false
         };
 
@@ -61,7 +62,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
-        if (bodyB.category == 2)
+        if (bodyB.collisionFilter.category == 2 || bodyB.collisionFilter.category == 1)
         {
             if (bodyA === this.sensors.left) 
             {
@@ -77,9 +78,10 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             {
                 this.status.isTouching.down = true;
             }
+            this.status.toggleSensors = false;
         }
     }
-    
+
     statusUpdate()
     {
         this.status.distanceFromPlayer = Math.sqrt((this.x - this.player.x) * (this.x - this.player.x) + 
@@ -112,8 +114,9 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         //console.log(this.status.isTouching.left);
         if(this.status.isTouching.left || this.status.isTouching.right)
         {
-            
             this.status.maxVelocityX = -this.status.maxVelocityX;
+            this.status.isTouching.left = false;
+            this.status.isTouching.right = false;
         }
         this.setVelocityX(this.status.maxVelocityX);
     }
