@@ -17,6 +17,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             fireRange: 200,
             fireRate: .9, // 1 bullet every [fireRate] seconds
             isFireReloaded: true,
+            maxVelocityX: 3,
             distanceFromPlayer: 0,
             isPlayerInRange: false,
             isTouching: { left: false, right: false, down: false },
@@ -60,7 +61,6 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
-
         if (bodyB.category == 2)
         {
             if (bodyA === this.sensors.left) 
@@ -109,14 +109,13 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
     moveAI()
     {
-        if(!this.status.isTouching.left)
+        //console.log(this.status.isTouching.left);
+        if(this.status.isTouching.left || this.status.isTouching.right)
         {
-            this.applyForce(-.000000005);
+            
+            this.status.maxVelocityX = -this.status.maxVelocityX;
         }
-        else if(!this.status.isTouching.right)
-        {
-            this.applyForce(.0000000005);
-        }
+        this.setVelocityX(this.status.maxVelocityX);
     }
 
     update()
