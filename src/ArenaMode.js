@@ -4,6 +4,7 @@ import { PreloaderArena } from "./interfaces/PreloaderArena.js";
 import { MenuScene } from "./interfaces/MenuScene.js";
 import { LevelSelect } from "./interfaces/LevelSelect.js";
 import { BonusLevel } from "./levels/BonusLevel.js";
+import { Connection } from "./components/Connection.js";
 
 
 export class ArenaMode 
@@ -33,10 +34,12 @@ export class ArenaMode
             this.scale = 1;
         }
 
+        let connection = new Connection();
+
         //Initializing Level
         let preloader = new PreloaderArena(this);
         let menu = new MenuScene(this);
-        let levelarena = new ArenaLevel(this);
+        let levelarena = new ArenaLevel(this, connection);
         let death = new DeathScene(this);
 
         //Initializing Config
