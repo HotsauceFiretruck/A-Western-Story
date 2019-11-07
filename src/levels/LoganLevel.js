@@ -24,6 +24,7 @@ export class LoganLevel extends Phaser.Scene
         //Adds background music
         this.sound.add('cartheftmusic').play();
         this.sound.play('cartheftmusic', { loop: -1 });
+
         
         let groundLayer = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -46,19 +47,31 @@ export class LoganLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         ];
-
         this.loopImage('background', 720, 420, groundLayer[0].length * 32, groundLayer.length * 32, 1.45);
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
-        let platform1 = new Platform(this, 2, 15, 1, 0, 0, 32, 32);
-        platform1.addSprite('sand');
-        platform1.enableKinematic(-.5, 0);
 
-        let platform2 = new Platform(this, 2, 20, 1, 0, 0, 32, 32);
-        platform2.addSprite('barrel');
-        platform2.enableKinematic(-.5, 0);
-
-        this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
+        // let platform1 = new Platform(this, 2, 10, 2, 0, 0, 32, 32);
+        // platform1.addSprite('sand');
+        // platform1.enableKinematic(-.5, 0);
+        // let platform2 = new Platform(this, 2, 15, 2, 0, 0, 32, 32);
+        // platform2.addSprite('sand');
+        // platform2.enableKinematic(-.5, 0);
+        // let platform3 = new Platform(this, 2, 20, 2, 0, 0, 32, 32);
+        // platform3.addSprite('barrel');
+        // platform3.enableKinematic(-.5, 0);
+        // let platform4 = new Platform(this, 2, 23, 2, 0, 0, 32, 32);
+        // platform4.addSprite('sand');
+        // platform4.enableKinematic(-.5, 0);
+        // let platform5 = new Platform(this, 2, 26, 2, 0, 0, 32, 32);
+        // platform5.addSprite('sand');
+        // platform5.enableKinematic(-.5, 0);
+        // let platform6 = new Platform(this, 2, 30, 2, 0, 0, 32, 32);
+        // platform6.addSprite('barrel');
+        // platform6.enableKinematic(-.5, 0);
+        
+        //testing obstacle collision
+        this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -71,14 +84,14 @@ export class LoganLevel extends Phaser.Scene
         };
 
         this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 600, 100); 
-
+        this.basicEnemy = new Enemy(this, 600, 100);
+        
         // scene, collisionCategory, fromTileX, fromTileY, tileBodyWidth, tileBodyHeight, pixelWidthPerTile, pixelHeightPerTile
         let platform = new Platform(this, 2, 10, 10, 0, 0, 32, 32);
         platform.addSprite('sand');
         platform.enableKinematic(-.5, 0);
         //Add damage enable
-        platform.enableDamage(-5, this.player);
+        platform.enableDamage(-5, this.player); 
     }
 
     update ()
