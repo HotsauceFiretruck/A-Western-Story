@@ -70,7 +70,7 @@ export class ArenaMode
                 ]
             },
          
-            scene: [preloader, levelarena]
+            scene: [preloader, levelarena, death]
 
         };
 
