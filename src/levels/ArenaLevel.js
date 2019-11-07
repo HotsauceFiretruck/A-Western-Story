@@ -9,7 +9,7 @@ export class ArenaLevel extends Phaser.Scene
         super({key:"level-arena"});
 
         this.PhaserGame = PhaserGame;
-        this.socket = io('http://localhost:8000');
+        this.socket = io('http://toxicserver.ddns.net:8123/');
     }
 
     create()
