@@ -10,6 +10,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         //Add to Group
         scene.enemies.list.push(this);
         scene.add.existing(this);
+        this.scene = scene;
 
         //Status
         this.status = {
