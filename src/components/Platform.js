@@ -103,4 +103,13 @@ export class Platform
             this.image[i].setY(this.status.vY + this.image[i].y);
         }
     }
+
+    destroy()
+    {
+        for (let i = 0; i < this.image.length; ++i)
+        {
+            this.image[i].destroy();
+        }
+        this.scene.matter.world.remove(this.body);
+    }
 }
