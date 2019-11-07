@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html>
-<head> 
-    <script src="./lib/phaser.js"></script>
-    <script src="./lib/phaser-matter-collision-plugin.min.js"></script>
-    <script type="module" src="./src/levels/LevelTutorial.js"></script>
-    <script type="module" src="./src/levels/AlexLevel.js"></script>
-    <script type="module" src="./src/Bullet.js"></script>
-    <script type="module" src="./src/Player.js"></script>
-    <script type="module" src="./src/Enemy.js"></script>
-    <script type="module" src="./src/Game.js"></script>
-    <script type="module" src="./src/Main.js"></script>
-    <script type="module" scr="./src/levels/TileMap.js"></script>
-    
-</head>
-<body>
-</body>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Western Story</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link href='https://fonts.googleapis.com/css?family=Actor' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Ewert&display=swap" rel="stylesheet">
+  </head>
+  <body style="background-image: url('assets/MenuScreen.png')">
+    <audio autoplay loop src="assets/MenuMusic.mp3">Audio Tag is not supported in your browser.</audio>
+
+    <div id="title">A WESTERN STORY</div>
+
+    <div class="buttonWrap">
+      <button class="button" onclick="window.location.href = 'https://hotsaucefiretruck.github.io/A-Western-Story/campaign.html'">Play Campaign</button> 
+    </div>
+    <div class="buttonWrap">
+      <button class="button">Play Arena</button>
+    </div>
+    <div class="buttonWrap">
+      <button class="button" onclick="window.location.href = 'https://github.com/HotsauceFiretruck/A-Western-Story'">Credits</button>
+    </div>
+
+  </body>
 </html>
