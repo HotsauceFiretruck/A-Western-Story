@@ -14,7 +14,6 @@ export class StoryMode
 {
     constructor() 
     {
-        
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
 

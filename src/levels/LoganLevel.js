@@ -1,14 +1,14 @@
-import { Player } from "../Player.js";
-import { Enemy } from "../Enemy.js";
-import { TileMap } from "./TileMap.js";
-import { Platform } from "./Platform.js";
+import { Player } from "../entities/Player.js";
+import { Enemy } from "../entities/Enemy.js";
+import { TileMap } from "../components/TileMap.js";
+import { Platform } from "../components/Platform.js";
 
 export class LoganLevel extends Phaser.Scene
 {
     
     constructor(PhaserGame)
     {
-        super({key:"level3"});
+        super({key:"level-3"});
         this.PhaserGame = PhaserGame;
     }
 
@@ -51,29 +51,27 @@ export class LoganLevel extends Phaser.Scene
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand'); 
 
 
-        let platform = new Platform(this, 2, 10, 2, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 15, 2, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 20, 2, 0, 0, 32, 32);
-        platform.addSprite('barrel');
-        platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 23, 2, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 26, 2, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
-        let platform = new Platform(this, 2, 30, 2, 0, 0, 32, 32);
-        platform.addSprite('barrel');
-        platform.enableKinematic(-.5, 0)
+        // let platform1 = new Platform(this, 2, 10, 2, 0, 0, 32, 32);
+        // platform1.addSprite('sand');
+        // platform1.enableKinematic(-.5, 0);
+        // let platform2 = new Platform(this, 2, 15, 2, 0, 0, 32, 32);
+        // platform2.addSprite('sand');
+        // platform2.enableKinematic(-.5, 0);
+        // let platform3 = new Platform(this, 2, 20, 2, 0, 0, 32, 32);
+        // platform3.addSprite('barrel');
+        // platform3.enableKinematic(-.5, 0);
+        // let platform4 = new Platform(this, 2, 23, 2, 0, 0, 32, 32);
+        // platform4.addSprite('sand');
+        // platform4.enableKinematic(-.5, 0);
+        // let platform5 = new Platform(this, 2, 26, 2, 0, 0, 32, 32);
+        // platform5.addSprite('sand');
+        // platform5.enableKinematic(-.5, 0);
+        // let platform6 = new Platform(this, 2, 30, 2, 0, 0, 32, 32);
+        // platform6.addSprite('barrel');
+        // platform6.enableKinematic(-.5, 0);
         
         //testing obstacle collision
         this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
-
-
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
