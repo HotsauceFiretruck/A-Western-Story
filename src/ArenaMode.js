@@ -1,6 +1,6 @@
 import { AlexLevel } from "./levels/AlexLevel.js";
 
-export class StoryMode 
+export class ArenaMode 
 {
     constructor() 
     {
@@ -27,7 +27,7 @@ export class StoryMode
             this.scale = 1;
         }
 
-        //Initializing Levels
+        //Initializing Level
         let level1 = new AlexLevel(this);
 
         //Initializing Config
@@ -79,5 +79,5 @@ export class StoryMode
     }
 }
 
-let A_Western_Story = new StoryMode();
+let A_Western_Story = new ArenaMode();
 
