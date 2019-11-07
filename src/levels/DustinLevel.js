@@ -6,7 +6,7 @@ import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 
 var battleInit = false;
-export class DustinLevel1 extends Phaser.Scene
+export class DustinLevel extends Phaser.Scene
 {
     
     constructor(PhaserGame)
