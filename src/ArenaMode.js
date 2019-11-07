@@ -1,4 +1,10 @@
-import { AlexLevel } from "./levels/AlexLevel.js";
+import { ArenaLevel } from "./levels/ArenaLevel.js";
+import { DeathScene } from "./interfaces/DeathScene.js";
+import { PreloaderArena } from "./interfaces/PreloaderArena.js";
+import { MenuScene } from "./interfaces/MenuScene.js";
+import { LevelSelect } from "./interfaces/LevelSelect.js";
+import { BonusLevel } from "./levels/BonusLevel.js";
+
 
 export class ArenaMode 
 {
@@ -28,7 +34,10 @@ export class ArenaMode
         }
 
         //Initializing Level
-        let level1 = new AlexLevel(this);
+        let preloader = new PreloaderArena(this);
+        let menu = new MenuScene(this);
+        let levelarena = new ArenaLevel(this);
+        let death = new DeathScene(this);
 
         //Initializing Config
         this.config = {
@@ -61,7 +70,7 @@ export class ArenaMode
                 ]
             },
          
-            scene: [level1, death]
+            scene: [preloader, levelarena]
 
         };
 
