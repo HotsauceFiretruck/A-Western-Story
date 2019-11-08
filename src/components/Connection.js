@@ -22,6 +22,7 @@ export class Connection {
         let socket = this.socket;
         this.otherPlayers = [];
         let otherPlayers = this.otherPlayers;
+        let localPlayer = player;
 
         socket.close();
         socket.open();
@@ -43,7 +44,7 @@ export class Connection {
 
         socket.on('send-bullet', data => {
             const { x, y, to, player } = data;
-            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, this.player);
+            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, localPlayer);
         })
 
         socket.on('update-players', playersData => {
@@ -113,16 +114,19 @@ export class Connection {
     updatePosition(player) {
         let socket = this.socket;
 
-        socket.emit('move-player', {
-            x: player.x,
-            y: player.y,
-            playerName: {
-              name: String(socket.id)
-            },
-            velocity: {
-                x: player.body.velocity.x,
-                y: player.body.velocity.y
-              }
-          })
+        if (player.body.velocity.x != 0 || player.body.velocity.y != 0) {
+            socket.emit('move-player', {
+                x: player.x,
+                y: player.y,
+                playerName: {
+                  name: String(socket.id)
+                },
+                velocity: {
+                    x: player.body.velocity.x,
+                    y: player.body.velocity.y
+                }
+            })
+            console.log("POSTITION SENT", player.x, player.y)
+        }
     }
 }
