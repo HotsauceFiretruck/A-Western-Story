@@ -6,6 +6,7 @@ import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 
 var battleInit = false;
+var scene;
 export class DustinLevel extends Phaser.Scene
 {
     
@@ -14,6 +15,7 @@ export class DustinLevel extends Phaser.Scene
         super({key:"level-2"});
 
         this.PhaserGame = PhaserGame;
+        scene = this;
     }
 
     create()
@@ -43,7 +45,7 @@ export class DustinLevel extends Phaser.Scene
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
@@ -75,10 +77,11 @@ export class DustinLevel extends Phaser.Scene
             list: []
         };
 
-        this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 608, 1);
-        this.basicEnemy2 = new Enemy(this, 6, 1);
-        this.basicEnemy3 = new Enemy(this, 408, 1);
+        //this.player = new Player(this, 300, 100);
+        this.player = new Player(this, 832, 532);
+        //this.basicEnemy = new Enemy(this, 608, 1);
+        //this.basicEnemy2 = new Enemy(this, 6, 1);
+        //this.basicEnemy3 = new Enemy(this, 408, 1);
 
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter()});
@@ -87,6 +90,7 @@ export class DustinLevel extends Phaser.Scene
         // this.testButton.on('pointerdown', function (event) { 
         //     this.nextLevel;
         // });
+        this.battle();
     }
 
     encounter()
@@ -206,11 +210,40 @@ export class DustinLevel extends Phaser.Scene
         this.loopImage('background4', 720, 420, levelBattle[0].length * 32, levelBattle.length * 32, 1.45);
         this.basicEnemy = new Enemy(this, 328, 336);
         this.basicEnemy2 = new Enemy(this, 377, 316);
-        this.basicEnemy3 = new Enemy(this, 255, 320);
-        this.basicEnemy4 = new Enemy(this, 366, 282);
-        this.basicEnemy5 = new Enemy(this, 308, 310);
-        this.basicEnemy6 = new Enemy(this, 247, 280);
+        //this.basicEnemy3 = new Enemy(this, 255, 320);
+        //this.basicEnemy4 = new Enemy(this, 366, 282);
+        //this.basicEnemy5 = new Enemy(this, 308, 310);
+        //this.basicEnemy6 = new Enemy(this, 247, 280);
         this.sheriff = new FinalEnemy(this, 304, 245).setScale(5);
+        var sheriff = this.sheriff;
+        this.sheriff.death = (function()
+        {
+            {
+                sheriff.scene.matterCollision.removeOnCollideStart();
+                const sensors = [sheriff.sensors.bottom, sheriff.sensors.left, sheriff.sensors.right];
+                sheriff.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+                sheriff.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
+                sheriff.scene.enemies.list.splice(sheriff.scene.enemies.list.indexOf(sheriff), 1);
+                sheriff.destroy();
+            }
+            
+            let dialogTree2 = new DialogTree(scene, 600, 100);
+            let sequence2 = dialogTree2.addSequence();
+            dialogTree2.addDialog(sequence2, "HrrrAHH. *Sheriff Escapes*\n(Next level begins in 5 seconds)");
+            dialogTree2.playSequence(sequence2);
+            setTimeout(function()
+            {
+            let nextLevelGoal = new Area(scene, 'clear', 0, 0, 5000, 5000);
+            nextLevelGoal.whenTouched(scene.player, () => {scene.nextLevel()});
+            }, 5000
+            );
+            
+        })
+    }
+
+    nextLevel()
+    {
+        this.scene.start('level-3');
     }
 
     update ()
@@ -236,7 +269,7 @@ export class DustinLevel extends Phaser.Scene
         //When there are no more enemies in the level, add a new one at that position
         if (this.enemies.list.length == 0 && battleInit) 
         {
-            new Enemy(this, 600, 100);
+            //new Enemy(this, 600, 100);
         }
 
         //Update player
