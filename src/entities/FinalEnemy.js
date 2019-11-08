@@ -20,11 +20,6 @@ export class FinalEnemy extends Enemy
         console.log( this.DECREASE_BY + " " + this.healthSpriteFront.displayWidth + " " + this.status.health);
     }
 
-    moveAI()
-    {
-        console.log("child!");
-    }
-
     changeHealth(changeHealthBy)
     {
         super.changeHealth(changeHealthBy);

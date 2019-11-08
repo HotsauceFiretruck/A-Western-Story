@@ -10,6 +10,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         //Add to Group
         scene.enemies.list.push(this);
         scene.add.existing(this);
+        this.scene = scene;
 
         //Status
         this.status = {
@@ -166,11 +167,15 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
 
     death()
     {
-        this.scene.matterCollision.removeOnCollideStart();
-        const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
-        this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
-        this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
-        this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
+        if(this.scene != undefined)
+        {
+            this.scene.matterCollision.removeOnCollideStart();
+            const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
+            this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+            this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
+            this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
+        }
+        
         this.destroy();
     }
 }

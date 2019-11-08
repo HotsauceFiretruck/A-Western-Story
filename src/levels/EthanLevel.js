@@ -58,14 +58,14 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(1500,200, 'cloud');
         this.add.image(1300,175, 'cloud');
         this.add.image(1400,210, 'cloud');
-        
-        // change 'house' to sign
-        let nextLevelGoal = new Area(this, 'house', 1950, 525, 75, 104);
-        nextLevelGoal.whenTouched(this.player, () => {this.switchToTown()});
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
         this.player = new Player(this, 1800, 550);
 
+        // change 'house' to sign
+        let nextLevelGoal = new Area(this, 'house', 1950, 525, 75, 104);
+        nextLevelGoal.whenTouched(this.player, () => {this.switchToTown()});
+        
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
             list: [] 
