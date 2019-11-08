@@ -96,6 +96,9 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
+        this.load.image('priest', 'assets/Priest.png');
+        this.load.image('snake', 'assets/Snake.png');
+        this.load.image('cross', 'assets/Cross.png');
         this.load.image('sheriffhouse', 'assets/SheriffHouse.png');
         this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         this.load.image('cactus', 'assets/Cactus.png');
