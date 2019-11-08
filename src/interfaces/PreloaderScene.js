@@ -129,6 +129,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('westSign', 'assets/WestSign.png');
         this.load.image('signPost', 'assets/SignPost.png');
         this.load.image('fence', 'assets/fence.png');
+        this.load.image('church', 'assets/church.png');
         this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
