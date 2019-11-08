@@ -4,7 +4,7 @@ import { Bullet } from "../entities/Bullet.js";
 export class Connection {
 
     constructor() {
-        this.socket = io('http://127.0.0.1:8123');
+        this.socket = io('http://toxicserver.ddns.net:8123');
     }
 
     getSocket() {
@@ -13,7 +13,7 @@ export class Connection {
 
     reload(player, scene) {
         this.socket.close();
-        this.socket = io('http://127.0.0.1:8123');
+        this.socket = io('http://toxicserver.ddns.net:8123');
         this.connection(player, scene);
     }
 
