@@ -6,6 +6,7 @@ import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 
 var battleInit = false;
+var scene;
 export class DustinLevel extends Phaser.Scene
 {
     
@@ -14,6 +15,7 @@ export class DustinLevel extends Phaser.Scene
         super({key:"level-2"});
 
         this.PhaserGame = PhaserGame;
+        scene = this;
     }
 
     create()
@@ -43,7 +45,7 @@ export class DustinLevel extends Phaser.Scene
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
@@ -62,7 +64,6 @@ export class DustinLevel extends Phaser.Scene
         this.house4 = this.add.image(1350, 525, 'house');
         this.house5 = this.add.image(1450, 525, 'house');
         this.house6 = this.add.image(1550, 525, 'house');
-        //this.add.image(1650, 525, 'sheriffhouse');
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
@@ -210,7 +211,42 @@ export class DustinLevel extends Phaser.Scene
         this.basicEnemy4 = new Enemy(this, 366, 282);
         this.basicEnemy5 = new Enemy(this, 308, 310);
         this.basicEnemy6 = new Enemy(this, 247, 280);
+        this.basicEnemy.changeHealth(-15);
+        this.basicEnemy2.changeHealth(-15);
+        this.basicEnemy3.changeHealth(-10);
+        this.basicEnemy4.changeHealth(-10);
+        this.basicEnemy5.changeHealth(-5);
+        this.basicEnemy6.changeHealth(-5);
         this.sheriff = new FinalEnemy(this, 304, 245).setScale(5);
+        var sheriff = this.sheriff;
+        this.sheriff.death = (function()
+        {
+            {
+                sheriff.scene.matterCollision.removeOnCollideStart();
+                const sensors = [sheriff.sensors.bottom, sheriff.sensors.left, sheriff.sensors.right];
+                sheriff.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+                sheriff.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
+                sheriff.scene.enemies.list.splice(sheriff.scene.enemies.list.indexOf(sheriff), 1);
+                sheriff.destroy();
+            }
+            
+            let dialogTree2 = new DialogTree(scene, 600, 100);
+            let sequence2 = dialogTree2.addSequence();
+            dialogTree2.addDialog(sequence2, "HrrrAHH. *Sheriff Escapes*\n(Next level begins in 5 seconds)");
+            dialogTree2.playSequence(sequence2);
+            setTimeout(function()
+            {
+            let nextLevelGoal = new Area(scene, 'clear', 0, 0, 5000, 5000);
+            nextLevelGoal.whenTouched(scene.player, () => {scene.nextLevel()});
+            }, 5000
+            );
+            
+        })
+    }
+
+    nextLevel()
+    {
+        this.scene.start('level-3');
     }
 
     update ()
@@ -236,7 +272,7 @@ export class DustinLevel extends Phaser.Scene
         //When there are no more enemies in the level, add a new one at that position
         if (this.enemies.list.length == 0 && battleInit) 
         {
-            new Enemy(this, 600, 100);
+            //new Enemy(this, 600, 100);
         }
 
         //Update player
