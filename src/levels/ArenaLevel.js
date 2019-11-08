@@ -63,7 +63,7 @@ export class ArenaLevel extends Phaser.Scene
         this.connection.reload(this.player, this);
 
         let timer = this.time.addEvent({
-            delay: 50,
+            delay: 40,
             callback: () => {this.connection.updatePosition(this.player)},
             callbackScope: this,
             loop: true
