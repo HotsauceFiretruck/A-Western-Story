@@ -1,5 +1,7 @@
 import { Enemy } from "./Enemy.js";
 import { Player } from "./Player.js";
+import { ArenaPlayer } from "./ArenaPlayer.js";
+import { OtherPlayer } from "./OtherPlayer.js";
 
 export class Bullet
 {
@@ -74,7 +76,7 @@ export class Bullet
 
         this.sprite
             .setExistingBody(mainBody)
-            .setPosition(fromX, fromY)
+            .setPosition(fromX+normalizeX*30, fromY+normalizeY*30)
             .setIgnoreGravity(true)
             .setVelocity(vX, vY)
             .setRotation(radians)
@@ -135,7 +137,7 @@ export class Bullet
     hit(target)
     {
         //If the bullet hits any collision targets -> destroy
-        if (target != null && (target instanceof Enemy || target instanceof Player)) {
+        if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer || target instanceof OtherPlayer)) {
             target.changeHealth(-5);
         }
         this.destroy();
