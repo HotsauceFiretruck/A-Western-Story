@@ -64,7 +64,6 @@ export class DustinLevel extends Phaser.Scene
         this.house4 = this.add.image(1350, 525, 'house');
         this.house5 = this.add.image(1450, 525, 'house');
         this.house6 = this.add.image(1550, 525, 'house');
-        //this.add.image(1650, 525, 'sheriffhouse');
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
@@ -77,11 +76,10 @@ export class DustinLevel extends Phaser.Scene
             list: []
         };
 
-        //this.player = new Player(this, 300, 100);
-        this.player = new Player(this, 832, 532);
-        //this.basicEnemy = new Enemy(this, 608, 1);
-        //this.basicEnemy2 = new Enemy(this, 6, 1);
-        //this.basicEnemy3 = new Enemy(this, 408, 1);
+        this.player = new Player(this, 300, 100);
+        this.basicEnemy = new Enemy(this, 608, 1);
+        this.basicEnemy2 = new Enemy(this, 6, 1);
+        this.basicEnemy3 = new Enemy(this, 408, 1);
 
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter()});
@@ -90,7 +88,6 @@ export class DustinLevel extends Phaser.Scene
         // this.testButton.on('pointerdown', function (event) { 
         //     this.nextLevel;
         // });
-        this.battle();
     }
 
     encounter()
@@ -210,10 +207,16 @@ export class DustinLevel extends Phaser.Scene
         this.loopImage('background4', 720, 420, levelBattle[0].length * 32, levelBattle.length * 32, 1.45);
         this.basicEnemy = new Enemy(this, 328, 336);
         this.basicEnemy2 = new Enemy(this, 377, 316);
-        //this.basicEnemy3 = new Enemy(this, 255, 320);
-        //this.basicEnemy4 = new Enemy(this, 366, 282);
-        //this.basicEnemy5 = new Enemy(this, 308, 310);
-        //this.basicEnemy6 = new Enemy(this, 247, 280);
+        this.basicEnemy3 = new Enemy(this, 255, 320);
+        this.basicEnemy4 = new Enemy(this, 366, 282);
+        this.basicEnemy5 = new Enemy(this, 308, 310);
+        this.basicEnemy6 = new Enemy(this, 247, 280);
+        this.basicEnemy.changeHealth(-15);
+        this.basicEnemy2.changeHealth(-15);
+        this.basicEnemy3.changeHealth(-10);
+        this.basicEnemy4.changeHealth(-10);
+        this.basicEnemy5.changeHealth(-5);
+        this.basicEnemy6.changeHealth(-5);
         this.sheriff = new FinalEnemy(this, 304, 245).setScale(5);
         var sheriff = this.sheriff;
         this.sheriff.death = (function()
