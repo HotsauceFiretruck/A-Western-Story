@@ -1,8 +1,8 @@
-export class PreloaderScene extends Phaser.Scene
+export class PreloaderArena extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key: "preloader-scene"});
+        super({key: "preloader-arena"});
         this.PhaserGame = PhaserGame;
     }
 
@@ -84,11 +84,8 @@ export class PreloaderScene extends Phaser.Scene
         }
         this.load.image('background', 'assets/Background.png');
         this.load.image('background2', 'assets/Background2.png');
-        this.load.image('background3', 'assets/Background3.png');
-        this.load.image('background4', 'assets/Background4.png');
         this.load.image('grass', 'assets/Grass.png');
         this.load.image('sand', 'assets/Sand.png');
-        this.load.image('clear', 'assets/Clear.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
@@ -96,7 +93,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
-        this.load.image('sheriffhouse', 'assets/SheriffHouse.png');
         this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         this.load.image('cactus', 'assets/Cactus.png');
         this.load.image('crate', 'assets/Crate.png');
@@ -126,6 +122,6 @@ export class PreloaderScene extends Phaser.Scene
 
     create()
     {
-        this.scene.start('menu-scene');
+        this.scene.start('level-arena');
     }
 }

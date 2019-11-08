@@ -1,20 +1,16 @@
-import { LevelTutorial } from "./levels/LevelTutorial.js";
-import { DustinLevel } from "./levels/DustinLevel.js";
-import { AlexLevel } from "./levels/AlexLevel.js";
-import { EthanLevel } from "./levels/EthanLevel.js";
-import { LoganLevel } from "./levels/LoganLevel.js";
-import { FinalLevel } from "./levels/FinalLevel.js";
+import { ArenaLevel } from "./levels/ArenaLevel.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
-import { PreloaderScene } from "./interfaces/PreloaderScene.js";
+import { PreloaderArena } from "./interfaces/PreloaderArena.js";
 import { MenuScene } from "./interfaces/MenuScene.js";
 import { LevelSelect } from "./interfaces/LevelSelect.js";
 import { BonusLevel } from "./levels/BonusLevel.js";
+import { Connection } from "./components/Connection.js";
 
-export class StoryMode 
+
+export class ArenaMode 
 {
     constructor() 
     {
-        
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
 
@@ -38,18 +34,12 @@ export class StoryMode
             this.scale = 1;
         }
 
-        //Initializing Levels
-        let preloader = new PreloaderScene(this);
-        let menu = new MenuScene(this);
-        let levelSelect = new LevelSelect(this);
+        let connection = new Connection();
 
-        let levelBonus = new BonusLevel(this);
-        let levelTutorial = new LevelTutorial(this);
-        let level1 = new AlexLevel(this);
-        let level2 = new DustinLevel(this);
-        let level3 = new LoganLevel(this);
-        let level4 = new EthanLevel(this);
-        let level5 = new FinalLevel(this);
+        //Initializing Level
+        let preloader = new PreloaderArena(this);
+        let menu = new MenuScene(this);
+        let levelarena = new ArenaLevel(this, connection);
         let death = new DeathScene(this);
 
         //Initializing Config
@@ -82,8 +72,8 @@ export class StoryMode
                     }
                 ]
             },
-          
-            scene: [preloader, menu, levelTutorial, levelSelect, level1, level2, level3, level4, level5, levelBonus, death]
+         
+            scene: [preloader, levelarena, death]
 
         };
 
@@ -101,4 +91,5 @@ export class StoryMode
     }
 }
 
-let A_Western_Story = new StoryMode();
+let A_Western_Story = new ArenaMode();
+
