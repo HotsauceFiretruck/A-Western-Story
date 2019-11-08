@@ -1,6 +1,7 @@
 import { Player } from "../entities/Player.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 import { TileMap } from "../components/TileMap.js";
+import { DialogTree } from "../interfaces/DialogTree.js";
 
 export class FinalLevel extends Phaser.Scene
 {
@@ -51,6 +52,9 @@ export class FinalLevel extends Phaser.Scene
         this.add.image(1900,200, 'cloud');
         this.add.image(2100,200, 'cloud');
         this.deadTree = this.add.image(450, 490, 'deadtree').setScale(1.75);
+        this.cactus1 = this.add.image(800, 530, 'cactus');
+        this.cactus2 = this.add.image(1100, 530, 'cactus');
+        this.bigcrate = this.add.image(700, 532, 'crate').setScale(.9);
 
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
@@ -65,9 +69,16 @@ export class FinalLevel extends Phaser.Scene
             list: []
         };
 
-        
         this.player = new Player(this, 64, 500);
         this.finalBoss = new FinalEnemy(this, 500, 500).setScale(5);
+
+        // let dialogTree = new DialogTree(this, 600, 100);
+        // let sequence1 = dialogTree.addSequence();
+        // dialogTree.addDialog(sequence1, "This is the final level.");
+        // dialogTree.addDialog(sequence1, "Get ready for the hardest fight of your life");
+        // dialogTree.addDialog(sequence1, "Have fun");
+
+        // dialogTree.playSequence(sequence1);
     }
 
     update ()
@@ -90,11 +101,6 @@ export class FinalLevel extends Phaser.Scene
             this.enemies.list[i].update();
         }
         
-        if (this.enemies.list.length == 0)
-        {
-            new FinalEnemy(this, 500, 500).setScale(5);
-        }
-
         this.player.update();
     }
 

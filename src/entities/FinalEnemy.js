@@ -20,18 +20,6 @@ export class FinalEnemy extends Enemy
         console.log( this.DECREASE_BY + " " + this.healthSpriteFront.displayWidth + " " + this.status.health);
     }
 
-    moveAI()
-    {
-        //console.log(this.status.isTouching.left);
-        if(this.status.isTouching.left || this.status.isTouching.right)
-        {
-            this.status.maxVelocityX = -this.status.maxVelocityX;
-            this.status.isTouching.left = false;
-            this.status.isTouching.right = false;
-        }
-        this.setVelocityX(this.status.maxVelocityX);
-    }
-
     changeHealth(changeHealthBy)
     {
         super.changeHealth(changeHealthBy);
