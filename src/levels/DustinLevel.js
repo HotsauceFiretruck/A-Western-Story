@@ -7,6 +7,7 @@ import { FinalEnemy } from "../entities/FinalEnemy.js";
 
 var battleInit = false;
 var scene;
+var currBg = [];
 export class DustinLevel extends Phaser.Scene
 {
     
@@ -51,7 +52,7 @@ export class DustinLevel extends Phaser.Scene
 
 
         //Looping background with level
-        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
+        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45, true);
         
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'sand');
@@ -132,7 +133,7 @@ export class DustinLevel extends Phaser.Scene
 
 
         //Looping background with level
-        this.loopImage('background3', 720, 420, levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32, 1.45);
+        this.loopImage('background3', 720, 420, levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32, 1.45, false);
         
         // Create map
         this.map = new TileMap(this, levelSheriffEncounter, 32, 32, 'clear');
@@ -204,7 +205,9 @@ export class DustinLevel extends Phaser.Scene
         this.map = new TileMap(this, levelBattle, 32, 32, 'clear');
 
         //Looping background with level
-        this.loopImage('background4', 720, 420, levelBattle[0].length * 32, levelBattle.length * 32, 1.45);
+        this.loopImage('background4', 720, 420, levelBattle[0].length * 32, levelBattle.length * 32, 1.45, false);
+
+
         this.basicEnemy = new Enemy(this, 328, 336);
         this.basicEnemy2 = new Enemy(this, 377, 316);
         this.basicEnemy3 = new Enemy(this, 255, 320);
@@ -288,7 +291,7 @@ export class DustinLevel extends Phaser.Scene
         levelHeight: the height of the level in pixels
         scale: how large you what the image to be display onscreen
     */
-    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
+    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale, repeat) 
     {
         let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
         let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
@@ -299,14 +302,29 @@ export class DustinLevel extends Phaser.Scene
         let numberOfWidth = Math.ceil(widthRatio);
         let numberOfHeight = Math.ceil(heightRatio);
 
-        for (let w = 0; w < numberOfWidth; ++w)
+        if (repeat)
         {
-            for (let h = 0; h < numberOfHeight; ++h)
+            for (let w = 0; w < numberOfWidth; ++w)
             {
-                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
-                this.add.existing(bgImage);
+                for (let h = 0; h < numberOfHeight; ++h)
+                {
+                    let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+                    bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
+                    this.add.existing(bgImage);
+                    currBg.push(bgImage);
+                }
             }
+        }
+        else
+        {
+            currBg.forEach(element => {
+                element.destroy();
+            });
+            
+            let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+            bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * 0 * scale, imageHeight * 0 * scale);
+            this.add.existing(bgImage);
+            currBg.push(bgImage)
         }
     }
 }
