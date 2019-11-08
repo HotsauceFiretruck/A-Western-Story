@@ -22,7 +22,6 @@ export class Connection {
         let socket = this.socket;
         this.otherPlayers = [];
         let otherPlayers = this.otherPlayers;
-        let localPlayer = player;
 
         socket.close();
         socket.open();
@@ -44,7 +43,7 @@ export class Connection {
 
         socket.on('send-bullet', data => {
             const { x, y, to, player } = data;
-            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, localPlayer);
+            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, this.player);
         })
 
         socket.on('update-players', playersData => {
