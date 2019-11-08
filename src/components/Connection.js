@@ -62,10 +62,9 @@ export class Connection {
                     otherPlayers[index].x = data.x;
                     otherPlayers[index].y = data.y;
             
-                    otherPlayers[index].body.velocity.x = data.velocity.x;
-                    otherPlayers[index].body.velocity.x = data.velocity.x;
+                    otherPlayers[index].setVelocityX(data.velocity.x);
+                    otherPlayers[index].setVelocityY(data.velocity.y);
                 }
-                //console.log(otherPlayers[index]);
             }
         
             // Check if there's no missing players, if there is, delete them
@@ -91,7 +90,7 @@ export class Connection {
         })
     }
 
-    updateMovement(player) {
+    updatePosition(player) {
         let socket = this.socket;
 
         socket.emit('move-player', {
@@ -101,9 +100,9 @@ export class Connection {
               name: String(socket.id)
             },
             velocity: {
-              x: player.body.velocity.x,
-              y: player.body.velocity.y
-            }
+                x: player.body.velocity.x,
+                y: player.body.velocity.y
+              }
           })
     }
 }
