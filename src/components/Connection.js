@@ -5,6 +5,7 @@ export class Connection {
 
     constructor() {
         this.socket = io('https://western-server.herokuapp.com');
+        this.otherPlayers = [];
     }
 
     getSocket() {
@@ -19,7 +20,8 @@ export class Connection {
 
     connection(player, scene) {
         let socket = this.socket;
-        let otherPlayers = [];
+        this.otherPlayers = [];
+        let otherPlayers = this.otherPlayers;
 
         socket.close();
         socket.open();
@@ -36,11 +38,12 @@ export class Connection {
                     y: player.body.velocity.y
                 }
             })
+            player.playerName = socket.id;
         })
 
         socket.on('send-bullet', data => {
-            const { x, y, to } = data;
-            new Bullet(scene, player, x, y, to.x, to.y);
+            const { x, y, to, player } = data;
+            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, this.player);
         })
 
         socket.on('update-players', playersData => {
@@ -59,11 +62,11 @@ export class Connection {
                 // Update players data
                 if (index !== socket.id) {
                     // Update players target but not their real position
-                    otherPlayers[index].x = data.x;
-                    otherPlayers[index].y = data.y;
+                    otherPlayers[index].target_x = data.x;
+                    otherPlayers[index].target_y = data.y;
             
-                    otherPlayers[index].setVelocityX(data.velocity.x);
-                    otherPlayers[index].setVelocityY(data.velocity.y);
+                    otherPlayers[index].velocity_target_x = data.velocity.x;
+                    otherPlayers[index].velocity_target_y = data.velocity.y;
                 }
             }
         
@@ -77,7 +80,23 @@ export class Connection {
         })
     }
 
-    sendBullet(fromX, fromY, toX, toY) {
+    playerMovementInterpolation() {
+        let otherPlayers = this.otherPlayers;
+
+        for (let id in otherPlayers) {
+          let player = otherPlayers[id]
+          if (player.x !== undefined) {
+            // Interpolate the player's position
+            player.x += (player.target_x - player.x) * 0.30;
+            player.y += (player.target_y - player.y) * 0.30;
+            
+            player.setVelocityX(player.body.velocity.x + (player.velocity_target_x - player.body.velocity.x)  * 0.30);
+            player.setVelocityY(player.body.velocity.y + (player.velocity_target_y - player.body.velocity.y)  * 0.30);
+          }
+        }
+      }
+
+    sendBullet(fromX, fromY, toX, toY, player) {
         let socket = this.socket;
 
         socket.emit('new-bullet', {
@@ -86,7 +105,8 @@ export class Connection {
             to: {
                 x: toX,
                 y: toY
-            }
+            },
+            player: player.playerName
         })
     }
 

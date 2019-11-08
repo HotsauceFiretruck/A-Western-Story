@@ -61,12 +61,6 @@ export class ArenaLevel extends Phaser.Scene
         this.player = new ArenaPlayer(this, 600, 0, this.connection);
 
         this.connection.reload(this.player, this);
-        let updatePosition = this.time.addEvent({
-            delay: 20,
-            callback: () => {this.connection.updatePosition(this.player)},
-            callbackScope: this,
-            loop: true
-        });
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
@@ -120,5 +114,11 @@ export class ArenaLevel extends Phaser.Scene
 
         //Update player
         this.player.update();
+        
+        if (this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) {
+            this.connection.updatePosition(this.player)
+        }
+
+        this.connection.playerMovementInterpolation();
     }
 }
