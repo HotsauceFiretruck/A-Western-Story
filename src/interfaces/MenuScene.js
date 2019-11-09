@@ -10,7 +10,7 @@ export class MenuScene extends Phaser.Scene {
         let scale = this.PhaserGame.scale;
 
         this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
-        this.add.image(600 * scale, 150 * scale, 'title').setDisplaySize(900 * scale, 100 * scale);
+        this.add.image(600 * scale, 150 * scale, 'title').setDisplaySize(1100 * scale, 100 * scale);
 
         this.playbtn = this.add.sprite(600 * scale, 300 * scale, 'playbtn').setScale(2 * scale).setInteractive();
         this.tutorialBtn = this.add.sprite(600 * scale, 390 * scale, 'tutorialbtn').setScale(2 * scale).setInteractive();
@@ -26,6 +26,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         this.tutorialBtn.on('pointerdown', (event) => { 
+            document.getElementById('menuMusic').pause();
             this.scene.start('level-tutorial');
         })
         this.tutorialBtn.on('pointerover', function (event) {

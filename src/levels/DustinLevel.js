@@ -220,7 +220,7 @@ export class DustinLevel extends Phaser.Scene
         this.basicEnemy4.changeHealth(-10);
         this.basicEnemy5.changeHealth(-5);
         this.basicEnemy6.changeHealth(-5);
-        this.sheriff = new FinalEnemy(this, 304, 245).setScale(5);
+        this.sheriff = new FinalEnemy(this, 304, 245);
         var sheriff = this.sheriff;
         this.sheriff.death = (function()
         {

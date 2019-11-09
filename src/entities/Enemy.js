@@ -30,8 +30,8 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
 
         let mainBody = Bodies.rectangle
-            (0, 0, this.width * 0.7, this.height, {chamfer: 10});
-
+            (0, 0, this.width * 0.7, this.height, {chamfer: 1});
+        
         this.sensors = {
             bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
             left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
@@ -51,18 +51,23 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             context: this
         });
 
+        Body.setInertia(compoundBody, Infinity);
+
         //Setting Sprite
         this.setExistingBody(compoundBody)
             .setMass(2)
-            .setScale(1.5)
+            .setScale(scale == undefined ? 1.5 : scale)
             .setPosition(x, y)
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category)
             .setDepth(1);
+        this.body.inertia = Infinity;
+        
+        console.log(this.body.inertia);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
-        if (bodyB.isSensor) return;
+        //if (bodyB.isSensor) return;
         if (bodyB.collisionFilter.category == 2 || 
             bodyB.collisionFilter.category == 1 ||
             bodyB.collisionFilter.category == 4)
