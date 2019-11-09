@@ -56,7 +56,7 @@ export class EthanLevel extends Phaser.Scene
         this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 3000, 550);
+        this.player = new Player(this, 150, 550);
 
         // Sets the goal and function for this area
         // When reached the the function .switchToChurch will run, causing things to change and update.
@@ -105,6 +105,7 @@ export class EthanLevel extends Phaser.Scene
         dialogTree.playSequence(sequence0);
     }
 
+    // Method used to change the level when the player reaches a nextLevelGoal at the beginning.
     switchToChurch()
     {
         // Deleting platforms on the map so as to not have invisible blocks when the level updates with new changes to the tilemap.
@@ -205,6 +206,7 @@ export class EthanLevel extends Phaser.Scene
         dialogTree.playSequence(sequence0);
     }
 
+    // Method used to 'move' the player to the town after completing the church section of the level.
     switchToTown()
     {
         this.map.deleteAllPlatforms();
