@@ -113,16 +113,19 @@ export class Connection {
     updatePosition(player) {
         let socket = this.socket;
 
-        socket.emit('move-player', {
-            x: player.x,
-            y: player.y,
-            playerName: {
-              name: String(socket.id)
-            },
-            velocity: {
-                x: player.body.velocity.x,
-                y: player.body.velocity.y
-              }
-          })
+        if (player.body.velocity.x != 0 || player.body.velocity.y != 0) {
+            socket.emit('move-player', {
+                x: player.x,
+                y: player.y,
+                playerName: {
+                  name: String(socket.id)
+                },
+                velocity: {
+                    x: player.body.velocity.x,
+                    y: player.body.velocity.y
+                }
+            })
+            console.log("POSTITION SENT", player.x, player.y)
+        }
     }
 }
