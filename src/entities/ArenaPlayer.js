@@ -193,7 +193,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     {
         if (this.status.isFireReloaded)
         {
-            this.scene.connection.sendBullet(this.x, this.y, x, y)
+            this.scene.connection.sendBullet(this.x, this.y, x, y, this)
             //new Bullet(this.scene, this, this.x, this.y, x, y);
             this.reloadGun();
         }
