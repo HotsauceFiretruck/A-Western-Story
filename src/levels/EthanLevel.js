@@ -50,7 +50,7 @@ export class EthanLevel extends Phaser.Scene
         this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 150, 550);
+        this.player = new Player(this, 3000, 550);
 
         let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
         nextLevelGoal.whenTouched(this.player, () => {
@@ -76,11 +76,22 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
-        // let dialogTree = new DialogTree(this, 600, 100);
-        // let sequence1 = dialogTree.addSequence();
-        // dialogTree.addDialog(sequence1, "Your horse has died to bullet wounds.");
-        // dialogTree.addDialog(sequence1, "You'll have to get through the desert to get back to town.");
-        // dialogTree.playSequence(sequence1);
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = dialogTree.addSequence();
+        let sequence1 = dialogTree.addSequence();
+        let sequence2 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "Your horse has died.", this.player);
+        dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
+        dialogTree.addDialog(sequence0, "Good luck.", this.player,
+            [
+                ["Thanks?", () => {dialogTree.changeSequence(1);}],
+                ["...", () => {dialogTree.changeSequence(2);
+                }],
+            ]
+        );
+        dialogTree.addDialog(sequence1, "You're welcome. :)");
+        dialogTree.addDialog(sequence2, ":(");
+        dialogTree.playSequence(sequence0);
     }
 
     switchToChurch()
@@ -133,9 +144,10 @@ export class EthanLevel extends Phaser.Scene
         this.church = this.add.image(1850, 317, 'church').setScale(2.25);
         this.deadTreeChurch = this.add.image(1550, 488, 'deadtree').setScale(1.75);
         this.bigcrateChurch = this.add.image(2120, 532, 'crate').setScale(.9);
+        this.specialItem = this.add.sprite(150, 528, 'crate').setVisible(false);
 
         this.map = new TileMap(this, levelChurch, 32, 32, 'sand');
-        this.player.setPosition(150, 525);
+        this.player.setPosition(1400, 525);
 
         let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
         nextLevelGoal.whenTouched(this.player, () => {
@@ -147,7 +159,29 @@ export class EthanLevel extends Phaser.Scene
         this.priest3 = new Priest(this, 1800, 525);
         this.priest4 = new Priest(this, 1900, 525);
 
-        // dialogue?
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = dialogTree.addSequence();
+        let sequence1 = dialogTree.addSequence();
+        let sequence2 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "Do you have a moment to speak about our lord and saviour Mr. Hotsauce?", this.player,
+        [
+            ["Of course!", () => {
+                dialogTree.changeSequence(1);  
+                this.priest1.death();
+                this.priest2.death();
+                this.priest3.death();
+                this.priest4.death();
+                // spawn in gun upgrade/powerup thing. tbd
+                // add crate image as placeholder
+                this.specialItem.setVisible(true);
+            }],
+            ["No.", () => {dialogTree.changeSequence(2);
+            }],
+        ]
+        );
+        dialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
+        dialogTree.addDialog(sequence2, "How unfortunate.");
+        dialogTree.playSequence(sequence0);
     }
 
     switchToTown()
@@ -241,12 +275,12 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy2 = new Enemy(this, 2600, 525);
         this.basicEnemy2 = new Enemy(this, 2650, 525);
 
-        // let dialogTree2 = new DialogTree(this, 600, 100);
-        // let sequence2 = dialogTree2.addSequence();
-        // dialogTree2.addDialog(sequence2, "You've made it back to town.");
-        // dialogTree2.addDialog(sequence2, "What lies ahead is unfortunate.");
-        // dialogTree2.addDialog(sequence2, "Good Luck.");
-        // dialogTree2.playSequence(sequence2);
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "You've made it back to town.", this.player);
+        dialogTree2.addDialog(sequence0, "What lies ahead is unfortunate.", this.player);
+        dialogTree2.addDialog(sequence0, "Good Luck.", this.player);
+        dialogTree2.playSequence(sequence0);
         
     }
 
@@ -265,10 +299,6 @@ export class EthanLevel extends Phaser.Scene
         
         if (this.enemies.list.length == 0)
         {
-            // let dialogTree = new DialogTree(this, 600, 100);
-            // let sequence1 = dialogTree.addSequence();
-            // dialogTree.addDialog(sequence1, "You Killed All The Enemies!");
-            // dialogTree.playSequence(sequence1);
             new Enemy(this, 100, 1000);
         }
         
