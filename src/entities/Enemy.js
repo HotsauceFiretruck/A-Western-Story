@@ -61,9 +61,6 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category)
             .setDepth(1);
-        this.body.inertia = Infinity;
-        
-        console.log(this.body.inertia);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
