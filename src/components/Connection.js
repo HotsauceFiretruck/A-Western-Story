@@ -18,6 +18,14 @@ export class Connection {
         this.connection(player, scene);
     }
 
+    createText(scene, target, text) {
+        return new Phaser.GameObjects.Text(scene, target.x, target.y, text, {
+            fontSize: '12px',
+            fill: '#FFF',
+            align: 'center'
+        })
+    }
+
     connection(player, scene) {
         let socket = this.socket;
         this.otherPlayers = [];
@@ -54,7 +62,10 @@ export class Connection {
                 // In case a player hasn't been created yet
                 // We make sure that we won't create a second instance of it
                 if (otherPlayers[index] === undefined && index !== socket.id) {
-                    otherPlayers[index] = new OtherPlayer(scene, data.x, data.y);
+                    const newPlayer = new OtherPlayer(scene, data.x, data.y);
+                    newPlayer.nameText = this.createText(scene, newPlayer, data.playerName.name);
+                    scene.add.existing(newPlayer.nameText);
+                    otherPlayers[index] = newPlayer;
                 }
             
                 playersFound[index] = true;
@@ -73,6 +84,7 @@ export class Connection {
             // Check if there's no missing players, if there is, delete them
             for (let id in otherPlayers) {
                 if (!playersFound[id]) {
+                    otherPlayers[id].nameText.destroy();
                     otherPlayers[id].destroy();
                     delete otherPlayers[id];
                 }
@@ -92,6 +104,9 @@ export class Connection {
             
             player.setVelocityX(player.body.velocity.x + (player.velocity_target_x - player.body.velocity.x)  * 0.30);
             player.setVelocityY(player.body.velocity.y + (player.velocity_target_y - player.body.velocity.y)  * 0.30);
+
+            player.nameText.x = player.x-65;
+            player.nameText.y = player.y-35;
           }
         }
       }
