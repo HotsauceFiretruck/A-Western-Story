@@ -213,6 +213,7 @@ export class EthanLevel extends Phaser.Scene
 
         // Removing images, enemies, and nextLevelGoal used in previous tile map
         this.nextLevelGoal.destroy();
+        this.specialItem.destroy();
         this.church.destroy();
         this.deadTreeChurch.destroy();
         this.bigcrateChurch.destroy();
@@ -261,7 +262,7 @@ export class EthanLevel extends Phaser.Scene
         // Adding images to the background.
         // Usage - 
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
-        this.add.image(150, 435, 'waterTower');
+        this.add.image(1150, 435, 'waterTower');
 
         this.add.image(560, 550, 'fence').setScale(.2);
         this.add.image(625, 550, 'fence').setScale(.2);
@@ -302,7 +303,7 @@ export class EthanLevel extends Phaser.Scene
 
         // Changes the tiles on screen to give the effect of being in a new area without having to create another level.
         this.map = new TileMap(this, levelTown, 32, 32, 'sand');
-        this.player.setPosition(1250, 525); // Moves the player to the beginning of the tilemap
+        this.player.setPosition(150, 525); // Moves the player to the beginning of the tilemap
 
         // Sets a new nextLevelGoal with a new function for this area.
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
