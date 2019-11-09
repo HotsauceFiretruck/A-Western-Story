@@ -74,7 +74,7 @@ export class Bullet
 
         this.sprite
             .setExistingBody(mainBody)
-            .setPosition(fromX, fromY)
+            .setPosition(fromX + normalizeX * 6, fromY + normalizeY * 6)
             .setIgnoreGravity(true)
             .setVelocity(vX, vY)
             .setRotation(radians)
