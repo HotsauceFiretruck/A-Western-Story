@@ -65,7 +65,7 @@ export class LevelTutorial extends Phaser.Scene
         this.add.image(50, 525, 'house');
 
         this.player = new Player(this, 300, 400);
-        this.basicEnemy = new FinalEnemy(this, 750, 400);
+        this.basicEnemy = new Enemy(this, 750, 400);
 
         //Add an Area Example
         //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
