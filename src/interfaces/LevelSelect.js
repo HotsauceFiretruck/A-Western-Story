@@ -12,16 +12,17 @@ export class LevelSelect extends Phaser.Scene {
         this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
 
         // Creating buttons on screen
-        this.lvl1Btn = this.add.sprite(300, 300, 'lvl1btn').setScale(4).setInteractive();
-        this.lvl2Btn = this.add.sprite(450, 300, 'lvl2btn').setScale(4).setInteractive();
-        this.lvl3Btn = this.add.sprite(600, 300, 'lvl3btn').setScale(4).setInteractive();
-        this.lvl4Btn = this.add.sprite(750, 300, 'lvl4btn').setScale(4).setInteractive();
-        this.lvl5Btn = this.add.sprite(900, 300, 'lvl5btn').setScale(4).setInteractive();
-        this.bonuslvlbtn = this.add.sprite(1050, 300, 'bonuslvlbtn').setAlpha(.2).setInteractive();
-        this.backBtn = this.add.sprite(350, 75, 'backbtn').setScale(2).setInteractive();
+        this.lvl1Btn = this.add.sprite(300 * scale, 300 * scale, 'lvl1btn').setScale(4 * scale).setInteractive();
+        this.lvl2Btn = this.add.sprite(450 * scale, 300 * scale, 'lvl2btn').setScale(4 * scale).setInteractive();
+        this.lvl3Btn = this.add.sprite(600 * scale, 300 * scale, 'lvl3btn').setScale(4 * scale).setInteractive();
+        this.lvl4Btn = this.add.sprite(750 * scale, 300 * scale, 'lvl4btn').setScale(4 * scale).setInteractive();
+        this.lvl5Btn = this.add.sprite(900 * scale, 300 * scale, 'lvl5btn').setScale(4 * scale).setInteractive();
+        this.bonuslvlbtn = this.add.sprite(1050 * scale, 300 * scale, 'bonuslvlbtn').setAlpha(.2).setInteractive();
+        this.backBtn = this.add.sprite(350 * scale, 75 * scale, 'backbtn').setScale(2 * scale).setInteractive();
 
         // Adding functionality to buttons. Like click events and color change on hover.
         this.lvl1Btn.on('pointerdown', (event) => {
+            document.getElementById('menuMusic').pause();
             this.scene.start('level-1');
         });
         this.lvl1Btn.on('pointerover', function (event) {
@@ -32,6 +33,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl2Btn.on('pointerdown', (event) => {
+            document.getElementById('menuMusic').pause();
             this.scene.start('level-2');
         });
         this.lvl2Btn.on('pointerover', function (event) {
@@ -42,6 +44,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl3Btn.on('pointerdown', (event) => {
+            document.getElementById('menuMusic').pause();
             this.scene.start('level-3');
         });
         this.lvl3Btn.on('pointerover', function (event) {
@@ -52,6 +55,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl4Btn.on('pointerdown', (event) => {
+            document.getElementById('menuMusic').pause();
             this.scene.start('level-4');
         });
         this.lvl4Btn.on('pointerover', function (event) {
@@ -62,6 +66,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl5Btn.on('pointerdown', (event) => {
+            document.getElementById('menuMusic').pause();
             console.log("Button Clicked!");
             this.scene.start('level-5');
         });
@@ -83,6 +88,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.bonuslvlbtn.on('pointerdown', (event) => {
+            document.getElementById('menuMusic').pause();
             this.scene.start('bonus-level');
         });
         this.bonuslvlbtn.on('pointerover', function (event) {
