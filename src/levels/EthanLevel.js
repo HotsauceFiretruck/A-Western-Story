@@ -52,8 +52,8 @@ export class EthanLevel extends Phaser.Scene
         this.map = new TileMap(this, level, 32, 32, 'sand');
         this.player = new Player(this, 3000, 550);
 
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {
             // make it so there are multiple directions to choose from, or just make it rng whether or not player gets to see church area; if not just go to town and then to final level.
             this.switchToChurch()
         });
@@ -99,6 +99,7 @@ export class EthanLevel extends Phaser.Scene
         this.map.deleteAllPlatforms();
 
         // Removing images & enemies used in previous tile map
+        this.nextLevelGoal.destroy();
         this.cactus1.destroy();
         this.cactus2.destroy();
         this.cactus3.destroy();
@@ -149,8 +150,8 @@ export class EthanLevel extends Phaser.Scene
         this.map = new TileMap(this, levelChurch, 32, 32, 'sand');
         this.player.setPosition(1400, 525);
 
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {
             this.switchToTown();
         });
 
@@ -163,7 +164,9 @@ export class EthanLevel extends Phaser.Scene
         let sequence0 = dialogTree.addSequence();
         let sequence1 = dialogTree.addSequence();
         let sequence2 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "Do you have a moment to speak about our lord and saviour Mr. Hotsauce?", this.player,
+        dialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
+        dialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
+        dialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
         [
             ["Of course!", () => {
                 dialogTree.changeSequence(1);  
@@ -189,6 +192,7 @@ export class EthanLevel extends Phaser.Scene
         this.map.deleteAllPlatforms();
 
         // Removing images & enemies used in previous tile map
+        this.nextLevelGoal.destroy();
         this.church.destroy();
         this.deadTreeChurch.destroy();
         this.bigcrateChurch.destroy();
@@ -266,8 +270,8 @@ export class EthanLevel extends Phaser.Scene
         this.map = new TileMap(this, levelTown, 32, 32, 'sand');
         this.player.setPosition(150, 525);
 
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {
             this.scene.start('level-5');
         });
 
@@ -278,9 +282,9 @@ export class EthanLevel extends Phaser.Scene
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence0 = dialogTree.addSequence();
         dialogTree.addDialog(sequence0, "You've made it back to town.", this.player);
-        dialogTree2.addDialog(sequence0, "What lies ahead is unfortunate.", this.player);
-        dialogTree2.addDialog(sequence0, "Good Luck.", this.player);
-        dialogTree2.playSequence(sequence0);
+        dialogTree.addDialog(sequence0, "What lies ahead is unfortunate.", this.player);
+        dialogTree.addDialog(sequence0, "Good Luck.", this.player);
+        dialogTree.playSequence(sequence0);
         
     }
 
