@@ -56,15 +56,18 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         //Setting Sprite
         this.setExistingBody(compoundBody)
             .setMass(2)
-            .setScale(1.5)
+            .setScale(scale == undefined ? 1.5 : scale)
             .setPosition(x, y)
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category)
             .setDepth(1);
+        this.body.inertia = Infinity;
+        
+        console.log(this.body.inertia);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
-        if (bodyB.isSensor) return;
+        //if (bodyB.isSensor) return;
         if (bodyB.collisionFilter.category == 2 || 
             bodyB.collisionFilter.category == 1 ||
             bodyB.collisionFilter.category == 4)

@@ -3,6 +3,7 @@ import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
+import { FinalEnemy } from "../entities/FinalEnemy.js";
 
 export class LevelTutorial extends Phaser.Scene
 {

@@ -5,7 +5,7 @@ export class FinalEnemy extends Enemy
 {
     constructor(scene, x, y)
     {
-        super(scene, x, y, 'sheriff', 100, 3);
+        super(scene, x, y, 'sheriff', 100, 5);
 
         this.healthSpriteBack = scene.add.sprite(602, 150, 'healthbarback'); 
         scene.add.existing(this.healthSpriteBack);
@@ -17,7 +17,6 @@ export class FinalEnemy extends Enemy
 
         //The number 5 comes from the fact that the bullet damages enemy and player by 5 health points.
         this.DECREASE_BY = this.healthSpriteFront.displayWidth * 5 / this.status.health;
-        console.log( this.DECREASE_BY + " " + this.healthSpriteFront.displayWidth + " " + this.status.health);
     }
 
     changeHealth(changeHealthBy)
