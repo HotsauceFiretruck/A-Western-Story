@@ -88,15 +88,14 @@ export class LevelTutorial extends Phaser.Scene
 
         //dialogTree.addDialog(sequenceID, text, actor, options)
         dialogTree.addDialog(sequence0, "Welcome to this game.", this.player);
-        dialogTree.addDialog(sequence0, "Press A to go right.", this.player);
-        dialogTree.addDialog(sequence0, "Press D to go left.", this.player);
+        dialogTree.addDialog(sequence0, "Press D to go right.", this.player);
+        dialogTree.addDialog(sequence0, "Press A to go left.", this.player);
         dialogTree.addDialog(sequence0, "Press W to jump.", this.player);
         dialogTree.addDialog(sequence0, "Right click to shoot.", this.player);
         dialogTree.addDialog(sequence0, "Have fun, bye.", this.player,
             [
                 ["Go to sequence 1", () => {dialogTree.changeSequence(1);}],
-                ["Go to sequence 2", () => {
-                    dialogTree.changeSequence(2);
+                ["Go to sequence 2", () => {dialogTree.changeSequence(2);
                 }],
             ]
         );
