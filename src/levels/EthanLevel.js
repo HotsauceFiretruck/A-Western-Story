@@ -56,7 +56,7 @@ export class EthanLevel extends Phaser.Scene
         this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 150, 550);
+        this.player = new Player(this, 3000, 550);
 
         // Sets the goal and function for this area
         // When reached the the function .switchToChurch will run, causing things to change and update.
@@ -161,7 +161,7 @@ export class EthanLevel extends Phaser.Scene
         this.specialItem = this.add.sprite(150, 528, 'crate').setVisible(false);
 
         this.map = new TileMap(this, levelChurch, 32, 32, 'sand');
-        this.player.setPosition(1400, 525);
+        this.player.setPosition(3000, 525);
 
         // Sets a new nextLevelGoal with a new function for this area.
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
@@ -261,6 +261,13 @@ export class EthanLevel extends Phaser.Scene
         // Adding images to the background.
         // Usage - 
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
+        this.add.image(1200, 435, 'waterTower');
+
+        this.add.image(560, 550, 'fence').setScale(.2);
+        this.add.image(625, 550, 'fence').setScale(.2);
+        this.add.image(690, 550, 'fence').setScale(.2);
+        this.add.image(755, 550, 'fence').setScale(.2);
+        this.add.image(810, 550, 'fence').setScale(.2);
         this.add.image(875, 550, 'fence').setScale(.2);
         this.add.image(940, 550, 'fence').setScale(.2);
         this.add.image(1005, 550, 'fence').setScale(.2);
@@ -275,15 +282,18 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(1590, 550, 'fence').setScale(.2);
         this.add.image(1300, 525, 'deadtree');
 
+
+        this.add.image(785, 508, 'bigHouse');
+
+        this.add.image(1000, 508, 'saloon');
+
+        this.add.image(1125, 525, 'sheriffhouse');
+
+        this.add.image(1275, 525, 'house');
         this.add.image(1300, 500, 'house');
         this.add.image(1300, 525, 'house');
-        this.add.image(1255, 525, 'house');
-        this.add.image(1050, 525, 'house');
 
-        this.add.image(785, 490, 'house');
-        this.add.image(755, 525, 'house');
-        this.add.image(785, 525, 'house');
-        this.add.image(815, 525, 'house');
+        this.add.image(1425, 508, 'bigHouse');
 
         this.add.image(1620, 500, 'house');
         this.add.image(1595, 525, 'house');
@@ -292,7 +302,7 @@ export class EthanLevel extends Phaser.Scene
 
         // Changes the tiles on screen to give the effect of being in a new area without having to create another level.
         this.map = new TileMap(this, levelTown, 32, 32, 'sand');
-        this.player.setPosition(150, 525); // Moves the player to the beginning of the tilemap
+        this.player.setPosition(1250, 525); // Moves the player to the beginning of the tilemap
 
         // Sets a new nextLevelGoal with a new function for this area.
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
