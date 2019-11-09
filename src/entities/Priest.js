@@ -5,7 +5,7 @@ export class Priest extends Enemy
 {
     constructor(scene, x, y)
     {
-        super(scene, x, y, 'priest', 100, 3);
+        super(scene, x, y, 'priest', 20, 3);
     }
 
     shoot()
