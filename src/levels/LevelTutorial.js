@@ -63,8 +63,8 @@ export class LevelTutorial extends Phaser.Scene
         //Adding static images
         this.add.image(50, 525, 'house');
 
-        this.player = new Player(this, 600, 0);
-        this.basicEnemy = new Enemy(this, 750, 100);
+        this.player = new Player(this, 300, 400);
+        this.basicEnemy = new Enemy(this, 750, 400);
 
         //Add an Area Example
         //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
@@ -72,15 +72,50 @@ export class LevelTutorial extends Phaser.Scene
         nextLevelGoal.whenTouched(this.player, () => {this.nextLevel()});
 
         //Enable Dialog Tree: Dialog Tree should be the last thing to load.
-        let dialogTree = new DialogTree(this, 600, 100);
+        this.dialogTree = new DialogTree(this, 600, 100);
+
+        //Getting options to store into this method --> check update function/method
+        this.optionsChosen = [];
+
+        this.dialogSetup(this.dialogTree);
+    }
+
+    dialogSetup(dialogTree)
+    {
+        let sequence0 = dialogTree.addSequence(); //sequence0 have the id of 0 because of index array start at 0
         let sequence1 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence1, "Welcome to this game.");
-        dialogTree.addDialog(sequence1, "Press A to go right.");
-        dialogTree.addDialog(sequence1, "Press D to go left.");
-        dialogTree.addDialog(sequence1, "Press W to jump.");
-        dialogTree.addDialog(sequence1, "Right click to shoot.");
-        dialogTree.addDialog(sequence1, "Have fun, bye.");
-        dialogTree.playSequence(sequence1);
+        let sequence2 = dialogTree.addSequence();
+
+        //dialogTree.addDialog(sequenceID, text, actor, options)
+        dialogTree.addDialog(sequence0, "Welcome to this game.", this.player);
+        dialogTree.addDialog(sequence0, "Press A to go right.", this.player);
+        dialogTree.addDialog(sequence0, "Press D to go left.", this.player);
+        dialogTree.addDialog(sequence0, "Press W to jump.", this.player);
+        dialogTree.addDialog(sequence0, "Right click to shoot.", this.player);
+        dialogTree.addDialog(sequence0, "Have fun, bye.", this.player,
+            [
+                ["Go to sequence 1", () => {dialogTree.changeSequence(1);}],
+                ["Go to sequence 2", () => {
+                    dialogTree.changeSequence(2);
+                }],
+            ]
+        );
+
+        dialogTree.addDialog(sequence1, "This is sequence 1.", this.basicEnemy);
+            
+        dialogTree.addDialog(sequence2, "This is sequence 2.", this.basicEnemy,
+            [
+                ["Go to sequence 1", () => {
+                    dialogTree.changeSequence(1);
+                    this.optionsChosen = dialogTree.globalOptionsChosen; //Get the options that was chosen as an array
+                }],
+                ["Go to sequence 0", () => {
+                    dialogTree.changeSequence(0);
+                }]
+            ]
+        );
+
+        dialogTree.playSequence(sequence0);
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
@@ -88,6 +123,8 @@ export class LevelTutorial extends Phaser.Scene
     {
         this.scene.start('level-1');
     }
+
+    
 
     //Load in image to fill in the level
     /*

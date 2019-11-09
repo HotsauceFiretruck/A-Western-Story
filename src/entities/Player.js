@@ -238,6 +238,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.enableAllMovement();
         this.healthSprite.setVisible(true);
         this.displayHealth.setVisible(true);
+        this.scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         if (this.scene.PhaserGame.isMobile)
         {
             this.controller.enable();
@@ -264,8 +265,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
 
+        this.scene.cameras.main.stopFollow();
         //this.destroy();
     }
-
-    
 }
