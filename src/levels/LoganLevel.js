@@ -120,27 +120,25 @@ export class LoganLevel extends Phaser.Scene
         this.player.update();
     }
 
-    // loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
-    // {
-    //     let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
-    //     let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
+    {
+        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
 
-    //     let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
-    //     let heightRatio = maxHeight / (imageHeight * scale);
+        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (imageHeight * scale);
 
-    //     let numberOfWidth = Math.ceil(widthRatio);
-    //     let numberOfHeight = Math.ceil(heightRatio);
-    //     console.log("levelWidth: " + levelWidth + " levelHeight: " + levelHeight + " cameraWidth: " +  
-    //                this.cameras.main.worldView.width + " cameraHeight: " + this.cameras.main.worldView.height);d
-    //     for (let w = 0; w < numberOfWidth; ++w)
-    //     {
-    //         for (let h = 0; h < numberOfHeight; ++h)
-    //         {
-    //             let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-    //             bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
-    //             this.add.existing(bgImage);
-    //         }
-    //     }
-    // }
+        let numberOfWidth = Math.ceil(widthRatio);
+        let numberOfHeight = Math.ceil(heightRatio);
+        for (let w = 0; w < numberOfWidth; ++w)
+        {
+            for (let h = 0; h < numberOfHeight; ++h)
+            {
+                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
+                this.add.existing(bgImage);
+            }
+        }
+    }
 }
 
