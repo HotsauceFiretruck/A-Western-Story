@@ -7,11 +7,11 @@ export class FinalEnemy extends Enemy
     {
         super(scene, x, y, 'sheriff', 100, 3);
 
-        this.healthSpriteBack = scene.add.sprite(402, 150, 'healthbarback'); 
+        this.healthSpriteBack = scene.add.sprite(602, 150, 'healthbarback'); 
         scene.add.existing(this.healthSpriteBack);
         this.healthSpriteBack.setFrame(0).setScrollFactor(0, 0);
 
-        this.healthSpriteFront = scene.add.sprite(401, 38, 'healthbarfront'); 
+        this.healthSpriteFront = scene.add.sprite(601, 38, 'healthbarfront'); 
         scene.add.existing(this.healthSpriteFront);
         this.healthSpriteFront.setFrame(0).setScrollFactor(0, 0);
 

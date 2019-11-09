@@ -1,6 +1,9 @@
 import { Player } from "../entities/Player.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 import { TileMap } from "../components/TileMap.js";
+import { Snake } from "../entities/Snake.js";
+import { Priest } from "../entities/Priest.js";
+import { Enemy } from "../entities/Enemy.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 
 export class FinalLevel extends Phaser.Scene
@@ -8,6 +11,8 @@ export class FinalLevel extends Phaser.Scene
     constructor(PhaserGame)
     {
         super({key:"level-5"});
+
+        this.count = 0;
 
         this.PhaserGame = PhaserGame;
     }
@@ -30,12 +35,12 @@ export class FinalLevel extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
@@ -54,7 +59,7 @@ export class FinalLevel extends Phaser.Scene
         this.deadTree = this.add.image(450, 490, 'deadtree').setScale(1.75);
         this.cactus1 = this.add.image(800, 530, 'cactus');
         this.cactus2 = this.add.image(1100, 530, 'cactus');
-        this.bigcrate = this.add.image(700, 532, 'crate').setScale(.9);
+        this.bigcrate = this.add.image(100, 532, 'crate').setScale(.9);
 
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
@@ -69,8 +74,13 @@ export class FinalLevel extends Phaser.Scene
             list: []
         };
 
-        this.player = new Player(this, 64, 500);
-        this.finalBoss = new FinalEnemy(this, 500, 500).setScale(5);
+        this.player = new Player(this, 100, 500);
+        this.snake1 = new Snake(this, 500, 500);
+        this.snake2 = new Snake(this, 700, 500);
+        this.snake3 = new Snake(this, 900, 500);
+        this.snake4 = new Snake(this, 1200, 500);
+        this.snake5 = new Snake(this, 1500, 500);
+        this.snake6 = new Snake(this, 1800, 500);
 
         // let dialogTree = new DialogTree(this, 600, 100);
         // let sequence1 = dialogTree.addSequence();
@@ -101,6 +111,42 @@ export class FinalLevel extends Phaser.Scene
             this.enemies.list[i].update();
         }
         
+        if (this.enemies.list.length == 0) 
+        {
+            if(this.count == 0)
+            {
+                this.basicEnemy1 = new Enemy(this, 500, 500);
+                this.basicEnemy2 = new Enemy(this, 700, 500);
+                this.basicEnemy3 = new Enemy(this, 900, 500);
+                this.basicEnemy4 = new Enemy(this, 1200, 500);
+                this.basicEnemy5 = new Enemy(this, 1500, 500);
+                this.basicEnemy6 = new Enemy(this, 1800, 500);
+                this.count = this.count + 1;
+            }
+            else if(this.count == 1)
+            {
+                this.preist1 = new Priest(this, 500, 500);
+                this.priest2 = new Priest(this, 700, 500);
+                this.priest3 = new Priest(this, 900, 500);
+                this.priest4 = new Priest(this, 1200, 500);
+                this.priest5 = new Priest(this, 1500, 500);
+                this.priest6 = new Priest(this, 1800, 500);
+                this.count = this.count + 1;
+            }
+
+            else if(this.count == 2)
+            {
+                this.finalBoss = new FinalEnemy(this, 500, 500).setScale(5);
+                this.count = this.count + 1;
+            }
+
+            else if(this.count == 3)
+            {
+                console.log("You Win!!!");
+            }
+            
+        }
+
         this.player.update();
     }
 
