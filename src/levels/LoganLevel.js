@@ -14,17 +14,13 @@ export class LoganLevel extends Phaser.Scene
 
     create()
     {
+        //game.load.audio('background_music', ['assets/CarTheft.mp3']);
         this.add.image(400, 300, 'background2').setScale(2);
         this.add.image(50, 503, 'house');
         this.add.image(800, 503, 'house');
         this.add.image(600,200, 'cloud');
         this.add.image(470,125, 'cloud');
         this.add.image(200,210, 'cloud');
-
-        //Adds background music
-        this.sound.add('cartheftmusic').play();
-        this.sound.play('cartheftmusic', { loop: -1 });
-
         
         let groundLayer = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -71,7 +67,7 @@ export class LoganLevel extends Phaser.Scene
         // platform6.enableKinematic(-.5, 0);
         
         //testing obstacle collision
-        this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
+        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -87,15 +83,20 @@ export class LoganLevel extends Phaser.Scene
         this.basicEnemy = new Enemy(this, 600, 100);
         
         // scene, collisionCategory, fromTileX, fromTileY, tileBodyWidth, tileBodyHeight, pixelWidthPerTile, pixelHeightPerTile
-        let platform = new Platform(this, 2, 10, 10, 0, 0, 32, 32);
-        platform.addSprite('sand');
-        platform.enableKinematic(-.5, 0);
+        // let platform = new Platform(this, 2, 10, 10, 0, 0, 32, 32);
+        // platform.addSprite('sand');
+        // platform.enableKinematic(-.5, 0);
         //Add damage enable
-        platform.enableDamage(-5, this.player); 
+        //platform.enableDamage(-5, this.player); 
     }
 
     update ()
-    {
+    { 
+        //Update platforms
+        for (let i = 0; i < this.map.platforms.list.length; ++i)
+        {
+            this.map.platforms.list[i]
+        }
 
         //Update bullets
         for (let i = 0; i < this.projectiles.list.length; i++)
@@ -109,35 +110,37 @@ export class LoganLevel extends Phaser.Scene
             this.enemies.list[i].update();
         }
         
-        if (this.enemies.list.length == 0)
+        //When there are no more enemies in the level, add a new one at that position
+        if (this.enemies.list.length == 0) 
         {
             new Enemy(this, 600, 100);
         }
 
+        //Update player
         this.player.update();
     }
 
-    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
-    {
-        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
-        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
+    // loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
+    // {
+    //     let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
+    //     let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
 
-        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
-        let heightRatio = maxHeight / (imageHeight * scale);
+    //     let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
+    //     let heightRatio = maxHeight / (imageHeight * scale);
 
-        let numberOfWidth = Math.ceil(widthRatio);
-        let numberOfHeight = Math.ceil(heightRatio);
-        //console.log("levelWidth: " + levelWidth + " levelHeight: " + levelHeight + " cameraWidth: " +  
-        //            this.cameras.main.worldView.width + " cameraHeight: " + this.cameras.main.worldView.height);d
-        for (let w = 0; w < numberOfWidth; ++w)
-        {
-            for (let h = 0; h < numberOfHeight; ++h)
-            {
-                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
-                this.add.existing(bgImage);
-            }
-        }
-    }
+    //     let numberOfWidth = Math.ceil(widthRatio);
+    //     let numberOfHeight = Math.ceil(heightRatio);
+    //     console.log("levelWidth: " + levelWidth + " levelHeight: " + levelHeight + " cameraWidth: " +  
+    //                this.cameras.main.worldView.width + " cameraHeight: " + this.cameras.main.worldView.height);d
+    //     for (let w = 0; w < numberOfWidth; ++w)
+    //     {
+    //         for (let h = 0; h < numberOfHeight; ++h)
+    //         {
+    //             let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
+    //             bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
+    //             this.add.existing(bgImage);
+    //         }
+    //     }
+    // }
 }
 

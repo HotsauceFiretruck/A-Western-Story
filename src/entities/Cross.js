@@ -1,9 +1,9 @@
-import { Enemy } from "./Enemy.js";
+import { Priest } from "./Priest.js";
 import { Player } from "./Player.js";
 import { ArenaPlayer } from "./ArenaPlayer.js";
 import { OtherPlayer } from "./OtherPlayer.js";
 
-export class Bullet
+export class Cross
 {
     /* scene: Scene (Level) (To add the bullet to the projectiles List)
        target: The target that this bullet meant for (Enemies/Other Players)
@@ -16,7 +16,7 @@ export class Bullet
     {
         this.scene = scene;
         this.target = target;
-        this.sprite = scene.matter.add.sprite(fromX, fromY, 'bullet');
+        this.sprite = scene.matter.add.sprite(fromX, fromY, 'cross');
         
         //Add to Group
         scene.projectiles.list.push(this);
@@ -138,13 +138,13 @@ export class Bullet
     {
         //If the bullet hits any collision targets -> destroy
         if (self !== undefined) {
-            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer) && target !== self) {
+            if (target != null && (target instanceof Priest || target instanceof Player || target instanceof ArenaPlayer) && target !== self) {
                 target.changeHealth(-5);
             }
             this.destroy();
         }
         else {
-            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer)) {
+            if (target != null && (target instanceof Priest || target instanceof Player || target instanceof ArenaPlayer)) {
                 target.changeHealth(-5);
             }
             this.destroy();
