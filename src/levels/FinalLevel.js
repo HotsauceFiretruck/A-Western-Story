@@ -220,10 +220,12 @@ export class FinalLevel extends Phaser.Scene
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
+        this.loopImage('background', 720, 420, levelWin[0].length * 32, levelWin.length * 32, 1.45);
+
         this.win1 = this.add.image(600, 350, 'win');
         this.win2 = this.add.image(1400, 350, 'win');
 
-        this.map = new TileMap(this, levelWin, 32, 32, 'sand');
+        this.map = new TileMap(this, levelWin, 32, 32, 'grass');
         this.player.setPosition(100, 500);
     }
 
