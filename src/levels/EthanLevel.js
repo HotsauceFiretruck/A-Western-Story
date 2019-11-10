@@ -213,6 +213,7 @@ export class EthanLevel extends Phaser.Scene
 
         // Removing images, enemies, and nextLevelGoal used in previous tile map
         this.nextLevelGoal.destroy();
+        this.specialItem.destroy();
         this.church.destroy();
         this.deadTreeChurch.destroy();
         this.bigcrateChurch.destroy();
@@ -261,6 +262,13 @@ export class EthanLevel extends Phaser.Scene
         // Adding images to the background.
         // Usage - 
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
+        this.add.image(1150, 435, 'waterTower');
+
+        this.add.image(560, 550, 'fence').setScale(.2);
+        this.add.image(625, 550, 'fence').setScale(.2);
+        this.add.image(690, 550, 'fence').setScale(.2);
+        this.add.image(755, 550, 'fence').setScale(.2);
+        this.add.image(810, 550, 'fence').setScale(.2);
         this.add.image(875, 550, 'fence').setScale(.2);
         this.add.image(940, 550, 'fence').setScale(.2);
         this.add.image(1005, 550, 'fence').setScale(.2);
@@ -275,15 +283,18 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(1590, 550, 'fence').setScale(.2);
         this.add.image(1300, 525, 'deadtree');
 
+
+        this.add.image(785, 508, 'bigHouse');
+
+        this.add.image(1000, 508, 'saloon');
+
+        this.add.image(1125, 525, 'sheriffhouse');
+
+        this.add.image(1275, 525, 'house');
         this.add.image(1300, 500, 'house');
         this.add.image(1300, 525, 'house');
-        this.add.image(1255, 525, 'house');
-        this.add.image(1050, 525, 'house');
 
-        this.add.image(785, 490, 'house');
-        this.add.image(755, 525, 'house');
-        this.add.image(785, 525, 'house');
-        this.add.image(815, 525, 'house');
+        this.add.image(1425, 508, 'bigHouse');
 
         this.add.image(1620, 500, 'house');
         this.add.image(1595, 525, 'house');

@@ -99,6 +99,8 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('priest', 'assets/Priest.png');
         this.load.image('snake', 'assets/Snake.png');
         this.load.image('cross', 'assets/Cross.png');
+        this.load.image('win', 'assets/YouWin.png');
+        this.load.image('bull', 'assets/Bull.png');
         this.load.image('sheriffhouse', 'assets/SheriffHouse.png');
         this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         this.load.image('cactus', 'assets/Cactus.png');
@@ -130,6 +132,9 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('signPost', 'assets/SignPost.png');
         this.load.image('fence', 'assets/fence.png');
         this.load.image('church', 'assets/church.png');
+        this.load.image('bigHouse', 'assets/bigHouse.png');
+        this.load.image('saloon', 'assets/Saloon.png');
+        this.load.image('waterTower', 'assets/waterTower.png');
         this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }

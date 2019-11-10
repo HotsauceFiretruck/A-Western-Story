@@ -25,4 +25,19 @@ export class FinalEnemy extends Enemy
         this.healthSpriteFront.displayWidth -= this.DECREASE_BY;
     }
 
+    death()
+    {
+        if(this.scene != undefined)
+        {
+            this.scene.matterCollision.removeOnCollideStart();
+            const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
+            this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+            this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
+            this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
+        }
+        
+        this.destroy();
+        this.healthSpriteBack.destroy();
+        this.healthSpriteFront.destroy();
+    }
 }
