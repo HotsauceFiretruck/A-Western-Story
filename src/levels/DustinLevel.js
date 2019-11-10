@@ -239,7 +239,12 @@ export class DustinLevel extends Phaser.Scene
             let sequence2 = dialogTree2.addSequence();
             dialogTree2.addDialog(sequence2, "HrrrAHH. *Sheriff Escapes*");
             dialogTree2.playSequence(sequence2);
-            scene.nextLevel();
+            setTimeout(function()
+            {
+            let nextLevelGoal = new Area(scene, 'clear', 0, 0, 5000, 5000);
+            nextLevelGoal.whenTouched(scene.player, () => {scene.nextLevel()});
+            }, 5000
+            );
         })
     }
 
