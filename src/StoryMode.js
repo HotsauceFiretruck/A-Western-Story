@@ -1,6 +1,7 @@
 import { LevelTutorial } from "./levels/LevelTutorial.js";
 import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
+import { AlexLevelPart2 } from "./levels/AlexLevelPart2.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
 import { FinalLevel } from "./levels/FinalLevel.js";
@@ -46,6 +47,7 @@ export class StoryMode
         let levelBonus = new BonusLevel(this);
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
+        let level1Continued = new AlexLevelPart2(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
         let level4 = new EthanLevel(this);
@@ -83,7 +85,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [preloader, menu, levelTutorial, levelSelect, level1, level2, level3, level4, level5, levelBonus, death]
+            scene: [preloader, menu, levelTutorial, levelSelect, level1, level1Continued, level2, level3, level4, level5, levelBonus, death]
         };
 
         let game = new Phaser.Game(this.config);
