@@ -4,6 +4,7 @@ import { TileMap } from "../components/TileMap.js";
 import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
 import { Enemy } from "../entities/Enemy.js";
+import { Bull } from "../entities/Bull.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 
 export class FinalLevel extends Phaser.Scene
@@ -126,6 +127,16 @@ export class FinalLevel extends Phaser.Scene
         {
             if(this.count == 0)
             {
+                this.bull1 = new Bull(this, 500, 500);
+                this.bull2 = new Bull(this, 700, 500);
+                this.bull3 = new Bull(this, 900, 500);
+                this.bull4 = new Bull(this, 1200, 500);
+                this.bull5 = new Bull(this, 1500, 500);
+                this.bull6 = new Bull(this, 1800, 500);
+                this.count = this.count + 1;
+            }
+            else if(this.count == 1)
+            {
                 this.basicEnemy1 = new Enemy(this, 500, 500);
                 this.basicEnemy2 = new Enemy(this, 700, 500);
                 this.basicEnemy3 = new Enemy(this, 900, 500);
@@ -135,7 +146,7 @@ export class FinalLevel extends Phaser.Scene
                 this.count = this.count + 1;
             }
 
-            else if(this.count == 1)
+            else if(this.count == 2)
             {
                 this.preist1 = new Priest(this, 500, 500);
                 this.priest2 = new Priest(this, 700, 500);
@@ -146,17 +157,17 @@ export class FinalLevel extends Phaser.Scene
                 this.count = this.count + 1;
             }
 
-            else if(this.count == 2)
+            else if(this.count == 3)
             {
-                this.finalBoss = new FinalEnemy(this, 500, 500);
+                this.finalBoss = new FinalEnemy(this, 600, 500);
                 this.count = this.count + 1;
                 //console.log("Hi");
             }
 
-            else if(this.count == 3)
+            else if(this.count == 4)
             {
                 this.switchToWin();
-                this.count = 4;
+                this.count = 5;
             }
             
         }

@@ -4,7 +4,7 @@ export class Snake extends Enemy
 {
     constructor(scene, x, y)
     {
-        super(scene, x, y, 'snake', 20, 3);
+        super(scene, x, y, 'snake', 20);
     }
 
     shoot()
