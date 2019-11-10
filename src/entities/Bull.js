@@ -1,10 +1,10 @@
 import { Enemy } from "./Enemy.js";
 
-export class Snake extends Enemy
+export class Bull extends Enemy
 {
     constructor(scene, x, y)
     {
-        super(scene, x, y, 'snake', 20);
+        super(scene, x, y, 'bull', 20, 2);
     }
 
     shoot()
