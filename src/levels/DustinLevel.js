@@ -87,7 +87,7 @@ export class DustinLevel extends Phaser.Scene
 
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence1, "The scondrels left Joe for dead...\nBut it turns out that he survived");
+        dialogTree.addDialog(sequence1, "The scoundrels left Joe for dead...\nBut it turns out that he survived");
         dialogTree.addDialog(sequence1, "You must now make your way into town.");
         dialogTree.playSequence(sequence1);
     }
