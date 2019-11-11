@@ -296,6 +296,8 @@ export class DustinLevel extends Phaser.Scene
     */
     loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale, repeat) 
     {
+        console.log(this.cameras.main.worldView.height);
+        console.log(this.PhaserGame.scale);
         let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
         let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
 
@@ -323,9 +325,9 @@ export class DustinLevel extends Phaser.Scene
             currBg.forEach(element => {
                 element.destroy();
             });
-            
+            var pScale = this.PhaserGame.scale * 1.5;
             let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-            bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * 0 * scale, imageHeight * 0 * scale);
+            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(levelWidth - (bgImage.width - 40)*pScale, levelHeight - bgImage.height*pScale);
             this.add.existing(bgImage);
             currBg.push(bgImage);
         }
