@@ -19,6 +19,7 @@ export class DialogTree
 
         if (scene.PhaserGame.isMobile)
         {
+            scene.input.addPointer(4);
             this.keyChange = "pointerdown";
         }
 
@@ -276,21 +277,49 @@ class Dialog
         }
         if (this.optionTexts.length == 0)
         {
-            this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
-                0, 
-                0, 
-                "Press Any Key To Continue...",
-                {
-                    fontFamily: 'Courier',
-                    fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
-                    fontStyle: "bold"
-                }
-            ).setScrollFactor(0, 0);
-    
-            this.pressAnyKeyToContinueText.setPosition(
-                centerX + 270 * this.dialogTree.scale,
-                centerY + 50 * this.dialogTree.scale
-            );
+            if (!this.dialogTree.scene.PhaserGame.isMobile)
+            {
+                this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
+                    0, 
+                    0, 
+                    "Press Any Key To Continue...",
+                    {
+                        fontFamily: 'Courier',
+                        fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
+                        fontStyle: "bold"
+                    }
+                ).setScrollFactor(0, 0);
+        
+                this.pressAnyKeyToContinueText.setPosition(
+                    centerX + 270 * this.dialogTree.scale,
+                    centerY + 50 * this.dialogTree.scale
+                );
+            } else
+            {
+                this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
+                    0, 
+                    0, 
+                    "Press Me To Continue...",
+                    {
+                        fontFamily: 'Courier',
+                        fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
+                        fontStyle: "bold"
+                    }
+                ).setScrollFactor(0, 0).setInteractive();
+        
+                this.pressAnyKeyToContinueText.setPosition(
+                    centerX + 270 * this.dialogTree.scale,
+                    centerY + 50 * this.dialogTree.scale
+                );
+                this.dialogTree.scene.time.addEvent({
+                    delay: 500,
+                    callback: () => this.pressAnyKeyToContinueText.on('pointerdown', () => {
+                        this.dialogTree.sequences[this.dialogSequenceId].nextDialog();
+                    }),
+                    callbackScope: this,
+                    loop: false
+                });
+            }
         }  
 
         if (this.actor != undefined) 
