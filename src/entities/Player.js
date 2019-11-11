@@ -25,7 +25,9 @@ export class Player extends Phaser.Physics.Matter.Sprite
             nodamage: false,
             isTouching: { left: false, right: false, down: false },
             canJump: true,
+            numOfBullets: 1,
             fireRate: .3, // 1 bullet every [fireRate] seconds
+            bulletSpacing: Math.PI/8, //In Radians
             isFireReloaded: true,
             jumpCooldownTimer: null,
             allowHorizontal: true,
@@ -90,6 +92,9 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
         this.displayHealth.setScrollFactor(0, 0);
+
+        this.gun = scene.add.image(this.x, this.y, 'gun');
+        this.gun.setDepth(999).setScale(2);
     }
 
     update()
@@ -99,6 +104,8 @@ export class Player extends Phaser.Physics.Matter.Sprite
             //Update Controls/Cursors
             this.controller.update();
         }
+
+        this.controller.updateGun();
         
         if (this.y > 600)
         {
@@ -144,11 +151,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
             this.damagedEffects();
         }
         
-        if (this.status.health < 0)
-        {
-            this.status.health = 0;
-            //death() // game over
-        }
         if (this.status.health < 10)
         {
             this.healthSprite.setFrame(2);
@@ -192,9 +194,28 @@ export class Player extends Phaser.Physics.Matter.Sprite
     {
         if (this.status.isFireReloaded)
         {
-            new Bullet(this.scene, this.scene.enemies, this.x, this.y, x, y);
+            let startRadians = (this.status.bulletSpacing/2) * (this.status.numOfBullets - 1);
+            let startPoint = this.rotateAroundPoint([this.x, this.y], [x, y], startRadians);
+
+            for (let i = 0; i < this.status.numOfBullets; ++i)
+            {
+                let nextPoint = this.rotateAroundPoint([this.x, this.y], startPoint, -this.status.bulletSpacing * i);
+                new Bullet(this.scene, this.scene.enemies, this.x, this.y, nextPoint[0], nextPoint[1]);
+            }
+            
             this.reloadGun();
         }
+    }
+
+    rotateAroundPoint(origin, point, angle)
+    {
+        let ox = origin[0];
+        let oy = origin[1];
+        let px = point[0];
+        let py = point[1];
+        let qx = ox + Math.cos(angle) * (px - ox) - Math.sin(angle) * (py - oy);
+        let qy = oy + Math.sin(angle) * (px - ox) + Math.cos(angle) * (py - oy);
+        return [qx, qy];
     }
 
     disableHorizontalMovement()
