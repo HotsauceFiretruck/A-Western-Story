@@ -124,7 +124,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('death', 'assets/GameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
-        this.load.image('bonuslvlbtn', 'assets/bonuslvlbtn.png')
         this.load.image('northSign', 'assets/NorthSign.png');
         this.load.image('southSign', 'assets/SouthSign.png');
         this.load.image('eastSign', 'assets/EastSign.png');
@@ -135,7 +134,10 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('bigHouse', 'assets/bigHouse.png');
         this.load.image('saloon', 'assets/Saloon.png');
         this.load.image('waterTower', 'assets/waterTower.png');
-        this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('extrahealth', 'assets/ExtraHealth.png');
+        this.load.image('flight', 'assets/Flight.png');
+        this.load.image('tripleshot', 'assets/TripleShot.png');
+        this.load.image('gun', 'assets/Gun.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 

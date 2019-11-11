@@ -52,6 +52,42 @@ export class DesktopController
         }
     }
 
+    updateGun()
+    {
+        let norm = this.normalization(this.player.x, this.player.y, 
+            this.scene.input.mousePointer.worldX, this.scene.input.mousePointer.worldY);
+        let rotation = Math.atan2(norm[1], norm[0]);
+        this.player.gun.setPosition(this.player.x + norm[0] * 35, this.player.y + norm[1] * 35);
+        this.player.gun.setRotation(rotation);
+        if (norm[0] < 0)
+        {
+            this.player.gun.setFlipY(true);
+        } else
+        {
+            this.player.gun.setFlipY(false);
+        }
+    }
+
+    normalization(fromX, fromY, toX, toY)
+    {
+        let distX = toX - fromX;
+        let distY = toY - fromY;
+        let magnitude = Math.sqrt(distX * distX + distY * distY);
+        let normalizeX = 0;
+        let normalizeY = 0;
+
+        if (magnitude > 0)
+        {
+            normalizeX = distX / magnitude;
+            normalizeY = distY / magnitude;
+        } else 
+        {
+            normalizeX = 1;
+        }
+
+        return [normalizeX, normalizeY];
+    }
+
     disableShoot()
     {
         this.scene.input.off('pointerdown');

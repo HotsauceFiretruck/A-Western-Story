@@ -51,7 +51,6 @@ export class DustinLevel extends Phaser.Scene
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-
         //Looping background with level
         this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45, true);
         
@@ -85,18 +84,11 @@ export class DustinLevel extends Phaser.Scene
 
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter()});
-        //Testing Buttons
-        // this.testButton = this.add.sprite(1650, 525, 'sheriffhouse').setInteractive();
-        // this.testButton.on('pointerdown', function (event) { 
-        //     this.nextLevel;
-        // });
     }
 
     encounter()
     {
-        
         this.map.deleteAllPlatforms();
-        
 
         let levelSheriffEncounter = 
         [   
@@ -130,8 +122,6 @@ export class DustinLevel extends Phaser.Scene
         this.house4.destroy();
         this.house5.destroy();
         this.house6.destroy();
-        
-
 
         //Looping background with level
         currBg.forEach(element => {
@@ -142,10 +132,6 @@ export class DustinLevel extends Phaser.Scene
         
         // Create map
         this.map = new TileMap(this, levelSheriffEncounter, 32, 32, 'clear');
-        //this.map.enableKinematicAll(-.5, 0); //Enable kinematic tiles
-        
-        //Adding static images
-        
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
@@ -255,7 +241,6 @@ export class DustinLevel extends Phaser.Scene
     nextLevel()
     {
         sheriffDeath = true;
-        console.log("Sheriff died");
     }
 
     update ()
@@ -281,7 +266,6 @@ export class DustinLevel extends Phaser.Scene
         //When there are no more enemies in the level, continue to next level
         if (this.enemies.list.length == 0 && battleInit && sheriffDeath) 
         {
-            console.log("Enemies cleared");
             this.scene.start('level-3');
         }
 
@@ -300,8 +284,6 @@ export class DustinLevel extends Phaser.Scene
     */
     loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale, repeat) 
     {
-        console.log(this.cameras.main.worldView.height);
-        console.log(this.PhaserGame.scale);
         let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
         let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
 

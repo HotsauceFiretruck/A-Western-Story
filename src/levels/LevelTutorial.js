@@ -3,7 +3,7 @@ import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
-import { FinalEnemy } from "../entities/FinalEnemy.js";
+import { Bull } from "../entities/Bull.js";
 
 export class LevelTutorial extends Phaser.Scene
 {
@@ -51,8 +51,8 @@ export class LevelTutorial extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
         //Looping background with level
@@ -65,7 +65,7 @@ export class LevelTutorial extends Phaser.Scene
         this.add.image(50, 525, 'house');
 
         this.player = new Player(this, 300, 400);
-        this.basicEnemy = new Enemy(this, 750, 400);
+        this.basicEnemy = new Enemy(this, 500, 200);
 
         //Add an Area Example
         //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height
@@ -84,36 +84,37 @@ export class LevelTutorial extends Phaser.Scene
     dialogSetup(dialogTree)
     {
         let sequence0 = dialogTree.addSequence(); //sequence0 have the id of 0 because of index array start at 0
-        let sequence1 = dialogTree.addSequence();
-        let sequence2 = dialogTree.addSequence();
+        // let sequence1 = dialogTree.addSequence();
+        // let sequence2 = dialogTree.addSequence();
 
         //dialogTree.addDialog(sequenceID, text, actor, options)
         dialogTree.addDialog(sequence0, "Welcome to this game.", this.player);
         dialogTree.addDialog(sequence0, "Press D to go right.", this.player);
         dialogTree.addDialog(sequence0, "Press A to go left.", this.player);
         dialogTree.addDialog(sequence0, "Press W to jump.", this.player);
-        dialogTree.addDialog(sequence0, "Right click to shoot.", this.player);
-        dialogTree.addDialog(sequence0, "Have fun, bye.", this.player,
-            [
-                ["Go to sequence 1", () => {dialogTree.changeSequence(1);}],
-                ["Go to sequence 2", () => {dialogTree.changeSequence(2);
-                }],
-            ]
-        );
+        dialogTree.addDialog(sequence0, "Left click to shoot.", this.player);
+        dialogTree.addDialog(sequence0, "Have fun, bye.", this.player);
+        // dialogTree.addDialog(sequence0, "Have fun, bye.", this.player,
+        //     [
+        //         ["Go to sequence 1", () => {dialogTree.changeSequence(1);}],
+        //         ["Go to sequence 2", () => {dialogTree.changeSequence(2);
+        //         }],
+        //     ]
+        // );
 
-        dialogTree.addDialog(sequence1, "This is sequence 1.", this.basicEnemy);
+        // dialogTree.addDialog(sequence1, "This is sequence 1.", this.basicEnemy);
             
-        dialogTree.addDialog(sequence2, "This is sequence 2.", this.basicEnemy,
-            [
-                ["Go to sequence 1", () => {
-                    dialogTree.changeSequence(1);
-                    this.optionsChosen = dialogTree.globalOptionsChosen; //Get the options that was chosen as an array
-                }],
-                ["Go to sequence 0", () => {
-                    dialogTree.changeSequence(0);
-                }]
-            ]
-        );
+        // dialogTree.addDialog(sequence2, "This is sequence 2.", this.basicEnemy,
+        //     [
+        //         ["Go to sequence 1", () => {
+        //             dialogTree.changeSequence(1);
+        //             this.optionsChosen = dialogTree.globalOptionsChosen; //Get the options that was chosen as an array
+        //         }],
+        //         ["Go to sequence 0", () => {
+        //             dialogTree.changeSequence(0);
+        //         }]
+        //     ]
+        // );
 
         dialogTree.playSequence(sequence0);
     }
@@ -123,8 +124,6 @@ export class LevelTutorial extends Phaser.Scene
     {
         this.scene.start('level-1');
     }
-
-    
 
     //Load in image to fill in the level
     /*
