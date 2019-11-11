@@ -321,10 +321,13 @@ export class DustinLevel extends Phaser.Scene
             this.add.existing(bgImage);
             currBg.push(bgImage);
 
+            for (let i = 0; i < 3; i++) {
+            initialPlace -= imageWidth * this.PhaserGame.scale;
             bgImage = new Phaser.GameObjects.Image(this, 0, 0, "background4r");
-            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace - (imageWidth * this.PhaserGame.scale), levelHeight - bgImage.height*pScale);
+            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
             this.add.existing(bgImage);
             currBg.push(bgImage);
+            }
         }
     }
 }
