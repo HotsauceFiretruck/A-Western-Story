@@ -83,7 +83,7 @@ export class DustinLevel extends Phaser.Scene
         this.basicEnemy3 = new Enemy(this, 408, 1);
 
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
-        nextLevelGoal.whenTouched(this.player, () => {this.encounter()});
+        nextLevelGoal.whenTouched(this.player, () => {this.encounter(); nextLevelGoal.destroy()});
     }
 
     encounter()
@@ -122,8 +122,13 @@ export class DustinLevel extends Phaser.Scene
         this.house4.destroy();
         this.house5.destroy();
         this.house6.destroy();
+        
 
         //Looping background with level
+        currBg.forEach(element => {
+            element.destroy();
+        });
+        //this.add.image(600, 300, "background3");
         this.loopImage('background3', 720, 420, levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32, 1.45, false);
         
         // Create map
@@ -139,9 +144,11 @@ export class DustinLevel extends Phaser.Scene
             category: 4,
             list: []
         };
-
-        this.player = new Player(this, 832, 532);
-        //this.player.changeHealth(100);
+        
+        this.player.setPosition(832, 532);
+        this.player.setHealth(20);
+        scene.cameras.main.startFollow(this.player, false, 0.5, 0.5);
+        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
         
 
         let dialogTree = new DialogTree(this, 600, 100);
@@ -309,9 +316,18 @@ export class DustinLevel extends Phaser.Scene
             });
             var pScale = this.PhaserGame.scale * 1.5;
             let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(levelWidth - (bgImage.width - 40)*pScale, levelHeight - bgImage.height*pScale);
+            var initialPlace = levelWidth - (bgImage.width - 40)*pScale;
+            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
             this.add.existing(bgImage);
             currBg.push(bgImage);
+
+            for (let i = 0; i < 3; i++) {
+            initialPlace -= imageWidth * this.PhaserGame.scale;
+            bgImage = new Phaser.GameObjects.Image(this, 0, 0, "background4r");
+            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
+            this.add.existing(bgImage);
+            currBg.push(bgImage);
+            }
         }
     }
 }
