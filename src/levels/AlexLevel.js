@@ -60,13 +60,13 @@ export class AlexLevel extends Phaser.Scene
 
         this.player = new Player(this, 1350, 500);
         this.basicEnemy1 = new Enemy(this, 2080, 200);
-        this.basicEnemy2 = new Enemy(this, 2112, 200);
-        this.basicEnemy3 = new Enemy(this, 2144, 200);
-        this.basicEnemy4 = new Enemy(this, 2176, 200);
-        this.basicEnemy5 = new Enemy(this, 2208, 200);
-        this.basicEnemy6 = new Enemy(this, 2240, 200);
-        this.basicEnemy7 = new Enemy(this, 2272, 200);
-        this.basicEnemy8 = new Enemy(this, 2304, 200);
+        // this.basicEnemy2 = new Enemy(this, 2112, 200);
+        // this.basicEnemy3 = new Enemy(this, 2144, 200);
+        // this.basicEnemy4 = new Enemy(this, 2176, 200);
+        // this.basicEnemy5 = new Enemy(this, 2208, 200);
+        // this.basicEnemy6 = new Enemy(this, 2240, 200);
+        // this.basicEnemy7 = new Enemy(this, 2272, 200);
+        // this.basicEnemy8 = new Enemy(this, 2304, 200);
 
         let dialogTree1 = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree1.addSequence();
