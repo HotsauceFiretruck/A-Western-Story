@@ -94,8 +94,6 @@ export class PreloaderArena extends Phaser.Scene
         this.load.image('enemy', 'assets/Outlaw.png');
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
-        this.load.image('sheriff', 'assets/Sheriff.png');
-        this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         this.load.image('cactus', 'assets/Cactus.png');
         this.load.image('crate', 'assets/Crate.png');
         this.load.image('deadtree', 'assets/DeadTree.png');
@@ -106,18 +104,10 @@ export class PreloaderArena extends Phaser.Scene
         this.load.image('tutorialbtn', 'assets/TutorialButton.png');
         this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
         this.load.image('backbtn', 'assets/BackButton.png');
-        this.load.image('lvl1btn', 'assets/lvl1.png');
-        this.load.image('lvl2btn', 'assets/lvl2.png');
-        this.load.image('lvl3btn', 'assets/lvl3.png');
-        this.load.image('lvl4btn', 'assets/lvl4.png');
-        this.load.image('lvl5btn', 'assets/lvl5.png');
-        this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
-        this.load.image('healthbarfront', 'assets/BossHealthBar.png');
         this.load.image('dialogbg', 'assets/DialogBackground.png');
         this.load.image('death', 'assets/GameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
-        this.load.image('bonuslvlbtn', 'assets/bonuslvlbtn.png')
         this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
