@@ -1,9 +1,6 @@
 import { ArenaLevel } from "./levels/ArenaLevel.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderArena } from "./interfaces/PreloaderArena.js";
-import { MenuScene } from "./interfaces/MenuScene.js";
-import { LevelSelect } from "./interfaces/LevelSelect.js";
-import { BonusLevel } from "./levels/BonusLevel.js";
 import { Connection } from "./components/Connection.js";
 
 
