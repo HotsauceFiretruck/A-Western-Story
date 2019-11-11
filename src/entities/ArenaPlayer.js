@@ -8,11 +8,11 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
        x: X position of player in level (pixel unit)
        y: Y position of player in level (pixel unit)
     */
-    constructor(scene, x, y, socket)
+    constructor(scene, x, y, connection)
     {
         super(scene.matter.world, x, y, 'player');
-        this.socket = socket;
         this.scene = scene;
+        this.connection = connection;
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
@@ -105,18 +105,6 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         {
             this.death();
         }
-
-        this.socket.emit('move-player', {
-            x: this.x,
-            y: this.y,
-            playerName: {
-              name: String(this.socket.id)
-            },
-            velocity: {
-              x: this.body.velocity.x,
-              y: this.body.velocity.y
-            }
-          })
     }
 
     //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
@@ -205,7 +193,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     {
         if (this.status.isFireReloaded)
         {
-            new Bullet(this.scene, this, this.x+20, this.y+20, x, y);
+            this.scene.connection.sendBullet(this.x, this.y, x, y, this)
+            //new Bullet(this.scene, this, this.x, this.y, x, y);
             this.reloadGun();
         }
     }
@@ -275,25 +264,10 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
         if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
+        this.connection.socket.close();
         this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
-
+        
         //this.destroy();
-    }
-
-    deathOtherPlayer() {
-        // Event listeners
-        if (this.scene.matter.world) {
-            this.scene.matter.world.off("beforeupdate", this.resetTouching, this);
-        }
-
-        // Matter collision plugin
-        const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
-        this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
-        this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
-
-        if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
-
-        this.destroy();
     }
 
     
