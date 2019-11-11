@@ -84,8 +84,11 @@ export class PreloaderScene extends Phaser.Scene
         }
         this.load.image('background', 'assets/Background.png');
         this.load.image('background2', 'assets/Background2.png');
+        this.load.image('background3', 'assets/Background3.png');
+        this.load.image('background4', 'assets/Background4.png');
         this.load.image('grass', 'assets/Grass.png');
         this.load.image('sand', 'assets/Sand.png');
+        this.load.image('clear', 'assets/Clear.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
         this.load.image('house', 'assets/House.png');
@@ -93,6 +96,12 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('sheriff', 'assets/Sheriff.png');
+        this.load.image('priest', 'assets/Priest.png');
+        this.load.image('snake', 'assets/Snake.png');
+        this.load.image('cross', 'assets/Cross.png');
+        this.load.image('win', 'assets/YouWin.png');
+        this.load.image('bull', 'assets/Bull.png');
+        this.load.image('sheriffhouse', 'assets/SheriffHouse.png');
         this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         this.load.image('cactus', 'assets/Cactus.png');
         this.load.image('crate', 'assets/Crate.png');
@@ -115,8 +124,20 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('death', 'assets/GameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
-        this.load.image('bonuslvlbtn', 'assets/bonuslvlbtn.png')
-        this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('northSign', 'assets/NorthSign.png');
+        this.load.image('southSign', 'assets/SouthSign.png');
+        this.load.image('eastSign', 'assets/EastSign.png');
+        this.load.image('westSign', 'assets/WestSign.png');
+        this.load.image('signPost', 'assets/SignPost.png');
+        this.load.image('fence', 'assets/fence.png');
+        this.load.image('church', 'assets/church.png');
+        this.load.image('bigHouse', 'assets/bigHouse.png');
+        this.load.image('saloon', 'assets/Saloon.png');
+        this.load.image('waterTower', 'assets/waterTower.png');
+        this.load.image('extrahealth', 'assets/ExtraHealth.png');
+        this.load.image('flight', 'assets/Flight.png');
+        this.load.image('tripleshot', 'assets/TripleShot.png');
+        this.load.image('gun', 'assets/Gun.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
