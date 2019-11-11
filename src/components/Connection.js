@@ -26,6 +26,11 @@ export class Connection {
         })
     }
 
+    updateName(player) {
+        player.nameText.x = player.x-65;
+        player.nameText.y = player.y-35;
+    }
+
     connection(player, scene) {
         let socket = this.socket;
         this.otherPlayers = [];
@@ -47,6 +52,12 @@ export class Connection {
                 }
             })
             player.playerName = socket.id;
+            player.nameText = this.createText(scene, player, player.playerName);
+            scene.add.existing(player.nameText);
+        })
+
+        socket.on('disconnect', () => {
+            player.nameText.destroy();
         })
 
         socket.on('send-bullet', data => {
@@ -140,7 +151,6 @@ export class Connection {
                     y: player.body.velocity.y
                 }
             })
-            console.log("POSTITION SENT", player.x, player.y)
         }
     }
 }

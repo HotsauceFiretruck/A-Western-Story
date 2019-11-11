@@ -111,7 +111,7 @@ export class MobileController
         this.horizontalControls.enable();
         this.fireControl.enable();
         this.jumpButton.setVisible(true);
-        this.jumpButton.on('pointerdown', () => {this.jump(player)});
+        this.jumpButton.on('pointerdown', () => {this.jump(this.player)});
     }
 }
 
