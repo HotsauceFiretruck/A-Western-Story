@@ -124,7 +124,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('death', 'assets/GameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
-        this.load.image('bonuslvlbtn', 'assets/bonuslvlbtn.png')
         this.load.image('northSign', 'assets/NorthSign.png');
         this.load.image('southSign', 'assets/SouthSign.png');
         this.load.image('eastSign', 'assets/EastSign.png');
