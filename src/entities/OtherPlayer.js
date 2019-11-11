@@ -49,7 +49,7 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
         });
 
         //Set collision category
-        this.category = 1;
+        this.category = 16;
         
         //Setting Sprite
         this.setExistingBody(compoundBody)
@@ -65,11 +65,6 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
     //Important for entities
     changeHealth(changeHealthBy)
     {
-        this.status.health += changeHealthBy;
-        if (changeHealthBy < 0 && this.status.nodamage)
-        {
-            this.status.health -= changeHealthBy;
-        }
         if (changeHealthBy < 0 && !this.status.nodamage)
         {
             this.damagedEffects();
