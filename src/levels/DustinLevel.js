@@ -134,7 +134,11 @@ export class DustinLevel extends Phaser.Scene
 
 
         //Looping background with level
-        this.loopImage('background3', 720, 420, levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32, 1.45, false);
+        currBg.forEach(element => {
+            element.destroy();
+        });
+        this.add.image(600, 300, "background3");
+        //this.loopImage('background3', 720, 420, levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32, 1.45, false);
         
         // Create map
         this.map = new TileMap(this, levelSheriffEncounter, 32, 32, 'clear');
