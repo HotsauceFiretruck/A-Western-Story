@@ -13,6 +13,8 @@ export class AlexLevelPart2 extends Phaser.Scene
     {
         super({key:"level-1Continued"});
 
+        this.count = 0;
+
         this.PhaserGame = PhaserGame;
     }
 
@@ -62,18 +64,30 @@ export class AlexLevelPart2 extends Phaser.Scene
         this.player = new Player(this, 500, 500);
         this.basicEnemy1 = new Enemy(this, 750, 500).setScale(2);
 
-        let dialogTree1 = new DialogTree(this, 600, 100);
-        let sequence1 = dialogTree1.addSequence();
-        dialogTree1.addDialog(sequence1, "I'm tired. if one more bullet hits me, I'll die right here");
-        dialogTree1.playSequence(sequence1);
+        this.dialogTree = new DialogTree(this, 600, 100);
+        this.dialogSetup(this.dialogTree);
+    }
+
+    dialogSetup(dialogTree)
+    {
+        let sequence0 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "I'm tired. if one more bullet hits me, I'll die right here");
+        dialogTree.playSequence(sequence0);
     }
 
     update ()
     {  
         this.player.stageMode();
         this.basicEnemy1.stageMode();
-        new Bullet(this.scene, this.player, 100, 100, this.player.x, this.player.y);
-
+        if(this.dialogTree.isTreeEnded)
+        {
+            if(this.count == 0)
+            {
+                new Bullet(this, this.player, 750, 550, this.player.x, this.player.y);
+                this.count = 1;
+            }
+        }
+        
         //Update platforms
         for (let i = 0; i < this.map.platforms.list.length; ++i)
         {
