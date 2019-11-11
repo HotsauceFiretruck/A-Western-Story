@@ -88,7 +88,9 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('background4', 'assets/Background4.png');
         this.load.image('background4r', 'assets/Background4R.png');
         this.load.image('grass', 'assets/Grass.png');
+        this.load.image('grass2', 'assets/Grass2.png');
         this.load.image('sand', 'assets/Sand.png');
+        this.load.image('sand2', 'assets/Sand2.png');
         this.load.image('clear', 'assets/Clear.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
