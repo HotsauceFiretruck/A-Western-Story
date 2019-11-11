@@ -38,7 +38,6 @@ export class ArenaMode
 
         //Initializing Level
         let preloader = new PreloaderArena(this);
-        let menu = new MenuScene(this);
         let levelarena = new ArenaLevel(this, connection);
         let death = new DeathScene(this);
 

@@ -82,6 +82,7 @@ export class Bullet
             .setRotation(radians)
             .setFixedRotation()
             .setCollisionCategory(8)
+            .setDepth(900)
             .setCollidesWith([2]);
 
         if (target != null) {
