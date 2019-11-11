@@ -119,7 +119,9 @@ export class ArenaLevel extends Phaser.Scene
         //Update player
         this.player.update();
 
-        //this.connection.updatePosition(this.player);
-        this.connection.playerMovementInterpolation();
+        if (this.connection.getSocket().connected) {
+            this.connection.updateName(this.player);
+            this.connection.playerMovementInterpolation();
+        }
     }
 }
