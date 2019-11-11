@@ -155,11 +155,29 @@ export class Player extends Phaser.Physics.Matter.Sprite
         {
             this.healthSprite.setFrame(2);
         }
+        else if (this.status.health > 10)
+        {
+            this.healthSprite.setFrame(1);
+        }
         this.displayHealth.setText(this.status.health);
         if (this.status.health <= 0) 
         {
             this.death();
         }
+    }
+
+    setHealth(health)
+    {
+        this.status.health = health;
+        if (this.status.health < 10)
+        {
+            this.healthSprite.setFrame(2);
+        }
+        else if (this.status.health > 10)
+        {
+            this.healthSprite.setFrame(1);
+        }
+        this.displayHealth.setText(this.status.health);
     }
 
     damagedEffects()
