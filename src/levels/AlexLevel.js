@@ -1,6 +1,7 @@
 import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
+import { DialogTree } from "../interfaces/DialogTree.js";
 import { Priest } from "../entities/Priest.js";
 import { Bull } from "../entities/Bull.js";
 import { Snake } from "../entities/Snake.js";
@@ -58,16 +59,20 @@ export class AlexLevel extends Phaser.Scene
         };
 
         this.player = new Player(this, 1350, 500);
-        this.basicEnemy1 = new Enemy(this, 2048, 200);
-        this.basicEnemy2 = new Enemy(this, 2080, 200);
-        this.basicEnemy3 = new Enemy(this, 2112, 200);
-        this.basicEnemy4 = new Enemy(this, 2144, 200);
-        this.basicEnemy5 = new Enemy(this, 2176, 200);
-        this.basicEnemy6 = new Enemy(this, 2208, 200);
-        this.basicEnemy7 = new Enemy(this, 2240, 200);
-        this.basicEnemy8 = new Enemy(this, 2272, 200);
-        this.basicEnemy9 = new Enemy(this, 2304, 200);
-        this.basicEnemy10 = new Enemy(this, 2336, 200);
+        this.basicEnemy1 = new Enemy(this, 2080, 200);
+        this.basicEnemy2 = new Enemy(this, 2112, 200);
+        this.basicEnemy3 = new Enemy(this, 2144, 200);
+        this.basicEnemy4 = new Enemy(this, 2176, 200);
+        this.basicEnemy5 = new Enemy(this, 2208, 200);
+        this.basicEnemy6 = new Enemy(this, 2240, 200);
+        this.basicEnemy7 = new Enemy(this, 2272, 200);
+        this.basicEnemy8 = new Enemy(this, 2304, 200);
+
+        let dialogTree1 = new DialogTree(this, 600, 100);
+        let sequence1 = dialogTree1.addSequence();
+        dialogTree1.addDialog(sequence1, "Kill the enemies before they get to you.");
+        dialogTree1.addDialog(sequence1, "Good Luck.");
+        dialogTree1.playSequence(sequence1);
     }
 
     update ()
@@ -92,16 +97,7 @@ export class AlexLevel extends Phaser.Scene
         
         if (this.enemies.list.length == 0)
         {
-            this.basicEnemy1 = new Enemy(this, 2048, 200);
-            this.basicEnemy2 = new Enemy(this, 2080, 200);
-            this.basicEnemy3 = new Enemy(this, 2112, 200);
-            this.basicEnemy4 = new Enemy(this, 2144, 200);
-            this.basicEnemy5 = new Enemy(this, 2176, 200);
-            this.basicEnemy6 = new Enemy(this, 2208, 200);
-            this.basicEnemy7 = new Enemy(this, 2240, 200);
-            this.basicEnemy8 = new Enemy(this, 2272, 200);
-            this.basicEnemy9 = new Enemy(this, 2304, 200);
-            this.basicEnemy10 = new Enemy(this, 2336, 200);
+            this.nextLevel();
         }
 
         this.player.update();
@@ -127,5 +123,10 @@ export class AlexLevel extends Phaser.Scene
                 this.add.existing(bgImage);
             }
         }
+    }
+
+    nextLevel()
+    {
+        this.scene.start('level-1Continued');
     }
 }

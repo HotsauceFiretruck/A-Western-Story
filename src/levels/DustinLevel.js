@@ -6,6 +6,7 @@ import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 
 var battleInit = false;
+var sheriffDeath = false;
 var scene;
 var currBg = [];
 export class DustinLevel extends Phaser.Scene
@@ -207,6 +208,7 @@ export class DustinLevel extends Phaser.Scene
         //Looping background with level
         this.loopImage('background4', 720, 420, levelBattle[0].length * 32, levelBattle.length * 32, 1.45, false);
 
+        battleInit = true;
 
         this.basicEnemy = new Enemy(this, 328, 336);
         this.basicEnemy2 = new Enemy(this, 377, 316);
@@ -235,7 +237,7 @@ export class DustinLevel extends Phaser.Scene
             
             let dialogTree2 = new DialogTree(scene, 600, 100);
             let sequence2 = dialogTree2.addSequence();
-            dialogTree2.addDialog(sequence2, "HrrrAHH. *Sheriff Escapes*\n(Next level begins in 5 seconds)");
+            dialogTree2.addDialog(sequence2, "HrrrAHH. *Sheriff Escapes*");
             dialogTree2.playSequence(sequence2);
             setTimeout(function()
             {
@@ -243,13 +245,13 @@ export class DustinLevel extends Phaser.Scene
             nextLevelGoal.whenTouched(scene.player, () => {scene.nextLevel()});
             }, 5000
             );
-            
         })
     }
 
     nextLevel()
     {
-        this.scene.start('level-3');
+        sheriffDeath = true;
+        console.log("Sheriff died");
     }
 
     update ()
@@ -272,10 +274,11 @@ export class DustinLevel extends Phaser.Scene
             this.enemies.list[i].update();
         }
         
-        //When there are no more enemies in the level, add a new one at that position
-        if (this.enemies.list.length == 0 && battleInit) 
+        //When there are no more enemies in the level, continue to next level
+        if (this.enemies.list.length == 0 && battleInit && sheriffDeath) 
         {
-            //new Enemy(this, 600, 100);
+            console.log("Enemies cleared");
+            this.scene.start('level-3');
         }
 
         //Update player
@@ -324,7 +327,7 @@ export class DustinLevel extends Phaser.Scene
             let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
             bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * 0 * scale, imageHeight * 0 * scale);
             this.add.existing(bgImage);
-            currBg.push(bgImage)
+            currBg.push(bgImage);
         }
     }
 }
