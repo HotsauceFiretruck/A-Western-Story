@@ -15,6 +15,14 @@ export class DialogTree
         this.globalOptionsChosen = [];
         this.seqQueue = [];
 
+        this.keyChange = "keydown";
+
+        if (scene.PhaserGame.isMobile)
+        {
+            scene.input.addPointer(4);
+            this.keyChange = "pointerdown";
+        }
+
         //Play Dialog ----
         this.dialogBackground = scene.add.image(this.centerX, this.centerY, 'dialogbg');
         this.dialogBackground.setScale(4 * this.scale).setScrollFactor(0, 0);
@@ -104,7 +112,7 @@ export class DialogTree
     endTree()
     {
         this.currentSequence = null;
-        this.scene.input.keyboard.off("keydown");
+        this.scene.input.keyboard.off(this.keyChange);
         this.dialogBackground.setVisible(false);
         this.isTreeEnded = true;
 
@@ -147,7 +155,7 @@ class Sequence
     endSequence()
     {
         //this.onDialogNumber = 0;
-        this.dialogTree.scene.input.keyboard.off("keydown");
+        this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
         this.dialogTree.currentSequenceEnded();
     }
 
@@ -165,18 +173,18 @@ class Sequence
         else
         {
             this.dialogs[this.onDialogNumber - 1].endDialog();
-            this.dialogTree.scene.input.keyboard.off("keydown");
+            this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
             this.endSequence();
             return;
         }
 
         if (this.dialogs[this.onDialogNumber].optionTexts.length != 0)
         {
-            this.dialogTree.scene.input.keyboard.off("keydown");
+            this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
         }
         else if (this.onDialogNumber == 0)
         {
-            this.dialogTree.scene.input.keyboard.on("keydown", () => {this.nextDialog();});
+            this.dialogTree.scene.input.keyboard.on(this.dialogTree.keyChange, () => {this.nextDialog();});
         }
 
         //If dialog have options -> stop keyboard
@@ -269,21 +277,49 @@ class Dialog
         }
         if (this.optionTexts.length == 0)
         {
-            this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
-                0, 
-                0, 
-                "Press Any Key To Continue...",
-                {
-                    fontFamily: 'Courier',
-                    fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
-                    fontStyle: "bold"
-                }
-            ).setScrollFactor(0, 0);
-    
-            this.pressAnyKeyToContinueText.setPosition(
-                centerX + 270 * this.dialogTree.scale,
-                centerY + 50 * this.dialogTree.scale
-            );
+            if (!this.dialogTree.scene.PhaserGame.isMobile)
+            {
+                this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
+                    0, 
+                    0, 
+                    "Press Any Key To Continue...",
+                    {
+                        fontFamily: 'Courier',
+                        fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
+                        fontStyle: "bold"
+                    }
+                ).setScrollFactor(0, 0);
+        
+                this.pressAnyKeyToContinueText.setPosition(
+                    centerX + 270 * this.dialogTree.scale,
+                    centerY + 50 * this.dialogTree.scale
+                );
+            } else
+            {
+                this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
+                    0, 
+                    0, 
+                    "Press Me To Continue...",
+                    {
+                        fontFamily: 'Courier',
+                        fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
+                        fontStyle: "bold"
+                    }
+                ).setScrollFactor(0, 0).setInteractive();
+        
+                this.pressAnyKeyToContinueText.setPosition(
+                    centerX + 270 * this.dialogTree.scale,
+                    centerY + 50 * this.dialogTree.scale
+                );
+                this.dialogTree.scene.time.addEvent({
+                    delay: 500,
+                    callback: () => this.pressAnyKeyToContinueText.on('pointerdown', () => {
+                        this.dialogTree.sequences[this.dialogSequenceId].nextDialog();
+                    }),
+                    callbackScope: this,
+                    loop: false
+                });
+            }
         }  
 
         if (this.actor != undefined) 

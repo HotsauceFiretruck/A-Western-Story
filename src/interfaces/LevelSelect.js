@@ -17,7 +17,6 @@ export class LevelSelect extends Phaser.Scene {
         this.lvl3Btn = this.add.sprite(600 * scale, 300 * scale, 'lvl3btn').setScale(4 * scale).setInteractive();
         this.lvl4Btn = this.add.sprite(750 * scale, 300 * scale, 'lvl4btn').setScale(4 * scale).setInteractive();
         this.lvl5Btn = this.add.sprite(900 * scale, 300 * scale, 'lvl5btn').setScale(4 * scale).setInteractive();
-        this.bonuslvlbtn = this.add.sprite(1050 * scale, 300 * scale, 'bonuslvlbtn').setAlpha(.2).setInteractive();
         this.backBtn = this.add.sprite(350 * scale, 75 * scale, 'backbtn').setScale(2 * scale).setInteractive();
 
         // Adding functionality to buttons. Like click events and color change on hover.
@@ -84,17 +83,6 @@ export class LevelSelect extends Phaser.Scene {
             this.setTint(616161);
         });
         this.backBtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
-
-        this.bonuslvlbtn.on('pointerdown', (event) => {
-            document.getElementById('menuMusic').pause();
-            this.scene.start('bonus-level');
-        });
-        this.bonuslvlbtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.bonuslvlbtn.on('pointerout', function (event) {
             this.clearTint();
         });
     }
