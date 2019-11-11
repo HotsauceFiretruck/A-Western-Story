@@ -77,13 +77,19 @@ export class DustinLevel extends Phaser.Scene
             list: []
         };
 
-        this.player = new Player(this, 300, 100);
-        this.basicEnemy = new Enemy(this, 608, 1);
-        this.basicEnemy2 = new Enemy(this, 6, 1);
-        this.basicEnemy3 = new Enemy(this, 408, 1);
+        this.player = new Player(this, 300, level.length * 30);
+        this.basicEnemy = new Enemy(this, 608, level.length * 30);
+        this.basicEnemy2 = new Enemy(this, 36, level.length * 30);
+        this.basicEnemy3 = new Enemy(this, 1008, level.length * 30);
 
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter(); nextLevelGoal.destroy()});
+
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence1 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence1, "The scondrels left Joe for dead...\nBut it turns out that he survived");
+        dialogTree.addDialog(sequence1, "You must now make your way into town.");
+        dialogTree.playSequence(sequence1);
     }
 
     encounter()
