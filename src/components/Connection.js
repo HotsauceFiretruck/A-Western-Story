@@ -58,6 +58,10 @@ export class Connection {
 
         socket.on('disconnect', () => {
             player.nameText.destroy();
+            for (id in otherPlayers) {
+                otherPlayers[id].nameText.destroy();
+                otherPlayers[id].destroy();
+            }
         })
 
         socket.on('send-bullet', data => {
