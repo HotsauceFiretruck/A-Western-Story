@@ -61,8 +61,13 @@ export class Connection {
         })
 
         socket.on('send-bullet', data => {
-            const { x, y, to, player } = data;
-            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, this.player);
+            const { x, y, to, playerData } = data;
+            if (playerData === player.playerName) {
+                new Bullet(scene, this.player, x, y, to.x, to.y, this.player);
+            }
+            else {
+                new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, this.player);
+            }
         })
 
         socket.on('update-players', playersData => {
@@ -132,7 +137,7 @@ export class Connection {
                 x: toX,
                 y: toY
             },
-            player: player.playerName
+            playerData: player.playerName
         })
     }
 
