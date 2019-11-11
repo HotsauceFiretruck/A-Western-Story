@@ -1,4 +1,6 @@
 import { Bullet } from "./Bullet.js"
+import { ExtraHealth } from "../powerups/ExtraHealth.js";
+import { TripleShot } from "../powerups/TripleShot.js";
 
 export class Enemy extends Phaser.Physics.Matter.Sprite
 {
@@ -60,11 +62,12 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             .setPosition(x, y)
             .setFixedRotation()
             .setCollisionCategory(scene.enemies.category)
-            .setDepth(1);
+            .setDepth(1)
+            .setCollidesWith([2,1,8]);
     }
 
     onSensorCollide({ bodyA, bodyB, pair }) {
-        //if (bodyB.isSensor) return;
+        if (bodyB.isSensor) return;
         if (bodyB.collisionFilter.category == 2 || 
             bodyB.collisionFilter.category == 1 ||
             bodyB.collisionFilter.category == 4)
@@ -72,12 +75,12 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             if (bodyA === this.sensors.left) 
             {
                 this.status.isTouching.left = true;
-                if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+                //if (pair.separation > 0.5) this.x += pair.separation - 0.5;
             } 
             else if (bodyA === this.sensors.right) 
             {
                 this.status.isTouching.right = true;
-                if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+                //if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
             } 
             else if (bodyA === this.sensors.bottom) 
             {
@@ -176,6 +179,14 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
             this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
             this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
+
+            if (Math.random() < .2)
+            {
+                new TripleShot(this.scene, 'tripleshot', this.x, this.y - 20);
+            } else if (Math.random() < .5)
+            {
+                new ExtraHealth(this.scene, 'extrahealth', this.x, this.y - 20);
+            }
         }
         
         this.destroy();

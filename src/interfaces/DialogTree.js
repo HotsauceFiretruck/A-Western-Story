@@ -15,6 +15,13 @@ export class DialogTree
         this.globalOptionsChosen = [];
         this.seqQueue = [];
 
+        this.keyChange = "keydown";
+
+        if (scene.PhaserGame.isMobile)
+        {
+            this.keyChange = "pointerdown";
+        }
+
         //Play Dialog ----
         this.dialogBackground = scene.add.image(this.centerX, this.centerY, 'dialogbg');
         this.dialogBackground.setScale(4 * this.scale).setScrollFactor(0, 0);
@@ -104,7 +111,7 @@ export class DialogTree
     endTree()
     {
         this.currentSequence = null;
-        this.scene.input.keyboard.off("keydown");
+        this.scene.input.keyboard.off(this.keyChange);
         this.dialogBackground.setVisible(false);
         this.isTreeEnded = true;
 
@@ -147,7 +154,7 @@ class Sequence
     endSequence()
     {
         //this.onDialogNumber = 0;
-        this.dialogTree.scene.input.keyboard.off("keydown");
+        this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
         this.dialogTree.currentSequenceEnded();
     }
 
@@ -165,18 +172,18 @@ class Sequence
         else
         {
             this.dialogs[this.onDialogNumber - 1].endDialog();
-            this.dialogTree.scene.input.keyboard.off("keydown");
+            this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
             this.endSequence();
             return;
         }
 
         if (this.dialogs[this.onDialogNumber].optionTexts.length != 0)
         {
-            this.dialogTree.scene.input.keyboard.off("keydown");
+            this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
         }
         else if (this.onDialogNumber == 0)
         {
-            this.dialogTree.scene.input.keyboard.on("keydown", () => {this.nextDialog();});
+            this.dialogTree.scene.input.keyboard.on(this.dialogTree.keyChange, () => {this.nextDialog();});
         }
 
         //If dialog have options -> stop keyboard

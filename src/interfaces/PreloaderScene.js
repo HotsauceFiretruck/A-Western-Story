@@ -135,7 +135,10 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('bigHouse', 'assets/bigHouse.png');
         this.load.image('saloon', 'assets/Saloon.png');
         this.load.image('waterTower', 'assets/waterTower.png');
-        this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
+        this.load.image('extrahealth', 'assets/ExtraHealth.png');
+        this.load.image('flight', 'assets/Flight.png');
+        this.load.image('tripleshot', 'assets/TripleShot.png');
+        this.load.image('gun', 'assets/Gun.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 

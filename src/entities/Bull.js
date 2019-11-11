@@ -8,8 +8,5 @@ export class Bull extends Enemy
     }
 
     shoot()
-    {
-        //new Bullet(this.scene, this.player, this.x, this.y, this.player.x, this.player.y);
-        console.log("Hi");
-    }
+    { }
 }
