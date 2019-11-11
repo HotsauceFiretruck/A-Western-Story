@@ -1,5 +1,5 @@
 import { ArenaLevel } from "./levels/ArenaLevel.js";
-import { DeathScene } from "./interfaces/DeathScene.js";
+import { ArenaDeathScene } from "./interfaces/ArenaDeathScene.js";
 import { PreloaderArena } from "./interfaces/PreloaderArena.js";
 import { Connection } from "./components/Connection.js";
 
@@ -36,7 +36,7 @@ export class ArenaMode
         //Initializing Level
         let preloader = new PreloaderArena(this);
         let levelarena = new ArenaLevel(this, connection);
-        let death = new DeathScene(this);
+        let death = new ArenaDeathScene(this);
 
         //Initializing Config
         this.config = {
