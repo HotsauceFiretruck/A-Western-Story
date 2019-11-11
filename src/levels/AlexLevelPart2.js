@@ -2,6 +2,7 @@ import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
+import { Bullet } from "../entities/Bullet.js";
 import { Priest } from "../entities/Priest.js";
 import { Bull } from "../entities/Bull.js";
 import { Snake } from "../entities/Snake.js";
@@ -11,6 +12,8 @@ export class AlexLevelPart2 extends Phaser.Scene
     constructor(PhaserGame)
     {
         super({key:"level-1Continued"});
+
+        this.count = 0;
 
         this.PhaserGame = PhaserGame;
     }
@@ -59,19 +62,33 @@ export class AlexLevelPart2 extends Phaser.Scene
         };
 
         this.player = new Player(this, 500, 500);
-        this.basicEnemy1 = new Enemy(this, 600, 500).setScale(2);
+        this.basicEnemy1 = new Enemy(this, 750, 500);
 
-        let dialogTree1 = new DialogTree(this, 600, 100);
-        let sequence1 = dialogTree1.addSequence();
-        dialogTree1.addDialog(sequence1, "????: You killed my firends and now you must die!!");
-        dialogTree1.addDialog(sequence1, "Joe: No don't do it.");
-        dialogTree1.playSequence(sequence1);
+        this.dialogTree = new DialogTree(this, 600, 100);
+        this.dialogSetup(this.dialogTree);
+    }
+
+    dialogSetup(dialogTree)
+    {
+        let sequence0 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "Joe: I'm tired. if one more bullet hits me, I'll die right here");
+        dialogTree.addDialog(sequence0, "?????: Your dead sucker you killed my friends!!");
+        dialogTree.playSequence(sequence0);
     }
 
     update ()
     {  
         this.player.stageMode();
-
+        this.basicEnemy1.stageMode();
+        if(this.dialogTree.isTreeEnded)
+        {
+            if(this.count == 0)
+            {
+                new Bullet(this, this.player, 750, 560, this.player.x, this.player.y);
+                this.count = 1;
+            }
+        }
+        
         //Update platforms
         for (let i = 0; i < this.map.platforms.list.length; ++i)
         {

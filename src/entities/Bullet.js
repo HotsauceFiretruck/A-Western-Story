@@ -83,11 +83,11 @@ export class Bullet
             .setFixedRotation()
             .setCollisionCategory(8)
             .setDepth(900)
-            .setCollidesWith([2]);
+            .setCollidesWith([2, 16]);
 
         if (target != null) {
             //Setting the collision category that this bullet will interacts with
-            this.sprite.setCollidesWith([2, target.category]); 
+            this.sprite.setCollidesWith([2, 16, target.category]); 
         }
     } 
       
@@ -139,13 +139,13 @@ export class Bullet
     {
         //If the bullet hits any collision targets -> destroy
         if (self !== undefined) {
-            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer) && target !== self) {
+            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer || target instanceof OtherPlayer) && target !== self) {
                 target.changeHealth(-5);
             }
             this.destroy();
         }
         else {
-            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer)) {
+            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer || target instanceof OtherPlayer)) {
                 target.changeHealth(-5);
             }
             this.destroy();

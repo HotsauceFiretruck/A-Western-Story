@@ -50,12 +50,13 @@ export class ArenaLevel extends Phaser.Scene
         ];
 
         //Looping background with level
-        this.loopImage('background', 720, 420, level[0].length * 32, level.length * 32, 1.45);
+        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
 
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'sand');
 
-        this.player = new ArenaPlayer(this, 600, 100, this.connection);
+        let randPos = this.getRandPos();
+        this.player = new ArenaPlayer(this, randPos.x, randPos.y, this.connection);
 
         this.connection.reload(this.player, this);
 
@@ -101,6 +102,12 @@ export class ArenaLevel extends Phaser.Scene
         }
     }
 
+    getRandPos() {
+        let positions = [{x: 600, y: 200}, {x: 90, y: 200}, {x: 580, y: 525}, {x: 1160, y: 240}, {x: 1090, y: 560}, {x: 850, y: 335}, {x: 160, y: 560}];
+        let random = Math.round(Math.random() * (positions.length-1));
+        return positions[random];
+    }
+
     update()
     { 
         //Update platforms
@@ -119,7 +126,9 @@ export class ArenaLevel extends Phaser.Scene
         //Update player
         this.player.update();
 
-        //this.connection.updatePosition(this.player);
-        this.connection.playerMovementInterpolation();
+        if (this.connection.getSocket().connected) {
+            this.connection.updateName(this.player);
+            this.connection.playerMovementInterpolation();
+        }
     }
 }
