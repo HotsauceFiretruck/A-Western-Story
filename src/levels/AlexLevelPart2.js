@@ -71,7 +71,8 @@ export class AlexLevelPart2 extends Phaser.Scene
     dialogSetup(dialogTree)
     {
         let sequence0 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "I'm tired. if one more bullet hits me, I'll die right here");
+        dialogTree.addDialog(sequence0, "Joe: I'm tired. if one more bullet hits me, I'll die right here");
+        dialogTree.addDialog(sequence0, "?????: Your dead sucker you killed my firends!!");
         dialogTree.playSequence(sequence0);
     }
 
