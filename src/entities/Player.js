@@ -96,7 +96,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.gun = scene.add.image(this.x, this.y, 'gun');
         this.gun.setDepth(999).setScale(2);
     }
-    
+
     update()
     {
         if (this.status.allowMove)
