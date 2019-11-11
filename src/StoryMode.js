@@ -64,8 +64,7 @@ export class StoryMode
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: 1.3},
-                    debug: true
+                    gravity: { y: 1.3}
                 }
             },
             plugins: {
