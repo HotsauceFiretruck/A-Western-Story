@@ -55,7 +55,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         });
 
         //Set collision category
-        this.category = 16;
+        this.category = 1;
 
         //Add Collision Events
         scene.matter.world.on("beforeupdate", this.resetTouching, this);

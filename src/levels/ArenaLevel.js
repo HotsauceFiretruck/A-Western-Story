@@ -55,7 +55,8 @@ export class ArenaLevel extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'sand');
 
-        this.player = new ArenaPlayer(this, 600, 100, this.connection);
+        let randPos = this.getRandPos();
+        this.player = new ArenaPlayer(this, randPos.x, randPos.y, this.connection);
 
         this.connection.reload(this.player, this);
 
@@ -99,6 +100,12 @@ export class ArenaLevel extends Phaser.Scene
                 this.add.existing(bgImage);
             }
         }
+    }
+
+    getRandPos() {
+        let positions = [{x: 600, y: 200}, {x: 90, y: 200}, {x: 580, y: 525}, {x: 1160, y: 240}, {x: 1090, y: 560}, {x: 850, y: 335}, {x: 160, y: 560}];
+        let random = Math.round(Math.random() * (positions.length-1));
+        return positions[random];
     }
 
     update()
