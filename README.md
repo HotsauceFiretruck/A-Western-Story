@@ -2,6 +2,10 @@
 
 Link to game: https://a-western-story.js.org/
 
+<img src=GameQR.png>
+
+Presentation --> http://bit.ly/2O39QQI
+
 Hello and welcome to the GitHub repository for _A Western Story_, a web based game developed by the HotSauceFireTruck programming team from West High School. We are based in Davenport, Iowa, and this project was created to be showcased at Byte Jam 2019 at Indian Hills Community College. 
 
 <hr>
