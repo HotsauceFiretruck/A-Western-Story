@@ -18,7 +18,7 @@ export class FinalEnemy extends Enemy
         //The number 5 comes from the fact that the bullet damages enemy and player by 5 health points.
         this.DECREASE_BY = this.healthSpriteFront.displayWidth * 5 / this.status.health;
 
-        this.status.fireRange = 320;
+        this.status.fireRange = 600;
 
         this.setDepth(0);
     }
@@ -46,6 +46,29 @@ export class FinalEnemy extends Enemy
     {
         super.changeHealth(changeHealthBy);
         this.healthSpriteFront.displayWidth -= this.DECREASE_BY;
+    }
+
+    shoot()
+    {
+        let startRadians = ((Math.PI / 8) /2) * (2);
+        let startPoint = this.rotateAroundPoint([this.x, this.y], [this.player.x, this.player.y], startRadians);
+
+        for (let i = 0; i < 3; ++i)
+        {
+            let nextPoint = this.rotateAroundPoint([this.x, this.y], startPoint, -(Math.PI / 8) * i);
+            new Bullet(this.scene, this.player, this.x, this.y, nextPoint[0], nextPoint[1]);
+        }
+    }
+
+    rotateAroundPoint(origin, point, angle)
+    {
+        let ox = origin[0];
+        let oy = origin[1];
+        let px = point[0];
+        let py = point[1];
+        let qx = ox + Math.cos(angle) * (px - ox) - Math.sin(angle) * (py - oy);
+        let qy = oy + Math.sin(angle) * (px - ox) + Math.cos(angle) * (py - oy);
+        return [qx, qy];
     }
 
     death()
