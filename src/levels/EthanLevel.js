@@ -192,7 +192,7 @@ export class EthanLevel extends Phaser.Scene
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
-                new Flight(this.scene, 'flight', 150, 200);
+                new Flight(this, 'flight', 150, 200);
             }],
             ["No.", () => {dialogTree.changeSequence(2);
             }],
