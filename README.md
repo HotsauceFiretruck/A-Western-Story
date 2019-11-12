@@ -1,6 +1,7 @@
 # A Western Story
 
 Link to game: https://a-western-story.js.org/
+<a href="hhttps://github.com/HotsauceFiretruck/A-Western-Story/blob/master/app-release.apk">Android APK</a>
 
 <img src=GameQR.png>
 
