@@ -1,6 +1,6 @@
 # A Western Story
 
-Link to game: https://hotsaucefiretruck.github.io/A-Western-Story/campaign.html
+Link to game: https://a-western-story.js.org/
 
 If you are using iPhone, you might want to turn on Multi-Touch:
 
