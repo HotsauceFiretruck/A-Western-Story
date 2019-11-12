@@ -18,12 +18,23 @@ export class Connection {
         this.connection(player, scene);
     }
 
-    createText(scene, target, text) {
-        return new Phaser.GameObjects.Text(scene, target.x, target.y, text, {
-            fontSize: '12px',
-            fill: '#FFF',
-            align: 'center'
-        })
+    createText(scene, target, text, color) {
+        let textObject = null;
+        if (color !== undefined) {
+            textObject = new Phaser.GameObjects.Text(scene, target.x, target.y, text, {
+                fontSize: '12px',
+                fill: color,
+                align: 'center'
+            })
+        }
+        else {
+            textObject = new Phaser.GameObjects.Text(scene, target.x, target.y, text, {
+                fontSize: '12px',
+                fill: '#FFF',
+                align: 'center'
+            })
+        }
+        return textObject;
     }
 
     updateName(player) {
@@ -52,7 +63,7 @@ export class Connection {
                 }
             })
             player.playerName = socket.id;
-            player.nameText = this.createText(scene, player, player.playerName);
+            player.nameText = this.createText(scene, player, player.playerName, "#1937ff");
             scene.add.existing(player.nameText);
         })
 
@@ -61,8 +72,13 @@ export class Connection {
         })
 
         socket.on('send-bullet', data => {
-            const { x, y, to, player } = data;
-            new Bullet(scene, otherPlayers[player], x, y, to.x, to.y, this.player);
+            const { x, y, to, playerData } = data;
+            if (playerData === player.playerName) {
+                new Bullet(scene, player, x, y, to.x, to.y, player);
+            }
+            else {
+                new Bullet(scene, player, x, y, to.x, to.y, otherPlayers[player]);
+            }
         })
 
         socket.on('update-players', playersData => {
@@ -74,7 +90,7 @@ export class Connection {
                 // We make sure that we won't create a second instance of it
                 if (otherPlayers[index] === undefined && index !== socket.id) {
                     const newPlayer = new OtherPlayer(scene, data.x, data.y);
-                    newPlayer.nameText = this.createText(scene, newPlayer, data.playerName.name);
+                    newPlayer.nameText = this.createText(scene, newPlayer, data.playerName.name, "#373737");
                     scene.add.existing(newPlayer.nameText);
                     otherPlayers[index] = newPlayer;
                 }
@@ -132,7 +148,7 @@ export class Connection {
                 x: toX,
                 y: toY
             },
-            player: player.playerName
+            playerData: player.playerName
         })
     }
 

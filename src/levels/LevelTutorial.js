@@ -83,7 +83,7 @@ export class LevelTutorial extends Phaser.Scene
 
     dialogSetup(dialogTree)
     {
-        let sequence0 = dialogTree.addSequence(); //sequence0 have the id of 0 because of index array start at 0
+        let sequence0 = dialogTree.addSequence(); //sequence0 have the id of 0 because of index array starts at 0
         // let sequence1 = dialogTree.addSequence();
         // let sequence2 = dialogTree.addSequence();
 
