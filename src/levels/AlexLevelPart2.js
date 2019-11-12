@@ -62,7 +62,7 @@ export class AlexLevelPart2 extends Phaser.Scene
         };
 
         this.player = new Player(this, 500, 500);
-        this.basicEnemy1 = new Enemy(this, 750, 500).setScale(2);
+        this.basicEnemy1 = new Enemy(this, 750, 500);
 
         this.dialogTree = new DialogTree(this, 600, 100);
         this.dialogSetup(this.dialogTree);
@@ -72,7 +72,7 @@ export class AlexLevelPart2 extends Phaser.Scene
     {
         let sequence0 = dialogTree.addSequence();
         dialogTree.addDialog(sequence0, "Joe: I'm tired. if one more bullet hits me, I'll die right here");
-        dialogTree.addDialog(sequence0, "?????: Your dead sucker you killed my firends!!");
+        dialogTree.addDialog(sequence0, "?????: Your dead sucker you killed my friends!!");
         dialogTree.playSequence(sequence0);
     }
 
@@ -84,7 +84,7 @@ export class AlexLevelPart2 extends Phaser.Scene
         {
             if(this.count == 0)
             {
-                new Bullet(this, this.player, 750, 550, this.player.x, this.player.y);
+                new Bullet(this, this.player, 750, 560, this.player.x, this.player.y);
                 this.count = 1;
             }
         }

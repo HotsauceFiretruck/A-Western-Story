@@ -13,13 +13,12 @@ export class FinalLevel extends Phaser.Scene
     {
         super({key:"level-5"});
 
-        this.count = 0;
-
         this.PhaserGame = PhaserGame;
     }
 
     create()
     {
+        this.count = 0;
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long
@@ -125,8 +124,8 @@ export class FinalLevel extends Phaser.Scene
         {
             if(this.count == 0)
             {
-                this.bull4 = new Bull(this, 1200, 500);
-                this.bull5 = new Bull(this, 1500, 500);
+                this.bull4 = new Bull(this, 1200, 400);
+                this.bull5 = new Bull(this, 1500, 400);
                 this.count = this.count + 1;
             }
             else if(this.count == 1)
