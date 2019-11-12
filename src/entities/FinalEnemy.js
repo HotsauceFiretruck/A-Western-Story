@@ -50,7 +50,6 @@ export class FinalEnemy extends Enemy
 
     shoot()
     {
-        console.log("Oi");
         let startRadians = ((Math.PI / 8) /2) * (2);
         let startPoint = this.rotateAroundPoint([this.x, this.y], [this.player.x, this.player.y], startRadians);
 
