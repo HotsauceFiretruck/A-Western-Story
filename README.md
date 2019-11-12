@@ -2,7 +2,7 @@
 
 Link to game: https://a-western-story.js.org/
 <br/>
-<a href="https://github.com/HotsauceFiretruck/A-Western-Story/blob/master/app-release.apk">Android APK</a> - just click download, then install.
+<a href="https://github.com/HotsauceFiretruck/A-Western-Story/releases/tag/v1.0">Android APK</a> - just click on the apk, then install.
 
 <img src=GameQR.png>
 
