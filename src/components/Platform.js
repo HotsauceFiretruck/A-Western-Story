@@ -54,6 +54,7 @@ export class Platform
                 this.image.push(this.scene.add.image(this.pixelWidthPerTile * (x + 1/2), 
                                                      this.pixelHeightPerTile * (y + 1/2), image));
             }
+            if (y == this.fromTileY && (image == 'sand' || image == 'grass')) image = image + '2';
         }
     }
 

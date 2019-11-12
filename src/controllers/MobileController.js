@@ -81,6 +81,23 @@ export class MobileController
         }
     }
 
+    updateGun()
+    {
+        let normalizedY = Math.sin(this.fireControl.getRotation());
+        let normalizedX = Math.cos(this.fireControl.getRotation());
+
+        let rotation = Math.atan2(normalizedY, normalizedX);
+        this.player.gun.setPosition(this.player.x + normalizedX * 35, this.player.y + normalizedY * 35);
+        this.player.gun.setRotation(rotation);
+        if (normalizedX < 0)
+        {
+            this.player.gun.setFlipY(true);
+        } else
+        {
+            this.player.gun.setFlipY(false);
+        }
+    }
+
     disable()
     {
         this.horizontalControls.disable();
@@ -94,7 +111,7 @@ export class MobileController
         this.horizontalControls.enable();
         this.fireControl.enable();
         this.jumpButton.setVisible(true);
-        this.jumpButton.on('pointerdown', () => {this.jump(player)});
+        this.jumpButton.on('pointerdown', () => {this.jump(this.player)});
     }
 }
 

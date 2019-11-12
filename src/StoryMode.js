@@ -1,6 +1,7 @@
 import { LevelTutorial } from "./levels/LevelTutorial.js";
 import { DustinLevel } from "./levels/DustinLevel.js";
 import { AlexLevel } from "./levels/AlexLevel.js";
+import { AlexLevelPart2 } from "./levels/AlexLevelPart2.js";
 import { EthanLevel } from "./levels/EthanLevel.js";
 import { LoganLevel } from "./levels/LoganLevel.js";
 import { FinalLevel } from "./levels/FinalLevel.js";
@@ -8,7 +9,6 @@ import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderScene } from "./interfaces/PreloaderScene.js";
 import { MenuScene } from "./interfaces/MenuScene.js";
 import { LevelSelect } from "./interfaces/LevelSelect.js";
-import { BonusLevel } from "./levels/BonusLevel.js";
 
 export class StoryMode 
 {
@@ -43,9 +43,9 @@ export class StoryMode
         let menu = new MenuScene(this);
         let levelSelect = new LevelSelect(this);
 
-        let levelBonus = new BonusLevel(this);
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
+        let level1Continued = new AlexLevelPart2(this);
         let level2 = new DustinLevel(this);
         let level3 = new LoganLevel(this);
         let level4 = new EthanLevel(this);
@@ -64,8 +64,7 @@ export class StoryMode
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: 1.3},
-                    debug: true
+                    gravity: { y: 1.3}
                 }
             },
             plugins: {
@@ -83,7 +82,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [preloader, menu, levelTutorial, levelSelect, level1, level2, level3, level4, level5, levelBonus, death]
+            scene: [preloader, menu, levelTutorial, levelSelect, level1, level1Continued, level2, level3, level4, level5, death]
         };
 
         let game = new Phaser.Game(this.config);
