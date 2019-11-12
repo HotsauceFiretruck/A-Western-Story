@@ -7,9 +7,10 @@ Hello and welcome to the GitHub repository for _A Western Story_, a web based ga
 <hr>
 <h1>Contributing</h1>
 <a href="https://github.com/brosius02">John Brosius</a> - Mentor/Teacher
+
 <b>Programmers:</b>
 <ul>
-<li><a href="https://github.com/tranqnhan>Nhan Tran</a></li>
+<li><a href="https://github.com/tranqnhan">Nhan Tran</a></li>
 <li><a href="https://github.com/ETRulz">Ethan Hancock</a></li>
 <li><a href="https://github.com/Lui798">Austin Leuenhagen</a></li>
 <li><a href="https://github.com/adawson21">Alex Dawson</a></li>
