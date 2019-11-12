@@ -54,20 +54,7 @@ export class LoganLevel extends Phaser.Scene
         this.map = new TileMap(this, groundLayer, 32, 32, 'sand');
 
         this.platformCreation = [];
-
-
         this.isLevelEnded = false;
-
-        this.time.addEvent({
-            delay: 45000,
-            callback: () => this.isLevelEnded = true,
-            callbackScope: this,
-            loop: false
-        });
-
-    
-        //testing obstacle collision
-        //this.testDamagePlatform = new Platform(this, 2, 3, 15, 0, 0, 32, 32);
 
         this.projectiles = {
             category: 2, //telling what collision category these objects belong in
@@ -84,11 +71,21 @@ export class LoganLevel extends Phaser.Scene
         this.player.status.maxVelocityY = 13;
         this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
         this.storyMessage = new DialogTree(this, 600, 100);
+        this.dialogSetup(this.storyMessage, this);
+    }
+    startGame(scene){
+        this.storyMessage.sequences[0].nextDialog();
         this.countdown = 45;
-        this.timer = this.add.text(1150, 20, this.countdown, {color:'#DC143C'});
+        this.timer = scene.add.text(1150, 20, this.countdown, {color:'#DC143C'});
         this.timer.setScale(1.5);
+        scene.time.addEvent({
+            delay: 45000,
+            callback: () => this.isLevelEnded = true,
+            callbackScope: this,
+            loop: false
+        });
 
-        this.time.addEvent({
+        scene.time.addEvent({
             delay: 1000  ,
             callback: () => {
                 if(!this.isLevelEnded){
@@ -113,13 +110,9 @@ export class LoganLevel extends Phaser.Scene
             loop: true
             
         });
-        
-
-        this.dialogSetup(this.storyMessage);
     }
 
-
-    dialogSetup(storyMessage)
+    dialogSetup(storyMessage, scene)
     {
         let sequence0 = storyMessage.addSequence(); 
 
@@ -127,8 +120,15 @@ export class LoganLevel extends Phaser.Scene
         storyMessage.addDialog(sequence0, "Chase the sheriff!", this.player);
         storyMessage.addDialog(sequence0, "Last 45 seconds... To survive!", this.player);
 
+        storyMessage.addDialog(sequence0, "Are you ready?", this.player,
+            [
+                ["I'm Ready!", ()=>{this.startGame(scene)}],
+            ]
+        );
+
         storyMessage.playSequence(sequence0);
     }
+
 
 
     update ()
