@@ -61,10 +61,10 @@ export class DustinLevel extends Phaser.Scene
         //Adding static images
         this.house1 = this.add.image(1050, 525, 'house');
         this.house2 = this.add.image(1150, 525, 'house');
-        this.house3 = this.add.image(1250, 525, 'house');
-        this.house4 = this.add.image(1350, 525, 'house');
-        this.house5 = this.add.image(1450, 525, 'house');
-        this.house6 = this.add.image(1550, 525, 'house');
+        this.house3 = this.add.image(1280, 508, 'bigHouse');
+        this.house4 = this.add.image(1410, 525, 'house');
+        this.house5 = this.add.image(1530, 510, 'saloon');
+        this.house6 = this.add.image(1650, 525, 'house');
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
@@ -82,7 +82,7 @@ export class DustinLevel extends Phaser.Scene
         this.basicEnemy2 = new Enemy(this, 36, level.length * 30);
         this.basicEnemy3 = new Enemy(this, 1008, level.length * 30);
 
-        let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
+        let nextLevelGoal = new Area(this, 'sheriffhouse', 1750, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter(); nextLevelGoal.destroy()});
 
         let dialogTree = new DialogTree(this, 600, 100);
