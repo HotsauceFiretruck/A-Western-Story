@@ -28,11 +28,32 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
             allowMove: true,
         };
 
+        let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
+
+        //Bodies.rectangle(centerX position IN the sprite, centerY position IN the sprite, 
+        //                 width of the collision body, height of the collision body, {options});
+        let mainBody = Bodies.rectangle(0, 0, this.width * 0.7, this.height, {chamfer: 1});
+        
+        //Sensors: only for detecting, not for collision
+        this.sensors = {
+            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
+            left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
+            right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
+        };
+
+        let compoundBody = Body.create({
+            parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
+            frictionStatic: 0,
+            frictionAir: 0.03,
+            friction: .012
+        });
+
         //Set collision category
-        this.category = 1;
+        this.category = 16;
         
         //Setting Sprite
-        this.setPosition(x, y)
+        this.setExistingBody(compoundBody)
+            .setPosition(x, y)
             .setMass(2)
             .setScale(1.5)
             .setFixedRotation()
@@ -44,11 +65,6 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
     //Important for entities
     changeHealth(changeHealthBy)
     {
-        this.status.health += changeHealthBy;
-        if (changeHealthBy < 0 && this.status.nodamage)
-        {
-            this.status.health -= changeHealthBy;
-        }
         if (changeHealthBy < 0 && !this.status.nodamage)
         {
             this.damagedEffects();

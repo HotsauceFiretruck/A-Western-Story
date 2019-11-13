@@ -12,7 +12,7 @@ export class Bullet
                                      It is not for the bullet to be destroyed when it 
                                      reached the position)
      */
-    constructor(scene, target, fromX, fromY, toX, toY)
+    constructor(scene, target, fromX, fromY, toX, toY, self)
     {
         this.scene = scene;
         this.target = target;
@@ -43,7 +43,7 @@ export class Bullet
             // If it collides with anything else -> call the method hit
             callback: ({gameObjectB, bodyB}) => {
                 if (bodyB.isSensor) return;
-                this.hit(gameObjectB);
+                this.hit(gameObjectB, self);
             },
             context: this
         });
@@ -76,17 +76,18 @@ export class Bullet
 
         this.sprite
             .setExistingBody(mainBody)
-            .setPosition(fromX+normalizeX*30, fromY+normalizeY*30)
+            .setPosition(fromX+normalizeX*30, fromY+normalizeY*35)
             .setIgnoreGravity(true)
             .setVelocity(vX, vY)
             .setRotation(radians)
             .setFixedRotation()
             .setCollisionCategory(8)
-            .setCollidesWith([2]);
+            .setDepth(900)
+            .setCollidesWith([2, 16]);
 
         if (target != null) {
             //Setting the collision category that this bullet will interacts with
-            this.sprite.setCollidesWith([2, target.category]); 
+            this.sprite.setCollidesWith([2, 16, target.category]); 
         }
     } 
       
@@ -134,13 +135,21 @@ export class Bullet
         }
     }
 
-    hit(target)
+    hit(target, self)
     {
         //If the bullet hits any collision targets -> destroy
-        if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer || target instanceof OtherPlayer)) {
-            target.changeHealth(-5);
+        if (self !== undefined) {
+            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer || target instanceof OtherPlayer) && target !== self) {
+                target.changeHealth(-5);
+            }
+            this.destroy();
         }
-        this.destroy();
+        else {
+            if (target != null && (target instanceof Enemy || target instanceof Player || target instanceof ArenaPlayer || target instanceof OtherPlayer)) {
+                target.changeHealth(-5);
+            }
+            this.destroy();
+        }
     }
 
     destroy()

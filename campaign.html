@@ -4,7 +4,7 @@
     <title>A Western Story</title>
 
     <!--Setting up Game-->
-    <script src="./lib/phaser.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.20.1/dist/phaser.min.js"></script>
     <script src="./lib/phaser-matter-collision-plugin.min.js"></script>
     <script src="./lib/rexvirtualjoystickplugin.min.js"></script>
     
@@ -36,11 +36,16 @@
     <script type="module" src="./src/levels/EthanLevel.js"></script>
     <script type="module" src="./src/levels/LoganLevel.js"></script>
     <script type="module" src="./src/levels/DustinLevel.js"></script>
-    <script type="module" src="./src/levels/BonusLevel.js"></script>
+
+    <!--Initializing PowerUps-->
+    <script type="module" src="./src/powerups/PowerUp.js"></script>
+    <script type="module" src="./src/powerups/TripleShot.js"></script>
+    <script type="module" src="./src/powerups/ExtraHealth.js"></script>
+    <script type="module" src="./src/powerups/Flight.js"></script>
 
     <script type="module" src="./src/StoryMode.js"></script>
-
 </head>
 <body>
+    <audio id="menuMusic" autoplay loop src="assets/MenuMusic.mp3">Audio Tag is not supported in your browser.</audio>
 </body>
 </html>

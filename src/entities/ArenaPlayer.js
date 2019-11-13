@@ -55,7 +55,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         });
 
         //Set collision category
-        this.category = 1;
+        this.category = 16;
 
         //Add Collision Events
         scene.matter.world.on("beforeupdate", this.resetTouching, this);
@@ -193,7 +193,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     {
         if (this.status.isFireReloaded)
         {
-            this.scene.connection.sendBullet(this.x, this.y, x, y)
+            this.scene.connection.sendBullet(this.x, this.y, x, y, this)
             //new Bullet(this.scene, this, this.x, this.y, x, y);
             this.reloadGun();
         }
@@ -265,7 +265,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
         this.connection.socket.close();
-        this.scene.scene.start('death-scene', {scene: this.scene.scene.key});
+        this.scene.scene.start('arena-death', {scene: this.scene.scene.key});
         
         //this.destroy();
     }
