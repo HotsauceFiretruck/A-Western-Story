@@ -91,6 +91,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
         this.displayHealth.setScrollFactor(0, 0);
+
+        this.isDead = false;
     }
 
     update()
@@ -252,6 +254,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
     //Initializing death sequence
     death() {
+        this.isDead = true;
+
         // Event listeners
         if (this.scene.matter.world) {
             this.scene.matter.world.off("beforeupdate", this.resetTouching, this);
@@ -264,7 +268,6 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
         if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
-        this.connection.socket.close();
         this.scene.scene.start('arena-death', {scene: this.scene.scene.key});
         
         //this.destroy();

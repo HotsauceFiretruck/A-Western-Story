@@ -31,7 +31,8 @@ export class ArenaMode
             this.scale = 1;
         }
 
-        let connection = new Connection();
+        let connection = new Connection('http://127.0.0.1:3000');
+        console.log(connection);
 
         //Initializing Level
         let preloader = new PreloaderArena(this);
@@ -53,6 +54,10 @@ export class ArenaMode
                     gravity: { y: 1.3}
                 }
             },
+            // scale: {
+            //     mode: Phaser.Scale.FIT,
+            //     autoCenter: Phaser.Scale.CENTER_BOTH
+            // },
             plugins: {
                 scene: [
                     {
