@@ -4,6 +4,7 @@ import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
+import { Cloud } from "../components/Cloud.js";
 
 var battleInit = false;
 var sheriffDeath = false;
@@ -72,10 +73,18 @@ export class DustinLevel extends Phaser.Scene
             list: [] 
         };
 
+        this.clouds = {
+            category: 5,
+            list: [] 
+        };
+
         this.enemies = {
             category: 4,
             list: []
         };
+
+        //Adding clood
+        this.cloud = new Cloud(this, 100, level.length * 25);
 
         this.player = new Player(this, 300, level.length * 30);
         this.basicEnemy = new Enemy(this, 608, level.length * 30);
@@ -273,8 +282,14 @@ export class DustinLevel extends Phaser.Scene
             this.scene.start('level-3');
         }
 
+        this.clouds.list.forEach(element => {
+            element.update();
+        });
+
         //Update player
         this.player.update();
+
+        
     }
 
     //Load in image to fill in the level
