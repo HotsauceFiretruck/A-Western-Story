@@ -11,7 +11,10 @@ export class DesktopController
             up: 'W',
             left: 'A',
             right: 'D',
-            down: 'S'
+            down: 'S',
+            shoot1: 'Q',
+            shoot2: 'E',
+            space: 'SPACE'
         });
     }
 
@@ -38,7 +41,7 @@ export class DesktopController
             }
         }
 
-        if (this.cursors.up.isDown && 
+        if ((this.cursors.up.isDown || this.cursors.space.isDown) && 
             this.player.status.canJump && 
             this.player.status.isTouching.down)
         {
@@ -49,6 +52,22 @@ export class DesktopController
                 delay: 250,
                 callback: () => (this.player.canJump = true)
             });
+        }
+
+        // if (this.cursors.shoot.isDown) {
+        //     if (this.player.flipX) {
+        //         this.player.shoot(this.player.x+20, this.player.y);
+        //     }
+        //     else {
+        //         this.player.shoot(this.player.x-20, this.player.y);
+        //     }
+        // }
+
+        if (this.cursors.shoot2.isDown) {
+            this.player.shoot(this.player.x+20, this.player.y);
+        }
+        else if (this.cursors.shoot1.isDown){
+            this.player.shoot(this.player.x-20, this.player.y);
         }
     }
 
