@@ -5,6 +5,7 @@ import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
+import { Flight } from "../powerups/Flight.js";
 
 export class EthanLevel extends Phaser.Scene
 {
@@ -158,8 +159,6 @@ export class EthanLevel extends Phaser.Scene
         this.church = this.add.image(1850, 317, 'church').setScale(2.25);
         this.deadTreeChurch = this.add.image(1550, 488, 'deadtree').setScale(1.75);
         this.bigcrateChurch = this.add.image(2120, 532, 'crate').setScale(.9);
-        this.specialItem = this.add.sprite(150, 528, 'crate').setVisible(false);
-
         this.map = new TileMap(this, levelChurch, 32, 32, 'sand');
         this.player.setPosition(1400, 525);
 
@@ -193,9 +192,7 @@ export class EthanLevel extends Phaser.Scene
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
-                // spawn in gun upgrade/powerup thing. tbd
-                // add crate image as placeholder
-                this.specialItem.setVisible(true);
+                new Flight(this, 'flight', 150, 200);
             }],
             ["No.", () => {dialogTree.changeSequence(2);
             }],
@@ -213,7 +210,6 @@ export class EthanLevel extends Phaser.Scene
 
         // Removing images, enemies, and nextLevelGoal used in previous tile map
         this.nextLevelGoal.destroy();
-        this.specialItem.destroy();
         this.church.destroy();
         this.deadTreeChurch.destroy();
         this.bigcrateChurch.destroy();
@@ -283,7 +279,6 @@ export class EthanLevel extends Phaser.Scene
         this.add.image(1590, 550, 'fence').setScale(.2);
         this.add.image(1300, 525, 'deadtree');
 
-
         this.add.image(785, 508, 'bigHouse');
 
         this.add.image(1000, 508, 'saloon');
@@ -322,8 +317,8 @@ export class EthanLevel extends Phaser.Scene
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence0 = dialogTree.addSequence();
         dialogTree.addDialog(sequence0, "You've made it back to town.", this.player);
-        dialogTree.addDialog(sequence0, "What lies ahead is unfortunate.", this.player);
-        dialogTree.addDialog(sequence0, "Good Luck.", this.player);
+        dialogTree.addDialog(sequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
+        dialogTree.addDialog(sequence0, "You'll have to look further to see if you can find him.", this.player);
         dialogTree.playSequence(sequence0);
         
     }

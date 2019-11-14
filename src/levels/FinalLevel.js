@@ -6,6 +6,7 @@ import { Priest } from "../entities/Priest.js";
 import { Enemy } from "../entities/Enemy.js";
 import { Bull } from "../entities/Bull.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
+import { Flight } from "../powerups/Flight.js";
 
 export class FinalLevel extends Phaser.Scene
 {
@@ -64,7 +65,6 @@ export class FinalLevel extends Phaser.Scene
         this.cactus4 = this.add.image(1700, 530, 'cactus');
         this.bigcrate = this.add.image(100, 532, 'crate').setScale(.9);
 
-
         this.map = new TileMap(this, level, 32, 32, 'sand');
 
         this.projectiles = {
@@ -78,6 +78,7 @@ export class FinalLevel extends Phaser.Scene
         };
 
         this.player = new Player(this, 100, 500);
+        new Flight(this, 'flight', 100, 500);
 
         this.snake2 = new Snake(this, 700, 500);
         this.snake3 = new Snake(this, 900, 500);
