@@ -13,8 +13,6 @@ export class DialogTree
 
         this.sequences = [];
         this.queue = [];
-
-        this.keyChange = "keydown-X";
     }
     
     startTree()
@@ -79,7 +77,7 @@ export class DialogTree
     endTree()
     {
         this.currentSequence = null;
-        this.scene.input.keyboard.off(this.keyChange);
+        this.scene.input.keyboard.off("keydown-X");
         this.dialogBackground.setVisible(false);
         this.isTreeEnded = true;
 
@@ -126,7 +124,7 @@ class Sequence
     endSequence()
     {
         if (this.currentDialog != null || this.currentDialog != undefined) this.currentDialog.endDialog();
-        this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
+        this.dialogTree.scene.input.keyboard.off("keydown-X");
         this.dialogTree.endTree();
     }
 
@@ -154,7 +152,7 @@ class Dialog
     constructor(dialogTree, dialogSequence, text, actor)
     {
         this.optionObjects = []; // [object, text, callback]
-        this.nextDialogButton = null;
+        this.nextDialogButton = [null, null]; //[text, image]
         this.textObject = null;
 
         this.text = text;
@@ -170,18 +168,7 @@ class Dialog
     }
 
     displayDialog()
-    {
-        //Setting Signal To Next Dialog
-        if (this.optionObjects.length == 0)
-        {
-            this.dialogTree.scene.input.keyboard.on(this.dialogTree.keyChange, (event) => {this.sequence.nextDialog();});
-        } else
-        {
-            this.nextDialogButton = scene.add.sprite(20, 20, 'continueDialogButton'); 
-            this.nextDialogButton.setFrame(0).setScrollFactor(0, 0);
-            //this.nextDialogButton = new 
-        }
-        
+    {   
         //Setup
         let spacing = 35 * this.dialogTree.scale;
 
@@ -235,6 +222,47 @@ class Dialog
             this.optionObjects[i - 1][0] = newOption;
         }
 
+        //Setting Signal To Next Dialog
+        if (this.optionObjects.length == 0)
+        {
+            this.nextDialogButton[1] = this.dialogTree.scene.add.image(
+                this.dialogTree.centerX + 400 * this.dialogTree.scale, 
+                this.dialogTree.centerY + 122 * this.dialogTree.scale, 'continueDialogButton'); 
+            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5);
+
+            if (this.dialogTree.mobile)
+            {
+                this.nextDialogButton[0] = this.dialogTree.scene.add.text(
+                    this.nextDialogButton[1].x - 118 * this.dialogTree.scale, 
+                    this.nextDialogButton[1].y - 12 * this.dialogTree.scale, 
+                    "Press Me To Continue",
+                    {
+                        fontFamily: 'Courier',
+                        fontSize: scaleSize + 'px',
+                        fontStyle: 'bold'
+                    }
+                ).setInteractive();
+
+                this.nextDialogButton.on('pointerdown', () => {this.sequence.nextDialog();});
+            } 
+            else 
+            {
+                this.dialogTree.scene.input.keyboard.on("keydown-X", () => {this.sequence.nextDialog();});
+            
+                this.nextDialogButton[0] = this.dialogTree.scene.add.text(
+                    this.nextDialogButton[1].x - 112 * this.dialogTree.scale, 
+                    this.nextDialogButton[1].y - 12 * this.dialogTree.scale, 
+                    "Press X To Continue",
+                    {
+                        fontFamily: 'Courier',
+                        fontSize: scaleSize + 'px',
+                        fontStyle: 'bold'
+                    }
+                );
+            }
+            this.nextDialogButton[0].setScrollFactor(0, 0);
+        }
+
         if (this.actor != undefined) 
         {
             //this.dialogTree.scene.cameras.main.setZoom(2);
@@ -250,8 +278,13 @@ class Dialog
         {
             this.optionObjects[i][0].destroy();
         }
-    
-        this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
+
+        if (this.nextDialogButton[0] != null) 
+        {
+            this.nextDialogButton[0].destroy();
+            this.nextDialogButton[1].destroy();
+        }
+        this.dialogTree.scene.input.keyboard.off("keydown-X");
     }
 }
 

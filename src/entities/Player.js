@@ -152,11 +152,11 @@ export class Player extends Phaser.Physics.Matter.Sprite
         
         if (this.status.health < 10)
         {
-            this.healthSprite.setFrame(2);
+            this.healthSprite.setFrame(1);
         }
         else if (this.status.health > 10)
         {
-            this.healthSprite.setFrame(1);
+            this.healthSprite.setFrame(0);
         }
         this.displayHealth.setText(this.status.health);
         if (this.status.health <= 0) 
@@ -170,11 +170,11 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.status.health = health;
         if (this.status.health < 10)
         {
-            this.healthSprite.setFrame(2);
+            this.healthSprite.setFrame(1);
         }
         else if (this.status.health > 10)
         {
-            this.healthSprite.setFrame(1);
+            this.healthSprite.setFrame(0);
         }
         this.displayHealth.setText(this.status.health);
     }
