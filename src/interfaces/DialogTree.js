@@ -8,6 +8,11 @@ export class DialogTree
         this.centerX = centerX * this.scale;
         this.centerY = centerY * this.scale;
 
+        if (this.mobile)
+        {
+            scene.input.addPointer(4);
+        }
+
         this.isTreeEnded = true;
         this.currentSequence = null;
 
