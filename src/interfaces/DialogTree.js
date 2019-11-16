@@ -8,6 +8,11 @@ export class DialogTree
         this.centerX = centerX * this.scale;
         this.centerY = centerY * this.scale;
 
+        if (this.mobile)
+        {
+            scene.input.addPointer(4);
+        }
+
         this.isTreeEnded = true;
         this.currentSequence = null;
 
@@ -202,7 +207,8 @@ class Dialog
                 {
                     fontFamily: 'Courier',
                     fontSize: scaleSize + 'px',
-                    fontStyle: "bold"
+                    fontStyle: "bold",
+                    backgroundColor: "#323c39"
                 }
             ).setScrollFactor(0, 0).setInteractive();
 
