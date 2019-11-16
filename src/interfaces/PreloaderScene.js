@@ -120,7 +120,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('lvl1Button', 'assets/Lvl1Button.png');
         this.load.image('lvl2Button', 'assets/Lvl2Button.png');
         this.load.image('lvl3Button', 'assets/Lvl3Button.png');
-        this.load.image('lvl4Button', 'assets/lvl4Button.png');
+        this.load.image('lvl4Button', 'assets/Lvl4Button.png');
         this.load.image('lvl5Button', 'assets/Lvl5Button.png');
         this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
         this.load.image('healthbarfront', 'assets/BossHealthBar.png');
