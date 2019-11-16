@@ -2,7 +2,7 @@ import { ArenaLevel } from "./levels/ArenaLevel.js";
 import { ArenaDeathScene } from "./interfaces/ArenaDeathScene.js";
 import { PreloaderArena } from "./interfaces/PreloaderArena.js";
 import { Connection } from "./components/Connection.js";
-
+import { ServerSelect } from "./interfaces/ServerSelect.js";
 
 export class ArenaMode 
 {
@@ -31,12 +31,10 @@ export class ArenaMode
             this.scale = 1;
         }
 
-        let connection = new Connection('http://127.0.0.1:3000');
-        console.log(connection);
-
         //Initializing Level
         let preloader = new PreloaderArena(this);
-        let levelarena = new ArenaLevel(this, connection);
+        let serverList = new ServerSelect(this);
+        let levelarena = new ArenaLevel(this, serverList.getServer());
         let death = new ArenaDeathScene(this);
 
         //Initializing Config
@@ -58,6 +56,9 @@ export class ArenaMode
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
+            fps: {
+                target: 60
+            },
             plugins: {
                 scene: [
                     {
@@ -69,11 +70,14 @@ export class ArenaMode
                         plugin: PhaserMatterCollisionPlugin,
                         key: "matterCollision",
                         mapping: "matterCollision"
+                    },
+                    {
+                        plugin: PhaserInput
                     }
                 ]
             },
          
-            scene: [preloader, levelarena, death]
+            scene: [preloader, serverList, levelarena, death]
 
         };
 

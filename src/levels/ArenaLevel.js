@@ -15,7 +15,6 @@ export class ArenaLevel extends Phaser.Scene
 
     create()
     {
-        console.log(this.connection)
         this.projectiles = {
             category: 2,
             list: [] 
@@ -56,14 +55,7 @@ export class ArenaLevel extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'sand');
 
-        let randPos = this.getRandPos();
-        this.player = new ArenaPlayer(this, randPos.x, randPos.y, this.connection);
-
-        //this.connection.reload(this.player, this);
-        if (!this.connection.isSetup) {
-            this.connection.firstSetup(this, this.player);
-        }
-        this.connection.sceneSetup(this, this.player);
+        this.player = new ArenaPlayer(this, 50, 50, this.connection);
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
@@ -100,12 +92,6 @@ export class ArenaLevel extends Phaser.Scene
         }
     }
 
-    getRandPos() {
-        let positions = [{x: 600, y: 200}, {x: 90, y: 200}, {x: 580, y: 525}, {x: 1160, y: 240}, {x: 1090, y: 560}, {x: 850, y: 335}, {x: 160, y: 560}];
-        let random = Math.round(Math.random() * (positions.length-1));
-        return positions[random];
-    }
-
     update()
     { 
         //Update platforms
@@ -123,7 +109,5 @@ export class ArenaLevel extends Phaser.Scene
 
         //Update player
         this.player.update();
-        console.log("TEST")
-        this.connection.update(this.player);
     }
 }
