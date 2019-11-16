@@ -1,12 +1,12 @@
 import { Connection } from "../components/Connection.js";
 
 export class ServerSelect extends Phaser.Scene {
-    constructor(PhaserGame)
+    constructor(PhaserGame, connection)
     {
         super({key:"server-select"});
         this.PhaserGame = PhaserGame;
 
-        this.connection = undefined;
+        this.connection = connection;
     }
 
     create()
@@ -16,11 +16,12 @@ export class ServerSelect extends Phaser.Scene {
         this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
 
         // Creating buttons on screen
-        this.lvl1Btn = this.add.sprite(300 * scale, 300 * scale, 'svr1btn').setScale(4 * scale).setInteractive();
+        this.lvl1Btn = this.add.sprite(300 * scale, 300 * scale, 'svr1btn').setScale(2 * scale).setInteractive();
 
         // Adding functionality to buttons. Like click events and color change on hover.
         this.lvl1Btn.on('pointerdown', (event) => {
-            this.connection = new Connection("http://127.0.0.1:3000");
+            //Set the server IP based on the button & start the level
+            this.connection.setServer("http://127.0.0.1:3000");
             this.scene.start('level-arena');
         });
         this.lvl1Btn.on('pointerover', function (event) {

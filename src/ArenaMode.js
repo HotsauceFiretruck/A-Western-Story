@@ -31,10 +31,13 @@ export class ArenaMode
             this.scale = 1;
         }
 
+        //Initialize the connection
+        this.connection = new Connection();
+
         //Initializing Level
         let preloader = new PreloaderArena(this);
-        let serverList = new ServerSelect(this);
-        let levelarena = new ArenaLevel(this, serverList.getServer());
+        let serverList = new ServerSelect(this, this.connection);
+        let levelarena = new ArenaLevel(this, this.connection);
         let death = new ArenaDeathScene(this);
 
         //Initializing Config
@@ -55,9 +58,6 @@ export class ArenaMode
             scale: {
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH
-            },
-            fps: {
-                target: 60
             },
             plugins: {
                 scene: [
@@ -82,6 +82,8 @@ export class ArenaMode
         };
 
         let game = new Phaser.Game(this.config);
+        //Disable right click menu on canvas
+        game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
         if (game.device.os.android || 
             game.device.os.iOS || 

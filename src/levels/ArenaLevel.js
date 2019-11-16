@@ -55,7 +55,16 @@ export class ArenaLevel extends Phaser.Scene
         // Create map
         this.map = new TileMap(this, level, 32, 32, 'sand');
 
-        this.player = new ArenaPlayer(this, 50, 50, this.connection);
+        this.player = new ArenaPlayer(this, 800, 80, this.connection);
+        this.player.stageMode();
+
+        //Setup our players and listeners for the connection
+        this.connection.setPlayer(this, this.player);
+        this.connection.setupListeners(this);
+
+        //When this scene is loaded it means you respawned
+        //Tell the server we did so we can get our spawn point
+        this.connection.socket.emit('respawn');
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
@@ -109,5 +118,6 @@ export class ArenaLevel extends Phaser.Scene
 
         //Update player
         this.player.update();
+        this.connection.update();
     }
 }
