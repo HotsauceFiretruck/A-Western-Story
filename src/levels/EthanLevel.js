@@ -93,8 +93,8 @@ export class EthanLevel extends Phaser.Scene
         // var n = 0;
         // var escKey = this.input.keyboard.addKey('ESC');
         this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseButton').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseButton').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
         // Button events for disabling and reenabling player movements and enemie ai.
         // escKey.on('down', (event) => {
         //     if(paused == false && n == 0){

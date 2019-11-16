@@ -12,16 +12,16 @@ export class MenuScene extends Phaser.Scene {
         this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
         this.add.image(600 * scale, 150 * scale, 'title').setDisplaySize(1100 * scale, 85 * scale);
 
-        this.playbtn = this.add.sprite(600 * scale, 300 * scale, 'playbtn').setScale(2 * scale).setInteractive();
-        this.tutorialBtn = this.add.sprite(600 * scale, 390 * scale, 'tutorialbtn').setScale(2 * scale).setInteractive();
+        this.playButton = this.add.sprite(600 * scale, 300 * scale, 'playButton').setScale(2 * scale).setInteractive();
+        this.tutorialBtn = this.add.sprite(600 * scale, 390 * scale, 'tutorialButton').setScale(2 * scale).setInteractive();
 
-        this.playbtn.on('pointerdown', (event) => {
+        this.playButton.on('pointerdown', (event) => {
             this.scene.start('lvl-select');
         });
-        this.playbtn.on('pointerover', function (event) {
+        this.playButton.on('pointerover', function (event) {
             this.setTint(616161);
         })
-        this.playbtn.on('pointerout', function (event) {
+        this.playButton.on('pointerout', function (event) {
             this.clearTint();
         })
 
