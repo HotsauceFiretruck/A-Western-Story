@@ -202,7 +202,8 @@ class Dialog
                 {
                     fontFamily: 'Courier',
                     fontSize: scaleSize + 'px',
-                    fontStyle: "bold"
+                    fontStyle: "bold",
+                    backgroundColor: "#323c39"
                 }
             ).setScrollFactor(0, 0).setInteractive();
 
