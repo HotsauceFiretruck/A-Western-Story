@@ -93,8 +93,8 @@ export class EthanLevel extends Phaser.Scene
         // var n = 0;
         // var escKey = this.input.keyboard.addKey('ESC');
         this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseButton').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseButton').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
         // Button events for disabling and reenabling player movements and enemie ai.
         // escKey.on('down', (event) => {
         //     if(paused == false && n == 0){
@@ -182,8 +182,8 @@ export class EthanLevel extends Phaser.Scene
         dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
         dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {dialogTree.changeSequence(1);}],
-                ["...", () => {dialogTree.changeSequence(2);
+                ["Thanks?", () => {dialogTree.playSequence(1);}],
+                ["...", () => {dialogTree.playSequence(2);
                 }],
             ]
         );
@@ -273,14 +273,14 @@ export class EthanLevel extends Phaser.Scene
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                dialogTree.changeSequence(1);  
+                dialogTree.playSequence(1);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {dialogTree.changeSequence(2);
+            ["No.", () => {dialogTree.playSequence(2);
             }],
         ]
         );

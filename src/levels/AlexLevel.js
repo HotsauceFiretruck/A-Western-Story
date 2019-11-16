@@ -72,8 +72,8 @@ export class AlexLevel extends Phaser.Scene
         var paused = false;
         // positioning of this image is broken somehow only in this level. dont know how to fix -Ethan
         this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false); 
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseButton').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseButton').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
         this.pauseBtn.on('pointerdown', (event) => {
             if(paused == false){
                 this.player.gun.setVisible(false);
