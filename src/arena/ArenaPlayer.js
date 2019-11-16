@@ -1,4 +1,3 @@
-import { Bullet } from "./Bullet.js";
 import { DesktopController } from "../controllers/DesktopController.js";
 import { MobileController } from "../controllers/MobileController.js";
 

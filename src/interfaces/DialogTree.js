@@ -3,6 +3,7 @@ export class DialogTree
     constructor(scene, centerX, centerY)
     {
         this.scene = scene;
+        this.mobile = scene.PhaserGame.isMobile;
         this.scale = scene.PhaserGame.scale;
         this.centerX = centerX * this.scale;
         this.centerY = centerY * this.scale;
@@ -70,7 +71,6 @@ export class DialogTree
     playSequence(sequenceId)
     {
         if (this.isTreeEnded) this.startTree();
-        //if (this.currentSequence != null || this.currentSequence != undefined) this.currentSequence.endSequence();
         this.dialogBackground.setVisible(true);
         this.sequences[sequenceId].playSequence();
         this.currentSequence = this.sequences[sequenceId];
@@ -175,6 +175,11 @@ class Dialog
         if (this.optionObjects.length == 0)
         {
             this.dialogTree.scene.input.keyboard.on(this.dialogTree.keyChange, (event) => {this.sequence.nextDialog();});
+        } else
+        {
+            this.nextDialogButton = scene.add.sprite(20, 20, 'continueDialogButton'); 
+            this.nextDialogButton.setFrame(0).setScrollFactor(0, 0);
+            //this.nextDialogButton = new 
         }
         
         //Setup

@@ -147,6 +147,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('pauseButton', 'assets/PauseButton.png');
         this.load.image('unpauseButton', 'assets/UnpauseButton.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.spritesheet('continueDialogButton', 'assets/ContinueDialogButton.png',  {frameWidth: 360, frameHeight: 40});
     }
 
     create()

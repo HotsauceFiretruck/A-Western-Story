@@ -101,8 +101,6 @@ export class PreloaderArena extends Phaser.Scene
         this.load.image('title', 'assets/Title.PNG');
         this.load.image('bg', 'assets/MenuScreen.png');
         this.load.image('playbtn', 'assets/PlayButton.png');
-        this.load.image('tutorialbtn', 'assets/TutorialButton.png');
-        this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
         this.load.image('backbtn', 'assets/BackButton.png');
         this.load.image('dialogbg', 'assets/DialogBackground.png');
         this.load.image('death', 'assets/GameOver.png');

@@ -1,5 +1,4 @@
-import { ArenaPlayer } from "../entities/ArenaPlayer.js";
-import { OtherPlayer } from "../entities/OtherPlayer.js";
+import { ArenaPlayer } from "./ArenaPlayer.js";
 import { TileMap } from "../components/TileMap.js";
 
 
