@@ -22,6 +22,7 @@ export class DustinLevel extends Phaser.Scene
 
     create()
     {
+        let scale = this.PhaserGame.scale;
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -84,6 +85,54 @@ export class DustinLevel extends Phaser.Scene
 
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1750, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter(); nextLevelGoal.destroy()});
+
+        var paused = false;
+        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseBtn.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseBtn.setVisible(false).setInteractive(false);
+            this.unPauseBtn.setVisible(true).setInteractive();
+        });
+        this.unPauseBtn.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseBtn.setVisible(true).setInteractive(true);
+            this.unPauseBtn.setVisible(false).setInteractive(false);
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
 
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree.addSequence();

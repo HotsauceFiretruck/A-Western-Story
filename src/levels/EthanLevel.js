@@ -17,6 +17,7 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
+        let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -87,6 +88,91 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
+        // Pause buttons
+        var paused = false;
+        // var n = 0;
+        // var escKey = this.input.keyboard.addKey('ESC');
+        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        // Button events for disabling and reenabling player movements and enemie ai.
+        // escKey.on('down', (event) => {
+        //     if(paused == false && n == 0){
+        //         this.player.gun.setVisible(false);
+        //         this.player.stageMode();
+        //         this.player.setVisible(false);
+        //         for(var i = 0; i < this.enemies.list.length; i++) {
+        //             this.enemies.list[i].stageMode();
+        //             this.enemies.list[i].setVisible(false);
+        //         }
+        //         setTimeout(function(){
+        //             n++;
+        //         }, 1);
+        //         paused = true;
+        //         this.pauseScreen.setVisible(true).setAlpha(50);
+        //         this.pauseBtn.setVisible(false).setInteractive(false);
+        //         this.unPauseBtn.setVisible(true).setInteractive();
+        //     }
+        //     if(paused && n == 1){
+        //         this.player.gun.setVisible(true);
+        //         this.player.playMode();
+        //         this.player.setVisible(true);
+        //         for(var i = 0; i < this.enemies.list.length; i++) {
+        //             this.enemies.list[i].playMode();
+        //             this.enemies.list[i].setVisible(true);
+        //         }
+        //         n--;
+        //         paused = false;
+        //         this.pauseScreen.setVisible(false)
+        //         this.pauseBtn.setVisible(true).setInteractive(true);
+        //         this.unPauseBtn.setVisible(false).setInteractive(false);
+        //     }
+        // });
+        this.pauseBtn.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseBtn.setVisible(false).setInteractive(false);
+            this.unPauseBtn.setVisible(true).setInteractive();
+        });
+        this.unPauseBtn.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseBtn.setVisible(true).setInteractive(true);
+            this.unPauseBtn.setVisible(false).setInteractive(false);
+        });
+
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence0 = dialogTree.addSequence();
