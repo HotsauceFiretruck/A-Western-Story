@@ -22,6 +22,7 @@ export class DustinLevel extends Phaser.Scene
 
     create()
     {
+        let scale = this.PhaserGame.scale;
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -61,10 +62,10 @@ export class DustinLevel extends Phaser.Scene
         //Adding static images
         this.house1 = this.add.image(1050, 525, 'house');
         this.house2 = this.add.image(1150, 525, 'house');
-        this.house3 = this.add.image(1250, 525, 'house');
-        this.house4 = this.add.image(1350, 525, 'house');
-        this.house5 = this.add.image(1450, 525, 'house');
-        this.house6 = this.add.image(1550, 525, 'house');
+        this.house3 = this.add.image(1280, 508, 'bigHouse');
+        this.house4 = this.add.image(1410, 525, 'house');
+        this.house5 = this.add.image(1530, 510, 'saloon');
+        this.house6 = this.add.image(1650, 525, 'house');
 
         // These lists are important because when you create a bullet or enemy, these lists are called to add and update them.
         this.projectiles = {
@@ -82,8 +83,56 @@ export class DustinLevel extends Phaser.Scene
         this.basicEnemy2 = new Enemy(this, 36, level.length * 30);
         this.basicEnemy3 = new Enemy(this, 1008, level.length * 30);
 
-        let nextLevelGoal = new Area(this, 'sheriffhouse', 1650, 525, 75, 104);
+        let nextLevelGoal = new Area(this, 'sheriffhouse', 1750, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter(); nextLevelGoal.destroy()});
+
+        var paused = false;
+        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseBtn.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseBtn.setVisible(false).setInteractive(false);
+            this.unPauseBtn.setVisible(true).setInteractive();
+        });
+        this.unPauseBtn.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseBtn.setVisible(true).setInteractive(true);
+            this.unPauseBtn.setVisible(false).setInteractive(false);
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
 
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree.addSequence();

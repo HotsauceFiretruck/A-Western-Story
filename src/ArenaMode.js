@@ -53,6 +53,10 @@ export class ArenaMode
                     gravity: { y: 1.3}
                 }
             },
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
             plugins: {
                 scene: [
                     {
