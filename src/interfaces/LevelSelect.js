@@ -64,6 +64,7 @@ export class LevelSelect extends Phaser.Scene {
 
         this.lvl5Button.on('pointerdown', (event) => {
             document.getElementById('menuMusic').pause();
+            this.setTint(616161);
             console.log("Button Clicked!");
             this.scene.start('level-5');
         });
@@ -71,17 +72,18 @@ export class LevelSelect extends Phaser.Scene {
             this.setTint(616161);
         });
         this.lvl5Button.on('pointerout', function (event) {
-            this.clearTint();
+            //this.clearTint();
         });
 
         this.backButton.on('pointerdown', (event) => {
             this.scene.start('menu-scene');
+            this.setTint(616161);
         });
         this.backButton.on('pointerover', function (event) {
             this.setTint(616161);
         });
         this.backButton.on('pointerout', function (event) {
-            this.clearTint();
+            //this.clearTint();
         });
     }
 
