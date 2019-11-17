@@ -41,7 +41,7 @@ export class MenuScene extends Phaser.Scene {
             this.clearTint();
         })
 
-        playButton.on('pointerdown', (event) => {
+        playButton.on('pointerdown', () => {
             this.scene.start('lvl-select');
         });
         playButton.on('pointerover', function (event) {
