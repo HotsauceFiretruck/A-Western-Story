@@ -14,11 +14,12 @@ export class MenuScene extends Phaser.Scene {
         let playButton = this.add.sprite(600, 300, 'playButton').setScale(2).setInteractive();
         let tutorialBtn = this.add.sprite(600, 390, 'tutorialButton').setScale(2).setInteractive();
 
-        fullscreenButton.on('pointerdown', (event) => {
+        fullscreenButton.on('pointerdown', () => {
             if (this.scale.isFullscreen) {
                 this.scale.stopFullscreen();
             } 
             else {
+                console.log("Fullscreen!");
                 this.scale.startFullscreen();
             }
         });

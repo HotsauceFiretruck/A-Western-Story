@@ -19,11 +19,11 @@ export class StoryMode
         this.isMobile = false;
 
         //Detecting the Device's Size and Set Max
-        let maxWidth = 1200;
-        let maxHeight = 600;
+        let defaultWidth = 1200;
+        let defaultHeight = 600;
         
-        let scaleWidth = window.innerWidth / maxWidth;
-        let scaleHeight = window.innerHeight / maxHeight;
+        let scaleWidth = window.innerWidth / defaultWidth;
+        let scaleHeight = window.innerHeight / defaultHeight;
         this.scale = Math.min(scaleWidth, scaleHeight);
         
         // let modifiedWidth = maxWidth * this.scale;
@@ -55,8 +55,6 @@ export class StoryMode
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-            width: maxWidth,
-            height: maxHeight,
             parent: 'phaser-game',
             pixelArt: true,
             activePointers: 4,
@@ -68,7 +66,9 @@ export class StoryMode
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: defaultWidth,
+                height: defaultHeight,
             },
             plugins: {
                 scene: [
@@ -89,7 +89,6 @@ export class StoryMode
         };
 
         let game = new Phaser.Game(this.config);
-        game.scale.startFullscreen();
 
         if (game.device.os.android || 
             game.device.os.iOS || 
@@ -98,7 +97,6 @@ export class StoryMode
             game.device.os.windowsPhone)
         {
             this.isMobile = true;
-            ScreenOrientation.lock("landscape");
         }
     }
 }
