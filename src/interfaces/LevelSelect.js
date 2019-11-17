@@ -19,7 +19,7 @@ export class LevelSelect extends Phaser.Scene {
 
         // Adding functionality to buttons. Like click events and color change on hover.
         this.lvl1Button.on('pointerdown', (event) => {
-            document.getElementById('menuMusic').pause();
+            //document.getElementById('menuMusic').pause();
             this.scene.start('level-1');
         });
         this.lvl1Button.on('pointerover', function (event) {
@@ -30,7 +30,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl2Button.on('pointerdown', (event) => {
-            document.getElementById('menuMusic').pause();
+            //document.getElementById('menuMusic').pause();
             this.scene.start('level-2');
         });
         this.lvl2Button.on('pointerover', function (event) {
@@ -41,7 +41,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl3Button.on('pointerdown', (event) => {
-            document.getElementById('menuMusic').pause();
+            //document.getElementById('menuMusic').pause();
             this.scene.start('level-3');
         });
         this.lvl3Button.on('pointerover', function (event) {
@@ -52,7 +52,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl4Button.on('pointerdown', (event) => {
-            document.getElementById('menuMusic').pause();
+            //document.getElementById('menuMusic').pause();
             this.scene.start('level-4');
         });
         this.lvl4Button.on('pointerover', function (event) {
@@ -63,7 +63,7 @@ export class LevelSelect extends Phaser.Scene {
         });
 
         this.lvl5Button.on('pointerdown', (event) => {
-            document.getElementById('menuMusic').pause();
+            //document.getElementById('menuMusic').pause();
             this.scene.start('level-5');
         });
         this.lvl5Button.on('pointerover', function (event) {
