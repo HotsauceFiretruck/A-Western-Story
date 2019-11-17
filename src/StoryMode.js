@@ -9,6 +9,7 @@ import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderScene } from "./interfaces/PreloaderScene.js";
 import { MenuScene } from "./interfaces/MenuScene.js";
 import { LevelSelect } from "./interfaces/LevelSelect.js";
+import { PauseScene } from "./interfaces/PauseScene.js";
 
 export class StoryMode 
 {
@@ -42,6 +43,7 @@ export class StoryMode
         let preloader = new PreloaderScene(this);
         let menu = new MenuScene(this);
         let levelSelect = new LevelSelect(this);
+        let pauseScene = new PauseScene(this);
 
         let levelTutorial = new LevelTutorial(this);
         let level1 = new AlexLevel(this);
@@ -86,7 +88,7 @@ export class StoryMode
                 ]
             },
           
-            scene: [preloader, menu, levelTutorial, levelSelect, level1, level1Continued, level2, level3, level4, level5, death]
+            scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, level1, level1Continued, level2, level3, level4, level5, death]
         };
 
         let game = new Phaser.Game(this.config);
