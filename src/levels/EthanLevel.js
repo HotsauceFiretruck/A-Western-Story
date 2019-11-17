@@ -17,7 +17,6 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -92,9 +91,9 @@ export class EthanLevel extends Phaser.Scene
         var paused = false;
         // var n = 0;
         // var escKey = this.input.keyboard.addKey('ESC');
-        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
         // Button events for disabling and reenabling player movements and enemie ai.
         // escKey.on('down', (event) => {
         //     if(paused == false && n == 0){
@@ -110,8 +109,8 @@ export class EthanLevel extends Phaser.Scene
         //         }, 1);
         //         paused = true;
         //         this.pauseScreen.setVisible(true).setAlpha(50);
-        //         this.pauseBtn.setVisible(false).setInteractive(false);
-        //         this.unPauseBtn.setVisible(true).setInteractive();
+        //         this.pauseButton.setVisible(false).setInteractive(false);
+        //         this.unPauseButton.setVisible(true).setInteractive();
         //     }
         //     if(paused && n == 1){
         //         this.player.gun.setVisible(true);
@@ -124,11 +123,11 @@ export class EthanLevel extends Phaser.Scene
         //         n--;
         //         paused = false;
         //         this.pauseScreen.setVisible(false)
-        //         this.pauseBtn.setVisible(true).setInteractive(true);
-        //         this.unPauseBtn.setVisible(false).setInteractive(false);
+        //         this.pauseButton.setVisible(true).setInteractive(true);
+        //         this.unPauseButton.setVisible(false).setInteractive(false);
         //     }
         // });
-        this.pauseBtn.on('pointerdown', (event) => {
+        this.pauseButton.on('pointerdown', (event) => {
             if(paused == false){
                 this.player.gun.setVisible(false);
                 this.player.stageMode();
@@ -140,10 +139,10 @@ export class EthanLevel extends Phaser.Scene
                 paused = true;
             }
             this.pauseScreen.setVisible(true).setAlpha(50);
-            this.pauseBtn.setVisible(false).setInteractive(false);
-            this.unPauseBtn.setVisible(true).setInteractive();
+            this.pauseButton.setVisible(false).setInteractive(false);
+            this.unPauseButton.setVisible(true).setInteractive();
         });
-        this.unPauseBtn.on('pointerdown', (event) => {
+        this.unPauseButton.on('pointerdown', (event) => {
             if(paused){
                 this.player.gun.setVisible(true);
                 this.player.playMode();
@@ -155,21 +154,21 @@ export class EthanLevel extends Phaser.Scene
                 paused = false;
             }
             this.pauseScreen.setVisible(false)
-            this.pauseBtn.setVisible(true).setInteractive(true);
-            this.unPauseBtn.setVisible(false).setInteractive(false);
+            this.pauseButton.setVisible(true).setInteractive(true);
+            this.unPauseButton.setVisible(false).setInteractive(false);
         });
 
         // Functions to tint the buttons on hover to look nice. :)
-        this.pauseBtn.on('pointerover', function (event) {
+        this.pauseButton.on('pointerover', function (event) {
             this.setTint(616161);
         });
-        this.pauseBtn.on('pointerout', function (event) {
+        this.pauseButton.on('pointerout', function (event) {
             this.clearTint();
         });
-        this.unPauseBtn.on('pointerover', function (event) {
+        this.unPauseButton.on('pointerover', function (event) {
             this.setTint(616161);
         });
-        this.unPauseBtn.on('pointerout', function (event) {
+        this.unPauseButton.on('pointerout', function (event) {
             this.clearTint();
         });
 
@@ -182,8 +181,8 @@ export class EthanLevel extends Phaser.Scene
         dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
         dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {dialogTree.changeSequence(1);}],
-                ["...", () => {dialogTree.changeSequence(2);
+                ["Thanks?", () => {dialogTree.playSequence(1);}],
+                ["...", () => {dialogTree.playSequence(2);
                 }],
             ]
         );
@@ -273,14 +272,14 @@ export class EthanLevel extends Phaser.Scene
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                dialogTree.changeSequence(1);  
+                dialogTree.playSequence(1);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {dialogTree.changeSequence(2);
+            ["No.", () => {dialogTree.playSequence(2);
             }],
         ]
         );

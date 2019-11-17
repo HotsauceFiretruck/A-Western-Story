@@ -11,7 +11,8 @@ export class DesktopController
             up: 'W',
             left: 'A',
             right: 'D',
-            down: 'S'
+            down: 'S',
+            space: 'SPACE'
         });
     }
 
@@ -38,7 +39,7 @@ export class DesktopController
             }
         }
 
-        if (this.cursors.up.isDown && 
+        if ((this.cursors.up.isDown || this.cursors.space.isDown) && 
             this.player.status.canJump && 
             this.player.status.isTouching.down)
         {
