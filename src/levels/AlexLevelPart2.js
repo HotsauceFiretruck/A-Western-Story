@@ -20,7 +20,6 @@ export class AlexLevelPart2 extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long
@@ -66,9 +65,9 @@ export class AlexLevelPart2 extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 750, 500);
 
         var paused = false;
-        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseButton = this.add.sprite(1150 * scale, 45 * scale, 'pauseButton').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseButton = this.add.sprite(600 * scale, 250 * scale, 'unpauseButton').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
         this.pauseButton.on('pointerdown', (event) => {
             if(paused == false){
                 this.player.gun.setVisible(false);

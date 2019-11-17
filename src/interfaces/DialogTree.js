@@ -4,9 +4,8 @@ export class DialogTree
     {
         this.scene = scene;
         this.mobile = scene.PhaserGame.isMobile;
-        this.scale = scene.PhaserGame.scale;
-        this.centerX = centerX * this.scale;
-        this.centerY = centerY * this.scale;
+        this.centerX = centerX;
+        this.centerY = centerY;
 
         if (this.mobile)
         {
@@ -25,7 +24,7 @@ export class DialogTree
         //Play Dialog ----
         this.isTreeEnded = false;
         this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
-        this.dialogBackground.setScale(4 * this.scale).setScrollFactor(0, 0);
+        this.dialogBackground.setScale(4).setScrollFactor(0, 0);
 
         if (this.scene.projectiles != undefined)
         {
@@ -175,14 +174,13 @@ class Dialog
     displayDialog()
     {   
         //Setup
-        let spacing = 35 * this.dialogTree.scale;
+        let spacing = 35;
 
         let numberOfLines = this.optionObjects.length + 1;
-        let scaleSize = Math.floor(20 * this.dialogTree.scale);
 
         let centerY = this.dialogTree.centerY;
         let centerX = this.dialogTree.centerX;
-        let startY = centerY - (spacing/2) * (numberOfLines - 1) - (scaleSize / 2);
+        let startY = centerY - (spacing/2) * (numberOfLines - 1) - 10;
 
         //Create Text Objects
         this.textObject = this.dialogTree.scene.add.text(
@@ -191,7 +189,7 @@ class Dialog
             this.text,
             {
                 fontFamily: 'Courier',
-                fontSize: scaleSize + 'px',
+                fontSize: 20,
                 fontStyle: "bold"
             }
         ).setScrollFactor(0, 0);
@@ -206,7 +204,7 @@ class Dialog
                 i + ". " + this.optionObjects[i - 1][1],
                 {
                     fontFamily: 'Courier',
-                    fontSize: scaleSize + 'px',
+                    fontSize: 20,
                     fontStyle: "bold",
                     backgroundColor: "#323c39"
                 }
@@ -232,19 +230,19 @@ class Dialog
         if (this.optionObjects.length == 0)
         {
             this.nextDialogButton[1] = this.dialogTree.scene.add.image(
-                this.dialogTree.centerX + 400 * this.dialogTree.scale, 
-                this.dialogTree.centerY + 122 * this.dialogTree.scale, 'continueDialogButton'); 
+                this.dialogTree.centerX + 400, 
+                this.dialogTree.centerY + 122, 'continueDialogButton'); 
             this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5);
 
             if (this.dialogTree.mobile)
             {
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
-                    this.nextDialogButton[1].x - 118 * this.dialogTree.scale, 
-                    this.nextDialogButton[1].y - 12 * this.dialogTree.scale, 
+                    this.nextDialogButton[1].x - 118, 
+                    this.nextDialogButton[1].y - 12, 
                     "Press Me To Continue",
                     {
                         fontFamily: 'Courier',
-                        fontSize: scaleSize + 'px',
+                        fontSize: 20,
                         fontStyle: 'bold'
                     }
                 ).setInteractive();
@@ -256,12 +254,12 @@ class Dialog
                 this.dialogTree.scene.input.keyboard.on("keydown-X", () => {this.sequence.nextDialog();});
             
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
-                    this.nextDialogButton[1].x - 112 * this.dialogTree.scale, 
-                    this.nextDialogButton[1].y - 12 * this.dialogTree.scale, 
+                    this.nextDialogButton[1].x - 112, 
+                    this.nextDialogButton[1].y - 12, 
                     "Press X To Continue",
                     {
                         fontFamily: 'Courier',
-                        fontSize: scaleSize + 'px',
+                        fontSize: 20,
                         fontStyle: 'bold'
                     }
                 );
