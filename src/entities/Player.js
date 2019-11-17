@@ -199,7 +199,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
     reloadGun()
     {
         this.status.isFireReloaded = false;
-        let timer = this.scene.time.addEvent({
+        this.scene.time.addEvent({
             delay: this.status.fireRate * 1000,
             callback: () => this.status.isFireReloaded = true,
             callbackScope: this,

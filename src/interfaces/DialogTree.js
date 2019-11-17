@@ -243,7 +243,7 @@ class Dialog
                 ).setInteractive();
 
                 this.nextDialogButton[1].setInteractive();
-                this.nextDialogButton[1].on('pointerdown', () => {this.sequence.nextDialog();});
+                this.nextDialogButton[1].on('pointerup', () => {this.sequence.nextDialog();});
             } 
             else 
             {
