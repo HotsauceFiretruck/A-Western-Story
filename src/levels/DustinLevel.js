@@ -74,7 +74,6 @@ export class DustinLevel extends Phaser.Scene
         };
 
         this.clouds = {
-            category: 5,
             list: [] 
         };
 
@@ -83,8 +82,12 @@ export class DustinLevel extends Phaser.Scene
             list: []
         };
 
-        //Adding clood
-        this.cloud = new Cloud(this, 100, level.length * 25);
+        //Adding cloods
+
+        for(var i = 0; i < 15; i++)
+        {
+            this.cloud = new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
+        }
 
         this.player = new Player(this, 300, level.length * 30);
         this.basicEnemy = new Enemy(this, 608, level.length * 30);
@@ -96,7 +99,7 @@ export class DustinLevel extends Phaser.Scene
 
         var paused = false;
         this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
-        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0).setDepth(9);
         this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
         this.pauseButton.on('pointerdown', (event) => {
             if(paused == false){
@@ -106,6 +109,9 @@ export class DustinLevel extends Phaser.Scene
                 for(var i = 0; i < this.enemies.list.length; i++) {
                     this.enemies.list[i].stageMode();
                     this.enemies.list[i].setVisible(false);
+                }
+                for(var i = 0; i < this.clouds.list.length; i++) {
+                    this.clouds.list[i].stageMode();
                 }
                 paused = true;
             }
@@ -121,6 +127,9 @@ export class DustinLevel extends Phaser.Scene
                 for(var i = 0; i < this.enemies.list.length; i++) {
                     this.enemies.list[i].playMode(true);
                     this.enemies.list[i].setVisible(true);
+                }
+                for(var i = 0; i < this.clouds.list.length; i++) {
+                    this.clouds.list[i].playMode();
                 }
                 paused = false;
             }

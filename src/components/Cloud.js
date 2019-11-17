@@ -1,31 +1,42 @@
-export class Cloud extends Phaser.Physics.Matter.Sprite
+var cloudWidth = 52;
+export class Cloud
 {
     /*  scene: Scene (Level)
         centerX: X position in the Level
         centerY: Y position in the level
     */
-    constructor(scene, centerX, centerY)
+    constructor(scene, centerX, centerY, levelWidth)
     {
-        super(scene.matter.world, centerX, centerY, "cloud");
-        scene.add.existing(this);
-        scene.clouds.list.push(this);
         this.scene = scene;
         this.centerX = centerX;
         this.centerY = centerY;
-
-        let Bodies = scene.PhaserGame.MatterPhysics.Bodies;
-        let mainBody = Bodies.rectangle(centerX, centerY, 52, 46, { isStatic: true, isSensor: false });
-        this.setExistingBody(mainBody);
+        this.levelWidth = levelWidth;
+        this.image = scene.add.image(centerX, centerY, 'cloud');
+        scene.clouds.list.push(this);
     }
 
     update()
     {
-        this.centerX--;
-        if(this.centerX < -26)
+        if (!this.isOnStage)
         {
-            this.centerX = 100;
+            this.centerX -= Math.sqrt(this.centerY) / 15;
+            if(this.centerX < (cloudWidth / 2) * -1)
+            {
+                this.centerX = this.levelWidth + cloudWidth;
+            }
+            this.image.destroy();
+            this.image = this.scene.add.image(this.centerX, this.centerY, 'cloud');
         }
-        
-        console.log("cloud update")
+    }
+
+    stageMode()
+    {
+        this.isOnStage = true;
+        this.image.destroy();
+    }
+
+    playMode()
+    {
+        this.isOnStage = false;
     }
 }

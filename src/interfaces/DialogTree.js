@@ -24,7 +24,7 @@ export class DialogTree
         //Play Dialog ----
         this.isTreeEnded = false;
         this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
-        this.dialogBackground.setScale(4).setScrollFactor(0, 0);
+        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(998);
 
         if (this.scene.projectiles != undefined)
         {
@@ -45,6 +45,14 @@ export class DialogTree
         if (this.scene.player != undefined)
         {
             this.scene.player.stageMode(); // player set on stage --> disable everything.
+        }
+
+        if (this.scene.clouds != undefined)
+        {
+            for (let i = 0; i < this.scene.clouds.list.length; i++)
+            {
+                this.scene.clouds.list[i].stageMode();
+            }
         }
     }
 
@@ -97,6 +105,14 @@ export class DialogTree
         if (this.scene.player != undefined)
         {
             this.scene.player.playMode();
+        }
+
+        if (this.scene.clouds != undefined)
+        {
+            for (let i = 0; i < this.scene.clouds.list.length; i++)
+            {
+                this.scene.clouds.list[i].playMode();
+            }
         }
     }
 }
@@ -192,7 +208,7 @@ class Dialog
                 fontSize: 20,
                 fontStyle: "bold"
             }
-        ).setScrollFactor(0, 0);
+        ).setScrollFactor(0, 0).setDepth(999);
 
         this.textObject.setPosition(centerX - this.textObject.displayWidth / 2, startY);
 

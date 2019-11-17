@@ -90,7 +90,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.healthSprite.setFrame(0).setScrollFactor(0, 0).setDepth(999);
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
-        this.displayHealth.setScrollFactor(0, 0);
+        this.displayHealth.setScrollFactor(0, 0).setDepth(999);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
         this.gun.setDepth(999).setScale(2);
