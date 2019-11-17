@@ -91,6 +91,7 @@ export class StoryMode
         };
 
         let game = new Phaser.Game(this.config);
+        game.scale.startFullscreen();
 
         if (game.device.os.android || 
             game.device.os.iOS || 

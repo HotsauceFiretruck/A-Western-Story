@@ -10,27 +10,43 @@ export class MenuScene extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
         this.add.image(600, 150, 'title').setDisplaySize(1100, 85);
 
-        this.playButton = this.add.sprite(600, 300, 'playButton').setScale(2).setInteractive();
-        this.tutorialBtn = this.add.sprite(600, 390, 'tutorialButton').setScale(2).setInteractive();
+        let fullscreenButton = this.add.image(1150, 50, 'fullscreenButton').setScale(2).setInteractive();
+        let playButton = this.add.sprite(600, 300, 'playButton').setScale(2).setInteractive();
+        let tutorialBtn = this.add.sprite(600, 390, 'tutorialButton').setScale(2).setInteractive();
 
-        this.playButton.on('pointerdown', (event) => {
-            this.scene.start('lvl-select');
+        fullscreenButton.on('pointerdown', (event) => {
+            if (this.scale.isFullscreen) {
+                this.scale.stopFullscreen();
+            } 
+            else {
+                this.scale.startFullscreen();
+            }
         });
-        this.playButton.on('pointerover', function (event) {
+        fullscreenButton.on('pointerover', function (event) {
             this.setTint(616161);
         })
-        this.playButton.on('pointerout', function (event) {
+        fullscreenButton.on('pointerout', function (event) {
             this.clearTint();
         })
 
-        this.tutorialBtn.on('pointerdown', (event) => { 
+        playButton.on('pointerdown', (event) => {
+            this.scene.start('lvl-select');
+        });
+        playButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        playButton.on('pointerout', function (event) {
+            this.clearTint();
+        })
+
+        tutorialBtn.on('pointerdown', (event) => { 
             document.getElementById('menuMusic').pause();
             this.scene.start('level-tutorial');
         })
-        this.tutorialBtn.on('pointerover', function (event) {
+        tutorialBtn.on('pointerover', function (event) {
             this.setTint(616161);
         })
-        this.tutorialBtn.on('pointerout', function (event) {
+        tutorialBtn.on('pointerout', function (event) {
             this.clearTint();
         })
     }
