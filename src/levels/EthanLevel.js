@@ -87,6 +87,91 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
+        // Pause buttons
+        var paused = false;
+        // var n = 0;
+        // var escKey = this.input.keyboard.addKey('ESC');
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
+        // Button events for disabling and reenabling player movements and enemie ai.
+        // escKey.on('down', (event) => {
+        //     if(paused == false && n == 0){
+        //         this.player.gun.setVisible(false);
+        //         this.player.stageMode();
+        //         this.player.setVisible(false);
+        //         for(var i = 0; i < this.enemies.list.length; i++) {
+        //             this.enemies.list[i].stageMode();
+        //             this.enemies.list[i].setVisible(false);
+        //         }
+        //         setTimeout(function(){
+        //             n++;
+        //         }, 1);
+        //         paused = true;
+        //         this.pauseScreen.setVisible(true).setAlpha(50);
+        //         this.pauseButton.setVisible(false).setInteractive(false);
+        //         this.unPauseButton.setVisible(true).setInteractive();
+        //     }
+        //     if(paused && n == 1){
+        //         this.player.gun.setVisible(true);
+        //         this.player.playMode();
+        //         this.player.setVisible(true);
+        //         for(var i = 0; i < this.enemies.list.length; i++) {
+        //             this.enemies.list[i].playMode();
+        //             this.enemies.list[i].setVisible(true);
+        //         }
+        //         n--;
+        //         paused = false;
+        //         this.pauseScreen.setVisible(false)
+        //         this.pauseButton.setVisible(true).setInteractive(true);
+        //         this.unPauseButton.setVisible(false).setInteractive(false);
+        //     }
+        // });
+        this.pauseButton.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseButton.setVisible(false).setInteractive(false);
+            this.unPauseButton.setVisible(true).setInteractive();
+        });
+        this.unPauseButton.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseButton.setVisible(true).setInteractive(true);
+            this.unPauseButton.setVisible(false).setInteractive(false);
+        });
+
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence0 = dialogTree.addSequence();
@@ -96,8 +181,8 @@ export class EthanLevel extends Phaser.Scene
         dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
         dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {dialogTree.changeSequence(1);}],
-                ["...", () => {dialogTree.changeSequence(2);
+                ["Thanks?", () => {dialogTree.playSequence(1);}],
+                ["...", () => {dialogTree.playSequence(2);
                 }],
             ]
         );
@@ -187,14 +272,14 @@ export class EthanLevel extends Phaser.Scene
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                dialogTree.changeSequence(1);  
+                dialogTree.playSequence(1);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {dialogTree.changeSequence(2);
+            ["No.", () => {dialogTree.playSequence(2);
             }],
         ]
         );

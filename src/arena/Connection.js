@@ -1,4 +1,4 @@
-import { OtherPlayer } from "../entities/OtherPlayer.js";
+import { OtherPlayer } from "./OtherPlayer.js";
 import { Bullet } from "../entities/Bullet.js";
 
 export class Connection {

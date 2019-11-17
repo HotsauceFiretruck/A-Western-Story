@@ -1,5 +1,4 @@
-import { ArenaPlayer } from "../entities/ArenaPlayer.js";
-import { OtherPlayer } from "../entities/OtherPlayer.js";
+import { ArenaPlayer } from "./ArenaPlayer.js";
 import { TileMap } from "../components/TileMap.js";
 
 
@@ -59,7 +58,7 @@ export class ArenaLevel extends Phaser.Scene
         this.player = new ArenaPlayer(this, randPos.x, randPos.y, this.connection);
 
         this.connection.reload(this.player, this);
-
+        
         let timer = this.time.addEvent({
             delay: 40,
             callback: () => {this.connection.updatePosition(this.player)},

@@ -94,6 +94,54 @@ export class DustinLevel extends Phaser.Scene
         let nextLevelGoal = new Area(this, 'sheriffhouse', 1750, 525, 75, 104);
         nextLevelGoal.whenTouched(this.player, () => {this.encounter(); nextLevelGoal.destroy()});
 
+        var paused = false;
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
+        this.pauseButton.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseButton.setVisible(false).setInteractive(false);
+            this.unPauseButton.setVisible(true).setInteractive();
+        });
+        this.unPauseButton.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseButton.setVisible(true).setInteractive(true);
+            this.unPauseButton.setVisible(false).setInteractive(false);
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree.addSequence();
         dialogTree.addDialog(sequence1, "The scoundrels left Joe for dead...\nBut it turns out that he survived");
@@ -331,7 +379,7 @@ export class DustinLevel extends Phaser.Scene
             element.destroy();
         });
 
-        var pScale = this.PhaserGame.scale * 1.5;
+        var pScale = 1.5;
         let bgImage = this.add.image(0, 0, imageKey);
         var initialPlace = levelWidth - (bgImage.width - 40)*pScale;
         bgImage.setOrigin(0,0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
@@ -340,7 +388,7 @@ export class DustinLevel extends Phaser.Scene
 
         while (initialPlace > 0) {
             let bgImage = this.add.image(0, 0, 'background4r');
-            initialPlace -= 720 * this.PhaserGame.scale;
+            initialPlace -= 720;
             bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
             currBg.push(bgImage);
         }

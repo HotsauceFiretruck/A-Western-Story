@@ -10,12 +10,11 @@ export class PreloaderScene extends Phaser.Scene
     {
         let width = this.cameras.main.width;
         let height = this.cameras.main.height;
-        let scale = this.PhaserGame.scale;
 
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(240 * scale, 270 * scale, 720 * scale, 50 * scale);
+        progressBox.fillRect(240, 270, 720, 50);
         
         let loadingText = this.make.text({
             x: width / 2,
@@ -26,7 +25,7 @@ export class PreloaderScene extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        loadingText.setOrigin(0.5, 0.5).setScale(scale);
+        loadingText.setOrigin(0.5, 0.5);
         
         let percentText = this.make.text({
             x: width / 2,
@@ -37,7 +36,7 @@ export class PreloaderScene extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        percentText.setOrigin(0.5, 0.5).setScale(scale);
+        percentText.setOrigin(0.5, 0.5);
         
         let assetText = this.make.text({
             x: width / 2,
@@ -49,13 +48,13 @@ export class PreloaderScene extends Phaser.Scene
             }
         });
 
-        assetText.setOrigin(0.5, 0.5).setScale(scale);
+        assetText.setOrigin(0.5, 0.5);
 
         this.load.on('progress', function (value) {
             percentText.setText(parseInt(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(250 * scale, 280 * scale, 700 * scale * value, 30 * scale);
+            progressBar.fillRect(250, 280, 700 * value, 30);
         });
         
         this.load.on('fileprogress', function (file) {
@@ -113,15 +112,15 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('barrel', 'assets/Barrel.png');
         this.load.image('title', 'assets/Title.PNG');
         this.load.image('bg', 'assets/MenuScreen.png');
-        this.load.image('playbtn', 'assets/PlayButton.png');
-        this.load.image('tutorialbtn', 'assets/TutorialButton.png');
-        this.load.image('nxtlvlbtn', 'assets/NextLevelBTN.png');
-        this.load.image('backbtn', 'assets/BackButton.png');
-        this.load.image('lvl1btn', 'assets/lvl1.png');
-        this.load.image('lvl2btn', 'assets/lvl2.png');
-        this.load.image('lvl3btn', 'assets/lvl3.png');
-        this.load.image('lvl4btn', 'assets/lvl4.png');
-        this.load.image('lvl5btn', 'assets/lvl5.png');
+        this.load.image('playButton', 'assets/PlayButton.png');
+        this.load.image('tutorialButton', 'assets/TutorialButton.png');
+        this.load.image('nxtlvlButton', 'assets/NextLevelButton.png');
+        this.load.image('backButton', 'assets/BackButton.png');
+        this.load.image('lvl1Button', 'assets/Lvl1Button.png');
+        this.load.image('lvl2Button', 'assets/Lvl2Button.png');
+        this.load.image('lvl3Button', 'assets/Lvl3Button.png');
+        this.load.image('lvl4Button', 'assets/Lvl4Button.png');
+        this.load.image('lvl5Button', 'assets/Lvl5Button.png');
         this.load.image('healthbarback', 'assets/BossHealthBarBackground.png');
         this.load.image('healthbarfront', 'assets/BossHealthBar.png');
         this.load.image('dialogbg', 'assets/DialogBackground.png');
@@ -133,17 +132,21 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('eastSign', 'assets/EastSign.png');
         this.load.image('westSign', 'assets/WestSign.png');
         this.load.image('signPost', 'assets/SignPost.png');
-        this.load.image('fence', 'assets/fence.png');
-        this.load.image('church', 'assets/church.png');
-        this.load.image('bigHouse', 'assets/bigHouse.png');
+        this.load.image('fence', 'assets/Fence.png');
+        this.load.image('church', 'assets/Church.png');
+        this.load.image('bigHouse', 'assets/BigHouse.png');
         this.load.image('saloon', 'assets/Saloon.png');
-        this.load.image('waterTower', 'assets/waterTower.png');
-        this.load.image('horse', 'assets/horse.png');
-        this.load.image('horse2', 'assets/horse2.png');
+        this.load.image('waterTower', 'assets/WaterTower.png');
+        this.load.image('horse', 'assets/Horse.png');
+        this.load.image('horse2', 'assets/Horse2.png');
         this.load.image('extrahealth', 'assets/ExtraHealth.png');
         this.load.image('flight', 'assets/Flight.png');
         this.load.image('tripleshot', 'assets/TripleShot.png');
         this.load.image('gun', 'assets/Gun.png');
+        this.load.image('pauseButton', 'assets/PauseButton.png');
+        this.load.image('unpauseButton', 'assets/UnpauseButton.png');
+        this.load.image('continueDialogButton', 'assets/ContinueDialogButton.png');
+        this.load.image('fullscreenButton', 'assets/FullscreenButton.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 

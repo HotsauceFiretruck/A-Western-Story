@@ -1,7 +1,7 @@
-import { ArenaLevel } from "./levels/ArenaLevel.js";
-import { ArenaDeathScene } from "./interfaces/ArenaDeathScene.js";
-import { PreloaderArena } from "./interfaces/PreloaderArena.js";
-import { Connection } from "./components/Connection.js";
+import { ArenaLevel } from "./ArenaLevel.js";
+import { ArenaDeathScene } from "./ArenaDeathScene.js";
+import { PreloaderArena } from "./PreloaderArena.js";
+import { Connection } from "./Connection.js";
 
 
 export class ArenaMode 
@@ -52,6 +52,10 @@ export class ArenaMode
                 matter: {
                     gravity: { y: 1.3}
                 }
+            },
+            scale: {
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH
             },
             plugins: {
                 scene: [

@@ -2,9 +2,6 @@ import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
-import { Priest } from "../entities/Priest.js";
-import { Bull } from "../entities/Bull.js";
-import { Snake } from "../entities/Snake.js";
 
 export class AlexLevel extends Phaser.Scene
 {
@@ -67,6 +64,55 @@ export class AlexLevel extends Phaser.Scene
         this.basicEnemy6 = new Enemy(this, 2240, 200);
         this.basicEnemy7 = new Enemy(this, 2272, 200);
         this.basicEnemy8 = new Enemy(this, 2304, 200);
+
+        var paused = false;
+        // positioning of this image is broken somehow only in this level. dont know how to fix -Ethan
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false); 
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
+        this.pauseButton.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseButton.setVisible(false).setInteractive(false);
+            this.unPauseButton.setVisible(true).setInteractive();
+        });
+        this.unPauseButton.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseButton.setVisible(true).setInteractive(true);
+            this.unPauseButton.setVisible(false).setInteractive(false);
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
 
         let dialogTree1 = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree1.addSequence();

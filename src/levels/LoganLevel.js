@@ -15,7 +15,6 @@ export class LoganLevel extends Phaser.Scene
 
     create()
     {
-        //game.load.audio('background_music', ['assets/CarTheft.mp3']);
         this.add.image(50, 503, 'house');
         this.add.image(800, 503, 'house');
         this.add.image(600,200, 'cloud');
@@ -70,6 +69,55 @@ export class LoganLevel extends Phaser.Scene
         this.player.disableHorizontalMovement();
         this.player.status.maxVelocityY = 13;
         this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
+
+        var paused = false;
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
+        this.pauseButton.on('pointerdown', (event) => {
+            if(paused == false){
+                this.player.gun.setVisible(false);
+                this.player.stageMode();
+                this.player.setVisible(false);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].stageMode();
+                    this.enemies.list[i].setVisible(false);
+                }
+                paused = true;
+            }
+            this.pauseScreen.setVisible(true).setAlpha(50);
+            this.pauseButton.setVisible(false).setInteractive(false);
+            this.unPauseButton.setVisible(true).setInteractive();
+        });
+        this.unPauseButton.on('pointerdown', (event) => {
+            if(paused){
+                this.player.gun.setVisible(true);
+                this.player.playMode();
+                this.player.setVisible(true);
+                for(var i = 0; i < this.enemies.list.length; i++) {
+                    this.enemies.list[i].playMode(true);
+                    this.enemies.list[i].setVisible(true);
+                }
+                paused = false;
+            }
+            this.pauseScreen.setVisible(false)
+            this.pauseButton.setVisible(true).setInteractive(true);
+            this.unPauseButton.setVisible(false).setInteractive(false);
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+        this.unPauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.unPauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
+
         this.storyMessage = new DialogTree(this, 600, 100);
         this.dialogSetup(this.storyMessage, this);
     }
@@ -178,6 +226,7 @@ export class LoganLevel extends Phaser.Scene
 
         let numberOfWidth = Math.ceil(widthRatio);
         let numberOfHeight = Math.ceil(heightRatio);
+
         for (let w = 0; w < numberOfWidth; ++w)
         {
             for (let h = 0; h < numberOfHeight; ++h)
