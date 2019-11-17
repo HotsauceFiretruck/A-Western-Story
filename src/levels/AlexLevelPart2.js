@@ -20,7 +20,6 @@ export class AlexLevelPart2 extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long
@@ -66,10 +65,10 @@ export class AlexLevelPart2 extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 750, 500);
 
         var paused = false;
-        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseBtn = this.add.sprite(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
-        this.pauseBtn.on('pointerdown', (event) => {
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
+        this.pauseButton.on('pointerdown', (event) => {
             if(paused == false){
                 this.player.gun.setVisible(false);
                 this.player.stageMode();
@@ -81,10 +80,10 @@ export class AlexLevelPart2 extends Phaser.Scene
                 paused = true;
             }
             this.pauseScreen.setVisible(true).setAlpha(50);
-            this.pauseBtn.setVisible(false).setInteractive(false);
-            this.unPauseBtn.setVisible(true).setInteractive();
+            this.pauseButton.setVisible(false).setInteractive(false);
+            this.unPauseButton.setVisible(true).setInteractive();
         });
-        this.unPauseBtn.on('pointerdown', (event) => {
+        this.unPauseButton.on('pointerdown', (event) => {
             if(paused){
                 this.player.gun.setVisible(true);
                 this.player.playMode();
@@ -96,20 +95,20 @@ export class AlexLevelPart2 extends Phaser.Scene
                 paused = false;
             }
             this.pauseScreen.setVisible(false)
-            this.pauseBtn.setVisible(true).setInteractive(true);
-            this.unPauseBtn.setVisible(false).setInteractive(false);
+            this.pauseButton.setVisible(true).setInteractive(true);
+            this.unPauseButton.setVisible(false).setInteractive(false);
         });
         // Functions to tint the buttons on hover to look nice. :)
-        this.pauseBtn.on('pointerover', function (event) {
+        this.pauseButton.on('pointerover', function (event) {
             this.setTint(616161);
         });
-        this.pauseBtn.on('pointerout', function (event) {
+        this.pauseButton.on('pointerout', function (event) {
             this.clearTint();
         });
-        this.unPauseBtn.on('pointerover', function (event) {
+        this.unPauseButton.on('pointerover', function (event) {
             this.setTint(616161);
         });
-        this.unPauseBtn.on('pointerout', function (event) {
+        this.unPauseButton.on('pointerout', function (event) {
             this.clearTint();
         });
 

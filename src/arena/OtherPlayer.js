@@ -1,5 +1,3 @@
-import { Bullet } from "./Bullet.js";
-
 export class OtherPlayer extends Phaser.Physics.Matter.Sprite
 {
     /* scene: Scene (Level)

@@ -16,12 +16,10 @@ export class ArenaDeathScene extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
+        this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
 
-        this.add.image(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale);
-
-        let respawn = this.add.image(600 * scale, 300 * scale, 'respawnButton')
-                        .setDisplaySize(360 * scale, 90 * scale)
+        let respawn = this.add.image(600, 300, 'respawnButton')
+                        .setDisplaySize(360, 90)
                         .setInteractive();
         respawn.on('pointerdown', () => {this.respawn()});
     }
