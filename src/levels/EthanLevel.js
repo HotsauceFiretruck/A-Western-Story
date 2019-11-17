@@ -17,7 +17,6 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -92,9 +91,9 @@ export class EthanLevel extends Phaser.Scene
         var paused = false;
         // var n = 0;
         // var escKey = this.input.keyboard.addKey('ESC');
-        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseButton = this.add.sprite(1150 * scale, 45 * scale, 'pauseButton').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseButton = this.add.sprite(600 * scale, 250 * scale, 'unpauseButton').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
         // Button events for disabling and reenabling player movements and enemie ai.
         // escKey.on('down', (event) => {
         //     if(paused == false && n == 0){

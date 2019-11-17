@@ -7,17 +7,15 @@ export class LevelSelect extends Phaser.Scene {
 
     create()
     {
-        let scale = this.PhaserGame.scale;
-
-        this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
+        this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen
-        this.lvl1Button = this.add.sprite(300 * scale, 300 * scale, 'lvl1Button').setScale(4 * scale).setInteractive();
-        this.lvl2Button = this.add.sprite(450 * scale, 300 * scale, 'lvl2Button').setScale(4 * scale).setInteractive();
-        this.lvl3Button = this.add.sprite(600 * scale, 300 * scale, 'lvl3Button').setScale(4 * scale).setInteractive();
-        this.lvl4Button = this.add.sprite(750 * scale, 300 * scale, 'lvl4Button').setScale(4 * scale).setInteractive();
-        this.lvl5Button = this.add.sprite(900 * scale, 300 * scale, 'lvl5Button').setScale(4 * scale).setInteractive();
-        this.backButton = this.add.sprite(350 * scale, 75 * scale, 'backButton').setScale(2 * scale).setInteractive();
+        this.lvl1Button = this.add.sprite(300, 300, 'lvl1Button').setScale(4).setInteractive();
+        this.lvl2Button = this.add.sprite(450, 300, 'lvl2Button').setScale(4).setInteractive();
+        this.lvl3Button = this.add.sprite(600, 300, 'lvl3Button').setScale(4).setInteractive();
+        this.lvl4Button = this.add.sprite(750, 300, 'lvl4Button').setScale(4).setInteractive();
+        this.lvl5Button = this.add.sprite(900, 300, 'lvl5Button').setScale(4).setInteractive();
+        this.backButton = this.add.sprite(350, 75, 'backButton').setScale(2).setInteractive();
 
         // Adding functionality to buttons. Like click events and color change on hover.
         this.lvl1Button.on('pointerdown', (event) => {

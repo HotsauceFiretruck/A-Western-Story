@@ -26,17 +26,17 @@ export class StoryMode
         let scaleHeight = window.innerHeight / maxHeight;
         this.scale = Math.min(scaleWidth, scaleHeight);
         
-        let modifiedWidth = maxWidth * this.scale;
-        let modifiedHeight = maxHeight * this.scale;
+        // let modifiedWidth = maxWidth * this.scale;
+        // let modifiedHeight = maxHeight * this.scale;
 
-        if (this.scale < 1) 
-        {
-            maxHeight = modifiedHeight;
-            maxWidth = modifiedWidth;
-        } else 
-        {
-            this.scale = 1;
-        }
+        // if (this.scale < 1) 
+        // {
+        //     maxHeight = modifiedHeight;
+        //     maxWidth = modifiedWidth;
+        // } else 
+        // {
+        //     this.scale = 1;
+        // }
 
         //Initializing Levels
         let preloader = new PreloaderScene(this);
@@ -57,6 +57,7 @@ export class StoryMode
             type: Phaser.AUTO,
             width: maxWidth,
             height: maxHeight,
+            mode: Phaser.Scale.FIT,
             parent: 'phaser-game',
             autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,

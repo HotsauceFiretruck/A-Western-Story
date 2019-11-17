@@ -15,8 +15,6 @@ export class LoganLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
-        //game.load.audio('background_music', ['assets/CarTheft.mp3']);
         this.add.image(50, 503, 'house');
         this.add.image(800, 503, 'house');
         this.add.image(600,200, 'cloud');
@@ -73,9 +71,9 @@ export class LoganLevel extends Phaser.Scene
         this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
 
         var paused = false;
-        this.pauseScreen = this.add.sprite(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale).setVisible(false);
-        this.pauseButton = this.add.sprite(1150 * scale, 45 * scale, 'pauseButton').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.unPauseButton = this.add.sprite(600 * scale, 250 * scale, 'unpauseButton').setScale(5 * scale).setVisible(false).setScrollFactor(0,0);
+        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
+        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
         this.pauseButton.on('pointerdown', (event) => {
             if(paused == false){
                 this.player.gun.setVisible(false);
@@ -228,6 +226,7 @@ export class LoganLevel extends Phaser.Scene
 
         let numberOfWidth = Math.ceil(widthRatio);
         let numberOfHeight = Math.ceil(heightRatio);
+
         for (let w = 0; w < numberOfWidth; ++w)
         {
             for (let h = 0; h < numberOfHeight; ++h)

@@ -10,12 +10,11 @@ export class PreloaderArena extends Phaser.Scene
     {
         let width = this.cameras.main.width;
         let height = this.cameras.main.height;
-        let scale = this.PhaserGame.scale;
 
         let progressBar = this.add.graphics();
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
-        progressBox.fillRect(240 * scale, 270 * scale, 720 * scale, 50 * scale);
+        progressBox.fillRect(240, 270, 720, 50);
         
         let loadingText = this.make.text({
             x: width / 2,
@@ -26,7 +25,7 @@ export class PreloaderArena extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        loadingText.setOrigin(0.5, 0.5).setScale(scale);
+        loadingText.setOrigin(0.5, 0.5);
         
         let percentText = this.make.text({
             x: width / 2,
@@ -37,7 +36,7 @@ export class PreloaderArena extends Phaser.Scene
                 fill: '#ffffff'
             }
         });
-        percentText.setOrigin(0.5, 0.5).setScale(scale);
+        percentText.setOrigin(0.5, 0.5);
         
         let assetText = this.make.text({
             x: width / 2,
@@ -49,13 +48,13 @@ export class PreloaderArena extends Phaser.Scene
             }
         });
 
-        assetText.setOrigin(0.5, 0.5).setScale(scale);
+        assetText.setOrigin(0.5, 0.5);
 
         this.load.on('progress', function (value) {
             percentText.setText(parseInt(value * 100) + '%');
             progressBar.clear();
             progressBar.fillStyle(0xffffff, 1);
-            progressBar.fillRect(250 * scale, 280 * scale, 700 * scale * value, 30 * scale);
+            progressBar.fillRect(250, 280, 700 * value, 30);
         });
         
         this.load.on('fileprogress', function (file) {
