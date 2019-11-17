@@ -55,7 +55,6 @@ export class StoryMode
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-            parent: 'phaser-game',
             pixelArt: true,
             activePointers: 4,
             physics: {
@@ -66,10 +65,11 @@ export class StoryMode
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH,
+                parent: 'AWesternStory',
                 width: defaultWidth,
                 height: defaultHeight,
             },
+            canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
             plugins: {
                 scene: [
                     {
