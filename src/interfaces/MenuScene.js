@@ -22,6 +22,17 @@ export class MenuScene extends Phaser.Scene {
                 this.scale.startFullscreen();
             }
         });
+
+        this.scale.on('fullscreenunsupported', () =>
+        {
+            this.add.text(0, 0, "Fullscreen Unsupported Error.");
+        });
+
+        this.scale.on('enterfullscreen', () =>
+        {
+            this.add.text(0, 0, "Fullscreen Mode Entered Successfully.");
+        });
+
         fullscreenButton.on('pointerover', function (event) {
             this.setTint(616161);
         })
