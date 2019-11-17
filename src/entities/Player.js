@@ -80,7 +80,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             .setScale(1.5)
             .setFixedRotation()
             .setCollisionCategory(this.category)
-            .setDepth(999);
+            .setDepth(0);
 
         // Creating Controls/Cursors
         this.controller = scene.PhaserGame.isMobile ? new MobileController(scene, this) : new DesktopController(scene, this);
@@ -93,7 +93,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.displayHealth.setScrollFactor(0, 0).setDepth(999);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
-        this.gun.setDepth(999).setScale(2);
+        this.gun.setDepth(0).setScale(2);
     }
 
     update()
