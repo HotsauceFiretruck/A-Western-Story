@@ -90,6 +90,7 @@ export class StoryMode
         };
 
         let game = new Phaser.Game(this.config);
+        game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
         if (game.device.os.android || 
             game.device.os.iOS || 
