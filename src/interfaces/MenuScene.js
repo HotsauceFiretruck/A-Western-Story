@@ -52,7 +52,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         tutorialBtn.on('pointerdown', (event) => { 
-            document.getElementById('menuMusic').pause();
+            //document.getElementById('menuMusic').pause();
             this.scene.start('level-tutorial');
         })
         tutorialBtn.on('pointerover', function (event) {
