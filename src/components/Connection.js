@@ -27,13 +27,19 @@ export class Connection {
         scene: the scene the player is in
         player: our specified player
     */
-    setPlayer(scene, player) {
+    setupPlayer(scene, player) {
         this.player = player;
         this.player.name = this.createNameText(scene, this.player, "Connecting...", "#1937ff");
         scene.add.existing(this.player.name);
         if (!this.firstSetup) {
             this.player.name.text = String(this.socket.id);
         }
+        this.updateTimer = scene.time.addEvent({
+            delay: 80,
+            callback: () => { this.movePlayer(this.player) },
+            callbackScope: this,
+            loop: true
+        })
     }
     
     //Setup the socket listeners to listen to server requests
@@ -54,7 +60,7 @@ export class Connection {
             this.socket.emit('new_player', {
                 x: this.player.x,
                 y: this.player.y,
-                name: String(this.socket.id),
+                id: String(this.socket.id),
                 velocity: {
                     x: this.player.body.velocity.x,
                     y: this.player.body.velocity.y
@@ -62,6 +68,8 @@ export class Connection {
             });
             //set the player name text of ourselves to our socket id (for now until name enter screen is made)
             this.player.name.text = String(this.socket.id);
+
+            this.socket.emit()
         });
 
         //on disconnect from server
@@ -79,13 +87,21 @@ export class Connection {
             this.socket.emit('new_player', {
                 x: this.player.x,
                 y: this.player.y,
-                name: String(this.socket.id),
+                id: String(this.socket.id),
                 velocity: {
                     x: this.player.body.velocity.x,
                     y: this.player.body.velocity.y
                 }
             });
             this.player.name.text = String(this.socket.id);
+        });
+
+        this.socket.on('update_player', data => {
+
+        });
+
+        this.socket.on('update_players', data => {
+            
         });
 
         //when our info is sent or we respawn the server will send us a random place to spawn
@@ -99,18 +115,18 @@ export class Connection {
         //when bullet comes from the server create it on client
         this.socket.on('new_bullet', data => {
             //putting data into variables
-            const { x, y, to, player } = data;
+            const { x, y, to, id } = data;
 
             //if we are the player the bullet came from
-            if (player === this.player.name.text) {
+            if (id === String(this.socket.id)) {
                 //make bullet that can't damage us
                 new Bullet(scene, this.player, x, y, to.x, to.y, this.player);
             }
             else {
                 //make bullet from another player that can damage us
-                new Bullet(scene, this.player, x, y, to.x, to.y, this.otherPlayers[player]);
+                new Bullet(scene, this.player, x, y, to.x, to.y, this.otherPlayers[id]);
             }
-        })
+        });
 
         //open the connection after listeners are setup
         this.socket.open();
@@ -158,15 +174,23 @@ export class Connection {
                 x: toX,
                 y: toY
             },
-            player: player.name.text
+            id: String(this.socket.id)
         })
     }
 
     //Tell the server to move our player on other clients
     movePlayer() {
-        this.socket.emit('move_player', data => {
-
-        })
+        if (Math.round(this.player.body.velocity.x) != 0 || Math.round(this.player.body.velocity.y) != 0) {
+            this.socket.emit('move_player', {
+                x: Math.round(this.player.x),
+                y: Math.round(this.player.y),
+                id: String(this.socket.id),
+                velocity: {
+                    x: parseFloat(this.player.body.velocity.x.toFixed(2)),
+                    y: parseFloat(this.player.body.velocity.y.toFixed(2))
+                }
+            })
+        }
     }
 
     //Main update function updated with the scene
