@@ -19,7 +19,7 @@ export class DialogTree
         //Play Dialog ----
         this.isTreeEnded = false;
         this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
-        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(0);
+        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(2);
 
         if (this.scene.projectiles != undefined)
         {
@@ -203,7 +203,7 @@ class Dialog
                 fontSize: 20,
                 fontStyle: "bold"
             }
-        ).setScrollFactor(0, 0).setDepth(999);
+        ).setScrollFactor(0, 0).setDepth(3);
 
         this.textObject.setPosition(centerX - this.textObject.displayWidth / 2, startY);
 
@@ -215,7 +215,7 @@ class Dialog
                 this.dialogTree.dialogBackground.displayWidth - 110,
                 25,
                 0x2C2F30
-            ).setScrollFactor(0, 0).setDepth(1000);
+            ).setScrollFactor(0, 0).setDepth(3);
 
             rectangleObject.setPosition(
                 centerX, 
@@ -241,7 +241,7 @@ class Dialog
                     fontColor: "white",
                    // backgroundColor: "#323c39"
                 }
-            ).setScrollFactor(0, 0).setDepth(1001);
+            ).setScrollFactor(0, 0).setDepth(3);
 
             textObject.setPosition(
                 (centerX - textObject.displayWidth / 2), 
@@ -258,7 +258,7 @@ class Dialog
             this.nextDialogButton[1] = this.dialogTree.scene.add.image(
                 this.dialogTree.centerX + 400, 
                 this.dialogTree.centerY + 122, 'continueDialogButton'); 
-            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5);
+            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5).setDepth(4);
 
             if (this.dialogTree.mobile)
             {
@@ -271,7 +271,7 @@ class Dialog
                         fontSize: 20,
                         fontStyle: 'bold'
                     }
-                );
+                ).setDepth(4);
 
                 this.nextDialogButton[1].setInteractive();
                 this.nextDialogButton[1].on('pointerup', () => {this.sequence.nextDialog();});
@@ -295,7 +295,7 @@ class Dialog
                         fontSize: 20,
                         fontStyle: 'bold'
                     }
-                );
+                ).setDepth(4);
             }
             this.nextDialogButton[0].setScrollFactor(0, 0);
         }
