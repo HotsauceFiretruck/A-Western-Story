@@ -19,7 +19,7 @@ export class DialogTree
         //Play Dialog ----
         this.isTreeEnded = false;
         this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
-        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(998);
+        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(0);
 
         if (this.scene.projectiles != undefined)
         {
@@ -217,22 +217,23 @@ class Dialog
                     fontFamily: 'Courier',
                     fontSize: 20,
                     fontStyle: "bold",
+                    fontColor: "white",
                     backgroundColor: "#323c39"
                 }
-            ).setScrollFactor(0, 0).setInteractive();
-
-            newOption.on('pointerdown', () => {
-                this.sequence.nextDialog();
-                this.optionObjects[i - 1][2]();
-            });
-
-            newOption.on('pointerover', () => {newOption.setTint(616161);});
-            newOption.on('pointerout', newOption.clearTint);
+            ).setScrollFactor(0, 0);
 
             newOption.setPosition(
                 (centerX - newOption.displayWidth / 2), 
                 startY + (spacing * i)
             );
+
+            newOption.setInteractive().on('pointerup', () => {
+                this.sequence.nextDialog();
+                this.optionObjects[i - 1][2]();
+            });
+
+            newOption.on('pointerover', () => {newOption.setTint(616161);});
+            newOption.on('pointerout', () => {newOption.clearTint();});
 
             this.optionObjects[i - 1][0] = newOption;
         }
@@ -256,10 +257,16 @@ class Dialog
                         fontSize: 20,
                         fontStyle: 'bold'
                     }
-                ).setInteractive();
+                );
 
                 this.nextDialogButton[1].setInteractive();
-                this.nextDialogButton[1].on('pointerdown', () => {this.sequence.nextDialog();});
+                this.nextDialogButton[1].on('pointerup', () => {this.sequence.nextDialog();});
+                this.nextDialogButton[1].on('pointerover', function() {
+                    this.setTint(616161);
+                })
+                this.nextDialogButton[1].on('pointerout', function() {
+                    this.clearTint();
+                })
             } 
             else 
             {

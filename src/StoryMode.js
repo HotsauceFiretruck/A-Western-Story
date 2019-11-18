@@ -21,22 +21,6 @@ export class StoryMode
         //Detecting the Device's Size and Set Max
         let defaultWidth = 1200;
         let defaultHeight = 600;
-        
-        let scaleWidth = window.innerWidth / defaultWidth;
-        let scaleHeight = window.innerHeight / defaultHeight;
-        this.scale = Math.min(scaleWidth, scaleHeight);
-        
-        // let modifiedWidth = maxWidth * this.scale;
-        // let modifiedHeight = maxHeight * this.scale;
-
-        // if (this.scale < 1) 
-        // {
-        //     maxHeight = modifiedHeight;
-        //     maxWidth = modifiedWidth;
-        // } else 
-        // {
-        //     this.scale = 1;
-        // }
 
         //Initializing Levels
         let preloader = new PreloaderScene(this);
@@ -55,21 +39,22 @@ export class StoryMode
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-            parent: 'phaser-game',
             pixelArt: true,
             activePointers: 4,
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: 1.3}
-                }
+                    gravity: { y: 1.3},
+                    //debug: true
+                },
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH,
+                parent: 'AWesternStory',
                 width: defaultWidth,
                 height: defaultHeight,
             },
+            canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
             plugins: {
                 scene: [
                     {
