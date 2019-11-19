@@ -192,7 +192,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     {
         if (this.status.isFireReloaded)
         {
-            this.scene.connection.sendBullet(this.x, this.y, x, y, this)
+            this.scene.connection.shootBullet(this.x, this.y, x, y, this)
             //new Bullet(this.scene, this, this.x, this.y, x, y);
             this.reloadGun();
         }
@@ -236,6 +236,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
     playMode()
     {
+        this.scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         this.enableAllMovement();
         this.healthSprite.setVisible(true);
         this.displayHealth.setVisible(true);
@@ -251,19 +252,22 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
     //Initializing death sequence
     death() {
+        //Freeze our character and delete nametag
+        this.stageMode();
+        this.name.destroy();
+
         // Event listeners
-        if (this.scene.matter.world) {
-            this.scene.matter.world.off("beforeupdate", this.resetTouching, this);
-        }
+        // if (this.scene.matter.world) {
+        //     this.scene.matter.world.off("beforeupdate", this.resetTouching, this);
+        // }
 
         // Matter collision plugin
-        const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
-        this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
-        this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
+        // const sensors = [this.sensors.bottom, this.sensors.left, this.sensors.right];
+        // this.scene.matterCollision.removeOnCollideStart({ objectA: sensors });
+        // this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
 
-        if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
+        // if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
-        this.connection.socket.close();
         this.scene.scene.start('arena-death', {scene: this.scene.scene.key});
         
         //this.destroy();
