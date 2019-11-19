@@ -25,8 +25,10 @@ __Programmers:__
 
 ## Built With
 
-https://socket.io Socket.io - Server Management
-https://www.heroku.com Heroku - Server Host
-https://phaser.io Phaser.io - Game Framework
-https://www.javascript.com JavaScript - Programming Language
-https://code.visualstudio.com Visual Studio Code - IDE
+* [Socket.io](https://socket.io) - Server Management
+* [Heroku](https://www.heroku.com) - Server Host
+* [Phaser.io](https://phaser.io) - Game Framework
+* [JavaScript](https://www.javascript.com) - Programming Language
+* [Visual Studio Code](https://code.visualstudio.com) - IDE
+
+## How to Contribute
