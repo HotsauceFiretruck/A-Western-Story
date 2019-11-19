@@ -19,7 +19,6 @@ export class FinalLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         this.count = 0;
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space

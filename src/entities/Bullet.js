@@ -1,7 +1,7 @@
 import { Enemy } from "./Enemy.js";
 import { Player } from "./Player.js";
-import { ArenaPlayer } from "./ArenaPlayer.js";
-import { OtherPlayer } from "./OtherPlayer.js";
+import { ArenaPlayer } from "../arena/ArenaPlayer.js";
+import { OtherPlayer } from "../arena/OtherPlayer.js";
 
 export class Bullet
 {
@@ -82,7 +82,7 @@ export class Bullet
             .setRotation(radians)
             .setFixedRotation()
             .setCollisionCategory(8)
-            .setDepth(900)
+            .setDepth(1)
             .setCollidesWith([2, 16]);
 
         if (target != null) {

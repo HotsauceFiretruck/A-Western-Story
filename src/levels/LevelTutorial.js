@@ -84,37 +84,14 @@ export class LevelTutorial extends Phaser.Scene
     dialogSetup(dialogTree)
     {
         let sequence0 = dialogTree.addSequence(); //sequence0 have the id of 0 because of index array starts at 0
-        // let sequence1 = dialogTree.addSequence();
-        // let sequence2 = dialogTree.addSequence();
 
         //dialogTree.addDialog(sequenceID, text, actor, options)
         dialogTree.addDialog(sequence0, "Welcome to this game.", this.player);
         dialogTree.addDialog(sequence0, "Press D to go right.", this.player);
         dialogTree.addDialog(sequence0, "Press A to go left.", this.player);
-        dialogTree.addDialog(sequence0, "Press W to jump.", this.player);
+        dialogTree.addDialog(sequence0, "Press W or Space to jump.", this.player);
         dialogTree.addDialog(sequence0, "Left click to shoot.", this.player);
         dialogTree.addDialog(sequence0, "Have fun, bye.", this.player);
-        // dialogTree.addDialog(sequence0, "Have fun, bye.", this.player,
-        //     [
-        //         ["Go to sequence 1", () => {dialogTree.changeSequence(1);}],
-        //         ["Go to sequence 2", () => {dialogTree.changeSequence(2);
-        //         }],
-        //     ]
-        // );
-
-        // dialogTree.addDialog(sequence1, "This is sequence 1.", this.basicEnemy);
-            
-        // dialogTree.addDialog(sequence2, "This is sequence 2.", this.basicEnemy,
-        //     [
-        //         ["Go to sequence 1", () => {
-        //             dialogTree.changeSequence(1);
-        //             this.optionsChosen = dialogTree.globalOptionsChosen; //Get the options that was chosen as an array
-        //         }],
-        //         ["Go to sequence 0", () => {
-        //             dialogTree.changeSequence(0);
-        //         }]
-        //     ]
-        // );
 
         dialogTree.playSequence(sequence0);
     }

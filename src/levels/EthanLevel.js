@@ -17,7 +17,6 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -97,10 +96,10 @@ export class EthanLevel extends Phaser.Scene
         });
 
         // Functions to tint the buttons on hover to look nice. :)
-        this.pauseBtn.on('pointerover', function (event) {
+        this.pauseButton.on('pointerover', function (event) {
             this.setTint(616161);
         });
-        this.pauseBtn.on('pointerout', function (event) {
+        this.pauseButton.on('pointerout', function (event) {
             this.clearTint();
         });
 
@@ -113,8 +112,8 @@ export class EthanLevel extends Phaser.Scene
         dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
         dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {dialogTree.changeSequence(1);}],
-                ["...", () => {dialogTree.changeSequence(2);
+                ["Thanks?", () => {dialogTree.playSequence(1);}],
+                ["...", () => {dialogTree.playSequence(2);
                 }],
             ]
         );
@@ -204,14 +203,14 @@ export class EthanLevel extends Phaser.Scene
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                dialogTree.changeSequence(1);  
+                dialogTree.playSequence(1);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 this.flight = new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {dialogTree.changeSequence(2);
+            ["No.", () => {dialogTree.playSequence(2);
             }],
         ]
         );

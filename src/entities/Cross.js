@@ -1,7 +1,7 @@
 import { Priest } from "./Priest.js";
 import { Player } from "./Player.js";
-import { ArenaPlayer } from "./ArenaPlayer.js";
-import { OtherPlayer } from "./OtherPlayer.js";
+import { ArenaPlayer } from "../arena/ArenaPlayer.js";
+import { OtherPlayer } from "../arena/OtherPlayer.js";
 
 export class Cross
 {
