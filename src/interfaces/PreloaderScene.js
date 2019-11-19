@@ -146,6 +146,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('gun', 'assets/Gun.png');
         this.load.image('pauseBtn', 'assets/pauseBtn.png');
         this.load.image('unpauseBtn', 'assets/unpauseBtn.png');
+        this.load.image('arenabtn', 'assets/ArenaButton.png');
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
