@@ -2,9 +2,6 @@ import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
-import { Priest } from "../entities/Priest.js";
-import { Bull } from "../entities/Bull.js";
-import { Snake } from "../entities/Snake.js";
 
 export class AlexLevel extends Phaser.Scene
 {
@@ -17,7 +14,6 @@ export class AlexLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long

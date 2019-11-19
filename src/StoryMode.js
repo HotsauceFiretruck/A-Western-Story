@@ -20,24 +20,8 @@ export class StoryMode
         this.isMobile = false;
 
         //Detecting the Device's Size and Set Max
-        let maxWidth = 1200;
-        let maxHeight = 600;
-        
-        let scaleWidth = window.innerWidth / maxWidth;
-        let scaleHeight = window.innerHeight / maxHeight;
-        this.scale = Math.min(scaleWidth, scaleHeight);
-        
-        let modifiedWidth = maxWidth * this.scale;
-        let modifiedHeight = maxHeight * this.scale;
-
-        if (this.scale < 1) 
-        {
-            maxHeight = modifiedHeight;
-            maxWidth = modifiedWidth;
-        } else 
-        {
-            this.scale = 1;
-        }
+        let defaultWidth = 1200;
+        let defaultHeight = 600;
 
         //Initializing Levels
         let preloader = new PreloaderScene(this);
@@ -57,22 +41,22 @@ export class StoryMode
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-            width: maxWidth,
-            height: maxHeight,
-            parent: 'phaser-game',
-            autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
             activePointers: 4,
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: 1.3}
-                }
+                    gravity: { y: 1.3},
+                    //debug: true
+                },
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH
+                parent: 'AWesternStory',
+                width: defaultWidth,
+                height: defaultHeight,
             },
+            canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
             plugins: {
                 scene: [
                     {
@@ -92,6 +76,7 @@ export class StoryMode
         };
 
         let game = new Phaser.Game(this.config);
+        game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
         if (game.device.os.android || 
             game.device.os.iOS || 
@@ -100,7 +85,6 @@ export class StoryMode
             game.device.os.windowsPhone)
         {
             this.isMobile = true;
-            ScreenOrientation.lock("landscape");
         }
     }
 }

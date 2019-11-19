@@ -15,8 +15,6 @@ export class LoganLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
-        //game.load.audio('background_music', ['assets/CarTheft.mp3']);
         this.add.image(50, 503, 'house');
         this.add.image(800, 503, 'house');
         this.add.image(600,200, 'cloud');
@@ -180,6 +178,7 @@ export class LoganLevel extends Phaser.Scene
 
         let numberOfWidth = Math.ceil(widthRatio);
         let numberOfHeight = Math.ceil(heightRatio);
+
         for (let w = 0; w < numberOfWidth; ++w)
         {
             for (let h = 0; h < numberOfHeight; ++h)

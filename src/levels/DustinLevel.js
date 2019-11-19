@@ -4,6 +4,7 @@ import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
+import { Cloud } from "../components/Cloud.js";
 
 var battleInit = false;
 var sheriffDeath = false;
@@ -22,7 +23,6 @@ export class DustinLevel extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
            Note: Each block/tile is 32 pixels wide and 32 pixels long
@@ -73,10 +73,21 @@ export class DustinLevel extends Phaser.Scene
             list: [] 
         };
 
+        this.clouds = {
+            list: [] 
+        };
+
         this.enemies = {
             category: 4,
             list: []
         };
+
+        //Adding cloods
+
+        for(var i = 0; i < 15; i++)
+        {
+            this.cloud = new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
+        }
 
         this.player = new Player(this, 300, level.length * 30);
         this.basicEnemy = new Enemy(this, 608, level.length * 30);
@@ -274,8 +285,14 @@ export class DustinLevel extends Phaser.Scene
             this.scene.start('level-3');
         }
 
+        this.clouds.list.forEach(element => {
+            element.update();
+        });
+
         //Update player
         this.player.update();
+
+        
     }
 
     //Load in image to fill in the level
@@ -317,7 +334,7 @@ export class DustinLevel extends Phaser.Scene
             element.destroy();
         });
 
-        var pScale = this.PhaserGame.scale * 1.5;
+        var pScale = 1.5;
         let bgImage = this.add.image(0, 0, imageKey);
         var initialPlace = levelWidth - (bgImage.width - 40)*pScale;
         bgImage.setOrigin(0,0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
@@ -326,7 +343,7 @@ export class DustinLevel extends Phaser.Scene
 
         while (initialPlace > 0) {
             let bgImage = this.add.image(0, 0, 'background4r');
-            initialPlace -= 720 * this.PhaserGame.scale;
+            initialPlace -= 720;
             bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
             currBg.push(bgImage);
         }

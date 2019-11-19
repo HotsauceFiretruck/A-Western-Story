@@ -10,16 +10,16 @@ export class MobileController
         scene.input.addPointer(4);
 
         this.horizontalControls = new Joystick(scene, 'base', 'thumb', 
-                                        (150 * scene.PhaserGame.scale), 
-                                        scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
+                                        150, 
+                                        scene.cameras.main.height - 150, 
                                         90, 240);
         this.fireControl = new Joystick(scene, 'gunbase', 'thumb', 
-                                        scene.cameras.main.width - (150 * scene.PhaserGame.scale), 
-                                        scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
+                                        scene.cameras.main.width - 150, 
+                                        scene.cameras.main.height - 150, 
                                         90, 240);
-        this.jumpButton = scene.add.image(scene.cameras.main.width - (350 * scene.PhaserGame.scale), 
-                          scene.cameras.main.height - (90 * scene.PhaserGame.scale), 'jump')
-                          .setDisplaySize(120 * scene.PhaserGame.scale, 120 * scene.PhaserGame.scale).setScrollFactor(0, 0).setAlpha(.9)
+        this.jumpButton = scene.add.image(scene.cameras.main.width - 350, 
+                          scene.cameras.main.height - 90, 'jump')
+                          .setDisplaySize(120, 120).setScrollFactor(0, 0).setAlpha(.9)
                           .setInteractive().setDepth(10);
         this.jumpButton.on('pointerdown', () => {this.jump(player)});
     }

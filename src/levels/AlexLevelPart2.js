@@ -20,7 +20,6 @@ export class AlexLevelPart2 extends Phaser.Scene
 
     create()
     {
-        let scale = this.PhaserGame.scale;
         //Creating Level using an Array + Tile Map
         //1 is for block/tile; 0 is for empty space
         //25 wide by 19 long
