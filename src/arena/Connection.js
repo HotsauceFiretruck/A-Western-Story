@@ -105,6 +105,10 @@ export class Connection {
             
         });
 
+        this.socket.on('player_disconnect', data => {
+
+        });
+
         //when our info is sent or we respawn the server will send us a random place to spawn
         this.socket.on('new_spawn', data => {
             //set player position and enable player
