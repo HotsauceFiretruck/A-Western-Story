@@ -2,6 +2,7 @@ import { ArenaLevel } from "./ArenaLevel.js";
 import { ArenaDeathScene } from "./ArenaDeathScene.js";
 import { PreloaderArena } from "./PreloaderArena.js";
 import { Connection } from "./Connection.js";
+import { ServerSelect } from "./ServerSelect.js";
 
 
 export class ArenaMode 
@@ -35,6 +36,7 @@ export class ArenaMode
 
         //Initializing Level
         let preloader = new PreloaderArena(this);
+        let serverList = new ServerSelect(this, connection);
         let levelarena = new ArenaLevel(this, connection);
         let death = new ArenaDeathScene(this);
 
@@ -72,11 +74,12 @@ export class ArenaMode
                 ]
             },
          
-            scene: [preloader, levelarena, death]
+            scene: [preloader, serverList, levelarena, death]
 
         };
 
         let game = new Phaser.Game(this.config);
+        //Disable right click menu on canvas
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
         if (game.device.os.android || 
