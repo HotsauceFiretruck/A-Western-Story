@@ -88,10 +88,12 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
-        // (broken) Pause button
+        //  Pause button
         this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
         this.pauseBtn.on('pointerdown', (event) => {
-            this.scene.switch('pause-scene');
+            this.scene.pause('level-4')
+            this.scene.setVisible(false, 'level-4');
+            this.scene.launch('pause-scene', {scene: this.scene.key});
         });
         // Functions to tint the buttons on hover to look nice. :)
         this.pauseBtn.on('pointerover', function (event) {

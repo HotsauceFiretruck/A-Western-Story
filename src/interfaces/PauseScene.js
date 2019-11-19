@@ -3,6 +3,12 @@ export class PauseScene extends Phaser.Scene {
     {
         super({key:"pause-scene"});
         this.PhaserGame = PhaserGame;
+        this.previousScene = null;
+    }
+
+    init(data)
+    {
+        this.previousScene = data.scene;
     }
 
     create()
@@ -10,7 +16,9 @@ export class PauseScene extends Phaser.Scene {
         this.pauseScreen = this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
         this.unPauseBtn = this.add.image(600, 250, 'unpauseButton').setScale(5).setInteractive();
         this.unPauseBtn.on('pointerdown',  () => {
-            this.scene.switch('level-4');
+            this.scene.setVisible(true, this.previousScene);
+            this.scene.resume(this.previousScene);
+            this.scene.stop('pause-scene');
         });
 
         // Functions to tint the buttons on hover to look nice. :)
@@ -21,9 +29,7 @@ export class PauseScene extends Phaser.Scene {
             this.clearTint();
         });
         
-        this.returnToMenu = this.add.image(600, 390, 'returnButton')
-                        .setDisplaySize(360, 90)
-                        .setInteractive();
+        this.returnToMenu = this.add.image(600, 390, 'returnButton').setDisplaySize(360, 90).setInteractive();
         this.returnToMenu.on('pointerdown', () => {
             this.scene.stop('level-4');
             this.scene.start('menu-scene');
