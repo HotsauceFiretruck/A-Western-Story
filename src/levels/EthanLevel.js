@@ -17,6 +17,7 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
+        let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -88,18 +89,15 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
         // (broken) Pause button
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
         this.pauseBtn.on('pointerdown', (event) => {
-            this.scene.launch('pause-scene');
-            this.scene.pause().setVisible(false);
-            this.scene.resume('pause-scene');
+            this.scene.switch('pause-scene');
         });
-
         // Functions to tint the buttons on hover to look nice. :)
-        this.pauseButton.on('pointerover', function (event) {
+        this.pauseBtn.on('pointerover', function (event) {
             this.setTint(616161);
         });
-        this.pauseButton.on('pointerout', function (event) {
+        this.pauseBtn.on('pointerout', function (event) {
             this.clearTint();
         });
 

@@ -53,7 +53,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         arenabtn.on('pointerdown', (event) => {
-            location.assign("https://a-western-story.js.org/arena.html");
+            location.assign("arena.html");
         });
         arenabtn.on('pointerover', function (event) {
             this.setTint(616161);
