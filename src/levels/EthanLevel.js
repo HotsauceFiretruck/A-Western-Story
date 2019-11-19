@@ -17,7 +17,6 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
-        this.scene.launch('pause-scene');
         let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
@@ -59,7 +58,7 @@ export class EthanLevel extends Phaser.Scene
         this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 150, 550);
+        this.player = new Player(this, 3000, 550);
 
         // Sets the goal and function for this area
         // When reached the the function .switchToChurch will run, causing things to change and update.
@@ -89,11 +88,12 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
-        // Pause button
+        // (broken) Pause button
         this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
         this.pauseBtn.on('pointerdown', (event) => {
-            this.scene.sleep();
-            this.scene.wake('pause-scene');
+            this.scene.launch('pause-scene');
+            this.scene.pause().setVisible(false);
+            this.scene.resume('pause-scene');
         });
 
         // Functions to tint the buttons on hover to look nice. :)
@@ -209,7 +209,7 @@ export class EthanLevel extends Phaser.Scene
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
-                new Flight(this, 'flight', 150, 200);
+                this.flight = new Flight(this, 'flight', 150, 200);
             }],
             ["No.", () => {dialogTree.changeSequence(2);
             }],
@@ -226,6 +226,7 @@ export class EthanLevel extends Phaser.Scene
         this.map.deleteAllPlatforms();
 
         // Removing images, enemies, and nextLevelGoal used in previous tile map
+        this.flight.destroy();
         this.nextLevelGoal.destroy();
         this.church.destroy();
         this.deadTreeChurch.destroy();
@@ -277,23 +278,9 @@ export class EthanLevel extends Phaser.Scene
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
         this.add.image(1150, 435, 'waterTower');
 
-        this.add.image(560, 550, 'fence').setScale(.2);
-        this.add.image(625, 550, 'fence').setScale(.2);
-        this.add.image(690, 550, 'fence').setScale(.2);
-        this.add.image(755, 550, 'fence').setScale(.2);
-        this.add.image(810, 550, 'fence').setScale(.2);
-        this.add.image(875, 550, 'fence').setScale(.2);
-        this.add.image(940, 550, 'fence').setScale(.2);
-        this.add.image(1005, 550, 'fence').setScale(.2);
-        this.add.image(1070, 550, 'fence').setScale(.2);
-        this.add.image(1135, 550, 'fence').setScale(.2);
-        this.add.image(1200, 550, 'fence').setScale(.2);
-        this.add.image(1265, 550, 'fence').setScale(.2);
-        this.add.image(1330, 550, 'fence').setScale(.2);
-        this.add.image(1395, 550, 'fence').setScale(.2);
-        this.add.image(1460, 550, 'fence').setScale(.2);
-        this.add.image(1525, 550, 'fence').setScale(.2);
-        this.add.image(1590, 550, 'fence').setScale(.2);
+        for(var i=560; i <= 1300; i+=65){
+            this.add.image(i, 550, 'fence').setScale(.2);
+        }
         this.add.image(1300, 525, 'deadtree');
 
         this.add.image(785, 508, 'bigHouse');

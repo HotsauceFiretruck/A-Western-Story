@@ -7,11 +7,13 @@ export class PauseScene extends Phaser.Scene {
 
     create()
     {
-        this.pauseScreen = this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
-        this.unPauseBtn = this.add.image(600, 250, 'unpauseBtn').setScale(5).setInteractive();
+        let scale = this.PhaserGame.scale;
+
+        this.pauseScreen = this.add.image(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale);
+        this.unPauseBtn = this.add.image(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setInteractive();
         this.unPauseBtn.on('pointerdown', function (event) {
-            this.scene.stop('pause-scene');
-            this.scene.wake('level-4');
+            this.scene.pause();
+            this.scene.resume('level-4');
         });
 
         // Functions to tint the buttons on hover to look nice. :)
