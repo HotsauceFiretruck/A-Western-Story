@@ -2,36 +2,33 @@
 
 Link to game: https://a-western-story.js.org/
 <br/>
-<a href="https://github.com/HotsauceFiretruck/A-Western-Story/releases/tag/v1.0">Android APK</a> - just click on the apk, then install.
+[Android APK](https://github.com/HotsauceFiretruck/A-Western-Story/releases/tag/v1.0) - Link to install the Android version of our game.
 
-<img src=GameQR.png>
+![GameQRCode](GameQR.png)
 
 Presentation --> http://bit.ly/2O39QQI
 
-Hello and welcome to the GitHub repository for _A Western Story_, a web based game developed by the HotSauceFireTruck programming team from West High School. We are based in Davenport, Iowa, and this project was created to be showcased at Byte Jam 2019 at Indian Hills Community College. 
+Hello and welcome to the GitHub repository for _A Western Story_, a web based game developed by the HotsauceFiretruck programming team from West High School. We are based in Davenport, Iowa, and this project was created to be showcased at Byte Jam 2019 at Indian Hills Community College. 
 
-<hr>
-<h1>Contributing</h1>
-<a href="https://github.com/brosius02">John Brosius</a> - Mentor/Teacher
+## Contributors
+John Brosius - Mentor/Teacher
 
-<b>Programmers:</b>
-<ul>
-<li><a href="https://github.com/tranqnhan">Nhan Tran</a></li>
-<li><a href="https://github.com/ETRulz">Ethan Hancock</a></li>
-<li><a href="https://github.com/Lui798">Austin Leuenhagen</a></li>
-<li><a href="https://github.com/adawson21">Alex Dawson</a></li>
-<li><a href="https://github.com/logan-gosch">Logan Gosch</a></li>
-<li><a href="https://github.com/CodingSyntax">Dustin Cornelison</a></li>
-<li><a href="https://github.com/alang2002">Aaron Lang</a></li>
-</ul>
+__Programmers:__
+* [Nhan Tran](https://github.com/tranqnhan)
+* [Ethan Hancock](https://github.com/ETRulz)
+* [Austin Leuenhagen](https://github.com/Lui798)
+* [Alex Dawson](https://github.com/adawson21)
+* [Logan Gosch](https://github.com/logan-gosch)
+* [Dustin Cornelison](https://github.com/CodingSyntax)
+* [Aaron Lang](https://github.com/alang2002)
 
-<hr>
-<h1>Built With</h1>
-<ul>
 
-<li><a href="https://socket.io/">Socket.io</a> - Server Management</li>
-<li><a href="https://www.heroku.com/">Heroku</a> - Server Host</li>
-<li><a href="https://phaser.io/">Phaser.io</a> - Game Framework</li>
-<li><a href="https://www.javascript.com/">JavaScript</a> - Programming Language</li>
-<li><a href="https://code.visualstudio.com/">Visual Studio Code</a> - IDE</li>
-</ul>
+## Built With
+
+* [Socket.io](https://socket.io) - Server Management
+* [Heroku](https://www.heroku.com) - Server Host
+* [Phaser.io](https://phaser.io) - Game Framework
+* [JavaScript](https://www.javascript.com) - Programming Language
+* [Visual Studio Code](https://code.visualstudio.com) - IDE
+
+## How to Contribute
