@@ -255,6 +255,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         //Freeze our character and delete nametag
         this.stageMode();
         this.name.destroy();
+        this.connection.destroyTimer();
+        this.connection.death();
 
         // Event listeners
         // if (this.scene.matter.world) {

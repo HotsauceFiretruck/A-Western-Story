@@ -1,12 +1,14 @@
 import { OtherPlayer } from "./OtherPlayer.js";
 import { Bullet } from "../entities/Bullet.js";
 
+//Main class for the server connection in arena mode
 export class Connection {
 
     constructor() {
         //Init variables
-        this.otherPlayers = [];
+        this.otherPlayers = null;
         this.firstSetup = true;
+        this.updateTimer = null;
     }
 
     //Setup the server with an IP and options
@@ -27,20 +29,43 @@ export class Connection {
         scene: the scene the player is in
         player: our specified player
     */
-    setupPlayer(scene, player) {
+    setupPlayers(scene, player) {
         this.player = player;
         this.player.name = this.createNameText(scene, this.player, "Connecting...", "#1937ff");
         scene.add.existing(this.player.name);
         if (!this.firstSetup) {
+            //When this scene is loaded it means you respawned
+            //Tell the server we did so we can get our spawn point
+            this.socket.emit('respawn', this.socket.id);
             this.player.name.text = String(this.socket.id);
+            this.otherPlayers = null;
+            this.socket.emit('get_all_players');
         }
-        this.updateTimer = scene.time.addEvent({
-            delay: 80,
-            callback: () => { this.movePlayer(this.player) },
-            callbackScope: this,
-            loop: true
-        })
     }
+
+    destroyTimer() {
+        if (this.updateTimer !== null) {
+            this.updateTimer.destroy();
+        }
+        this.updateTimer = null;
+    }
+
+    onConnect(scene) {
+        console.log("CONNECTED");
+        //send new player info to the server
+        this.socket.emit('new_player', {
+            x: this.player.x,
+            y: this.player.y,
+            id: this.socket.id,
+            velocity: {
+                x: this.player.body.velocity.x,
+                y: this.player.body.velocity.y
+            }
+        });
+        //set the player name text of ourselves to our socket id (for now until name enter screen is made)
+        this.player.name.text = this.socket.id;
+        this.socket.emit('get_all_players');
+    } 
     
     //Setup the socket listeners to listen to server requests
     /*
@@ -55,21 +80,12 @@ export class Connection {
 
         //on first server connect
         this.socket.on('connect', () => {
-            console.log("CONNECTED");
-            //send new player info to the server
-            this.socket.emit('new_player', {
-                x: this.player.x,
-                y: this.player.y,
-                id: String(this.socket.id),
-                velocity: {
-                    x: this.player.body.velocity.x,
-                    y: this.player.body.velocity.y
-                }
-            });
-            //set the player name text of ourselves to our socket id (for now until name enter screen is made)
-            this.player.name.text = String(this.socket.id);
+            this.onConnect(scene);
+        });
 
-            this.socket.emit()
+        //on reconnect to server
+        this.socket.on('reconnect', (attemptNumber) => {
+            this.onConnect(scene);
         });
 
         //on disconnect from server
@@ -78,36 +94,94 @@ export class Connection {
             //set player name to show reconnect & retry connection
             this.player.stageMode();
             this.player.name.text = "Connecting...";
+            this.destroyTimer();
+
+            for (let id in this.otherPlayers) {
+                if (this.otherPlayers[id] !== undefined) {
+                    this.otherPlayers[id].name.destroy();
+                    this.otherPlayers[id].destroy();
+                    delete this.otherPlayers[id];
+                }
+            }
+            this.otherPlayers = null;
+            
             this.socket.connect();
         });
 
-        //on reconnect to server
-        this.socket.on('reconnect', (attemptNumber) => {
-            console.log("RECONNECTED");
-            //send our player info to the server again
-            this.socket.emit('new_player', {
-                x: this.player.x,
-                y: this.player.y,
-                id: String(this.socket.id),
-                velocity: {
-                    x: this.player.body.velocity.x,
-                    y: this.player.body.velocity.y
+        //Setup player list on client side (reply from get_all_players)
+        this.socket.on('player_list', data => {
+            this.otherPlayers = [];
+
+            // Iterate over all players
+            for (let index in data) {
+                const playerData = data[index];
+                // In case a player hasn't been created yet
+                // We make sure that we won't create a second instance of it
+                if (this.otherPlayers[index] === undefined && index !== this.socket.id) {
+                    const newPlayer = new OtherPlayer(scene, playerData.x, playerData.y);
+                    newPlayer.name = this.createNameText(scene, newPlayer, playerData.id, "#373737");
+                    scene.add.existing(newPlayer.name);
+                    this.otherPlayers[index] = newPlayer;
+
+                    this.otherPlayers[index].target_x = playerData.x;
+                    this.otherPlayers[index].target_y = playerData.y;
+                    this.otherPlayers[index].velocity_target_x = playerData.velocity.x;
+                    this.otherPlayers[index].velocity_target_y = playerData.velocity.y;
                 }
-            });
-            this.player.name.text = String(this.socket.id);
+            }
         });
 
+        //Get movement updates from players
         this.socket.on('update_player', data => {
+            const { x, y, id, velocity } = data;
 
+            //Ignore update if its from us or the playerlist doesn't exist yet
+            if (this.socket.id === id || this.otherPlayers === null) {
+                return;
+            }
+
+            // Update players target but not their real position
+            this.otherPlayers[id].target_x = x;
+            this.otherPlayers[id].target_y = y;
+            this.otherPlayers[id].velocity_target_x = velocity.x;
+            this.otherPlayers[id].velocity_target_y = velocity.y;
         });
 
-        this.socket.on('update_players', data => {
-            
+        //when a player is disconnects
+        this.socket.on('player_disconnect', id => {
+            //Ignore update if its from us or the playerlist doesn't exist yet
+            if (this.socket.id === id || this.otherPlayers === null) {
+                return;
+            }
+
+            if (this.otherPlayers[id] !== undefined) {
+                this.otherPlayers[id].name.destroy();
+                this.otherPlayers[id].destroy();
+                delete this.otherPlayers[id];
+            }
         });
 
-        this.socket.on('player_disconnect', data => {
+        //when a player connects
+        this.socket.on('player_connect', data => {
+            const { x, y, id, velocity } = data;
 
-        });
+            //Ignore update if its from us or the playerlist doesn't exist yet
+            if (this.socket.id === id || this.otherPlayers === null) {
+                return;
+            }
+
+            if (this.otherPlayers[id] === undefined) {
+                const newPlayer = new OtherPlayer(scene, x, y);
+                newPlayer.name = this.createNameText(scene, newPlayer, id, "#373737");
+                scene.add.existing(newPlayer.name);
+                this.otherPlayers[id] = newPlayer;
+
+                this.otherPlayers[id].target_x = x;
+                this.otherPlayers[id].target_y = y;
+                this.otherPlayers[id].velocity_target_x = velocity.x;
+                this.otherPlayers[id].velocity_target_y = velocity.y;
+            }
+        })
 
         //when our info is sent or we respawn the server will send us a random place to spawn
         this.socket.on('new_spawn', data => {
@@ -115,6 +189,15 @@ export class Connection {
             this.player.x = data.x;
             this.player.y = data.y;
             this.player.playMode();
+            this.movePlayer();
+            if (this.updateTimer === null) {
+                this.updateTimer = scene.time.addEvent({
+                    delay: 100,
+                    callback: () => { this.movePlayer() },
+                    callbackScope: this,
+                    loop: true
+                })
+            }
         });
 
         //when bullet comes from the server create it on client
@@ -123,7 +206,7 @@ export class Connection {
             const { x, y, to, id } = data;
 
             //if we are the player the bullet came from
-            if (id === String(this.socket.id)) {
+            if (id === this.socket.id) {
                 //make bullet that can't damage us
                 new Bullet(scene, this.player, x, y, to.x, to.y, this.player);
             }
@@ -179,7 +262,7 @@ export class Connection {
                 x: toX,
                 y: toY
             },
-            id: String(this.socket.id)
+            id: this.socket.id
         })
     }
 
@@ -189,7 +272,7 @@ export class Connection {
             this.socket.emit('move_player', {
                 x: Math.round(this.player.x),
                 y: Math.round(this.player.y),
-                id: String(this.socket.id),
+                id: this.socket.id,
                 velocity: {
                     x: parseFloat(this.player.body.velocity.x.toFixed(2)),
                     y: parseFloat(this.player.body.velocity.y.toFixed(2))
@@ -198,14 +281,18 @@ export class Connection {
         }
     }
 
+    death() {
+        this.socket.emit('death');
+    }
+
     //Main update function updated with the scene
     //Used to update positions of nametags
     //Used to interpolate the positions of other players
     update() {
         for (let id in this.otherPlayers) {
             let player = this.otherPlayers[id]
-            if (player.x !== undefined && player.body !== undefined) {
-                let smoothness = 0.18;
+            if (player.x !== undefined) {
+                let smoothness = 0.20;
     
                 // Interpolate the player's position
                 player.x += (player.target_x - player.x) * smoothness;

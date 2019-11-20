@@ -58,12 +58,8 @@ export class ArenaLevel extends Phaser.Scene
         this.player.stageMode();
 
         //Setup our players and listeners for the connection
-        this.connection.setupPlayer(this, this.player);
+        this.connection.setupPlayers(this, this.player);
         this.connection.setupListeners(this);
-
-        //When this scene is loaded it means you respawned
-        //Tell the server we did so we can get our spawn point
-        this.connection.socket.emit('respawn');
     }
 
     //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
