@@ -143,6 +143,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('flight', 'assets/Flight.png');
         this.load.image('tripleshot', 'assets/TripleShot.png');
         this.load.image('gun', 'assets/Gun.png');
+        this.load.image('arenabtn', 'assets/ArenaButton.png');                  // placeholder image. Dustin please replace.
         this.load.image('pauseButton', 'assets/PauseButton.png');
         this.load.image('unpauseButton', 'assets/UnpauseButton.png');
         this.load.image('continueDialogButton', 'assets/ContinueDialogButton.png');

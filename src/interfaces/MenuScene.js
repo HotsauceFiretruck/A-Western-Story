@@ -12,7 +12,8 @@ export class MenuScene extends Phaser.Scene {
 
         let fullscreenButton = this.add.image(1150, 50, 'fullscreenButton').setScale(2).setInteractive();
         let playButton = this.add.sprite(600, 300, 'playButton').setScale(2).setInteractive();
-        let tutorialBtn = this.add.sprite(600, 390, 'tutorialButton').setScale(2).setInteractive();
+        let tutorialBtn = this.add.sprite(725, 375, 'tutorialButton').setScale(2).setInteractive();
+        let arenabtn = this.add.sprite(475, 375, 'arenabtn').setScale(2).setInteractive();
 
         fullscreenButton.on('pointerup', () => {
             if (this.scale.isFullscreen) {
@@ -51,6 +52,19 @@ export class MenuScene extends Phaser.Scene {
             this.clearTint();
         })
 
+        arenabtn.on('pointerdown', (event) => {
+            location.assign("arena.html");
+        });
+        arenabtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        arenabtn.on('pointerout', function (event) {
+            this.clearTint();
+        })
+
+        tutorialBtn.on('pointerdown', (event) => { 
+            document.getElementById('menuMusic').pause();
+        })
         tutorialBtn.on('pointerdown', (event) => { 
             //document.getElementById('menuMusic').pause();
             this.scene.start('level-tutorial');
@@ -61,6 +75,6 @@ export class MenuScene extends Phaser.Scene {
         tutorialBtn.on('pointerout', function (event) {
             this.clearTint();
         })
-    }
-
+    
+    }   
 }
