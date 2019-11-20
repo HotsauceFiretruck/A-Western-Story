@@ -19,7 +19,7 @@ export class DialogTree
         //Play Dialog ----
         this.isTreeEnded = false;
         this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
-        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(0);
+        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(2);
 
         if (this.scene.projectiles != undefined)
         {
@@ -166,7 +166,7 @@ class Dialog
 {
     constructor(dialogTree, dialogSequence, text, actor)
     {
-        this.optionObjects = []; // [object, text, callback]
+        this.optionObjects = []; // [text, callback, textObject, rectangleObject]
         this.nextDialogButton = [null, null]; //[text, image]
         this.textObject = null;
 
@@ -179,13 +179,13 @@ class Dialog
     //Activate another sequence when chosen
     addOption(text, callback)
     {
-        this.optionObjects.push([null, text, callback]);
+        this.optionObjects.push([text, callback, null, null]);
     }
 
     displayDialog()
     {   
         //Setup
-        let spacing = 35;
+        let spacing = 40;
 
         let numberOfLines = this.optionObjects.length + 1;
 
@@ -203,39 +203,53 @@ class Dialog
                 fontSize: 20,
                 fontStyle: "bold"
             }
-        ).setScrollFactor(0, 0).setDepth(999);
+        ).setScrollFactor(0, 0).setDepth(3);
 
         this.textObject.setPosition(centerX - this.textObject.displayWidth / 2, startY);
 
         for (let i = 1; i < numberOfLines; ++i)
         {
-            let newOption = this.dialogTree.scene.add.text(
+            let rectangleObject = this.dialogTree.scene.add.rectangle(
                 0,
                 0,
-                i + ". " + this.optionObjects[i - 1][1],
+                this.dialogTree.dialogBackground.displayWidth - 110,
+                25,
+                0x2C2F30
+            ).setScrollFactor(0, 0).setDepth(3);
+
+            rectangleObject.setPosition(
+                centerX, 
+                startY + (spacing * i) + 10
+            );
+
+            rectangleObject.setInteractive().on('pointerup', () => {
+                this.sequence.nextDialog();
+                this.optionObjects[i - 1][1]();
+            });
+
+            rectangleObject.on('pointerover', () => {rectangleObject.setFillStyle(0x616161);});
+            rectangleObject.on('pointerout', () => {rectangleObject.setFillStyle(0x2C2F30);});
+            
+            let textObject = this.dialogTree.scene.add.text(
+                0,
+                0,
+                i + ". " + this.optionObjects[i - 1][0],
                 {
                     fontFamily: 'Courier',
                     fontSize: 20,
                     fontStyle: "bold",
                     fontColor: "white",
-                    backgroundColor: "#323c39"
+                   // backgroundColor: "#323c39"
                 }
-            ).setScrollFactor(0, 0);
+            ).setScrollFactor(0, 0).setDepth(3);
 
-            newOption.setPosition(
-                (centerX - newOption.displayWidth / 2), 
+            textObject.setPosition(
+                (centerX - textObject.displayWidth / 2), 
                 startY + (spacing * i)
             );
 
-            newOption.setInteractive().on('pointerup', () => {
-                this.sequence.nextDialog();
-                this.optionObjects[i - 1][2]();
-            });
-
-            newOption.on('pointerover', () => {newOption.setTint(616161);});
-            newOption.on('pointerout', () => {newOption.clearTint();});
-
-            this.optionObjects[i - 1][0] = newOption;
+            this.optionObjects[i - 1][2] = textObject;
+            this.optionObjects[i - 1][3] = rectangleObject;
         }
 
         //Setting Signal To Next Dialog
@@ -244,20 +258,20 @@ class Dialog
             this.nextDialogButton[1] = this.dialogTree.scene.add.image(
                 this.dialogTree.centerX + 400, 
                 this.dialogTree.centerY + 122, 'continueDialogButton'); 
-            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5);
+            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5).setDepth(4);
 
             if (this.dialogTree.mobile)
             {
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
-                    this.nextDialogButton[1].x - 118, 
-                    this.nextDialogButton[1].y - 12, 
+                    this.nextDialogButton[1].x - 112, 
+                    this.nextDialogButton[1].y - 10, 
                     "Press Me To Continue",
                     {
                         fontFamily: 'Courier',
                         fontSize: 20,
                         fontStyle: 'bold'
                     }
-                );
+                ).setDepth(4);
 
                 this.nextDialogButton[1].setInteractive();
                 this.nextDialogButton[1].on('pointerup', () => {this.sequence.nextDialog();});
@@ -274,14 +288,14 @@ class Dialog
             
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
                     this.nextDialogButton[1].x - 112, 
-                    this.nextDialogButton[1].y - 12, 
+                    this.nextDialogButton[1].y - 10, 
                     "Press X To Continue",
                     {
                         fontFamily: 'Courier',
                         fontSize: 20,
                         fontStyle: 'bold'
                     }
-                );
+                ).setDepth(4);
             }
             this.nextDialogButton[0].setScrollFactor(0, 0);
         }
@@ -299,7 +313,8 @@ class Dialog
 
         for (let i = 0; i < this.optionObjects.length; ++i)
         {
-            this.optionObjects[i][0].destroy();
+            this.optionObjects[i][2].destroy();
+            this.optionObjects[i][3].destroy();
         }
 
         if (this.nextDialogButton[0] != null) 

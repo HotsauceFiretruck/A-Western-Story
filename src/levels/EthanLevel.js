@@ -57,7 +57,7 @@ export class EthanLevel extends Phaser.Scene
         this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 150, 550);
+        this.player = new Player(this, 3000, 550);
 
         // Sets the goal and function for this area
         // When reached the the function .switchToChurch will run, causing things to change and update.
@@ -87,75 +87,12 @@ export class EthanLevel extends Phaser.Scene
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
         
-        // Pause buttons
-        var paused = false;
-        // var n = 0;
-        // var escKey = this.input.keyboard.addKey('ESC');
-        this.pauseScreen = this.add.sprite(600, 300, 'death').setDisplaySize(1200, 600).setVisible(false);
-        this.pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
-        this.unPauseButton = this.add.sprite(600, 250, 'unpauseButton').setScale(5).setVisible(false).setScrollFactor(0,0);
-        // Button events for disabling and reenabling player movements and enemie ai.
-        // escKey.on('down', (event) => {
-        //     if(paused == false && n == 0){
-        //         this.player.gun.setVisible(false);
-        //         this.player.stageMode();
-        //         this.player.setVisible(false);
-        //         for(var i = 0; i < this.enemies.list.length; i++) {
-        //             this.enemies.list[i].stageMode();
-        //             this.enemies.list[i].setVisible(false);
-        //         }
-        //         setTimeout(function(){
-        //             n++;
-        //         }, 1);
-        //         paused = true;
-        //         this.pauseScreen.setVisible(true).setAlpha(50);
-        //         this.pauseButton.setVisible(false).setInteractive(false);
-        //         this.unPauseButton.setVisible(true).setInteractive();
-        //     }
-        //     if(paused && n == 1){
-        //         this.player.gun.setVisible(true);
-        //         this.player.playMode();
-        //         this.player.setVisible(true);
-        //         for(var i = 0; i < this.enemies.list.length; i++) {
-        //             this.enemies.list[i].playMode();
-        //             this.enemies.list[i].setVisible(true);
-        //         }
-        //         n--;
-        //         paused = false;
-        //         this.pauseScreen.setVisible(false)
-        //         this.pauseButton.setVisible(true).setInteractive(true);
-        //         this.unPauseButton.setVisible(false).setInteractive(false);
-        //     }
-        // });
-        this.pauseButton.on('pointerdown', (event) => {
-            if(paused == false){
-                this.player.gun.setVisible(false);
-                this.player.stageMode();
-                this.player.setVisible(false);
-                for(var i = 0; i < this.enemies.list.length; i++) {
-                    this.enemies.list[i].stageMode();
-                    this.enemies.list[i].setVisible(false);
-                }
-                paused = true;
-            }
-            this.pauseScreen.setVisible(true).setAlpha(50);
-            this.pauseButton.setVisible(false).setInteractive(false);
-            this.unPauseButton.setVisible(true).setInteractive();
-        });
-        this.unPauseButton.on('pointerdown', (event) => {
-            if(paused){
-                this.player.gun.setVisible(true);
-                this.player.playMode();
-                this.player.setVisible(true);
-                for(var i = 0; i < this.enemies.list.length; i++) {
-                    this.enemies.list[i].playMode(true);
-                    this.enemies.list[i].setVisible(true);
-                }
-                paused = false;
-            }
-            this.pauseScreen.setVisible(false)
-            this.pauseButton.setVisible(true).setInteractive(true);
-            this.unPauseButton.setVisible(false).setInteractive(false);
+        // (broken) Pause button
+        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
+        this.pauseBtn.on('pointerdown', (event) => {
+            this.scene.launch('pause-scene');
+            this.scene.pause().setVisible(false);
+            this.scene.resume('pause-scene');
         });
 
         // Functions to tint the buttons on hover to look nice. :)
@@ -163,12 +100,6 @@ export class EthanLevel extends Phaser.Scene
             this.setTint(616161);
         });
         this.pauseButton.on('pointerout', function (event) {
-            this.clearTint();
-        });
-        this.unPauseButton.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.unPauseButton.on('pointerout', function (event) {
             this.clearTint();
         });
 
@@ -277,7 +208,7 @@ export class EthanLevel extends Phaser.Scene
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
-                new Flight(this, 'flight', 150, 200);
+                this.flight = new Flight(this, 'flight', 150, 200);
             }],
             ["No.", () => {dialogTree.playSequence(2);
             }],
@@ -294,6 +225,7 @@ export class EthanLevel extends Phaser.Scene
         this.map.deleteAllPlatforms();
 
         // Removing images, enemies, and nextLevelGoal used in previous tile map
+        this.flight.destroy();
         this.nextLevelGoal.destroy();
         this.church.destroy();
         this.deadTreeChurch.destroy();
@@ -345,23 +277,9 @@ export class EthanLevel extends Phaser.Scene
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
         this.add.image(1150, 435, 'waterTower');
 
-        this.add.image(560, 550, 'fence').setScale(.2);
-        this.add.image(625, 550, 'fence').setScale(.2);
-        this.add.image(690, 550, 'fence').setScale(.2);
-        this.add.image(755, 550, 'fence').setScale(.2);
-        this.add.image(810, 550, 'fence').setScale(.2);
-        this.add.image(875, 550, 'fence').setScale(.2);
-        this.add.image(940, 550, 'fence').setScale(.2);
-        this.add.image(1005, 550, 'fence').setScale(.2);
-        this.add.image(1070, 550, 'fence').setScale(.2);
-        this.add.image(1135, 550, 'fence').setScale(.2);
-        this.add.image(1200, 550, 'fence').setScale(.2);
-        this.add.image(1265, 550, 'fence').setScale(.2);
-        this.add.image(1330, 550, 'fence').setScale(.2);
-        this.add.image(1395, 550, 'fence').setScale(.2);
-        this.add.image(1460, 550, 'fence').setScale(.2);
-        this.add.image(1525, 550, 'fence').setScale(.2);
-        this.add.image(1590, 550, 'fence').setScale(.2);
+        for(var i=560; i <= 1300; i+=65){
+            this.add.image(i, 550, 'fence').setScale(.2);
+        }
         this.add.image(1300, 525, 'deadtree');
 
         this.add.image(785, 508, 'bigHouse');
