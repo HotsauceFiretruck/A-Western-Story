@@ -3,6 +3,7 @@ import { ArenaDeathScene } from "./ArenaDeathScene.js";
 import { PreloaderArena } from "./PreloaderArena.js";
 import { Connection } from "./Connection.js";
 import { ServerSelect } from "./ServerSelect.js";
+import { PauseScene } from "../interfaces/PauseScene.js";
 
 
 export class ArenaMode 
@@ -23,6 +24,7 @@ export class ArenaMode
         let serverList = new ServerSelect(this, connection);
         let levelarena = new ArenaLevel(this, connection);
         let death = new ArenaDeathScene(this);
+        let pauseScene = new PauseScene(this);
 
         //Initializing Config
         this.config = {
@@ -57,7 +59,7 @@ export class ArenaMode
                 ]
             },
          
-            scene: [preloader, serverList, levelarena, death]
+            scene: [preloader, pauseScene, serverList, levelarena, death]
 
         };
 

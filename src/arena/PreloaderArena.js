@@ -105,6 +105,9 @@ export class PreloaderArena extends Phaser.Scene
         this.load.image('svr3btn', 'assets/Server3Button.png');
         this.load.image('svr4btn', 'assets/Server4Button.png');
         this.load.image('svr5btn', 'assets/Server5Button.png');
+        this.load.image('pauseButton', 'assets/PauseButton.png');
+        this.load.image('unpauseButton', 'assets/UnpauseButton.png');
+        this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
