@@ -24,19 +24,28 @@ export class Connection {
         this.socket.close();
     }
 
+    cleanup() {
+
+    }
+
     //Sets the player to the right player object
     /*
         scene: the scene the player is in
         player: our specified player
     */
-    setupPlayers(scene, player) {
+    setupPlayers(scene, player, state) {
         this.player = player;
         this.player.name = this.createNameText(scene, this.player, "Connecting...", "#1937ff");
         scene.add.existing(this.player.name);
         if (!this.firstSetup) {
             //When this scene is loaded it means you respawned
             //Tell the server we did so we can get our spawn point
-            this.socket.emit('respawn', this.socket.id);
+            if (state === "unpause") {
+                //emit u
+            }
+            else {
+                this.socket.emit('respawn', this.socket.id);
+            }
             this.player.name.text = String(this.socket.id);
             this.otherPlayers = null;
             this.socket.emit('get_all_players');
