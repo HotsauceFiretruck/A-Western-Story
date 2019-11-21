@@ -57,6 +57,28 @@ export class ArenaLevel extends Phaser.Scene
         this.player = new ArenaPlayer(this, 800, 80, this.connection);
         this.player.stageMode();
 
+        //  Pause button
+        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.pauseBtn.on('pointerdown', (event) => {
+            this.scene.setVisible(false, 'level-arena');
+            this.player.stageMode();
+            this.player.name.destroy();
+            this.connection.destroyTimer();
+            this.connection.death();
+            this.scene.launch('pause-scene', {
+                scene: this.scene.key,
+                player: this.player,
+                sceneObject: this
+            });
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+
         //Setup our players and listeners for the connection
         this.connection.setupPlayers(this, this.player);
         this.connection.setupListeners(this);
