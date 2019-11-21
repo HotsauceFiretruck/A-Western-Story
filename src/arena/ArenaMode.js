@@ -2,6 +2,7 @@ import { ArenaLevel } from "./ArenaLevel.js";
 import { ArenaDeathScene } from "./ArenaDeathScene.js";
 import { PreloaderArena } from "./PreloaderArena.js";
 import { Connection } from "./Connection.js";
+import { ServerSelect } from "./ServerSelect.js";
 
 
 export class ArenaMode 
@@ -12,39 +13,20 @@ export class ArenaMode
         this.isMobile = false;
 
         //Detecting the Device's Size and Set Max
-        let maxWidth = 1200;
-        let maxHeight = 600;
-        
-        let scaleWidth = window.innerWidth / maxWidth;
-        let scaleHeight = window.innerHeight / maxHeight;
-        this.scale = Math.min(scaleWidth, scaleHeight);
-        
-        let modifiedWidth = maxWidth * this.scale;
-        let modifiedHeight = maxHeight * this.scale;
-
-        if (this.scale < 1) 
-        {
-            maxHeight = modifiedHeight;
-            maxWidth = modifiedWidth;
-        } else 
-        {
-            this.scale = 1;
-        }
+        let defaultWidth = 1200;
+        let defaultHeight = 600;
 
         let connection = new Connection();
 
         //Initializing Level
         let preloader = new PreloaderArena(this);
+        let serverList = new ServerSelect(this, connection);
         let levelarena = new ArenaLevel(this, connection);
         let death = new ArenaDeathScene(this);
 
         //Initializing Config
         this.config = {
             type: Phaser.AUTO,
-            width: maxWidth,
-            height: maxHeight,
-            parent: 'phaser-game',
-            autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
             pixelArt: true,
             activePointers: 4,
             physics: {
@@ -55,8 +37,11 @@ export class ArenaMode
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH
+                parent: 'AWesternStory',
+                width: defaultWidth,
+                height: defaultHeight,
             },
+            canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
             plugins: {
                 scene: [
                     {
@@ -72,11 +57,12 @@ export class ArenaMode
                 ]
             },
          
-            scene: [preloader, levelarena, death]
+            scene: [preloader, serverList, levelarena, death]
 
         };
 
         let game = new Phaser.Game(this.config);
+        //Disable right click menu on canvas
         game.canvas.oncontextmenu = function (e) { e.preventDefault(); }
 
         if (game.device.os.android || 
