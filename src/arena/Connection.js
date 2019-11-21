@@ -90,6 +90,7 @@ export class Connection {
 
         //on disconnect from server
         this.socket.on('disconnect', (reason) => {
+            console.log(reason);
             console.log("DISCONNECTED");
             //set player name to show reconnect & retry connection
             this.player.stageMode();
@@ -105,7 +106,9 @@ export class Connection {
             }
             this.otherPlayers = null;
             
-            this.socket.connect();
+            if (reason !== "io server disconnect" && reason !== "forced close") {
+                this.socket.connect();
+            }
         });
 
         //Setup player list on client side (reply from get_all_players)
