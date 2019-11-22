@@ -3,17 +3,22 @@ export class PauseScene extends Phaser.Scene {
     {
         super({key:"pause-scene"});
         this.PhaserGame = PhaserGame;
+        this.previousScene = null;
+    }
+
+    init(data)
+    {
+        this.previousScene = data.scene;
     }
 
     create()
     {
-        let scale = this.PhaserGame.scale;
-
-        this.pauseScreen = this.add.image(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale);
-        this.unPauseBtn = this.add.image(600 * scale, 250 * scale, 'unpauseBtn').setScale(5 * scale).setInteractive();
-        this.unPauseBtn.on('pointerdown', function (event) {
-            this.scene.pause();
-            this.scene.resume('level-4');
+        this.pauseScreen = this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
+        this.unPauseBtn = this.add.image(600, 250, 'unpauseButton').setScale(5).setInteractive();
+        this.unPauseBtn.on('pointerdown',  () => {
+            this.scene.setVisible(true, this.previousScene);
+            this.scene.resume(this.previousScene);
+            this.scene.stop('pause-scene');
         });
 
         // Functions to tint the buttons on hover to look nice. :)
@@ -24,9 +29,7 @@ export class PauseScene extends Phaser.Scene {
             this.clearTint();
         });
         
-        this.returnToMenu = this.add.image(600, 390, 'returnButton')
-                        .setDisplaySize(360, 90)
-                        .setInteractive();
+        this.returnToMenu = this.add.image(600, 390, 'returnButton').setDisplaySize(360, 90).setInteractive();
         this.returnToMenu.on('pointerdown', () => {
             this.scene.stop('level-4');
             this.scene.start('menu-scene');

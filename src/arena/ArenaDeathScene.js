@@ -22,6 +22,12 @@ export class ArenaDeathScene extends Phaser.Scene
                         .setDisplaySize(360, 90)
                         .setInteractive();
         respawn.on('pointerdown', () => {this.respawn()});
+        respawn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        respawn.on('pointerout', function (event) {
+            this.clearTint();
+        });
     }
 
     respawn()
