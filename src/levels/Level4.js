@@ -7,7 +7,7 @@ import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
 import { Flight } from "../powerups/Flight.js";
 
-export class EthanLevel extends Phaser.Scene
+export class Level4 extends Phaser.Scene
 {
     constructor(PhaserGame)
     {

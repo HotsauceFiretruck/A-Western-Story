@@ -3,15 +3,12 @@ import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { Bullet } from "../entities/Bullet.js";
-import { Priest } from "../entities/Priest.js";
-import { Bull } from "../entities/Bull.js";
-import { Snake } from "../entities/Snake.js";
 
-export class AlexLevelPart2 extends Phaser.Scene
+export class Level1P2 extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
-        super({key:"level-1Continued"});
+        super({key:"level-1.2"});
 
         this.count = 0;
 

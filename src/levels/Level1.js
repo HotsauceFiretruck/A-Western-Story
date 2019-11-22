@@ -3,7 +3,7 @@ import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 
-export class AlexLevel extends Phaser.Scene
+export class Level1 extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
