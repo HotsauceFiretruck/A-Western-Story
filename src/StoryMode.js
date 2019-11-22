@@ -6,7 +6,7 @@ import { PauseScene } from "./interfaces/PauseScene.js";
 
 import { LevelTutorial } from "./levels/LevelTutorial.js";
 import { Level1 } from "./levels/Level1.js";
-import { Level1P2 } from "./levels/Level1P2";
+import { Level1P2 } from "./levels/Level1P2.js";
 import { Level2 } from "./levels/Level2.js";
 import { Level3 } from "./levels/Level3.js";
 import { Level4 } from "./levels/Level4.js";

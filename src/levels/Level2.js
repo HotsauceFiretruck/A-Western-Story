@@ -10,9 +10,8 @@ var battleInit = false;
 var sheriffDeath = false;
 var scene;
 var currBg = [];
-export class DustinLevel extends Phaser.Scene
+export class Level2 extends Phaser.Scene
 {
-    
     constructor(PhaserGame)
     {
         super({key:"level-2"});
