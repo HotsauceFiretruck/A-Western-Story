@@ -75,9 +75,6 @@ export class LevelTutorial extends Phaser.Scene
         //Enable Dialog Tree: Dialog Tree should be the last thing to load.
         this.dialogTree = new DialogTree(this, 600, 100);
 
-        //Getting options to store into this method --> check update function/method
-        this.optionsChosen = [];
-
         this.dialogSetup(this.dialogTree);
     }
 
