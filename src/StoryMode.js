@@ -54,7 +54,7 @@ export class StoryMode
                 mode: Phaser.Scale.FIT,
                 parent: 'AWesternStory',
                 width: defaultWidth,
-                height: defaultHeight,
+                height: defaultHeight
             },
             canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
             plugins: {

@@ -81,16 +81,11 @@ export class PreloaderArena extends Phaser.Scene
             this.load.image('gunbase', 'assets/JoystickGunBase.png');
             this.load.image('jump', 'assets/JumpButton.png');
         }
-        this.load.image('background', 'assets/Background.png');
         this.load.image('background2', 'assets/Background2.png');
-        this.load.image('grass', 'assets/Grass.png');
-        this.load.image('grass2', 'assets/Grass2.png');
         this.load.image('sand', 'assets/Sand.png');
         this.load.image('sand2', 'assets/Sand2.png');
         this.load.image('player', 'assets/Player.png');
         this.load.image('bullet', 'assets/Bullet.png');
-        this.load.image('house', 'assets/House.png');
-        this.load.image('enemy', 'assets/Outlaw.png');
         this.load.image('sun', 'assets/Sun1.png');
         this.load.image('cloud', 'assets/Cloud.png');
         this.load.image('cactus', 'assets/Cactus.png');
@@ -105,12 +100,17 @@ export class PreloaderArena extends Phaser.Scene
         this.load.image('death', 'assets/GameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
+        this.load.image('svr1btn', 'assets/Server1Button.png');
+        this.load.image('svr2btn', 'assets/Server2Button.png');
+        this.load.image('svr3btn', 'assets/Server3Button.png');
+        this.load.image('svr4btn', 'assets/Server4Button.png');
+        this.load.image('svr5btn', 'assets/Server5Button.png');
         this.load.spritesheet('dialogoptions', 'assets/OptionNumbers.png', {frameWidth: 32, frameHeight: 32});
         this.load.spritesheet('hearts', 'assets/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
     }
 
     create()
     {
-        this.scene.start('level-arena');
+        this.scene.start('server-select');
     }
 }

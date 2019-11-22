@@ -335,7 +335,7 @@ export class DustinLevel extends Phaser.Scene
         });
 
         var pScale = 1.5;
-        let bgImage = this.add.image(0, 0, imageKey);
+        let bgImage = this.add.image(0, 0, imageKey).setDepth(-3);
         var initialPlace = levelWidth - (bgImage.width - 40)*pScale;
         bgImage.setOrigin(0,0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
         
@@ -344,7 +344,7 @@ export class DustinLevel extends Phaser.Scene
         while (initialPlace > 0) {
             let bgImage = this.add.image(0, 0, 'background4r');
             initialPlace -= 720;
-            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale);
+            bgImage.setOrigin(0, 0).setScale(pScale).setPosition(initialPlace, levelHeight - bgImage.height*pScale).setDepth(-3);
             currBg.push(bgImage);
         }
     }
