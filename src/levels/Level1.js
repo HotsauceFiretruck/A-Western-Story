@@ -124,6 +124,6 @@ export class Level1 extends Phaser.Scene
 
     nextLevel()
     {
-        this.scene.start('level-1Continued');
+        this.scene.start('level-1.2');
     }
 }
