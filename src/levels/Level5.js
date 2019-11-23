@@ -8,7 +8,7 @@ import { Bull } from "../entities/Bull.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { Flight } from "../powerups/Flight.js";
 
-export class FinalLevel extends Phaser.Scene
+export class Level5 extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
