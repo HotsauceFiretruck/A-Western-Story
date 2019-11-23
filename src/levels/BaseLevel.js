@@ -44,6 +44,8 @@ export class BaseLevel extends Phaser.Scene
 
         this.enemies = {category: 4, list: []};
 
+        this.clouds = {list: []};
+
         this.player = new Player(this, 0, 0);
 
         this.dialogTree = new DialogTree(this, 600, 100);
@@ -69,6 +71,11 @@ export class BaseLevel extends Phaser.Scene
             this.enemies.list[i].update();
         }
 
+        //Update all clouds
+        this.clouds.list.forEach(element => {
+            element.update();
+        });
+
         //Update player
         this.player.update();
     }
@@ -76,6 +83,11 @@ export class BaseLevel extends Phaser.Scene
     setPlayerPosition(x, y)
     {
         this.player.setPosition(x, y);
+    }
+
+    setPlayerHealth(health)
+    {
+        this.player.setHealth(health);
     }
 
     /*  Creating Level using an Array + Tile Map
@@ -95,6 +107,13 @@ export class BaseLevel extends Phaser.Scene
         {
             this.enemies.list[i].death();
         }
+    }
+
+    clearAllClouds()
+    {
+        this.clouds.list.forEach(element => {
+            element.remove();
+        });
     }
 
     clearAllPlatforms()
