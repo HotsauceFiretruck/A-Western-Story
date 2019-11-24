@@ -1,4 +1,4 @@
-import { BaseLevel } from "./BaseLevel.js";
+import { BaseLevel } from "../core/BaseLevel.js";
 import { Area } from "../components/Area.js";
 import { Enemy } from "../entities/Enemy.js";
 
