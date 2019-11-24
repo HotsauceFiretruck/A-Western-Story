@@ -89,6 +89,16 @@ export class BaseLevel extends Phaser.Scene
         this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
     }
 
+    setPlayer(player)
+    {
+        if (this.player != null)
+        {
+            this.player.destroy();
+        }
+        this.player = player;
+    }
+
+    //Only use this when it is absolutely necessary
     getPlayer()
     {
         return this.player;
