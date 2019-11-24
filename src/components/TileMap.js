@@ -7,6 +7,7 @@ export class TileMap
         this.scene = scene;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
+        this.level = [[]];
 
         this.platforms = {
             category: 2,
@@ -108,7 +109,7 @@ export class TileMap
         
         this.searchTiles();
 
-        this.scene.cameraFollowEntity(this.scene.player);
+        this.scene.cameraFollowEntity(this.scene.getPlayer());
     }
     
     deleteAllPlatforms() {

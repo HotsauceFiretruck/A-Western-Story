@@ -13,8 +13,6 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         this.scene = scene;
         this.connection = connection;
         scene.add.existing(this);
-        scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
 
         //Status
         this.status = {
