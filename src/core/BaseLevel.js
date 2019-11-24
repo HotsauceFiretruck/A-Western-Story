@@ -38,7 +38,7 @@ export class BaseLevel extends Phaser.Scene
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
 
-        this.map = new TileMap(this, defaultTileMap, 32, 32, 'grass');
+        this.map = new TileMap(this, 32, 32);
 
         this.projectiles = {category: 2, list: []};
 
@@ -47,6 +47,8 @@ export class BaseLevel extends Phaser.Scene
         this.statics = {list: []};
 
         this.player = new Player(this, 0, 0);
+
+        this.createTileMap('grass', defaultTileMap);
 
         this.dialogTree = new DialogTree(this, 600, 100);
     }
@@ -81,6 +83,17 @@ export class BaseLevel extends Phaser.Scene
         this.player.update();
     }
 
+    cameraFollowEntity(entity)
+    {
+        this.cameras.main.startFollow(entity, false, 0.5, 0.5);
+        this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
+    }
+
+    getPlayer()
+    {
+        return this.player;
+    }
+
     setPlayerPosition(x, y)
     {
         this.player.setPosition(x, y);
@@ -99,7 +112,7 @@ export class BaseLevel extends Phaser.Scene
     */
     createTileMap(tileImageKey, tileMap) //Note to self: tile image key needs to be change later
     {
-        this.map.generateNewTileMap(tileImageKey, 32, 32, tileMap);
+        this.map.generateTileMap(tileImageKey, 32, 32, tileMap);
     }
 
     clearAllEnemies()
@@ -110,7 +123,7 @@ export class BaseLevel extends Phaser.Scene
         }
     }
 
-    clearAllStatics()
+    clearAllStaticEntities()
     {
         for (let i = 0; i < this.statics.list.length; i++)
         {

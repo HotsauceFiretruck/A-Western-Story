@@ -114,7 +114,7 @@ export class Level2 extends BaseLevel
         ];
 
         this.clearAllEnemies();
-        this.clearAllStatics();
+        this.clearAllStaticEntities();
 
         this.house1.destroy();
         this.house2.destroy();

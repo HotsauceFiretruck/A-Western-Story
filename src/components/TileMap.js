@@ -2,25 +2,17 @@ import { Platform } from "./Platform.js";
 
 export class TileMap
 {
-    constructor(scene, tileMap, tileWidth, tileHeight, imageKey)
+    constructor(scene, tileWidth, tileHeight)
     {
         this.scene = scene;
-        this.level = tileMap;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.imageKey = imageKey;
-
-        this.levelWidth = tileMap[0].length * tileWidth;
-        this.levelHeight = tileMap.length * tileHeight;
 
         this.platforms = {
             category: 2,
             collision: [1, 4],
             list: []
         };
-
-        this.loadedTiles = [];
-        this.searchTiles();
     }
 
     searchTiles()
@@ -101,7 +93,7 @@ export class TileMap
         this.platforms.list.push(platform);
     }
 
-    generateNewTileMap(tileImageKey, tileWidth, tileHeight, tileMap)
+    generateTileMap(tileImageKey, tileWidth, tileHeight, tileMap)
     {
         if (this.platforms.list.length != 0)
         {
@@ -115,6 +107,8 @@ export class TileMap
         this.loadedTiles = [];
         
         this.searchTiles();
+
+        this.scene.cameraFollowEntity(this.scene.player);
     }
     
     deleteAllPlatforms() {

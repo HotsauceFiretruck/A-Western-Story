@@ -13,9 +13,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
         super(scene.matter.world, x, y, 'player');
         this.scene = scene;
         scene.add.existing(this);
-        scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
-
         //Status
         this.status = {
             health: 20,
