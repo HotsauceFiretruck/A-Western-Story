@@ -1,16 +1,16 @@
-import { DeathScene } from "./interfaces/DeathScene.js";
-import { PreloaderScene } from "./interfaces/PreloaderScene.js";
-import { MenuScene } from "./interfaces/MenuScene.js";
-import { LevelSelect } from "./interfaces/LevelSelect.js";
-import { PauseScene } from "./interfaces/PauseScene.js";
+import { DeathScene } from "../interfaces/DeathScene.js";
+import { PreloaderScene } from "../interfaces/PreloaderScene.js";
+import { MenuScene } from "../interfaces/MenuScene.js";
+import { LevelSelect } from "../interfaces/LevelSelect.js";
+import { PauseScene } from "../interfaces/PauseScene.js";
 
-import { LevelTutorial } from "./levels/LevelTutorial.js";
-import { Level1 } from "./levels/Level1.js";
-import { Level1P2 } from "./levels/Level1P2.js";
-import { Level2 } from "./levels/Level2.js";
-import { Level3 } from "./levels/Level3.js";
-import { Level4 } from "./levels/Level4.js";
-import { Level5 } from "./levels/Level5.js";
+import { LevelTutorial } from "./LevelTutorial.js";
+import { Level1 } from "./Level1.js";
+import { Level1P2 } from "./Level1P2.js";
+import { Level2 } from "./Level2.js";
+import { Level3 } from "./Level3.js";
+import { Level4 } from "./Level4.js";
+import { Level5 } from "./Level5.js";
 
 export class StoryMode 
 {

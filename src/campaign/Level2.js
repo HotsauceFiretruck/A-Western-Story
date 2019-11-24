@@ -1,11 +1,9 @@
-import { BaseLevel } from "./BaseLevel.js";
-import { Player } from "../entities/Player.js";
+import { BaseLevel } from "../core/BaseLevel.js";
 import { Enemy } from "../entities/Enemy.js";
-import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
-import { Cloud } from "../components/Cloud.js";
+import { Cloud } from "../statics/Cloud.js";
 
 var battleInit = false;
 var sheriffDeath = false;
@@ -116,7 +114,7 @@ export class Level2 extends BaseLevel
         ];
 
         this.clearAllEnemies();
-        this.clearAllClouds();
+        this.clearAllStaticEntities();
 
         this.house1.destroy();
         this.house2.destroy();
