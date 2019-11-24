@@ -29,6 +29,11 @@ export class Cloud
         }
     }
 
+    remove()
+    {
+        this.image.destroy();
+    }
+
     stageMode()
     {
         this.isOnStage = true;
