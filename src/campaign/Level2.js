@@ -5,8 +5,7 @@ import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
 import { Cloud } from "../statics/Cloud.js";
 
-var battleInit = false;
-var sheriffDeath = false;
+var interval;
 var scene;
 var currBg = [];
 var levelScene;
@@ -89,6 +88,7 @@ export class Level2 extends BaseLevel
     encounter()
     {
         this.clearAllPlatforms();
+        this.clearAllStaticEntities();
 
         let levelSheriffEncounter = 
         [   
@@ -113,9 +113,6 @@ export class Level2 extends BaseLevel
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-        this.clearAllEnemies();
-        this.clearAllStaticEntities();
-
         this.house1.destroy();
         this.house2.destroy();
         this.house3.destroy();
@@ -131,6 +128,8 @@ export class Level2 extends BaseLevel
         
         this.setPlayerPosition(levelSheriffEncounter[0].length * 31, 532);
         this.setPlayerHealth(20);
+
+        this.clearAllEnemies();
         
 
         let dialogTree = new DialogTree(this, 600, 100);
@@ -141,18 +140,13 @@ export class Level2 extends BaseLevel
         dialogTree.addDialog(sequence1, "...");
         dialogTree.addDialog(sequence1, "Ahem. Well lookie here.");
         dialogTree.addDialog(sequence1, "Get'em, boys!");
+        dialogTree.setMethod(() => {this.battle(); this.background('background4', levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32); })
         dialogTree.playSequence(sequence1);
-        
-        //Continue once dialog is done
-
-        let nextLevelGoal = new Area(this, 'clear', levelSheriffEncounter[0].length * 31, 532, 32, 128);
-        nextLevelGoal.whenNotTouched(this.player, () => {this.battle(); nextLevelGoal.destroy();
-             this.background('background4', levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32);});        
     }
 
     battle()
     {
-        battleInit = true;
+        this.clearAllEnemies();
 
         new Enemy(this, 328, 336).changeHealth(-15);
         new Enemy(this, 377, 316).changeHealth(-15);
@@ -162,15 +156,7 @@ export class Level2 extends BaseLevel
         new Enemy(this, 247, 280).changeHealth(-5);
         this.sheriff = new FinalEnemy(this, 304, 245);
         var sheriff = this.sheriff;
-        this.update = function()
-        {
-            update();
-            //When there are no more enemies in the level, continue to next level
-            if (this.enemies.list.length == 0 && sheriffDeath) 
-            {
-                this.scene.start('level-3');
-            }
-        }
+        scene = this;
 
         this.sheriff.death = (function()
         {
@@ -187,18 +173,29 @@ export class Level2 extends BaseLevel
             let sequence2 = dialogTree2.addSequence();
             dialogTree2.addDialog(sequence2, "HrrrAHH. *Sheriff Escapes*");
             dialogTree2.playSequence(sequence2);
-            setTimeout(function()
+            dialogTree2.setMethod(() => 
             {
-            let nextLevelGoal = new Area(levelScene, 'clear', 0, 0, 5000, 5000);
-            nextLevelGoal.whenTouched(levelScene.player, () => {levelScene.nextLevel()});
-            }, 5000
+                interval = setInterval(function()
+                {
+                    scene.checkForNextLevel();
+                }, 500
+                );
+            }
             );
+            
         })
     }
 
-    nextLevel()
+    checkForNextLevel()
     {
-        sheriffDeath = true;
+        clearInterval(interval);
+        console.log(this.enemies.list.length);
+        if (this.enemies.list.length == 0)
+        {
+            //Start next lvl
+            
+            this.scene.start('level-3');
+        }
     }
 
     //Load in image to fill in the level
