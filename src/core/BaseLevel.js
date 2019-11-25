@@ -94,6 +94,7 @@ export class BaseLevel extends Phaser.Scene
         if (this.player != null)
         {
             this.player.destroy();
+            this.player.gun.destroy();
         }
         this.player = player;
     }
