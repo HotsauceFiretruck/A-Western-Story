@@ -24,7 +24,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             canJump: true,
             numOfBullets: 1,
             fireRate: .3, // 1 bullet every [fireRate] seconds
-            bulletSpacing: Math.PI/12, //In Radians
+            bulletSpacing: Math.PI/24, //In Radians
             isFireReloaded: true,
             jumpCooldownTimer: null,
             allowHorizontal: true,
