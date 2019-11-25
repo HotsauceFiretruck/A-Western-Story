@@ -130,12 +130,10 @@ export class BaseLevel extends Phaser.Scene
 
     clearAllEnemies()
     {
-        for (let i = 0; i < this.enemies.list.length; i++)
+        while(this.enemies.list.length > 0)
         {
-            this.enemies.list[i].death();
+            this.enemies.list[0].death();
         }
-
-        this.enemies.list = [];
     }
 
     clearAllStaticEntities()
@@ -196,6 +194,7 @@ export class BaseLevel extends Phaser.Scene
                let backgroundImage = new Phaser.GameObjects.Image(this, 0, 0, backgroundImageKey);
                backgroundImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale).setDepth(-3);
                this.add.existing(backgroundImage);
+               this.images.push(backgroundImage);
            }
        }
    }
