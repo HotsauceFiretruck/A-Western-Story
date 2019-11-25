@@ -17,7 +17,7 @@ export class Cloud
 
     update()
     {
-        if (!this.isOnStage)
+        if (!this.isOnStage && !this.removed)
         {
             this.centerX -= Math.sqrt(this.centerY) / 15;
             if(this.centerX < (cloudWidth / 2) * -1)
@@ -31,13 +31,14 @@ export class Cloud
 
     remove()
     {
+        this.removed = true;
         this.image.destroy();
+        //this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
     }
 
     stageMode()
     {
         this.isOnStage = true;
-        this.image.destroy();
     }
 
     playMode()
