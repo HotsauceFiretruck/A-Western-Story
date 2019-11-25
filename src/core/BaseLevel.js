@@ -40,6 +40,8 @@ export class BaseLevel extends Phaser.Scene
 
         this.map = new TileMap(this, 32, 32);
 
+        this.images = [];
+
         this.projectiles = {category: 2, list: []};
 
         this.enemies = {category: 4, list: []};
@@ -94,6 +96,7 @@ export class BaseLevel extends Phaser.Scene
         if (this.player != null)
         {
             this.player.destroy();
+            this.player.gun.destroy();
         }
         this.player = player;
     }
@@ -131,6 +134,8 @@ export class BaseLevel extends Phaser.Scene
         {
             this.enemies.list[i].death();
         }
+
+        this.enemies.list = [];
     }
 
     clearAllStaticEntities()
@@ -139,6 +144,8 @@ export class BaseLevel extends Phaser.Scene
         {
             this.statics.list[i].remove();
         }
+
+        this.statics.list = []
     }
 
     clearAllPlatforms()
@@ -148,7 +155,18 @@ export class BaseLevel extends Phaser.Scene
 
     addStaticImage(imageKey, x, y)
     {
-        return this.add.image(x, y, imageKey).setDepth(-2);
+        let image = this.add.image(x, y, imageKey).setDepth(-2);
+        this.images.push(image);
+        return image;
+    }
+
+    clearAllStaticImages()
+    {
+        for (let i = 0; i < this.images.length; ++i)
+        {
+            this.images[i].destroy();
+        }
+        this.images = [];
     }
 
     //Load in image to fill in the level
