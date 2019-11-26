@@ -151,6 +151,16 @@ export class BaseLevel extends Phaser.Scene
         this.map.deleteAllPlatforms();
     }
 
+    clearAllProjectiles()
+    {
+        for (let i = 0; i < this.projectiles.list.length; ++i)
+        {
+            this.projectiles.list[i].destroy();
+            console.log("destroy");
+        }
+        this.projectiles.list = [];
+    }
+
     addStaticImage(imageKey, x, y)
     {
         let image = this.add.image(x, y, imageKey).setDepth(-2);
