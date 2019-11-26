@@ -22,7 +22,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             nodamage: false,
             isTouching: { left: false, right: false, down: false },
             canJump: true,
-            numOfBullets: 3,
+            numOfBullets: 1,
             fireRate: .3, // 1 bullet every [fireRate] seconds
             bulletSpacing: Math.PI/24, //In Radians
             isFireReloaded: true,
