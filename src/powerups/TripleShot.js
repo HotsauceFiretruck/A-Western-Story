@@ -20,7 +20,8 @@ export class TripleShot extends PowerUp
                     callback: () => this.player.status.numOfBullets -= 2,
                     callbackScope: this.player,
                     loop: false
-                })
+                })  
+                this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
                 this.destroy();
             },
             context: this

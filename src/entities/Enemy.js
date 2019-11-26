@@ -9,8 +9,6 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
         super(scene.matter.world, x, y, key == undefined ? 'enemy' : key);
         this.player = scene.player;
 
-        console.log("Created!");
-
         //Add to Group
         scene.enemies.list.push(this);
         scene.add.existing(this);
@@ -223,7 +221,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
             this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
         }
-        console.log("Destroyed!");
+
         this.destroy();
     }
 }
