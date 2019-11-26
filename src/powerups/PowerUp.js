@@ -20,4 +20,10 @@ export class PowerUp extends Phaser.Physics.Matter.Image
 
     playMode()
     {}
+
+    remove()
+    {
+        this.destroy();
+        this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
+    }
 }

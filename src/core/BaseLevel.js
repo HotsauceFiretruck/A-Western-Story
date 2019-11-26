@@ -138,12 +138,10 @@ export class BaseLevel extends Phaser.Scene
 
     clearAllStaticEntities()
     {
-        for (let i = 0; i < this.statics.list.length; i++)
+        while(this.statics.list.length > 0)
         {
-            this.statics.list[i].remove();
+            this.statics.list[0].remove();
         }
-
-        this.statics.list = []
     }
 
     clearAllPlatforms()
@@ -156,7 +154,6 @@ export class BaseLevel extends Phaser.Scene
         for (let i = 0; i < this.projectiles.list.length; ++i)
         {
             this.projectiles.list[i].destroy();
-            console.log("destroy");
         }
         this.projectiles.list = [];
     }
