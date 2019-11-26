@@ -9,14 +9,14 @@ export class MobileController
 
         scene.input.addPointer(4);
 
-        this.horizontalControls = new Joystick(scene, 'base', 'thumb', 
-                                        150, 
-                                        scene.cameras.main.height - 150, 
-                                        90, 240);
+        this.movementControl = new Joystick(scene, 'base', 'thumb', 
+                                150, 
+                                scene.cameras.main.height - 150, 
+                                90, {x: 455, y: 455});
         this.fireControl = new Joystick(scene, 'gunbase', 'thumb', 
                                         scene.cameras.main.width - 150, 
                                         scene.cameras.main.height - 150, 
-                                        90, 240);
+                                        90, {x: 240, y: 240});
         this.jumpButton = scene.add.image(scene.cameras.main.width - 350, 
                           scene.cameras.main.height - 90, 'jump')
                           .setDisplaySize(120, 120).setScrollFactor(0, 0).setAlpha(.9)
@@ -43,10 +43,10 @@ export class MobileController
         //Update Movements
         if (this.player.status.allowHorizontal)
         {
-            if (this.horizontalControls.checkState())
+            if (this.movementControl.checkState())
             {
-                let normalizedX = Math.cos(this.horizontalControls.getRotation());
-                let speedScale = this.horizontalControls.getDistScale();
+                let normalizedX = Math.cos(this.movementControl.getRotation());
+                let speedScale = this.movementControl.getDistScale();
 
                 //If normalizedX is negative => left
                 if (normalizedX <= 0 &&
@@ -100,7 +100,7 @@ export class MobileController
 
     disable()
     {
-        this.horizontalControls.disable();
+        this.movementControl.disable();
         this.fireControl.disable();
         this.jumpButton.setVisible(false);
         this.jumpButton.removeAllListeners();
@@ -108,7 +108,7 @@ export class MobileController
 
     enable()
     {
-        this.horizontalControls.enable();
+        this.movementControl.enable();
         this.fireControl.enable();
         this.jumpButton.setVisible(true);
         this.jumpButton.on('pointerdown', () => {this.jump(this.player)});

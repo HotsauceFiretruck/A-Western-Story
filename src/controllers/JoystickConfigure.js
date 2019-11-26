@@ -9,12 +9,12 @@ export class Joystick
         this.isThumbTouched = false;
         this.isBaseTouched = false;
 
-        this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size, size).setAlpha(.85);
+        this.base = scene.add.image(0, 0, baseImageKey).setDisplaySize(size.x, size.y).setAlpha(.85);
         this.base.setScrollFactor(0, 0).setInteractive().setDepth(5);
         this.base.on('pointerdown', () => { this.isBaseTouched = true});
         this.base.on('pointerup', () => { this.isBaseTouched = false});;
 
-        this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize(size / 2, size / 2);
+        this.thumb = scene.add.image(0, 0, thumbImageKey).setDisplaySize(120, 120);
         this.thumb.setScrollFactor(0, 0).setInteractive().setDepth(5);
         this.thumb.on('pointerdown', () => { this.isThumbTouched = true});
         this.thumb.on('pointerup', () => { this.isThumbTouched = false});
