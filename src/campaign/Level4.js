@@ -1,4 +1,3 @@
-import { Player } from "../entities/Player.js";
 import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
@@ -6,18 +5,19 @@ import { DialogTree } from "../interfaces/DialogTree.js";
 import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
 import { Flight } from "../powerups/Flight.js";
+import { BaseLevel } from "../core/BaseLevel.js";
+import { Cloud } from "../statics/Cloud.js";
 
-export class Level4 extends Phaser.Scene
+export class Level4 extends BaseLevel
 {
     constructor(PhaserGame)
     {
-        super({key:"level-4"});
-        this.PhaserGame = PhaserGame;
+        super(PhaserGame, 'level-4');
     }
 
     create()
     {
-        let scale = this.PhaserGame.scale;
+        super.create();
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -42,109 +42,55 @@ export class Level4 extends Phaser.Scene
             [1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
+        //Looping background with level
+        this.loopBackground('background2', 720, 420, 1.45);
 
-        // This .loopImage loops the background texture so that we don't have to add several and line them up perfectly
-        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
+        //Create map
+        this.createTileMap('sand', level);
+
         // Adding images to the background.
         // Usage - 
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
-        this.cactus1 = this.add.image(800, 530, 'cactus');
-        this.cactus2 = this.add.image(1100, 500, 'cactus');
-        this.cactus3 = this.add.image(1725, 530, 'cactus');
-        this.bigcrate = this.add.image(700, 532, 'crate').setScale(.9);  // .setScale scales the image properly to fit the desired size.
-        this.bigcrate2 = this.add.image(1550, 532, 'crate').setScale(.9);
-        this.deadTree = this.add.image(370, 425, 'deadtree').setScale(1.75);
-        this.deadTree2 = this.add.image(3000, 490, 'deadtree').setScale(1.75);
-        this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
+        this.cactus1 = this.addStaticImage('cactus', 800, 530);
+        this.cactus2 = this.addStaticImage('cactus', 1100, 500);
+        this.cactus3 = this.addStaticImage('cactus', 1725, 530);
+        this.bigcrate = this.addStaticImage('crate', 700, 532).setScale(.9);  // .setScale scales the image properly to fit the desired size.
+        this.bigcrate2 = this.addStaticImage('crate', 1550, 532).setScale(.9);
+        this.deadTree = this.addStaticImage('deadtree', 370, 425).setScale(1.75);
+        this.deadTree2 = this.addStaticImage('deadtree', 3000, 490).setScale(1.75);
+        this.deadTree3 = this.addStaticImage('deadtree', 1450, 490).setScale(1.75);
 
-        this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 150, 550);
+        this.setPlayerPosition(100, level.length * 30);
+        
+        //Adding cloods
+        for(var i = 0; i < 15; i++)
+        {
+            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
+        }
 
         // Sets the goal and function for this area
         // When reached the the function .switchToChurch will run, causing things to change and update.
-        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
-        this.nextLevelGoal.whenTouched(this.player, () => {
-            this.switchToChurch()
-        });
+        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
+        nextLevelGoal.whenTouched(this.player, () => {this.switchToChurch()});
         
-        this.projectiles = {
-            category: 2, //telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
+        new Snake(this, 850, 575); 
+        new Snake(this, 750, 575);
+        new Snake(this, 1900, 575); 
+        new Snake(this, 2000, 575);
+        new Snake(this, 2900, 575);
+        new Enemy(this, 1600, 550);
+        new Enemy(this, 2850, 575);
         
-        // Spawning in enemies.
-        // Usage - 
-        // scene.enemyName = new EnemyType(scene, x-pos, y-pos)
-        this.Snake1 = new Snake(this, 850, 575); 
-        this.Snake2 = new Snake(this, 750, 575);
-        this.Snake3 = new Snake(this, 1900, 575); 
-        this.Snake4 = new Snake(this, 2000, 575);
-        this.Snake5 = new Snake(this, 2900, 575);
-        this.basicEnemy1 = new Enemy(this, 1600, 550);
-        this.basicEnemy2 = new Enemy(this, 2850, 575);
-        
-        //  Pause button
-        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
-        this.pauseBtn.on('pointerdown', (event) => {
-            this.scene.pause('level-4')
-            this.scene.setVisible(false, 'level-4');
-            this.scene.launch('pause-scene', {scene: this.scene.key});
-        });
-        // Functions to tint the buttons on hover to look nice. :)
-        this.pauseBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.pauseBtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
-
-        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let dialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = dialogTree.addSequence();
-        let sequence1 = dialogTree.addSequence();
-        let sequence2 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "Your horse has died.", this.player);
-        dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
-        dialogTree.addDialog(sequence0, "Good luck.", this.player,
-            [
-                ["Thanks?", () => {dialogTree.playSequence(1);}],
-                ["...", () => {dialogTree.playSequence(2);
-                }],
-            ]
-        );
-        dialogTree.addDialog(sequence1, "You're welcome. :)");
-        dialogTree.addDialog(sequence2, ":(");
-        dialogTree.playSequence(sequence0);
+        this.addPauseBtn();
+        this.dialogSetup1();
     }
 
     // Method used to change the level when the player reaches a nextLevelGoal at the beginning.
     switchToChurch()
     {
-        // Deleting platforms on the map so as to not have invisible blocks when the level updates with new changes to the tilemap.
-        this.map.deleteAllPlatforms();
-
-        // Removing images, enemies, and nextLevelGoal used in previous tile map
-        this.nextLevelGoal.destroy();
-        this.cactus1.destroy();
-        this.cactus2.destroy();
-        this.cactus3.destroy();
-        this.deadTree.destroy();
-        this.deadTree2.destroy();
-        this.deadTree3.destroy();
-        this.bigcrate.destroy();
-        this.bigcrate2.destroy();
-        this.Snake1.death();
-        this.Snake2.death();
-        this.Snake3.death();
-        this.Snake4.death();
-        this.Snake5.death();
-        this.basicEnemy1.death();
-        this.basicEnemy2.death();
+        this.clearAllPlatforms();
+        this.clearAllStaticEntities();
+        this.clearAllEnemies();
 
         // Tile Map to 'switch scene' without making whole new level file. This map is for the town you can find.
         let levelChurch = 
@@ -169,84 +115,40 @@ export class Level4 extends Phaser.Scene
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
+        this.clearAllStaticImages();
+
         // Adding images to the background.
         // Usage - 
         // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
-        this.church = this.add.image(1850, 317, 'church').setScale(2.25);
-        this.deadTreeChurch = this.add.image(1550, 488, 'deadtree').setScale(1.75);
-        this.bigcrateChurch = this.add.image(2120, 532, 'crate').setScale(.9);
-        this.map = new TileMap(this, levelChurch, 32, 32, 'sand');
-        this.player.setPosition(1400, 525);
+        this.church = this.addStaticImage('church', 1850, 317).setScale(2.25);
+        this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
+        this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
+
+        this.createTileMap(levelChurch, 'sand');
+
+        this.setPlayerPosition(1400, 525);
 
         // Sets a new nextLevelGoal with a new function for this area.
-        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
-        this.nextLevelGoal.whenTouched(this.player, () => {
-            this.switchToTown();
-        });
+        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
+        nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
 
         // Spawning in new enemies.
         // Usage - 
-        // scene.enemyName = new EnemyType(scene, x-pos, y-pos)
-        this.priest1 = new Priest(this, 1600, 525);
-        this.priest2 = new Priest(this, 1700, 525);
-        this.priest3 = new Priest(this, 1800, 525);
-        this.priest4 = new Priest(this, 1900, 525);
+        // new EnemyType(scene, x-pos, y-pos)
+        new Priest(this, 1600, 525);
+        new Priest(this, 1700, 525);
+        new Priest(this, 1800, 525);
+        new Priest(this, 1900, 525);
 
-        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let dialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = dialogTree.addSequence();
-        let sequence1 = dialogTree.addSequence();
-        let sequence2 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
-        dialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
-        dialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
-        [
-            // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
-            ["Of course!", () => {
-                dialogTree.playSequence(1);  
-                this.priest1.death();
-                this.priest2.death();
-                this.priest3.death();
-                this.priest4.death();
-                this.flight = new Flight(this, 'flight', 150, 200);
-            }],
-            ["No.", () => {dialogTree.playSequence(2);
-            }],
-        ]
-        );
-        dialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
-        dialogTree.addDialog(sequence2, "How unfortunate.");
-        dialogTree.playSequence(sequence0);
+        this.dialogSetup2();
     }
 
     // Method used to 'move' the player to the town after completing the church section of the level.
     switchToTown()
     {
-        this.map.deleteAllPlatforms();
-
-        // Removing images, enemies, and nextLevelGoal used in previous tile map
-        this.flight.destroy();
-        this.nextLevelGoal.destroy();
-        this.church.destroy();
-        this.deadTreeChurch.destroy();
-        this.bigcrateChurch.destroy();
-        this.cactus1.destroy();
-        this.cactus2.destroy();
-        this.deadTree.destroy();
-        this.deadTree2.destroy();
-        this.bigcrate.destroy();
-        this.bigcrate2.destroy();
-        this.Snake1.death();
-        this.Snake2.death();
-        this.Snake3.death();
-        this.Snake4.death();
-        this.Snake5.death();
-        this.basicEnemy1.death();
-        this.basicEnemy2.death();
-        this.priest1.death();
-        this.priest2.death();
-        this.priest3.death();
-        this.priest4.death();
+        this.clearAllPlatforms();
+        this.clearAllStaticEntities();
+        this.clearAllEnemies();
         
         // Tile Map to 'switch scene' without making whole new level file. This map is for the town you can find.
         let levelTown = 
@@ -367,5 +269,73 @@ export class Level4 extends Phaser.Scene
                 this.add.existing(bgImage);
             }
         }
+    }
+
+    addPauseBtn()
+    {
+        //  Pause button
+        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.pauseBtn.on('pointerdown', (event) => {
+            this.scene.pause('level-4')
+            this.scene.setVisible(false, 'level-4');
+            this.scene.launch('pause-scene', {scene: this.scene.key});
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+    }
+
+    dialogSetup1()
+    {
+        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = dialogTree.addSequence();
+        let sequence1 = dialogTree.addSequence();
+        let sequence2 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "Your horse has died.", this.player);
+        dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
+        dialogTree.addDialog(sequence0, "Good luck.", this.player,
+            [
+                ["Thanks?", () => {dialogTree.playSequence(1);}],
+                ["...", () => {dialogTree.playSequence(2);
+                }],
+            ]
+        );
+        dialogTree.addDialog(sequence1, "You're welcome. :)");
+        dialogTree.addDialog(sequence2, ":(");
+        dialogTree.playSequence(sequence0);
+    }
+
+    dialogSetup2()
+    {
+        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = dialogTree.addSequence();
+        let sequence1 = dialogTree.addSequence();
+        let sequence2 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
+        dialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
+        dialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
+        [
+            // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
+            ["Of course!", () => {
+                dialogTree.playSequence(1);  
+                this.priest1.death();
+                this.priest2.death();
+                this.priest3.death();
+                this.priest4.death();
+                this.flight = new Flight(this, 'flight', 150, 200);
+            }],
+            ["No.", () => {dialogTree.playSequence(2);
+            }],
+        ]
+        );
+        dialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
+        dialogTree.addDialog(sequence2, "How unfortunate.");
+        dialogTree.playSequence(sequence0);
     }
 }
