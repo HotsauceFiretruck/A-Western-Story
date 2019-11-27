@@ -13,8 +13,6 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         this.scene = scene;
         this.connection = connection;
         scene.add.existing(this);
-        scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
 
         //Status
         this.status = {
@@ -90,6 +88,9 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
         this.displayHealth.setScrollFactor(0, 0);
+
+        this.gun = scene.add.image(this.x, this.y, 'gun');
+        this.gun.setDepth(0).setScale(2);
     }
 
     update()
@@ -100,6 +101,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
             this.controller.update();
         }
         
+        this.controller.updateGun();
+
         if (this.y > 600)
         {
             this.death();

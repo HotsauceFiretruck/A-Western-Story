@@ -1,21 +1,21 @@
-import { LevelTutorial } from "./levels/LevelTutorial.js";
-import { DustinLevel } from "./levels/DustinLevel.js";
-import { AlexLevel } from "./levels/AlexLevel.js";
-import { AlexLevelPart2 } from "./levels/AlexLevelPart2.js";
-import { EthanLevel } from "./levels/EthanLevel.js";
-import { LoganLevel } from "./levels/LoganLevel.js";
-import { FinalLevel } from "./levels/FinalLevel.js";
-import { DeathScene } from "./interfaces/DeathScene.js";
-import { PreloaderScene } from "./interfaces/PreloaderScene.js";
-import { MenuScene } from "./interfaces/MenuScene.js";
-import { LevelSelect } from "./interfaces/LevelSelect.js";
-import { PauseScene } from "./interfaces/PauseScene.js";
+import { DeathScene } from "../interfaces/DeathScene.js";
+import { PreloaderScene } from "../interfaces/PreloaderScene.js";
+import { MenuScene } from "../interfaces/MenuScene.js";
+import { LevelSelect } from "../interfaces/LevelSelect.js";
+import { PauseScene } from "../interfaces/PauseScene.js";
+
+import { LevelTutorial } from "./LevelTutorial.js";
+import { Level1 } from "./Level1.js";
+import { Level1P2 } from "./Level1P2.js";
+import { Level2 } from "./Level2.js";
+import { Level3 } from "./Level3.js";
+import { Level4 } from "./Level4.js";
+import { Level5 } from "./Level5.js";
 
 export class StoryMode 
 {
     constructor() 
-    {
-        
+    {      
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
 
@@ -28,15 +28,15 @@ export class StoryMode
         let menu = new MenuScene(this);
         let levelSelect = new LevelSelect(this);
         let pauseScene = new PauseScene(this);
+        let death = new DeathScene(this);
 
         let levelTutorial = new LevelTutorial(this);
-        let level1 = new AlexLevel(this);
-        let level1Continued = new AlexLevelPart2(this);
-        let level2 = new DustinLevel(this);
-        let level3 = new LoganLevel(this);
-        let level4 = new EthanLevel(this);
-        let level5 = new FinalLevel(this);
-        let death = new DeathScene(this);
+        let level1 = new Level1(this);
+        let level1P2 = new Level1P2(this);
+        let level2 = new Level2(this);
+        let level3 = new Level3(this);
+        let level4 = new Level4(this);
+        let level5 = new Level5(this);
 
         //Initializing Config
         this.config = {
@@ -72,7 +72,8 @@ export class StoryMode
                 ]
             },
           
-            scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, level1, level1Continued, level2, level3, level4, level5, death]
+            scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, 
+                    level1, level1P2, level2, level3, level4, level5, death]
         };
 
         let game = new Phaser.Game(this.config);
