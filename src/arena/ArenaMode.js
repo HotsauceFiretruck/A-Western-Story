@@ -45,6 +45,13 @@ export class ArenaMode
             },
             canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
             plugins: {
+                global: [
+                    {
+                        plugin: rexinputtextplugin,
+                        key: "rexInputTextPlugin",
+                        mapping: "rexInputTextPlugin"
+                    }
+                ],
                 scene: [
                     {
                         plugin: rexvirtualjoystickplugin,
