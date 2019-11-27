@@ -42,11 +42,11 @@ export class DialogTree
             this.scene.player.stageMode(); // player set on stage --> disable everything.
         }
 
-        if (this.scene.clouds != undefined)
+        if (this.scene.statics != undefined)
         {
-            for (let i = 0; i < this.scene.clouds.list.length; i++)
+            for (let i = 0; i < this.scene.statics.list.length; i++)
             {
-                this.scene.clouds.list[i].stageMode();
+                this.scene.statics.list[i].stageMode();
             }
         }
     }
@@ -81,6 +81,11 @@ export class DialogTree
         this.currentSequence = this.sequences[sequenceId];
     }
 
+    setMethod(method)
+    {
+        this.method = method;
+    }
+
     endTree()
     {
         this.currentSequence = null;
@@ -102,12 +107,17 @@ export class DialogTree
             this.scene.player.playMode();
         }
 
-        if (this.scene.clouds != undefined)
+        if (this.scene.statics != undefined)
         {
-            for (let i = 0; i < this.scene.clouds.list.length; i++)
+            for (let i = 0; i < this.scene.statics.list.length; i++)
             {
-                this.scene.clouds.list[i].playMode();
+                this.scene.statics.list[i].playMode();
             }
+        }
+
+        if (this.method != undefined)
+        {
+            this.method();
         }
     }
 }

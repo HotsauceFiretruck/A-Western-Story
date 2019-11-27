@@ -221,7 +221,7 @@ export class Enemy extends Phaser.Physics.Matter.Sprite
             this.scene.matterCollision.removeOnCollideActive({ objectA: sensors });
             this.scene.enemies.list.splice(this.scene.enemies.list.indexOf(this), 1);
         }
-        
+
         this.destroy();
     }
 }
