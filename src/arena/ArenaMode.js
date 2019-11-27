@@ -72,7 +72,6 @@ export class ArenaMode
             game.device.os.windowsPhone)
         {
             this.isMobile = true;
-            ScreenOrientation.lock("landscape");
         }
     }
 }
