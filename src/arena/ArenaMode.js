@@ -3,6 +3,8 @@ import { ArenaDeathScene } from "./ArenaDeathScene.js";
 import { PreloaderArena } from "./PreloaderArena.js";
 import { Connection } from "./Connection.js";
 import { ServerSelect } from "./ServerSelect.js";
+import { PauseScene } from "../interfaces/PauseScene.js";
+import { NameScene } from "./NameScene.js";
 
 
 export class ArenaMode 
@@ -20,12 +22,15 @@ export class ArenaMode
 
         //Initializing Level
         let preloader = new PreloaderArena(this);
+        let nameInput = new NameScene(this, connection);
         let serverList = new ServerSelect(this, connection);
         let levelarena = new ArenaLevel(this, connection);
         let death = new ArenaDeathScene(this);
+        let pauseScene = new PauseScene(this);
 
         //Initializing Config
         this.config = {
+            parent: 'phaser-div',
             type: Phaser.AUTO,
             pixelArt: true,
             activePointers: 4,
@@ -37,12 +42,22 @@ export class ArenaMode
             },
             scale: {
                 mode: Phaser.Scale.FIT,
-                parent: 'AWesternStory',
+                parent: 'phaser-div',
                 width: defaultWidth,
-                height: defaultHeight,
+                height: defaultHeight
             },
             canvasStyle: 'padding: 0; margin: auto; display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0;',
+            dom: {
+                createContainer: true
+            },
             plugins: {
+                global: [
+                    {
+                        plugin: rexinputtextplugin,
+                        key: "rexInputTextPlugin",
+                        mapping: "rexInputTextPlugin"
+                    }
+                ],
                 scene: [
                     {
                         plugin: rexvirtualjoystickplugin,
@@ -57,7 +72,7 @@ export class ArenaMode
                 ]
             },
          
-            scene: [preloader, serverList, levelarena, death]
+            scene: [preloader, pauseScene, nameInput, serverList, levelarena, death]
 
         };
 
