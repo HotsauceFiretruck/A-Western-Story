@@ -27,7 +27,12 @@ export class Connection {
     }
 
     setUsername(name) {
-        this.username = name;
+        if (name === "") {
+            this.username = this.socket.id;
+        }
+        else {
+            this.username = name;
+        }
     }
 
     cleanup() {
