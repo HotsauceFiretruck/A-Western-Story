@@ -1,14 +1,23 @@
-import { ArenaLevel } from "./ArenaLevel.js";
-import { ArenaDeathScene } from "./ArenaDeathScene.js";
-import { PreloaderArena } from "./PreloaderArena.js";
-import { Connection } from "./Connection.js";
-import { ServerSelect } from "./ServerSelect.js";
-import { PauseScene } from "../interfaces/PauseScene.js";
-import { NameScene } from "./NameScene.js";
-import { ServerDisconnect } from "./ServerDisconnect.js";
+import { ArenaLevel } from "./arena/ArenaLevel.js";
+import { DeathScene } from "./interfaces/DeathScene.js";
+import { PreloaderScene } from "./interfaces/PreloaderScene.js";
+import { Connection } from "./arena/Connection.js";
+import { ServerSelect } from "./arena/ServerSelect.js";
+import { MenuScene } from "./interfaces/MenuScene.js";
+import { LevelSelect } from "./interfaces/LevelSelect.js";
+import { PauseScene } from "./interfaces/PauseScene.js";
+import { NameScene } from "./arena/NameScene.js";
+import { ServerDisconnect } from "./arena/ServerDisconnect.js";
 
+import { LevelTutorial } from "./campaign/LevelTutorial.js";
+import { Level1 } from "./campaign/Level1.js";
+import { Level1P2 } from "./campaign/Level1P2.js";
+import { Level2 } from "./campaign/Level2.js";
+import { Level3 } from "./campaign/Level3.js";
+import { Level4 } from "./campaign/Level4.js";
+import { Level5 } from "./campaign/Level5.js";
 
-export class ArenaMode 
+export class Game 
 {
     constructor() 
     {
@@ -19,16 +28,29 @@ export class ArenaMode
         let defaultWidth = 1200;
         let defaultHeight = 600;
 
+        //Connection for arena
         let connection = new Connection();
 
-        //Initializing Level
-        let preloader = new PreloaderArena(this);
+        //Initializing Levels
+        let preloader = new PreloaderScene(this);
+        let menu = new MenuScene(this);
+        let levelSelect = new LevelSelect(this);
+        let pauseScene = new PauseScene(this);
+        let death = new DeathScene(this);
+
+        let levelTutorial = new LevelTutorial(this);
+        let level1 = new Level1(this);
+        let level1P2 = new Level1P2(this);
+        let level2 = new Level2(this);
+        let level3 = new Level3(this);
+        let level4 = new Level4(this);
+        let level5 = new Level5(this);
+
+        //Arena stuff
         let nameInput = new NameScene(this, connection);
         let serverList = new ServerSelect(this, connection);
-        let levelarena = new ArenaLevel(this, connection);
-        let death = new ArenaDeathScene(this);
-        let pauseScene = new PauseScene(this);
-        let svrDisconnect = new ServerDisconnect(this, connection);
+        let levelArena = new ArenaLevel(this, connection);
+        let serverDisconnect = new ServerDisconnect(this, connection);
 
         //Initializing Config
         this.config = {
@@ -66,8 +88,10 @@ export class ArenaMode
                     }
                 ]
             },
-         
-            scene: [preloader, nameInput, serverList, levelarena, death, svrDisconnect, pauseScene]
+            
+            scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, 
+                level1, level1P2, level2, level3, level4, level5, death,
+                nameInput, serverList, levelArena, serverDisconnect]
 
         };
 
@@ -86,5 +110,5 @@ export class ArenaMode
     }
 }
 
-let A_Western_Story = new ArenaMode();
+let A_Western_Story = new Game();
 
