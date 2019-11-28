@@ -9,6 +9,7 @@ export class Connection {
         this.otherPlayers = null;
         this.firstSetup = true;
         this.updateTimer = null;
+        this.username = null;
     }
 
     //Setup the server with an IP and options
@@ -22,6 +23,10 @@ export class Connection {
         let ioParams = {reconnection: true, reconnectionDelay: 3000, reconnectionAttempts: Number.MAX_VALUE, timeout: 7000}
         this.socket = io(server, ioParams);
         this.socket.close();
+    }
+
+    setUsername(name) {
+        this.username = name;
     }
 
     cleanup() {
@@ -46,7 +51,7 @@ export class Connection {
             else {
                 this.socket.emit('respawn', this.socket.id);
             }
-            this.player.name.text = String(this.socket.id);
+            this.player.name.text = String(this.username);
             this.otherPlayers = null;
             this.socket.emit('get_all_players');
         }
@@ -66,13 +71,14 @@ export class Connection {
             x: this.player.x,
             y: this.player.y,
             id: this.socket.id,
+            name: this.username,
             velocity: {
                 x: this.player.body.velocity.x,
                 y: this.player.body.velocity.y
             }
         });
         //set the player name text of ourselves to our socket id (for now until name enter screen is made)
-        this.player.name.text = this.socket.id;
+        this.player.name.text = this.username;
         this.socket.emit('get_all_players');
     } 
     
@@ -131,7 +137,7 @@ export class Connection {
                 // We make sure that we won't create a second instance of it
                 if (this.otherPlayers[index] === undefined && index !== this.socket.id) {
                     const newPlayer = new OtherPlayer(scene, playerData.x, playerData.y);
-                    newPlayer.name = this.createNameText(scene, newPlayer, playerData.id, "#373737");
+                    newPlayer.name = this.createNameText(scene, newPlayer, playerData.name, "#373737");
                     scene.add.existing(newPlayer.name);
                     this.otherPlayers[index] = newPlayer;
 
@@ -175,7 +181,7 @@ export class Connection {
 
         //when a player connects
         this.socket.on('player_connect', data => {
-            const { x, y, id, velocity } = data;
+            const { x, y, id, name, velocity } = data;
 
             //Ignore update if its from us or the playerlist doesn't exist yet
             if (this.socket.id === id || this.otherPlayers === null) {
@@ -184,7 +190,7 @@ export class Connection {
 
             if (this.otherPlayers[id] === undefined) {
                 const newPlayer = new OtherPlayer(scene, x, y);
-                newPlayer.name = this.createNameText(scene, newPlayer, id, "#373737");
+                newPlayer.name = this.createNameText(scene, newPlayer, name, "#373737");
                 scene.add.existing(newPlayer.name);
                 this.otherPlayers[id] = newPlayer;
 

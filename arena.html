@@ -3,8 +3,36 @@
 <head> 
     <title>A Western Story - Arena</title>
 
+    <style>
+        h2 {
+            text-align:center;
+        }
+
+        #input-box {
+            width: 300px;
+            height: 125px;
+            padding: 5px 20px 20px 10px;
+            position: absolute;
+            left:calc(50% - 150px);
+            box-sizing: border-box;
+            border-radius: 10px;
+            background: #577e7f;
+            border: 4px solid #000000;
+            border-radius: 6px;
+            font-family: "Courier New", serif;
+        }
+
+        #input-box input {
+            margin: 0px 0px 18px 0px;
+            width: 100%;
+            padding: 8px 4px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+
     <!--Setting up Game-->
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.20.1/dist/phaser.min.js"></script>
+    <script src="./lib/phaser.min.js"></script> <!--Hopefully this will shorten the load time.-->
     <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src="./lib/phaser-matter-collision-plugin.min.js"></script>
     <script src="./lib/rexvirtualjoystickplugin.min.js"></script>
@@ -36,5 +64,10 @@
 
 </head>
 <body>
+    <div id="phaser-div"></div>
+    <div id="input-box" style="display: none">
+        <h4>Enter a username</h4>
+        <input type="text" name="username" placeholder="username"><br/>
+    </div>
 </body>
 </html>

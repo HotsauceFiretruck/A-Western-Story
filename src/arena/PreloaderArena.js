@@ -114,6 +114,6 @@ export class PreloaderArena extends Phaser.Scene
 
     create()
     {
-        this.scene.start('server-select');
+        this.scene.start('name-scene');
     }
 }
