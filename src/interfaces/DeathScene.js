@@ -12,6 +12,8 @@ export class DeathScene extends Phaser.Scene
     init(data)
     {
         this.previousScene = data.scene;
+        this.player = data.player;
+        this.sceneObject = data.sceneObject;
     }
 
     create()
@@ -23,7 +25,16 @@ export class DeathScene extends Phaser.Scene
         let returnToMenu = this.add.image(600, 370, 'returnButton')
                         .setDisplaySize(360, 90)
                         .setInteractive();
-        returnToMenu.on('pointerdown', () => {this.scene.start('menu-scene');});
+        returnToMenu.on('pointerdown', () => {
+            if (this.previousScene !== 'level-arena') {
+                this.scene.stop(this.previousScene);
+                this.scene.start('menu-scene');
+            } else if (this.previousScene === 'level-arena') {
+                this.sceneObject.connection.cleanup();
+                this.scene.stop('level-arena');
+                this.scene.start('server-select');
+            }
+        });
         returnToMenu.on('pointerover', function (event) {
             this.setTint(616161);
         });

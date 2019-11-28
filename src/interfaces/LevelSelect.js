@@ -82,6 +82,7 @@ export class LevelSelect extends Phaser.Scene {
         this.backButton.on('pointerout', function (event) {
             this.clearTint();
         });
-    }
 
+        window.document.title = "A Western Story - Campaign";
+    }
 }

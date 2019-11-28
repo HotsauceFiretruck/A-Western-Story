@@ -53,7 +53,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         arenabtn.on('pointerdown', (event) => {
-            location.assign("arena.html");
+            this.scene.start('name-scene');
         });
         arenabtn.on('pointerover', function (event) {
             this.setTint(616161);
@@ -63,10 +63,6 @@ export class MenuScene extends Phaser.Scene {
         })
 
         tutorialBtn.on('pointerdown', (event) => { 
-            document.getElementById('menuMusic').pause();
-        })
-        tutorialBtn.on('pointerdown', (event) => { 
-            //document.getElementById('menuMusic').pause();
             this.scene.start('level-tutorial');
         })
         tutorialBtn.on('pointerover', function (event) {
@@ -76,5 +72,6 @@ export class MenuScene extends Phaser.Scene {
             this.clearTint();
         })
     
+        window.document.title = "A Western Story";
     }   
 }
