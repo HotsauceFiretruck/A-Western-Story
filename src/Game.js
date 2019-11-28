@@ -1,5 +1,4 @@
 import { ArenaLevel } from "./arena/ArenaLevel.js";
-import { ArenaDeathScene } from "./arena/ArenaDeathScene.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderScene } from "./interfaces/PreloaderScene.js";
 import { Connection } from "./arena/Connection.js";
@@ -51,7 +50,6 @@ export class Game
         let nameInput = new NameScene(this, connection);
         let serverList = new ServerSelect(this, connection);
         let levelArena = new ArenaLevel(this, connection);
-        let arenaDeath = new ArenaDeathScene(this);
         let serverDisconnect = new ServerDisconnect(this, connection);
 
         //Initializing Config
@@ -93,7 +91,7 @@ export class Game
             
             scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, 
                 level1, level1P2, level2, level3, level4, level5, death,
-                nameInput, serverList, levelArena, arenaDeath, serverDisconnect]
+                nameInput, serverList, levelArena, serverDisconnect]
 
         };
 
