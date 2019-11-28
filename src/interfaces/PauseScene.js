@@ -21,7 +21,7 @@ export class PauseScene extends Phaser.Scene {
             if (this.previousScene !== 'level-arena') {
                 this.scene.setVisible(true, this.previousScene);
             } else if (this.previousScene === 'level-arena') {
-                this.sceneObject.connection.setupPlayers(this.sceneObject, this.player);
+                this.sceneObject.connection.setupPlayers(this.sceneObject, this.player, "unpause");
                 this.scene.setVisible(true, 'level-arena');
             }
             this.scene.resume(this.previousScene);
