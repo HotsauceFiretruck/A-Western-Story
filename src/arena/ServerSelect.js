@@ -23,7 +23,7 @@ export class ServerSelect extends Phaser.Scene {
         // Adding functionality to buttons. Like click events and color change on hover.
         this.svr1Btn.on('pointerdown', (event) => {
             //Set the server IP based on the button & start the level
-            this.connection.setServer("https://western-server.herokuapp.com");
+            this.connection.setServer("http://127.0.0.1:3000");
             this.scene.start('level-arena');
         });
         this.svr1Btn.on('pointerover', function (event) {

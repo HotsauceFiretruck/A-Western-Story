@@ -51,6 +51,7 @@ export class Connection {
             //Tell the server we did so we can get our spawn point
             if (state === "unpause") {
                 this.socket.emit('respawn', "unpause");
+                this.player.playMode();
             }
             else {
                 this.socket.emit('respawn', this.socket.id);
