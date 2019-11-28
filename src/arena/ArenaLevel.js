@@ -1,23 +1,18 @@
 import { ArenaPlayer } from "./ArenaPlayer.js";
 import { TileMap } from "../components/TileMap.js";
+import { BaseLevel } from "../core/BaseLevel.js";
 
-
-export class ArenaLevel extends Phaser.Scene
+export class ArenaLevel extends BaseLevel
 {
-    constructor(PhaserGame, connection)
+    constructor(phaserGame, connection)
     {
-        super({key:"level-arena"});
-
-        this.PhaserGame = PhaserGame;
+        super(phaserGame, "level-arena");
         this.connection = connection;
     }
 
     create()
     {
-        this.projectiles = {
-            category: 2,
-            list: [] 
-        };
+        super.create();
 
         /* Creating Level using an Array + Tile Map
            1 is for block/tile; 0 is for empty space
@@ -48,71 +43,44 @@ export class ArenaLevel extends Phaser.Scene
             [1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
         ];
 
-        //Looping background with level
-        this.loopImage('background2', 720, 420, level[0].length * 32, level.length * 32, 1.45);
-
         // Create map
-        this.map = new TileMap(this, level, 32, 32, 'sand');
+        this.createTileMap('sand', level);
 
-        this.player = new ArenaPlayer(this, 800, 80, this.connection);
+        //Looping background with level
+        this.loopBackground('background2', 720, 420, 1.45);
+
+        this.setPlayer(new ArenaPlayer(this, 800, 80, this.connection));
         this.player.stageMode();
+
+        //  Pause button
+        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        this.pauseBtn.on('pointerdown', (event) => {
+            this.scene.setVisible(false, 'level-arena');
+            this.player.stageMode();
+            this.player.name.destroy();
+            this.connection.death();
+            this.scene.launch('pause-scene', {
+                scene: this.scene.key,
+                player: this.player,
+                sceneObject: this
+            });
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        this.pauseBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.pauseBtn.on('pointerout', function (event) {
+            this.clearTint();
+        });
 
         //Setup our players and listeners for the connection
         this.connection.setupPlayers(this, this.player);
         this.connection.setupListeners(this);
     }
 
-    //Next Level Method; Calls when player touches the interactive area (nextLevelGoal)
-    
-
-    //Load in image to fill in the level
-    /*
-        imageKey: the image key
-        imageWidth: the width of the image in pixels
-        imageHeight: the height of the image in pixels
-        levelWidth: the width of the level in pixels
-        levelHeight: the height of the level in pixels
-        scale: how large you what the image to be display onscreen
-    */
-    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
-    {
-        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
-        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
-
-        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
-        let heightRatio = maxHeight / (imageHeight * scale);
-
-        let numberOfWidth = Math.ceil(widthRatio);
-        let numberOfHeight = Math.ceil(heightRatio);
-
-        for (let w = 0; w < numberOfWidth; ++w)
-        {
-            for (let h = 0; h < numberOfHeight; ++h)
-            {
-                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
-                this.add.existing(bgImage);
-            }
-        }
-    }
-
     update()
     { 
-        //Update platforms
-        for (let i = 0; i < this.map.platforms.list.length; ++i)
-        {
-            this.map.platforms.list[i]
-        }
-
-        //Update bullets
-        for (let i = 0; i < this.projectiles.list.length; i++)
-        {
-            this.projectiles.list[i].update();
-        }
-        
-
-        //Update player
-        this.player.update();
+        super.update();
         this.connection.update();
     }
 }

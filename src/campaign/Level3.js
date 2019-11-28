@@ -4,9 +4,8 @@ import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { Platform } from "../components/Platform.js";
 
-export class LoganLevel extends Phaser.Scene
+export class Level3 extends Phaser.Scene
 {
-    
     constructor(PhaserGame)
     {
         super({key:"level-3"});

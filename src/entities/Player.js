@@ -13,9 +13,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
         super(scene.matter.world, x, y, 'player');
         this.scene = scene;
         scene.add.existing(this);
-        scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
-
         //Status
         this.status = {
             health: 20,
@@ -27,7 +24,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             canJump: true,
             numOfBullets: 1,
             fireRate: .3, // 1 bullet every [fireRate] seconds
-            bulletSpacing: Math.PI/12, //In Radians
+            bulletSpacing: Math.PI/24, //In Radians
             isFireReloaded: true,
             jumpCooldownTimer: null,
             allowHorizontal: true,
@@ -93,7 +90,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.displayHealth.setScrollFactor(0, 0).setDepth(0);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
-        this.gun.setDepth(0).setScale(2);
+        this.gun.setDepth(1).setScale(2);
     }
 
     update()

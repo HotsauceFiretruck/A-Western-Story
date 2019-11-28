@@ -9,6 +9,7 @@ export class Connection {
         this.otherPlayers = null;
         this.firstSetup = true;
         this.updateTimer = null;
+        this.username = null;
     }
 
     //Setup the server with an IP and options
@@ -16,12 +17,29 @@ export class Connection {
         server: the ip of the server to connect to
     */
     setServer(server) {
-        if (this.socket !== undefined) {
+        if (this.socket !== undefined && this.socket !== null) {
             this.socket.close();
+            this.socket = null;
         }
         let ioParams = {reconnection: true, reconnectionDelay: 3000, reconnectionAttempts: Number.MAX_VALUE, timeout: 7000}
         this.socket = io(server, ioParams);
         this.socket.close();
+    }
+
+    setUsername(name) {
+        if (name === "") {
+            this.username = this.socket.id;
+        }
+        else {
+            this.username = name;
+        }
+    }
+
+    cleanup() {
+        this.destroyTimer();
+        this.socket.removeAllListeners();
+        this.otherPlayers = null;
+        this.firstSetup = true;
     }
 
     //Sets the player to the right player object
@@ -29,17 +47,23 @@ export class Connection {
         scene: the scene the player is in
         player: our specified player
     */
-    setupPlayers(scene, player) {
+    setupPlayers(scene, player, state) {
         this.player = player;
         this.player.name = this.createNameText(scene, this.player, "Connecting...", "#1937ff");
         scene.add.existing(this.player.name);
         if (!this.firstSetup) {
             //When this scene is loaded it means you respawned
             //Tell the server we did so we can get our spawn point
-            this.socket.emit('respawn', this.socket.id);
-            this.player.name.text = String(this.socket.id);
-            this.otherPlayers = null;
-            this.socket.emit('get_all_players');
+            if (state === "unpause") {
+                this.socket.emit('respawn', "unpause");
+                this.player.playMode();
+            }
+            else {
+                this.socket.emit('respawn', this.socket.id);
+                this.otherPlayers = null;
+                this.socket.emit('get_all_players');
+            }
+            this.player.name.text = String(this.username);
         }
     }
 
@@ -57,13 +81,14 @@ export class Connection {
             x: this.player.x,
             y: this.player.y,
             id: this.socket.id,
+            name: this.username,
             velocity: {
                 x: this.player.body.velocity.x,
                 y: this.player.body.velocity.y
             }
         });
         //set the player name text of ourselves to our socket id (for now until name enter screen is made)
-        this.player.name.text = this.socket.id;
+        this.player.name.text = this.username;
         this.socket.emit('get_all_players');
     } 
     
@@ -90,6 +115,7 @@ export class Connection {
 
         //on disconnect from server
         this.socket.on('disconnect', (reason) => {
+            console.log(reason);
             console.log("DISCONNECTED");
             //set player name to show reconnect & retry connection
             this.player.stageMode();
@@ -104,8 +130,20 @@ export class Connection {
                 }
             }
             this.otherPlayers = null;
-            
-            this.socket.connect();
+            if (reason === "io server disconnect" || reason === "forced close") {
+                this.player.stageMode();
+                this.player.name.destroy();
+                this.death();
+
+                scene.scene.start("server-disconnect", {
+                    key: scene.scene.key,
+                    scene: scene,
+                    message: "Disconnected by server, the server is most likely full."
+                });
+            }
+            else {
+                this.socket.connect();
+            }
         });
 
         //Setup player list on client side (reply from get_all_players)
@@ -119,7 +157,7 @@ export class Connection {
                 // We make sure that we won't create a second instance of it
                 if (this.otherPlayers[index] === undefined && index !== this.socket.id) {
                     const newPlayer = new OtherPlayer(scene, playerData.x, playerData.y);
-                    newPlayer.name = this.createNameText(scene, newPlayer, playerData.id, "#373737");
+                    newPlayer.name = this.createNameText(scene, newPlayer, playerData.name, "#373737");
                     scene.add.existing(newPlayer.name);
                     this.otherPlayers[index] = newPlayer;
 
@@ -163,7 +201,7 @@ export class Connection {
 
         //when a player connects
         this.socket.on('player_connect', data => {
-            const { x, y, id, velocity } = data;
+            const { x, y, id, name, velocity } = data;
 
             //Ignore update if its from us or the playerlist doesn't exist yet
             if (this.socket.id === id || this.otherPlayers === null) {
@@ -172,7 +210,7 @@ export class Connection {
 
             if (this.otherPlayers[id] === undefined) {
                 const newPlayer = new OtherPlayer(scene, x, y);
-                newPlayer.name = this.createNameText(scene, newPlayer, id, "#373737");
+                newPlayer.name = this.createNameText(scene, newPlayer, name, "#373737");
                 scene.add.existing(newPlayer.name);
                 this.otherPlayers[id] = newPlayer;
 
@@ -192,7 +230,7 @@ export class Connection {
             this.movePlayer();
             if (this.updateTimer === null) {
                 this.updateTimer = scene.time.addEvent({
-                    delay: 100,
+                    delay: 85,
                     callback: () => { this.movePlayer() },
                     callbackScope: this,
                     loop: true
@@ -292,7 +330,7 @@ export class Connection {
         for (let id in this.otherPlayers) {
             let player = this.otherPlayers[id]
             if (player.x !== undefined) {
-                let smoothness = 0.20;
+                let smoothness = 0.15;
     
                 // Interpolate the player's position
                 player.x += (player.target_x - player.x) * smoothness;

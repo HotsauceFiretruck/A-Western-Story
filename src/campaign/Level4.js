@@ -7,7 +7,7 @@ import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
 import { Flight } from "../powerups/Flight.js";
 
-export class EthanLevel extends Phaser.Scene
+export class Level4 extends Phaser.Scene
 {
     constructor(PhaserGame)
     {
@@ -17,6 +17,7 @@ export class EthanLevel extends Phaser.Scene
 
     create()
     {
+        let scale = this.PhaserGame.scale;
         // Tile Map for start of level 4
         // 0s symbolize empty spaces
         // 1s symbolize ground spaces/squares/tiles or whatever you want to call them
@@ -57,7 +58,7 @@ export class EthanLevel extends Phaser.Scene
         this.deadTree3 = this.add.image(1450, 490, 'deadtree').setScale(1.75);
 
         this.map = new TileMap(this, level, 32, 32, 'sand');
-        this.player = new Player(this, 3000, 550);
+        this.player = new Player(this, 150, 550);
 
         // Sets the goal and function for this area
         // When reached the the function .switchToChurch will run, causing things to change and update.
@@ -86,22 +87,6 @@ export class EthanLevel extends Phaser.Scene
         this.Snake5 = new Snake(this, 2900, 575);
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
-        
-        // (broken) Pause button
-        this.pauseBtn = this.add.sprite(1150 * scale, 45 * scale, 'pauseBtn').setScale(2.25 * scale).setInteractive().setScrollFactor(0,0);
-        this.pauseBtn.on('pointerdown', (event) => {
-            this.scene.launch('pause-scene');
-            this.scene.pause().setVisible(false);
-            this.scene.resume('pause-scene');
-        });
-
-        // Functions to tint the buttons on hover to look nice. :)
-        this.pauseButton.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.pauseButton.on('pointerout', function (event) {
-            this.clearTint();
-        });
 
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
         let dialogTree = new DialogTree(this, 600, 100);
