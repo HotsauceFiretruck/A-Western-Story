@@ -50,7 +50,7 @@ export class Connection {
             //When this scene is loaded it means you respawned
             //Tell the server we did so we can get our spawn point
             if (state === "unpause") {
-                this.socket.emit('unpause', this.socket.id);
+                this.socket.emit('respawn', "unpause");
             }
             else {
                 this.socket.emit('respawn', this.socket.id);
