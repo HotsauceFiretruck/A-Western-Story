@@ -97,4 +97,8 @@ export class DesktopController
     {
         this.scene.input.on('pointerdown', (pointer) => { this.player.shoot(pointer.worldX, pointer.worldY)});
     }
+
+    disable() {}
+
+    enable() {}
 }
