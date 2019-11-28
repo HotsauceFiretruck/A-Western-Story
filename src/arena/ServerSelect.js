@@ -14,9 +14,9 @@ export class ServerSelect extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen
-        this.svr1Btn = this.add.sprite(300, 175, 'svr1btn').setScale(2).setInteractive();
-        this.svr2Btn = this.add.sprite(600, 175, 'svr2btn').setScale(2).setInteractive();
-        this.svr3Btn = this.add.sprite(900, 175, 'svr3btn').setScale(2).setInteractive();
+        this.svr1Btn = this.add.sprite(300, 200, 'svr1btn').setScale(2).setInteractive();
+        this.svr2Btn = this.add.sprite(600, 200, 'svr2btn').setScale(2).setInteractive();
+        this.svr3Btn = this.add.sprite(900, 200, 'svr3btn').setScale(2).setInteractive();
         this.svr4Btn = this.add.sprite(450, 275, 'svr4btn').setScale(2).setInteractive();
         this.svr5Btn = this.add.sprite(750, 275, 'svr5btn').setScale(2).setInteractive();
 
