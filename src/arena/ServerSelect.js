@@ -14,11 +14,13 @@ export class ServerSelect extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen
-        this.svr1Btn = this.add.sprite(600, 100, 'svr1btn').setScale(2).setInteractive();
-        this.svr2Btn = this.add.sprite(600, 200, 'svr2btn').setScale(2).setInteractive();
-        this.svr3Btn = this.add.sprite(600, 300, 'svr3btn').setScale(2).setInteractive();
-        this.svr4Btn = this.add.sprite(600, 400, 'svr4btn').setScale(2).setInteractive();
-        this.svr5Btn = this.add.sprite(600, 500, 'svr5btn').setScale(2).setInteractive();
+        this.svr1Btn = this.add.sprite(300, 175, 'svr1btn').setScale(2).setInteractive();
+        this.svr2Btn = this.add.sprite(600, 175, 'svr2btn').setScale(2).setInteractive();
+        this.svr3Btn = this.add.sprite(900, 175, 'svr3btn').setScale(2).setInteractive();
+        this.svr4Btn = this.add.sprite(450, 275, 'svr4btn').setScale(2).setInteractive();
+        this.svr5Btn = this.add.sprite(750, 275, 'svr5btn').setScale(2).setInteractive();
+
+        this.returnBtn = this.add.sprite(600, 425, 'returnButton').setScale(2).setInteractive();
 
         // Adding functionality to buttons. Like click events and color change on hover.
         this.svr1Btn.on('pointerdown', (event) => {
@@ -74,6 +76,16 @@ export class ServerSelect extends Phaser.Scene {
             this.setTint(616161);
         });
         this.svr5Btn.on('pointerout', function (event) {
+            this.clearTint();
+        });
+
+        this.returnBtn.on('pointerdown', (event) => {
+            this.scene.start('menu-scene');
+        });
+        this.returnBtn.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        this.returnBtn.on('pointerout', function (event) {
             this.clearTint();
         });
     }

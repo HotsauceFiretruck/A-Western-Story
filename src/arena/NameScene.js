@@ -23,7 +23,7 @@ export class NameScene extends Phaser.Scene {
         this.scaleBox(scale);
 
         // Creating buttons on screen
-        let playBtn = this.add.sprite(600, 400, 'playbtn').setScale(2).setInteractive();
+        let playBtn = this.add.sprite(600, 400, 'playButton').setScale(2).setInteractive();
 
         // Adding functionality to buttons. Like click events and color change on hover.
         playBtn.on('pointerdown', (event) => {
@@ -41,6 +41,8 @@ export class NameScene extends Phaser.Scene {
         playBtn.on('pointerout', function (event) {
             this.clearTint();
         });
+
+        window.document.title = "A Western Story - Arena";
     }
 
     scaleBox(scale) {
