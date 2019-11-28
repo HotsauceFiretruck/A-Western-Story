@@ -53,6 +53,20 @@ export class BaseLevel extends Phaser.Scene
         this.createTileMap('grass', defaultTileMap);
 
         this.dialogTree = new DialogTree(this, 600, 100);
+
+        let pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        pauseButton.on('pointerdown', (event) => {
+            this.scene.pause(this.scene.key);
+            this.scene.setVisible(false, this.scene.key);
+            this.scene.launch('pause-scene', {scene: this.scene.key});
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        pauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        pauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
     }
 
     update()
