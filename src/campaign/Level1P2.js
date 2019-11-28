@@ -1,7 +1,5 @@
 import { BaseLevel } from "../core/BaseLevel.js";
 import { Enemy } from "../entities/Enemy.js";
-import { TileMap } from "../components/TileMap.js";
-import { DialogTree } from "../interfaces/DialogTree.js";
 import { Bullet } from "../entities/Bullet.js";
 
 export class Level1P2 extends BaseLevel
