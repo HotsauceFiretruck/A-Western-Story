@@ -55,10 +55,10 @@ export class Connection {
             }
             else {
                 this.socket.emit('respawn', this.socket.id);
+                this.otherPlayers = null;
+                this.socket.emit('get_all_players');
             }
             this.player.name.text = String(this.username);
-            this.otherPlayers = null;
-            this.socket.emit('get_all_players');
         }
     }
 
