@@ -58,6 +58,8 @@ export class OtherPlayer extends Phaser.Physics.Matter.Sprite
             .setCollisionCategory(this.category)
             .setDepth(1);
 
+        this.gun = scene.add.image(this.x, this.y, 'gun');
+        this.gun.setDepth(1).setScale(2);
     }
 
     //Important for entities
