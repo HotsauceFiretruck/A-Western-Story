@@ -90,7 +90,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.displayHealth.setScrollFactor(0, 0).setDepth(0);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
-        this.gun.setDepth(0).setScale(2);
+        this.gun.setDepth(1).setScale(2);
     }
 
     update()
