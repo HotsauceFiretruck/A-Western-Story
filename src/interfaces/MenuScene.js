@@ -53,7 +53,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         arenabtn.on('pointerdown', (event) => {
-            location.assign("arena.html");
+            this.scene.start('name-scene');
         });
         arenabtn.on('pointerover', function (event) {
             this.setTint(616161);
@@ -76,5 +76,6 @@ export class MenuScene extends Phaser.Scene {
             this.clearTint();
         })
     
+        window.document.title = "A Western Story";
     }   
 }

@@ -80,11 +80,6 @@ export class Connection {
             velocity: {
                 x: this.player.body.velocity.x,
                 y: this.player.body.velocity.y
-            },
-            gun: {
-                x: this.player.gun.x,
-                y: this.player.gun.y,
-                rotation: this.player.gun.rotation
             }
         });
         //set the player name text of ourselves to our socket id (for now until name enter screen is made)
@@ -124,7 +119,6 @@ export class Connection {
 
             for (let id in this.otherPlayers) {
                 if (this.otherPlayers[id] !== undefined) {
-                    this.otherPlayers[id].gun.destroy();
                     this.otherPlayers[id].name.destroy();
                     this.otherPlayers[id].destroy();
                     delete this.otherPlayers[id];
@@ -133,7 +127,6 @@ export class Connection {
             this.otherPlayers = null;
             if (reason === "io server disconnect" || reason === "forced close") {
                 this.player.stageMode();
-                this.player.gun.destroy();
                 this.player.name.destroy();
                 this.death();
 
@@ -167,16 +160,13 @@ export class Connection {
                     this.otherPlayers[index].target_y = playerData.y;
                     this.otherPlayers[index].velocity_target_x = playerData.velocity.x;
                     this.otherPlayers[index].velocity_target_y = playerData.velocity.y;
-                    this.otherPlayers[index].gun_target_x = playerData.gun.x;
-                    this.otherPlayers[index].gun_target_y = playerData.gun.y;
-                    this.otherPlayers[index].gun_target_rotation = playerData.gun.rotation;
                 }
             }
         });
 
         //Get movement updates from players
         this.socket.on('update_player', data => {
-            const { x, y, id, velocity, gun } = data;
+            const { x, y, id, velocity } = data;
 
             //Ignore update if its from us or the playerlist doesn't exist yet
             if (this.socket.id === id || this.otherPlayers === null) {
@@ -188,9 +178,6 @@ export class Connection {
             this.otherPlayers[id].target_y = y;
             this.otherPlayers[id].velocity_target_x = velocity.x;
             this.otherPlayers[id].velocity_target_y = velocity.y;
-            this.otherPlayers[id].gun_target_x = gun.x;
-            this.otherPlayers[id].gun_target_y = gun.y;
-            this.otherPlayers[id].gun_target_rotation = gun.rotation;
         });
 
         //when a player is disconnects
@@ -201,7 +188,6 @@ export class Connection {
             }
 
             if (this.otherPlayers[id] !== undefined) {
-                this.otherPlayers[id].gun.destroy();
                 this.otherPlayers[id].name.destroy();
                 this.otherPlayers[id].destroy();
                 delete this.otherPlayers[id];
@@ -210,7 +196,7 @@ export class Connection {
 
         //when a player connects
         this.socket.on('player_connect', data => {
-            const { x, y, id, name, velocity, gun } = data;
+            const { x, y, id, name, velocity } = data;
 
             //Ignore update if its from us or the playerlist doesn't exist yet
             if (this.socket.id === id || this.otherPlayers === null) {
@@ -227,9 +213,6 @@ export class Connection {
                 this.otherPlayers[id].target_y = y;
                 this.otherPlayers[id].velocity_target_x = velocity.x;
                 this.otherPlayers[id].velocity_target_y = velocity.y;
-                this.otherPlayers[id].gun_target_x = gun.x;
-                this.otherPlayers[id].gun_target_y = gun.y;
-                this.otherPlayers[id].gun_target_rotation = gun.rotation;
             }
         })
 
@@ -326,11 +309,6 @@ export class Connection {
                 velocity: {
                     x: parseFloat(this.player.body.velocity.x.toFixed(2)),
                     y: parseFloat(this.player.body.velocity.y.toFixed(2))
-                },
-                gun: {
-                    x: this.player.gun.x,
-                    y: this.player.gun.y,
-                    rotation: this.player.gun.rotation
                 }
             })
         }
@@ -358,17 +336,6 @@ export class Connection {
     
                 player.name.x = player.x;
                 player.name.y = player.y-30;
-
-                player.gun.x += (player.gun_target_x - player.gun.x) * smoothness;
-                player.gun.y += (player.gun_target_y - player.gun.y) * smoothness;
-                player.gun.rotation += (player.gun_target_rotation - player.gun.rotation) * smoothness;
-
-                if (player.gun.rotation < 0) {
-                    player.gun.setFlipY(true);
-                } 
-                else {
-                    player.gun.setFlipY(false);
-                }
             }
         }
 
