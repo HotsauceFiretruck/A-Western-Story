@@ -28,7 +28,7 @@ export class Connection {
 
     setUsername(name) {
         if (name === "") {
-            this.username = this.socket.id;
+            this.username = "Player";
         }
         else {
             this.username = name;
