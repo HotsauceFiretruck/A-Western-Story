@@ -31,7 +31,7 @@ export class NameScene extends Phaser.Scene {
             document.getElementById('input-box').style.display = 'none';
             //Set the player name
             let username = document.getElementsByName('username')[0].value;
-            this.connection.setUsername(username);
+            this.connection.setUsername(username.trim());
             //Start the select screen
             this.scene.start('server-select');
         });
