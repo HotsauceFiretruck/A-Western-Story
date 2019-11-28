@@ -210,7 +210,7 @@ export class Connection {
             this.movePlayer();
             if (this.updateTimer === null) {
                 this.updateTimer = scene.time.addEvent({
-                    delay: 100,
+                    delay: 85,
                     callback: () => { this.movePlayer() },
                     callbackScope: this,
                     loop: true
@@ -310,7 +310,7 @@ export class Connection {
         for (let id in this.otherPlayers) {
             let player = this.otherPlayers[id]
             if (player.x !== undefined) {
-                let smoothness = 0.20;
+                let smoothness = 0.15;
     
                 // Interpolate the player's position
                 player.x += (player.target_x - player.x) * smoothness;
