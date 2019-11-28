@@ -87,21 +87,6 @@ export class Level4 extends Phaser.Scene
         this.Snake5 = new Snake(this, 2900, 575);
         this.basicEnemy1 = new Enemy(this, 1600, 550);
         this.basicEnemy2 = new Enemy(this, 2850, 575);
-        
-        //  Pause button
-        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
-        this.pauseBtn.on('pointerdown', (event) => {
-            this.scene.pause('level-4')
-            this.scene.setVisible(false, 'level-4');
-            this.scene.launch('pause-scene', {scene: this.scene.key});
-        });
-        // Functions to tint the buttons on hover to look nice. :)
-        this.pauseBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.pauseBtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
 
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
         let dialogTree = new DialogTree(this, 600, 100);
