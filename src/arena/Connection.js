@@ -125,8 +125,18 @@ export class Connection {
                 }
             }
             this.otherPlayers = null;
-            
-            if (reason !== "io server disconnect" && reason !== "forced close") {
+            if (reason === "io server disconnect" || reason === "forced close") {
+                this.player.stageMode();
+                this.player.name.destroy();
+                this.death();
+
+                scene.scene.start("server-disconnect", {
+                    key: scene.scene.key,
+                    scene: scene,
+                    message: "Disconnected by server, the server is most likely full."
+                });
+            }
+            else {
                 this.socket.connect();
             }
         });

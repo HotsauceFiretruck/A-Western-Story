@@ -5,6 +5,7 @@ import { Connection } from "./Connection.js";
 import { ServerSelect } from "./ServerSelect.js";
 import { PauseScene } from "../interfaces/PauseScene.js";
 import { NameScene } from "./NameScene.js";
+import { ServerDisconnect } from "./ServerDisconnect.js";
 
 
 export class ArenaMode 
@@ -27,6 +28,7 @@ export class ArenaMode
         let levelarena = new ArenaLevel(this, connection);
         let death = new ArenaDeathScene(this);
         let pauseScene = new PauseScene(this);
+        let svrDisconnect = new ServerDisconnect(this, connection);
 
         //Initializing Config
         this.config = {
@@ -51,13 +53,6 @@ export class ArenaMode
                 createContainer: true
             },
             plugins: {
-                global: [
-                    {
-                        plugin: rexinputtextplugin,
-                        key: "rexInputTextPlugin",
-                        mapping: "rexInputTextPlugin"
-                    }
-                ],
                 scene: [
                     {
                         plugin: rexvirtualjoystickplugin,
@@ -72,7 +67,7 @@ export class ArenaMode
                 ]
             },
          
-            scene: [preloader, pauseScene, nameInput, serverList, levelarena, death]
+            scene: [preloader, nameInput, serverList, levelarena, death, svrDisconnect, pauseScene]
 
         };
 
