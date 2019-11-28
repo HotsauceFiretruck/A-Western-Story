@@ -1,25 +1,25 @@
+import { BaseLevel } from "../core/BaseLevel.js";
 import { Player } from "../entities/Player.js";
-import { Enemy } from "../entities/Enemy.js";
 import { TileMap } from "../components/TileMap.js";
-import { DialogTree } from "../interfaces/DialogTree.js";
+import { Area } from "../components/Area.js";
 import { Platform } from "../components/Platform.js";
+import { DialogTree } from "../interfaces/DialogTree.js";
 
-export class Level3 extends Phaser.Scene
+export class Level3 extends BaseLevel
 {
-    constructor(PhaserGame)
+    constructor(phaserGame)
     {
-        super({key:"level-3"});
-        this.PhaserGame = PhaserGame;
+        super(phaserGame, "level-3");
     }
 
     create()
     {
-        this.add.image(50, 503, 'house');
-        this.add.image(800, 503, 'house');
-        this.add.image(600,200, 'cloud');
-        this.add.image(470,125, 'cloud');
-        this.add.image(200,210, 'cloud');
-        this.add.image(50,505, 'cactus');
+        this.add.image(700, 525, 'house');
+        this.add.image(800, 525, 'house');
+        this.add.image(600, 200, 'cloud');
+        this.add.image(470, 125, 'cloud');
+        this.add.image(200, 210, 'cloud');
+        this.add.image(150, 525, 'cactus');
         
 
         for(let i = -1; i < 40; i++){
@@ -27,6 +27,9 @@ export class Level3 extends Phaser.Scene
             new Platform(this, 2, i, 16, 0, 0, 32, 32);
 
         }
+
+        super.create();
+
         let groundLayer = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -48,8 +51,17 @@ export class Level3 extends Phaser.Scene
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
         ];
-        this.loopImage('background2', 720, 420, groundLayer[0].length * 32, groundLayer.length * 32, 1.45);
-        this.map = new TileMap(this, groundLayer, 32, 32, 'sand');
+
+        this.loopBackground('background2', 720, 420, 1.45);
+        // this.map = new TileMap(this, 66, 19);
+
+        this.setPlayerPosition(300, 100);
+        // this.player = new Player(this, 300, 100);
+        this.player.disableHorizontalMovement();
+        this.player.status.maxVelocityY = 13;
+        this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
+
+        this.createTileMap('sand', groundLayer);
 
         this.platformCreation = [];
         this.isLevelEnded = false;
@@ -63,11 +75,6 @@ export class Level3 extends Phaser.Scene
             category: 4,
             list: []
         };
-
-        this.player = new Player(this, 300, 100);
-        this.player.disableHorizontalMovement();
-        this.player.status.maxVelocityY = 13;
-        this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
 
         this.storyMessage = new DialogTree(this, 600, 100);
         this.dialogSetup(this.storyMessage, this);
@@ -109,6 +116,12 @@ export class Level3 extends Phaser.Scene
             loop: true
             
         });
+    }
+
+    cameraFollowEntity(entity)
+    {
+        this.cameras.main.startFollow(entity, false, 0.5, 0.5);
+        this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
     }
 
     dialogSetup(storyMessage, scene)
