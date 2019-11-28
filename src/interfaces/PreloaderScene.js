@@ -77,9 +77,8 @@ export class PreloaderScene extends Phaser.Scene
         if(this.PhaserGame.isMobile)
         {
             this.load.image('thumb', 'assets/JoystickThumb.png');
-            this.load.image('base', 'assets/TestJoyStick.png');
+            this.load.image('base', 'assets/JoystickBase.png');
             this.load.image('gunbase', 'assets/JoystickGunBase.png');
-            this.load.image('jump', 'assets/JumpButton.png');
         }
         this.load.image('background', 'assets/Background.png');
         this.load.image('background2', 'assets/Background2.png');

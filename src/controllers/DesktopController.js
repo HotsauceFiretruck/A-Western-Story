@@ -43,12 +43,11 @@ export class DesktopController
             this.player.status.canJump && 
             this.player.status.isTouching.down)
         {
-
             this.player.setVelocityY(-this.player.status.maxVelocityY);
-            this.player.canJump = false;
-            this.jumpCooldownTimer = this.scene.time.addEvent({
-                delay: 250,
-                callback: () => (this.player.canJump = true)
+            this.player.status.canJump = false;
+            this.scene.time.addEvent({
+                delay: 700,
+                callback: () => (this.player.status.canJump = true)
             });
         }
     }
