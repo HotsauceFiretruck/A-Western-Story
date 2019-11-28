@@ -42,6 +42,7 @@ export class PauseScene extends Phaser.Scene {
                 this.scene.stop(this.previousScene);
                 this.scene.start('menu-scene');
             } else if (this.previousScene === 'level-arena') {
+                this.sceneObject.connection.cleanup();
                 this.scene.stop('level-arena');
                 this.scene.start('server-select');
             }

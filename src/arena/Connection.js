@@ -17,8 +17,9 @@ export class Connection {
         server: the ip of the server to connect to
     */
     setServer(server) {
-        if (this.socket !== undefined) {
+        if (this.socket !== undefined && this.socket !== null) {
             this.socket.close();
+            this.socket = null;
         }
         let ioParams = {reconnection: true, reconnectionDelay: 3000, reconnectionAttempts: Number.MAX_VALUE, timeout: 7000}
         this.socket = io(server, ioParams);
@@ -30,7 +31,10 @@ export class Connection {
     }
 
     cleanup() {
-
+        this.destroyTimer();
+        this.socket.removeAllListeners();
+        this.otherPlayers = null;
+        this.firstSetup = true;
     }
 
     //Sets the player to the right player object
