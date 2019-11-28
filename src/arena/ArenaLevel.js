@@ -58,7 +58,7 @@ export class ArenaLevel extends BaseLevel
             this.scene.setVisible(false, 'level-arena');
             this.player.stageMode();
             this.player.name.destroy();
-            this.connection.destroyTimer();
+            //this.connection.destroyTimer();
             this.connection.death();
             this.scene.launch('pause-scene', {
                 scene: this.scene.key,
