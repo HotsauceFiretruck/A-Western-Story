@@ -45,11 +45,6 @@ export class Level4 extends BaseLevel
         this.createTileMap('sand', level);
         this.loopBackground('background2', 720, 420, 1.45);
 
-        for(var i = 0; i < 15; i++)
-        {
-            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
-        }
-
         this.cactus1 = this.addStaticImage('cactus', 800, 530);
         this.cactus2 = this.addStaticImage('cactus', 1100, 500);
         this.cactus3 = this.addStaticImage('cactus', 1725, 530);
@@ -70,9 +65,10 @@ export class Level4 extends BaseLevel
         new Enemy(this, 1600, 550);
         new Enemy(this, 2850, 575);
         
-        this.setPlayerPosition(100, 560);
+        this.setPlayerPosition(3000, 560);
 
         this.addPauseBtn();
+        
         this.dialogSetup1();
     }
 
@@ -105,12 +101,12 @@ export class Level4 extends BaseLevel
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
+        this.createTileMap('sand', levelChurch);
+        this.loopBackground('background2', 720, 420, 1.45);
+
         this.church = this.addStaticImage('church', 1850, 317).setScale(2.25);
         this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
         this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
-
-        this.createTileMap('sand', levelChurch);
-        this.loopBackground('background2', 720, 420, 1.45);
 
         this.setPlayerPosition(1400, 560);
 
@@ -131,6 +127,7 @@ export class Level4 extends BaseLevel
         this.clearAllPlatforms();
         this.clearAllStaticEntities();
         this.clearAllEnemies();
+        this.clearAllStaticImages();
         
         // Tile Map to 'switch scene' without making whole new level file. This map is for the town you can find.
         let levelTown = 
@@ -155,7 +152,9 @@ export class Level4 extends BaseLevel
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-        
+        this.createTileMap('sand', levelTown);
+        this.loopBackground('background2', 720, 420, 1.45);
+
         this.addStaticImage('waterTower', 1150, 435);
         for(var i=560; i <= 1300; i+=65){
             this.addStaticImage('fence', i, 550).setScale(.2);
@@ -172,9 +171,6 @@ export class Level4 extends BaseLevel
         this.addStaticImage('house', 1595, 525);
         this.addStaticImage('house', 1620, 525);
         this.addStaticImage('house', 1645, 525);
-
-        this.createTileMap('sand', levelTown);
-        this.loopBackground('background2', 720, 420, 1.45);
 
         this.setPlayerPosition(150, 525);
 
@@ -230,60 +226,60 @@ export class Level4 extends BaseLevel
     dialogSetup1()
     {
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let dialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = dialogTree.addSequence();
-        let sequence1 = dialogTree.addSequence();
-        let sequence2 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "Your horse has died.", this.player);
-        dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
-        dialogTree.addDialog(sequence0, "Good luck.", this.player,
+        let desertDialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = desertDialogTree.addSequence();
+        let sequence1 = desertDialogTree.addSequence();
+        let sequence2 = desertDialogTree.addSequence();
+        desertDialogTree.addDialog(sequence0, "Your horse has died.", this.player);
+        desertDialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
+        desertDialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {dialogTree.playSequence(1);}],
-                ["...", () => {dialogTree.playSequence(2);
+                ["Thanks?", () => {desertDialogTree.playSequence(1);}],
+                ["...", () => {desertDialogTree.playSequence(2);
                 }],
             ]
         );
-        dialogTree.addDialog(sequence1, "You're welcome. :)");
-        dialogTree.addDialog(sequence2, ":(");
-        dialogTree.playSequence(sequence0);
+        desertDialogTree.addDialog(sequence1, "You're welcome. :)");
+        desertDialogTree.addDialog(sequence2, ":(");
+        desertDialogTree.playSequence(sequence0);
     }
 
     dialogSetup2()
     {
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let dialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = dialogTree.addSequence();
-        let sequence1 = dialogTree.addSequence();
-        let sequence2 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
-        dialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
-        dialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
+        let churchDialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = churchDialogTree.addSequence();
+        let sequence1 = churchDialogTree.addSequence();
+        let sequence2 = churchDialogTree.addSequence();
+        churchDialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
+        churchDialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
+        churchDialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                dialogTree.playSequence(1);  
+                churchDialogTree.playSequence(1);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 this.flight = new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {dialogTree.playSequence(2);
+            ["No.", () => {churchDialogTree.playSequence(2);
             }],
         ]
         );
-        dialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
-        dialogTree.addDialog(sequence2, "How unfortunate.");
-        dialogTree.playSequence(sequence0);
+        churchDialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
+        churchDialogTree.addDialog(sequence2, "How unfortunate.");
+        churchDialogTree.playSequence(sequence0);
     }
 
     dialogSetup3()
     {
-        let dialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "You've made it back to town.", this.player);
-        dialogTree.addDialog(sequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
-        dialogTree.addDialog(sequence0, "You'll have to look further to see if you can find him.", this.player);
-        dialogTree.playSequence(sequence0);
+        let townDialogTree = new DialogTree(this, 600, 100);
+        let townSequence0 = townDialogTree.addSequence();
+        townDialogTree.addDialog(townSequence0, "You've made it back to town.", this.player);
+        townDialogTree.addDialog(townSequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
+        townDialogTree.addDialog(townSequence0, "You'll have to look further to see if you can find him.", this.player);
+        townDialogTree.playSequence(townSequence0);
     }
 }
