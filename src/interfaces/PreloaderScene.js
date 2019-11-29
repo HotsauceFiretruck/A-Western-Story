@@ -76,9 +76,9 @@ export class PreloaderScene extends Phaser.Scene
 
         if(this.PhaserGame.isMobile)
         {
-            this.load.image('thumb', 'assets/JoystickThumb.png');
-            this.load.image('base', 'assets/JoystickBase.png');
-            this.load.image('gunbase', 'assets/JoystickGunBase.png');
+            this.load.image('thumb', 'assets/Sprites/JoystickThumb.png');
+            this.load.image('base', 'assets/Sprites/JoystickBase.png');
+            this.load.image('gunbase', 'assets/Sprites/JoystickGunBase.png');
         }
         else {
             this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');

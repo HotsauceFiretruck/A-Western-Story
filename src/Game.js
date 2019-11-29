@@ -22,7 +22,7 @@ export class Game
     constructor() 
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
-        this.isMobile = false;
+        this.isMobile = true;
 
         //Detecting the Device's Size and Set Max
         let defaultWidth = 1200;
