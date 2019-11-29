@@ -80,6 +80,10 @@ export class PreloaderScene extends Phaser.Scene
             this.load.image('base', 'assets/JoystickBase.png');
             this.load.image('gunbase', 'assets/JoystickGunBase.png');
         }
+        else {
+            this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
+        }
+      
         this.load.image('background', 'assets/Backgrounds/Background.png');
         this.load.image('background2', 'assets/Backgrounds/Background2.png');
         this.load.image('background3', 'assets/Backgrounds/Background3.png');
@@ -158,8 +162,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('fullscreenButton', 'assets/Buttons/FullscreenButton.png');
         this.load.image('returnButton', 'assets/Buttons/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/Buttons/RespawnButton.png');
-
-        
     }
 
     create()
