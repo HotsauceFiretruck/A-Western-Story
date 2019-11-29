@@ -22,7 +22,7 @@ export class TripleShot extends PowerUp
                     loop: false
                 })  
                 this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
-                this.destroy();
+                this.remove();
             },
             context: this
         });
