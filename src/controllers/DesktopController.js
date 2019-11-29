@@ -46,7 +46,7 @@ export class DesktopController
             this.player.setVelocityY(-this.player.status.maxVelocityY);
             this.player.status.canJump = false;
             this.scene.time.addEvent({
-                delay: 700,
+                delay: 500,
                 callback: () => (this.player.status.canJump = true)
             });
         }
