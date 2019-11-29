@@ -5,13 +5,12 @@ import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
 import { Flight } from "../powerups/Flight.js";
 import { BaseLevel } from "../core/BaseLevel.js";
-import { Cloud } from "../statics/Cloud.js";
 
 export class Level4 extends BaseLevel
 {
-    constructor(PhaserGame)
+    constructor(phaserGame)
     {
-        super(PhaserGame, 'level-4');
+        super(phaserGame, 'level-4');
     }
 
     create()
@@ -65,7 +64,7 @@ export class Level4 extends BaseLevel
         new Enemy(this, 1600, 550);
         new Enemy(this, 2850, 575);
         
-        this.setPlayerPosition(3000, 560);
+        this.setPlayerPosition(100, 560);
 
         this.addPauseBtn();
         
@@ -182,27 +181,6 @@ export class Level4 extends BaseLevel
         new Enemy(this, 2650, 525);
 
         this.dialogSetup3();
-    }
-
-    update ()
-    {  
-        for (let i = 0; i < this.projectiles.list.length; i++)
-        {
-            this.projectiles.list[i].update();
-        }
-
-        //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
-            this.enemies.list[i].update();
-        }
-        
-        if (this.enemies.list.length == 0)
-        {
-            new Enemy(this, 100, 1000);
-        }
-        
-        this.player.update();
     }
 
     addPauseBtn()
