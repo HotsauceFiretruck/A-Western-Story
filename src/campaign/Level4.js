@@ -42,34 +42,19 @@ export class Level4 extends BaseLevel
             [1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
-        //Looping background with level
-        this.loopBackground('background2', 720, 420, 1.45);
 
-        //Create map
+        this.loopBackground('background2', 720, 420, 1.45);
         this.createTileMap('sand', level);
 
-        // Adding images to the background.
-        // Usage - 
-        // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
         this.cactus1 = this.addStaticImage('cactus', 800, 530);
         this.cactus2 = this.addStaticImage('cactus', 1100, 500);
         this.cactus3 = this.addStaticImage('cactus', 1725, 530);
-        this.bigcrate = this.addStaticImage('crate', 700, 532).setScale(.9);  // .setScale scales the image properly to fit the desired size.
+        this.bigcrate = this.addStaticImage('crate', 700, 532).setScale(.9);
         this.bigcrate2 = this.addStaticImage('crate', 1550, 532).setScale(.9);
         this.deadTree = this.addStaticImage('deadtree', 370, 425).setScale(1.75);
         this.deadTree2 = this.addStaticImage('deadtree', 3000, 490).setScale(1.75);
         this.deadTree3 = this.addStaticImage('deadtree', 1450, 490).setScale(1.75);
-
-        this.setPlayerPosition(100, level.length * 30);
         
-        //Adding cloods
-        for(var i = 0; i < 15; i++)
-        {
-            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
-        }
-
-        // Sets the goal and function for this area
-        // When reached the the function .switchToChurch will run, causing things to change and update.
         let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
         nextLevelGoal.whenTouched(this.player, () => {this.switchToChurch()});
         
@@ -81,18 +66,19 @@ export class Level4 extends BaseLevel
         new Enemy(this, 1600, 550);
         new Enemy(this, 2850, 575);
         
+        this.setPlayerPosition(3000, 560);
+
         this.addPauseBtn();
         this.dialogSetup1();
     }
 
-    // Method used to change the level when the player reaches a nextLevelGoal at the beginning.
     switchToChurch()
     {
         this.clearAllPlatforms();
         this.clearAllStaticEntities();
         this.clearAllEnemies();
+        this.clearAllStaticImages();
 
-        // Tile Map to 'switch scene' without making whole new level file. This map is for the town you can find.
         let levelChurch = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -115,30 +101,22 @@ export class Level4 extends BaseLevel
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-        this.clearAllStaticImages();
-
-        // Adding images to the background.
-        // Usage - 
-        // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
         this.church = this.addStaticImage('church', 1850, 317).setScale(2.25);
         this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
         this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
 
-        this.createTileMap(levelChurch, 'sand');
+        this.loopBackground('background2', 720, 420, 1.45);
+        this.createTileMap('sand', levelChurch);
 
-        this.setPlayerPosition(1400, 525);
+        this.setPlayerPosition(1400, 560);
 
-        // Sets a new nextLevelGoal with a new function for this area.
         let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
         nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
 
-        // Spawning in new enemies.
-        // Usage - 
-        // new EnemyType(scene, x-pos, y-pos)
-        new Priest(this, 1600, 525);
-        new Priest(this, 1700, 525);
-        new Priest(this, 1800, 525);
-        new Priest(this, 1900, 525);
+        this.priest1 = new Priest(this, 1600, 525);
+        this.priest2 = new Priest(this, 1700, 525);
+        this.priest3 = new Priest(this, 1800, 525);
+        this.priest4 = new Priest(this, 1900, 525);
 
         this.dialogSetup2();
     }
@@ -174,58 +152,34 @@ export class Level4 extends BaseLevel
         ];
 
         
-        // Adding images to the background.
-        // Usage - 
-        // scene.name = scene.add.image(x-pos, y-pos, 'imageName');
-        this.add.image(1150, 435, 'waterTower');
-
+        this.addStaticImage('waterTower', 1150, 435);
         for(var i=560; i <= 1300; i+=65){
-            this.add.image(i, 550, 'fence').setScale(.2);
+            this.addStaticImage('fence', i, 550).setScale(.2);
         }
-        this.add.image(1300, 525, 'deadtree');
+        this.addStaticImage('deadtree', 1300, 525);
+        this.addStaticImage('bigHouse', 785, 508);
+        this.addStaticImage('saloon', 1000, 508);
+        this.addStaticImage('sheriffhouse', 1125, 525);
+        this.addStaticImage('house', 1275, 525);
+        this.addStaticImage('house', 1300, 500);
+        this.addStaticImage('house', 1300, 525);
+        this.addStaticImage('bigHouse', 1425, 508);
+        this.addStaticImage('house', 1620, 500);
+        this.addStaticImage('house', 1595, 525);
+        this.addStaticImage('house', 1620, 525);
+        this.addStaticImage('house', 1645, 525);
 
-        this.add.image(785, 508, 'bigHouse');
+        this.createTileMap('sand', levelTown);
+        this.player.setPosition(150, 525);
 
-        this.add.image(1000, 508, 'saloon');
-
-        this.add.image(1125, 525, 'sheriffhouse');
-
-        this.add.image(1275, 525, 'house');
-        this.add.image(1300, 500, 'house');
-        this.add.image(1300, 525, 'house');
-
-        this.add.image(1425, 508, 'bigHouse');
-
-        this.add.image(1620, 500, 'house');
-        this.add.image(1595, 525, 'house');
-        this.add.image(1620, 525, 'house');
-        this.add.image(1645, 525, 'house');
-
-        // Changes the tiles on screen to give the effect of being in a new area without having to create another level.
-        this.map = new TileMap(this, levelTown, 32, 32, 'sand');
-        this.player.setPosition(150, 525); // Moves the player to the beginning of the tilemap
-
-        // Sets a new nextLevelGoal with a new function for this area.
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
-        this.nextLevelGoal.whenTouched(this.player, () => {
-            this.scene.start('level-5');
-        });
+        this.nextLevelGoal.whenTouched(this.player, () => {this.scene.start('level-5');});
 
-        // Spawning in new enemies.
-        // Usage - 
-        // scene.enemyName = new EnemyType(scene, x-pos, y-pos)
-        this.basicEnemy1 = new Enemy(this, 2800, 525);
-        this.basicEnemy2 = new Enemy(this, 2600, 525);
-        this.basicEnemy2 = new Enemy(this, 2650, 525);
+        new Enemy(this, 2800, 525);
+        new Enemy(this, 2600, 525);
+        new Enemy(this, 2650, 525);
 
-        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let dialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = dialogTree.addSequence();
-        dialogTree.addDialog(sequence0, "You've made it back to town.", this.player);
-        dialogTree.addDialog(sequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
-        dialogTree.addDialog(sequence0, "You'll have to look further to see if you can find him.", this.player);
-        dialogTree.playSequence(sequence0);
-        
+        this.dialogSetup3();
     }
 
     update ()
@@ -336,6 +290,16 @@ export class Level4 extends BaseLevel
         );
         dialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
         dialogTree.addDialog(sequence2, "How unfortunate.");
+        dialogTree.playSequence(sequence0);
+    }
+
+    dialogSetup3()
+    {
+        let dialogTree = new DialogTree(this, 600, 100);
+        let sequence0 = dialogTree.addSequence();
+        dialogTree.addDialog(sequence0, "You've made it back to town.", this.player);
+        dialogTree.addDialog(sequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
+        dialogTree.addDialog(sequence0, "You'll have to look further to see if you can find him.", this.player);
         dialogTree.playSequence(sequence0);
     }
 }
