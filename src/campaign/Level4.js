@@ -1,5 +1,4 @@
 import { Enemy } from "../entities/Enemy.js";
-import { TileMap } from "../components/TileMap.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { Snake } from "../entities/Snake.js";
@@ -43,8 +42,13 @@ export class Level4 extends BaseLevel
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-        this.loopBackground('background2', 720, 420, 1.45);
         this.createTileMap('sand', level);
+        this.loopBackground('background2', 720, 420, 1.45);
+
+        for(var i = 0; i < 15; i++)
+        {
+            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
+        }
 
         this.cactus1 = this.addStaticImage('cactus', 800, 530);
         this.cactus2 = this.addStaticImage('cactus', 1100, 500);
@@ -66,7 +70,7 @@ export class Level4 extends BaseLevel
         new Enemy(this, 1600, 550);
         new Enemy(this, 2850, 575);
         
-        this.setPlayerPosition(3000, 560);
+        this.setPlayerPosition(100, 560);
 
         this.addPauseBtn();
         this.dialogSetup1();
@@ -105,8 +109,8 @@ export class Level4 extends BaseLevel
         this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
         this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
 
-        this.loopBackground('background2', 720, 420, 1.45);
         this.createTileMap('sand', levelChurch);
+        this.loopBackground('background2', 720, 420, 1.45);
 
         this.setPlayerPosition(1400, 560);
 
@@ -170,7 +174,9 @@ export class Level4 extends BaseLevel
         this.addStaticImage('house', 1645, 525);
 
         this.createTileMap('sand', levelTown);
-        this.player.setPosition(150, 525);
+        this.loopBackground('background2', 720, 420, 1.45);
+
+        this.setPlayerPosition(150, 525);
 
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
         this.nextLevelGoal.whenTouched(this.player, () => {this.scene.start('level-5');});
@@ -201,28 +207,6 @@ export class Level4 extends BaseLevel
         }
         
         this.player.update();
-    }
-
-    loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
-    {
-        let maxWidth = Math.max(this.cameras.main.worldView.width, levelWidth);
-        let maxHeight = Math.max(this.cameras.main.worldView.height, levelHeight);
-
-        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
-        let heightRatio = maxHeight / (imageHeight * scale);
-
-        let numberOfWidth = Math.ceil(widthRatio);
-        let numberOfHeight = Math.ceil(heightRatio);
-
-        for (let w = 0; w < numberOfWidth; ++w)
-        {
-            for (let h = 0; h < numberOfHeight; ++h)
-            {
-                let bgImage = new Phaser.GameObjects.Image(this, 0, 0, imageKey);
-                bgImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale);
-                this.add.existing(bgImage);
-            }
-        }
     }
 
     addPauseBtn()
