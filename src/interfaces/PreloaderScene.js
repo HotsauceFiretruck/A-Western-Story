@@ -79,7 +79,6 @@ export class PreloaderScene extends Phaser.Scene
             this.load.image('thumb', 'assets/JoystickThumb.png');
             this.load.image('base', 'assets/JoystickBase.png');
             this.load.image('gunbase', 'assets/JoystickGunBase.png');
-            this.load.image('jump', 'assets/JumpButton.png');
         }
         this.load.image('background', 'assets/Background.png');
         this.load.image('background2', 'assets/Background2.png');
@@ -127,6 +126,11 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('death', 'assets/GameOver.png');
         this.load.image('returnButton', 'assets/ReturnToMenuButton.png');
         this.load.image('respawnButton', 'assets/RespawnButton.png');
+        this.load.image('svr1btn', 'assets/Server1Button.png');
+        this.load.image('svr2btn', 'assets/Server2Button.png');
+        this.load.image('svr3btn', 'assets/Server3Button.png');
+        this.load.image('svr4btn', 'assets/Server4Button.png');
+        this.load.image('svr5btn', 'assets/Server5Button.png');
         this.load.image('northSign', 'assets/NorthSign.png');
         this.load.image('southSign', 'assets/SouthSign.png');
         this.load.image('eastSign', 'assets/EastSign.png');
