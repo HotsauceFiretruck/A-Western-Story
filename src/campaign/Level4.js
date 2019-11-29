@@ -5,7 +5,6 @@ import { Snake } from "../entities/Snake.js";
 import { Priest } from "../entities/Priest.js";
 import { Flight } from "../powerups/Flight.js";
 import { BaseLevel } from "../core/BaseLevel.js";
-import { Cloud } from "../statics/Cloud.js";
 
 export class Level4 extends BaseLevel
 {
@@ -65,7 +64,7 @@ export class Level4 extends BaseLevel
         new Enemy(this, 1600, 550);
         new Enemy(this, 2850, 575);
         
-        this.setPlayerPosition(3000, 560);
+        this.setPlayerPosition(100, 560);
 
         this.addPauseBtn();
         
