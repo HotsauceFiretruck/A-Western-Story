@@ -90,7 +90,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         this.displayHealth.setScrollFactor(0, 0);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
-        this.gun.setDepth(0).setScale(2);
+        this.gun.setDepth(1).setScale(2);
     }
 
     update()
@@ -273,7 +273,11 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
 
         // if (this.jumpCooldownTimer) this.jumpCooldownTimer.destroy();
 
-        this.scene.scene.start('arena-death', {scene: this.scene.scene.key});
+        this.scene.scene.start('death-scene', {
+            scene: this.scene.scene.key,
+            player: this,
+            sceneObject: this.scene
+        });
         
         //this.destroy();
     }
