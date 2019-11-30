@@ -40,6 +40,8 @@ export class BaseLevel extends Phaser.Scene
 
         this.map = new TileMap(this, 32, 32);
 
+        this.images = [];
+
         this.projectiles = {category: 2, list: []};
 
         this.enemies = {category: 4, list: []};
@@ -51,6 +53,20 @@ export class BaseLevel extends Phaser.Scene
         this.createTileMap('grass', defaultTileMap);
 
         this.dialogTree = new DialogTree(this, 600, 100);
+
+        let pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
+        pauseButton.on('pointerdown', (event) => {
+            this.scene.pause(this.scene.key);
+            this.scene.setVisible(false, this.scene.key);
+            this.scene.launch('pause-scene', {scene: this.scene.key});
+        });
+        // Functions to tint the buttons on hover to look nice. :)
+        pauseButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        });
+        pauseButton.on('pointerout', function (event) {
+            this.clearTint();
+        });
     }
 
     update()
@@ -89,6 +105,18 @@ export class BaseLevel extends Phaser.Scene
         this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
     }
 
+    setPlayer(player)
+    {
+        if (this.player != null)
+        {
+            this.player.destroy();
+            this.player.gun.destroy();
+            this.player.displayHealth.destroy();
+        }
+        this.player = player;
+    }
+
+    //Only use this when it is absolutely necessary
     getPlayer()
     {
         return this.player;
@@ -117,17 +145,17 @@ export class BaseLevel extends Phaser.Scene
 
     clearAllEnemies()
     {
-        for (let i = 0; i < this.enemies.list.length; i++)
+        while(this.enemies.list.length > 0)
         {
-            this.enemies.list[i].death();
+            this.enemies.list[0].death();
         }
     }
 
     clearAllStaticEntities()
     {
-        for (let i = 0; i < this.statics.list.length; i++)
+        while(this.statics.list.length > 0)
         {
-            this.statics.list[i].remove();
+            this.statics.list[0].remove();
         }
     }
 
@@ -136,9 +164,29 @@ export class BaseLevel extends Phaser.Scene
         this.map.deleteAllPlatforms();
     }
 
+    clearAllProjectiles()
+    {
+        for (let i = 0; i < this.projectiles.list.length; ++i)
+        {
+            this.projectiles.list[i].destroy();
+        }
+        this.projectiles.list = [];
+    }
+
     addStaticImage(imageKey, x, y)
     {
-        return this.add.image(x, y, imageKey).setDepth(-2);
+        let image = this.add.image(x, y, imageKey).setDepth(-2);
+        this.images.push(image);
+        return image;
+    }
+
+    clearAllStaticImages()
+    {
+        for (let i = 0; i < this.images.length; ++i)
+        {
+            this.images[i].destroy();
+        }
+        this.images = [];
     }
 
     //Load in image to fill in the level
@@ -168,6 +216,7 @@ export class BaseLevel extends Phaser.Scene
                let backgroundImage = new Phaser.GameObjects.Image(this, 0, 0, backgroundImageKey);
                backgroundImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale).setDepth(-3);
                this.add.existing(backgroundImage);
+               this.images.push(backgroundImage);
            }
        }
    }

@@ -89,6 +89,7 @@ export class Level2 extends BaseLevel
     {
         this.clearAllPlatforms();
         this.clearAllStaticEntities();
+        this.clearAllEnemies();
 
         let levelSheriffEncounter = 
         [   
@@ -113,13 +114,7 @@ export class Level2 extends BaseLevel
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         ];
 
-        this.house1.destroy();
-        this.house2.destroy();
-        this.house3.destroy();
-        this.house4.destroy();
-        this.house5.destroy();
-        this.house6.destroy();
-        
+        this.clearAllStaticImages();
 
         this.background('background3', levelSheriffEncounter[0].length * 32, levelSheriffEncounter.length * 32)
         
@@ -128,9 +123,6 @@ export class Level2 extends BaseLevel
         
         this.setPlayerPosition(levelSheriffEncounter[0].length * 31, 532);
         this.setPlayerHealth(20);
-
-        this.clearAllEnemies();
-        
 
         let dialogTree = new DialogTree(this, 600, 100);
         let sequence1 = dialogTree.addSequence();
