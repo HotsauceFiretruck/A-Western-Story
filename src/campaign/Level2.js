@@ -180,12 +180,10 @@ export class Level2 extends BaseLevel
 
     checkForNextLevel()
     {
-        clearInterval(interval);
-        console.log(this.enemies.list.length);
         if (this.enemies.list.length == 0)
         {
             //Start next lvl
-            
+            clearInterval(interval);
             this.scene.start('level-3');
         }
     }
