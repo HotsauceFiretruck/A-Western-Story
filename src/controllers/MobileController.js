@@ -35,7 +35,6 @@ export class MobileController
                     {
                         this.player.setVelocityY(-this.player.status.maxVelocityY);
                         this.player.status.canJump = false;
-                        console.log(this.player.status.canJump)
                         this.scene.time.addEvent({
                             delay: 700,
                             callback: () => (this.player.status.canJump = true)
@@ -43,26 +42,27 @@ export class MobileController
                     }
                 }
 
-                //If normalizedX is negative => left
-                if (normalizedX <= 0 &&
-                    this.movementControl.getRotation() < -(2*Math.PI / 3) &&
-                    this.player.body.velocity.x > -this.player.status.maxVelocityX)
+                if (!(this.movementControl.getRotation() > -(2*Math.PI / 3) &&
+                    this.movementControl.getRotation() < -(Math.PI / 3)))
                 {
-                    this.player.setFlipX(false);
-                    if (!this.player.status.isTouching.left) {
-                        this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                    if (normalizedX <= 0 &&
+                        this.player.body.velocity.x > -this.player.status.maxVelocityX)
+                    {
+                        this.player.setFlipX(false);
+                        if (!this.player.status.isTouching.left) {
+                            this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                        }
                     }
-                }
-                //If normalizedX is positive => right
-                if (normalizedX > 0 &&
-                    this.movementControl.getRotation() > -(Math.PI / 3) &&
-                    this.player.body.velocity.x < this.player.status.maxVelocityX)
-                {
-                    this.player.setFlipX(true);
-                    if (!this.player.status.isTouching.right) {
-                        this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                    //If normalizedX is positive => right
+                    if (normalizedX > 0 &&
+                        this.player.body.velocity.x < this.player.status.maxVelocityX)
+                    {
+                        this.player.setFlipX(true);
+                        if (!this.player.status.isTouching.right) {
+                            this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                        }
                     }
-                }
+                };
             }
         }
 
