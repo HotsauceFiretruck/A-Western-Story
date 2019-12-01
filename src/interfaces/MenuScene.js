@@ -37,40 +37,40 @@ export class MenuScene extends Phaser.Scene {
 
         fullscreenButton.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         fullscreenButton.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
 
         playButton.on('pointerdown', () => {
             this.scene.start('lvl-select');
         });
         playButton.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         playButton.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
 
         arenabtn.on('pointerdown', (event) => {
             this.scene.start('name-scene');
         });
         arenabtn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         arenabtn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
 
         tutorialBtn.on('pointerdown', (event) => { 
             this.scene.start('level-tutorial');
-        })
+        });
         tutorialBtn.on('pointerover', function (event) {
             this.setTint(616161);
-        })
+        });
         tutorialBtn.on('pointerout', function (event) {
             this.clearTint();
-        })
+        });
     
         window.document.title = "A Western Story";
     }   
