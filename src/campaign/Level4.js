@@ -204,60 +204,56 @@ export class Level4 extends BaseLevel
     dialogSetup1()
     {
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let desertDialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = desertDialogTree.addSequence();
-        let sequence1 = desertDialogTree.addSequence();
-        let sequence2 = desertDialogTree.addSequence();
-        desertDialogTree.addDialog(sequence0, "Your horse has died.", this.player);
-        desertDialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
-        desertDialogTree.addDialog(sequence0, "Good luck.", this.player,
+        let sequence0 = this.dialogTree.addSequence();
+        let sequence1 = this.dialogTree.addSequence();
+        let sequence2 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(sequence0, "Your horse has died.", this.player);
+        this.dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
+        this.dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {desertDialogTree.playSequence(1);}],
-                ["...", () => {desertDialogTree.playSequence(2);
+                ["Thanks?", () => {this.dialogTree.playSequence(1);}],
+                ["...", () => {this.dialogTree.playSequence(2);
                 }],
             ]
         );
-        desertDialogTree.addDialog(sequence1, "You're welcome. :)");
-        desertDialogTree.addDialog(sequence2, ":(");
-        desertDialogTree.playSequence(sequence0);
+        this.dialogTree.addDialog(sequence1, "You're welcome. :)");
+        this.dialogTree.addDialog(sequence2, ":(");
+        this.dialogTree.playSequence(sequence0);
     }
 
     dialogSetup2()
     {
-        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let churchDialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = churchDialogTree.addSequence();
-        let sequence1 = churchDialogTree.addSequence();
-        let sequence2 = churchDialogTree.addSequence();
-        churchDialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
-        churchDialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
-        churchDialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
+        let sequence3 = this.dialogTree.addSequence();
+        let sequence4 = this.dialogTree.addSequence();
+        let sequence5 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(sequence3, "You've stumbled across an old church.", this.player);
+        this.dialogTree.addDialog(sequence3, "There are some priests outside who seem to be saying something to you.", this.player);
+        this.dialogTree.addDialog(sequence3, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                churchDialogTree.playSequence(1);  
+                this.dialogTree.playSequence(4);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 this.flight = new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {churchDialogTree.playSequence(2);
+            ["No.", () => {this.dialogTree.playSequence(5);
             }],
         ]
         );
-        churchDialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
-        churchDialogTree.addDialog(sequence2, "How unfortunate.");
-        churchDialogTree.playSequence(sequence0);
+        this.dialogTree.addDialog(sequence4, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)", this.player);
+        this.dialogTree.addDialog(sequence5, "How unfortunate.", this.player);
+        this.dialogTree.playSequence(sequence3);
     }
 
     dialogSetup3()
     {
-        let townDialogTree = new DialogTree(this, 600, 100);
-        let townSequence0 = townDialogTree.addSequence();
-        townDialogTree.addDialog(townSequence0, "You've made it back to town.", this.player);
-        townDialogTree.addDialog(townSequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
-        townDialogTree.addDialog(townSequence0, "You'll have to look further to see if you can find him.", this.player);
-        townDialogTree.playSequence(townSequence0);
+        let sequence6 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(sequence6, "You've made it back to town.", this.player);
+        this.dialogTree.addDialog(sequence6, "Unfortunately, it seems the sheriff isn't here.", this.player);
+        this.dialogTree.addDialog(sequence6, "You'll have to look further to see if you can find him.", this.player);
+        this.dialogTree.playSequence(sequence6);
     }
 }
