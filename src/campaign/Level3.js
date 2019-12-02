@@ -14,12 +14,14 @@ export class Level3 extends BaseLevel
 
     create()
     {
-        this.add.image(700, 525, 'house');
-        this.add.image(800, 525, 'house');
-        this.add.image(600, 200, 'cloud');
-        this.add.image(470, 125, 'cloud');
-        this.add.image(200, 210, 'cloud');
-        this.add.image(150, 525, 'cactus');
+        super.create();
+
+        this.addStaticImage('house', 700, 525);
+        this.addStaticImage('house', 800, 525);
+        this.addStaticImage('cloud', 600, 200);
+        this.addStaticImage('cloud', 470, 125);
+        this.addStaticImage('cloud', 200, 210);
+        this.addStaticImage('cactus', 150, 525);
         
 
         for(let i = -1; i < 40; i++){
@@ -27,8 +29,6 @@ export class Level3 extends BaseLevel
             new Platform(this, 2, i, 16, 0, 0, 32, 32);
 
         }
-
-        super.create();
 
         let groundLayer = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -59,47 +59,33 @@ export class Level3 extends BaseLevel
         // this.player = new Player(this, 300, 100);
         this.player.disableHorizontalMovement();
         this.player.status.maxVelocityY = 13;
-        this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
+        this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4).setDepth(-1);
 
         this.createTileMap('sand', groundLayer);
 
         this.platformCreation = [];
         this.isLevelEnded = false;
-
-        this.projectiles = {
-            category: 2, //telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
-
-        this.storyMessage = new DialogTree(this, 600, 100);
-        this.dialogSetup(this.storyMessage, this);
+        this.dialogSetup();
     }
-    startGame(scene){
-        this.storyMessage.sequences[0].nextDialog();
+    startGame(){
+        this.dialogTree.sequences[0].nextDialog();
         this.countdown = 45;
-        this.timer = scene.add.text(560, 20, this.countdown, {color:'#DC143C'});
-        this.timer.setScale(1.5);
-        scene.time.addEvent({
+        let timer = this.add.text(560, 20, this.countdown, {color:'#DC143C'}).setScale(1.5);
+        this.time.addEvent({
             delay: 45000,
             callback: () => this.isLevelEnded = true,
             callbackScope: this,
             loop: false
         });
 
-        scene.time.addEvent({
-            delay: 1000  ,
+        this.time.addEvent({
+            delay: 1000,
             callback: () => {
                 if(!this.isLevelEnded){
                     this.countdown -= 1;
-                    this.timer.setText(this.countdown);
+                    timer.setText(this.countdown);
                     let random = Math.random()*3;
                     let platform1 = new Platform(this, 4, 50, 17-Math.floor(random +2), 0, Math.floor(random +2), 32, 32);
-                    platform1.setDepth(90);
                     if(Math.random() > .3)
                     {
                         platform1.addSprite('barrel');
@@ -125,21 +111,21 @@ export class Level3 extends BaseLevel
         this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
     }
 
-    dialogSetup(storyMessage, scene)
+    dialogSetup()
     {
-        let sequence0 = storyMessage.addSequence(); 
+        let sequence0 = this.dialogTree.addSequence(); 
 
          //dialogTree.addDialog(sequenceID, text, actor, options)
-        storyMessage.addDialog(sequence0, "Chase the sheriff!", this.player);
-        storyMessage.addDialog(sequence0, "Last 45 seconds... To survive!", this.player);
+        this.dialogTree.addDialog(sequence0, "Chase the sheriff!", this.player);
+        this.dialogTree.addDialog(sequence0, "Last 45 seconds... To survive!", this.player);
 
-        storyMessage.addDialog(sequence0, "Are you ready?", this.player,
+        this.dialogTree.addDialog(sequence0, "Are you ready?", this.player,
             [
-                ["I'm Ready!", ()=>{this.startGame(scene)}],
+                ["I'm Ready!", ()=>{this.startGame()}],
             ]
         );
 
-        storyMessage.playSequence(sequence0);
+        this.dialogTree.playSequence(sequence0);
     }
 
 
