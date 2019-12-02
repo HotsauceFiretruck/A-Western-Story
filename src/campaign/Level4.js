@@ -119,7 +119,9 @@ export class Level4 extends BaseLevel
         this.priest4 = new Priest(this, 1900, 525);
 
         this.churchDoorBtn.on('pointerdown', () => {
-            this.dialogSetup4();
+            if(this.cameras.main.scrollX > 1140 && this.cameras.main.scrollX < 1365) {
+                this.dialogSetup4();
+            }
         });
 
         this.dialogSetup2();
@@ -166,6 +168,8 @@ export class Level4 extends BaseLevel
         this.setPlayerPosition(600, 560);
     }
 
+    // Current Bugs/Things to do - 
+    // 3) Add something special or some easter egg inside the church. Ideas: Mr. Hotsauce statue, special minigame, just something stupid/meme
     switchToDesert()
     {
         this.clearAllPlatforms();
@@ -206,7 +210,7 @@ export class Level4 extends BaseLevel
 
         this.setPlayerPosition(1854, 560);
 
-        this.dialogSetup6();
+        this.time.delayedCall(150, this.dialogSetup6, [], this);
     }
 
     // Method used to 'move' the player to the town after completing the church section of the level.
@@ -382,7 +386,7 @@ export class Level4 extends BaseLevel
     dialogSetup6()
     {
         let odd = this.dialogTree.addSequence();
-        this.dialogTree.addDialog(odd, "The church seems to have disappeared.");
+        this.dialogTree.addDialog(odd, "The church and its remaining priests seem to have disappeared.");
         this.dialogTree.addDialog(odd, "Odd.");
         this.dialogTree.playSequence(odd);
     }
