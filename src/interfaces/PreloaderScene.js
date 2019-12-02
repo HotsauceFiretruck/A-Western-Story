@@ -91,6 +91,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('background4r', 'assets/Backgrounds/Background4R.png');
         this.load.image('bg', 'assets/Backgrounds/MenuScreen.png');
         this.load.image('death', 'assets/Backgrounds/GameOver.png');
+        this.load.image('woodBG', 'assets/Backgrounds/BackgroundWood.png');
 
         this.load.image('grass', 'assets/Textures/Grass.png');
         this.load.image('grass2', 'assets/Textures/Grass2.png');
@@ -98,6 +99,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('sand2', 'assets/Textures/Sand2.png');
         this.load.image('clear', 'assets/Textures/Clear.png');
         this.load.image('cactus3', 'assets/Textures/Cactus3.png');
+        this.load.image('wood', 'assets/Textures/Wood.png');
 
         this.load.image('player', 'assets/Sprites/Player.png');
         this.load.image('bullet', 'assets/Sprites/Bullet.png');
@@ -135,6 +137,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('signPost', 'assets/Structures/SignPost.png');
         this.load.image('fence', 'assets/Structures/Fence.png');
         this.load.image('church', 'assets/Structures/Church.png');
+        this.load.image('churchDoor', 'assets/Structures/ChurchDoor.png');
         this.load.image('bigHouse', 'assets/Structures/BigHouse.png');
         this.load.image('saloon', 'assets/Structures/Saloon.png');
         this.load.image('waterTower', 'assets/Structures/WaterTower.png');
