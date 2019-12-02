@@ -82,7 +82,7 @@ export class Level3 extends BaseLevel
     startGame(scene){
         this.storyMessage.sequences[0].nextDialog();
         this.countdown = 45;
-        this.timer = scene.add.text(1150, 20, this.countdown, {color:'#DC143C'});
+        this.timer = scene.add.text(560, 20, this.countdown, {color:'#DC143C'});
         this.timer.setScale(1.5);
         scene.time.addEvent({
             delay: 45000,
@@ -99,6 +99,7 @@ export class Level3 extends BaseLevel
                     this.timer.setText(this.countdown);
                     let random = Math.random()*3;
                     let platform1 = new Platform(this, 4, 50, 17-Math.floor(random +2), 0, Math.floor(random +2), 32, 32);
+                    platform1.setDepth(90);
                     if(Math.random() > .3)
                     {
                         platform1.addSprite('barrel');
