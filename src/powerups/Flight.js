@@ -16,17 +16,8 @@ export class Flight extends PowerUp
             callback: () => {
                 this.player.status.maxVelocityY = 17;
                 this.player.status.maxVelocityX = 5;
-                this.scene.time.addEvent({
-                    delay: 10000,
-                    callback: () => 
-                    {
-                        this.player.status.maxVelocityY = 9;
-                        this.player.status.maxVelocityX = 3;
-                    },
-                    callbackScope: this.player,
-                    loop: false
-                })
-                this.destroy();
+                this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
+                this.remove();
             },
             context: this
         });

@@ -4,8 +4,8 @@ export class PowerUp extends Phaser.Physics.Matter.Image
     {
         super(scene.matter.world, x, y, imageKey);
         scene.add.existing(this);
+        scene.statics.list.push(this);
         this.scene = scene;
-        //this.body.isSensor = true;
         this.player = this.scene.player;
         this.setCollidesWith([2, this.player.category]);
     }
@@ -15,4 +15,18 @@ export class PowerUp extends Phaser.Physics.Matter.Image
         //Add implementation here
     }
 
+    stageMode()
+    {}
+
+    playMode()
+    {}
+
+    update()
+    {}
+
+    remove()
+    {
+        this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
+        this.destroy();
+    }
 }

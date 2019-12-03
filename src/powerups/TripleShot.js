@@ -14,14 +14,15 @@ export class TripleShot extends PowerUp
             objectA: this,
             objectB: this.player,
             callback: () => {
-                this.player.status.numOfBullets = 3;
+                this.player.status.numOfBullets += 2;
                 this.scene.time.addEvent({
                     delay: 5000,
-                    callback: () => this.player.status.numOfBullets = 1,
+                    callback: () => this.player.status.numOfBullets -= 2,
                     callbackScope: this.player,
                     loop: false
-                })
-                this.destroy();
+                })  
+                this.scene.statics.list.splice(this.scene.statics.list.indexOf(this), 1);
+                this.remove();
             },
             context: this
         });

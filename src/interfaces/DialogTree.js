@@ -3,49 +3,51 @@ export class DialogTree
     constructor(scene, centerX, centerY)
     {
         this.scene = scene;
-        this.scale = scene.PhaserGame.scale;
-        this.centerX = centerX * this.scale;
-        this.centerY = centerY * this.scale;
-        
-        this.isPlaying = false;
+        this.mobile = scene.PhaserGame.isMobile;
+        this.centerX = centerX;
+        this.centerY = centerY;
+
         this.isTreeEnded = true;
         this.currentSequence = null;
 
         this.sequences = [];
-        this.globalOptionsChosen = [];
-        this.seqQueue = [];
-
-        this.keyChange = "keydown";
-
-        if (scene.PhaserGame.isMobile)
-        {
-            scene.input.addPointer(4);
-            this.keyChange = "pointerdown";
-        }
-
+        this.queue = [];
+    }
+    
+    startTree()
+    {
         //Play Dialog ----
-        this.dialogBackground = scene.add.image(this.centerX, this.centerY, 'dialogbg');
-        this.dialogBackground.setScale(4 * this.scale).setScrollFactor(0, 0);
+        this.isTreeEnded = false;
+        this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
+        this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(2);
 
-        if (scene.projectiles != undefined)
+        if (this.scene.projectiles != undefined)
         {
-            for (let i = 0; i < scene.projectiles.list.length; i++)
+            for (let i = 0; i < this.scene.projectiles.list.length; i++)
             {
-                scene.projectiles.list[i].destroy();
+                this.scene.projectiles.list[i].destroy();
             }
         }
 
-        if (scene.enemies != undefined)
+        if (this.scene.enemies != undefined)
         {
-            for (let i = 0; i < scene.enemies.list.length; i++)
+            for (let i = 0; i < this.scene.enemies.list.length; i++)
             {
-                scene.enemies.list[i].stageMode();
+                this.scene.enemies.list[i].stageMode();
             }
         }
 
-        if (scene.player != undefined)
+        if (this.scene.player != undefined)
         {
-            scene.player.stageMode(); // player set on stage --> disable everything.
+            this.scene.player.stageMode(); // player set on stage --> disable everything.
+        }
+
+        if (this.scene.statics != undefined)
+        {
+            for (let i = 0; i < this.scene.statics.list.length; i++)
+            {
+                this.scene.statics.list[i].stageMode();
+            }
         }
     }
 
@@ -59,7 +61,7 @@ export class DialogTree
 
     addDialog(sequenceId, dialogText, actor, options)
     {
-        let newDialog = new Dialog(this, sequenceId, dialogText, actor);
+        let newDialog = new Dialog(this, this.sequences[sequenceId], dialogText, actor);
         if (options != undefined)
         {
             for (let i = 0; i < options.length; i++)
@@ -70,49 +72,24 @@ export class DialogTree
         this.sequences[sequenceId].addDialog(newDialog);
     }
 
-    //pick a sequence to play
-    //stop and progress
+    //Stop current sequence and plays new sequence
     playSequence(sequenceId)
     {
-        this.isTreeEnded = false;
-        if (this.isPlaying)
-        {
-            this.seqQueue.push(sequenceId);
-        } 
-        else 
-        {
-            this.dialogBackground.setVisible(true);
-            this.sequences[sequenceId].playSequence();
-            this.currentSequence = this.sequences[sequenceId];
-            this.isPlaying = true;
-        }
+        if (this.isTreeEnded) this.startTree();
+        this.dialogBackground.setVisible(true);
+        this.sequences[sequenceId].playSequence();
+        this.currentSequence = this.sequences[sequenceId];
     }
 
-    currentSequenceEnded()
+    setMethod(method)
     {
-        this.isPlaying = false;
-        if (this.seqQueue.length == 0)
-        {
-            this.endTree();
-        } 
-        else
-        {
-            this.playSequence(this.seqQueue[0]);
-            this.seqQueue.splice(0, 1);
-        }
-    }
-
-    changeSequence(sequenceId)
-    {
-        this.playSequence(sequenceId);
-        this.currentSequence.dialogs[this.currentSequence.onDialogNumber - 1].endDialog();
-        this.currentSequence.endSequence();
+        this.method = method;
     }
 
     endTree()
     {
         this.currentSequence = null;
-        this.scene.input.keyboard.off(this.keyChange);
+        this.scene.input.keyboard.off("keydown-X");
         this.dialogBackground.setVisible(false);
         this.isTreeEnded = true;
 
@@ -129,8 +106,23 @@ export class DialogTree
         {
             this.scene.player.playMode();
         }
+
+        if (this.scene.statics != undefined)
+        {
+            for (let i = 0; i < this.scene.statics.list.length; i++)
+            {
+                this.scene.statics.list[i].playMode();
+            }
+        }
+
+        if (this.method != undefined)
+        {
+            this.method();
+        }
     }
 }
+
+//Sequence
 
 class Sequence
 {
@@ -138,6 +130,7 @@ class Sequence
     {
         this.dialogTree = dialogTree;
         this.onDialogNumber = 0;
+        this.currentDialog = null;
         this.dialogs = [];
     }
 
@@ -149,178 +142,173 @@ class Sequence
     playSequence()
     {
         this.onDialogNumber = 0;
-        this.nextDialog();
+        this.currentDialog = this.dialogs[this.onDialogNumber];
+        this.currentDialog.displayDialog();
     }
 
     endSequence()
     {
-        //this.onDialogNumber = 0;
-        this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
-        this.dialogTree.currentSequenceEnded();
+        if (this.currentDialog != null || this.currentDialog != undefined) this.currentDialog.endDialog();
+        this.dialogTree.scene.input.keyboard.off("keydown-X");
+        this.dialogTree.endTree();
     }
 
+    //Do not call this outside of this file for any reasons.
     nextDialog()
     {
-        if (this.onDialogNumber != 0)
+        this.onDialogNumber++;
+        if (this.onDialogNumber >= this.dialogs.length)
         {
-            this.dialogs[this.onDialogNumber - 1].endDialog();
-        }
-
-        if (this.onDialogNumber < this.dialogs.length)
-        {
-            this.dialogs[this.onDialogNumber].displayDialog();
-        }
-        else
-        {
-            this.dialogs[this.onDialogNumber - 1].endDialog();
-            this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
             this.endSequence();
             return;
         }
-
-        if (this.dialogs[this.onDialogNumber].optionTexts.length != 0)
-        {
-            this.dialogTree.scene.input.keyboard.off(this.dialogTree.keyChange);
-        }
-        else if (this.onDialogNumber == 0)
-        {
-            this.dialogTree.scene.input.keyboard.on(this.dialogTree.keyChange, () => {this.nextDialog();});
-        }
-
-        //If dialog have options -> stop keyboard
-        this.onDialogNumber++;
+        
+        if (this.currentDialog != null || this.currentDialog != undefined) this.currentDialog.endDialog();
+        
+        this.currentDialog = this.dialogs[this.onDialogNumber];
+        this.currentDialog.displayDialog();
     }
 }
 
-//Note to myself: 5 lines -> 1st line: Dialog; other lines: options; 200 / 5 = 40 pixels
-//Maximum options: 4
-//Press something to progress dialog
+//Dialog
+
 class Dialog
 {
-    constructor(dialogTree, dialogSequenceId, text, actor)
+    constructor(dialogTree, dialogSequence, text, actor)
     {
-        this.textObject = text;
-        this.optionTexts = [];
-        this.optionMethods = [];
-        this.optionObjects = [];
-        this.pressAnyKeyToContinueText = null;
+        this.optionObjects = []; // [text, callback, textObject, rectangleObject]
+        this.nextDialogButton = [null, null]; //[text, image]
+        this.textObject = null;
 
         this.text = text;
         this.actor = actor;
         this.dialogTree = dialogTree;
-        this.dialogSequenceId = dialogSequenceId;
+        this.sequence = dialogSequence;
     }
 
     //Activate another sequence when chosen
-    addOption(text, method)
+    addOption(text, callback)
     {
-        this.optionTexts.push(text);
-        this.optionMethods.push(method);
+        this.optionObjects.push([text, callback, null, null]);
     }
 
     displayDialog()
-    {
-        let spacing = 35 * this.dialogTree.scale;
+    {   
+        //Setup
+        let spacing = 40;
 
-        let numberOfLines = this.optionTexts.length + 1;
-        let scaleSize = Math.floor(20 * this.dialogTree.scale);
+        let numberOfLines = this.optionObjects.length + 1;
 
         let centerY = this.dialogTree.centerY;
         let centerX = this.dialogTree.centerX;
-        let startY = centerY - (spacing/2) * (numberOfLines - 1) - (scaleSize / 2);
+        let startY = centerY - (spacing/2) * (numberOfLines - 1) - 10;
 
-        for (let i = 0; i < numberOfLines; ++i)
-        {
-            if (i == 0)
+        //Create Text Objects
+        this.textObject = this.dialogTree.scene.add.text(
+            0, 
+            0, 
+            this.text,
             {
-                this.textObject = this.dialogTree.scene.add.text(
-                    0, 
-                    0, 
-                    this.text,
-                    {
-                        fontFamily: 'Courier',
-                        fontSize: scaleSize + 'px',
-                        fontStyle: "bold"
-                    }
-                ).setScrollFactor(0, 0);
-
-                this.textObject.setPosition(
-                    (centerX - this.textObject.displayWidth / 2), 
-                    startY + (spacing * i)
-                );
-            } 
-            else
-            {
-                let newOption = this.dialogTree.scene.add.text(
-                    0,
-                    0,
-                    i + ". " + this.optionTexts[i - 1],
-                    {
-                        fontFamily: 'Courier',
-                        fontSize: scaleSize + 'px',
-                        fontStyle: "bold"
-                    }
-                );
-                newOption.setScrollFactor(0, 0).setInteractive();
-                newOption.on('pointerdown', () => {
-                    this.dialogTree.globalOptionsChosen.push(i);
-                    this.optionMethods[i - 1]();
-                });
-                newOption.on('pointerover', () => {newOption.setTint(616161);});
-                newOption.on('pointerout', newOption.clearTint);
-                newOption.setPosition(
-                    (centerX - newOption.displayWidth / 2), 
-                    startY + (spacing * i)
-                );
-                this.optionObjects.push(newOption);
+                fontFamily: 'Courier',
+                fontSize: 20,
+                fontStyle: "bold"
             }
+        ).setScrollFactor(0, 0).setDepth(3);
+
+        this.textObject.setPosition(centerX - this.textObject.displayWidth / 2, startY);
+
+        for (let i = 1; i < numberOfLines; ++i)
+        {
+            let rectangleObject = this.dialogTree.scene.add.rectangle(
+                0,
+                0,
+                this.dialogTree.dialogBackground.displayWidth - 110,
+                25,
+                0x2C2F30
+            ).setScrollFactor(0, 0).setDepth(3);
+
+            rectangleObject.setPosition(
+                centerX, 
+                startY + (spacing * i) + 10
+            );
+
+            rectangleObject.setInteractive().on('pointerup', () => {
+                this.sequence.nextDialog();
+                this.optionObjects[i - 1][1]();
+            });
+
+            rectangleObject.on('pointerover', () => {rectangleObject.setFillStyle(0x616161);});
+            rectangleObject.on('pointerout', () => {rectangleObject.setFillStyle(0x2C2F30);});
+            
+            let textObject = this.dialogTree.scene.add.text(
+                0,
+                0,
+                i + ". " + this.optionObjects[i - 1][0],
+                {
+                    fontFamily: 'Courier',
+                    fontSize: 20,
+                    fontStyle: "bold",
+                    fontColor: "white",
+                   // backgroundColor: "#323c39"
+                }
+            ).setScrollFactor(0, 0).setDepth(3);
+
+            textObject.setPosition(
+                (centerX - textObject.displayWidth / 2), 
+                startY + (spacing * i)
+            );
+
+            this.optionObjects[i - 1][2] = textObject;
+            this.optionObjects[i - 1][3] = rectangleObject;
         }
-        if (this.optionTexts.length == 0)
+
+        //Setting Signal To Next Dialog
+        if (this.optionObjects.length == 0)
         {
-            if (!this.dialogTree.scene.PhaserGame.isMobile)
+            this.nextDialogButton[1] = this.dialogTree.scene.add.image(
+                this.dialogTree.centerX + 400, 
+                this.dialogTree.centerY + 122, 'continueDialogButton'); 
+            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5).setDepth(4);
+
+            if (this.dialogTree.mobile)
             {
-                this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
-                    0, 
-                    0, 
-                    "Press Any Key To Continue...",
+                this.nextDialogButton[0] = this.dialogTree.scene.add.text(
+                    this.nextDialogButton[1].x - 112, 
+                    this.nextDialogButton[1].y - 10, 
+                    "Press Me To Continue",
                     {
                         fontFamily: 'Courier',
-                        fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
-                        fontStyle: "bold"
+                        fontSize: 20,
+                        fontStyle: 'bold'
                     }
-                ).setScrollFactor(0, 0);
-        
-                this.pressAnyKeyToContinueText.setPosition(
-                    centerX + 270 * this.dialogTree.scale,
-                    centerY + 50 * this.dialogTree.scale
-                );
-            } else
+                ).setDepth(4);
+
+                this.nextDialogButton[1].setInteractive();
+                this.nextDialogButton[1].on('pointerup', () => {this.sequence.nextDialog();});
+                this.nextDialogButton[1].on('pointerover', function() {
+                    this.setTint(616161);
+                })
+                this.nextDialogButton[1].on('pointerout', function() {
+                    this.clearTint();
+                })
+            } 
+            else 
             {
-                this.pressAnyKeyToContinueText = this.dialogTree.scene.add.text(
-                    0, 
-                    0, 
-                    "Press Me To Continue...",
+                this.dialogTree.scene.input.keyboard.on("keydown-X", () => {this.sequence.nextDialog();});
+            
+                this.nextDialogButton[0] = this.dialogTree.scene.add.text(
+                    this.nextDialogButton[1].x - 112, 
+                    this.nextDialogButton[1].y - 10, 
+                    "Press X To Continue",
                     {
                         fontFamily: 'Courier',
-                        fontSize: Math.floor(16 * this.dialogTree.scale) + 'px',
-                        fontStyle: "bold"
+                        fontSize: 20,
+                        fontStyle: 'bold'
                     }
-                ).setScrollFactor(0, 0).setInteractive();
-        
-                this.pressAnyKeyToContinueText.setPosition(
-                    centerX + 270 * this.dialogTree.scale,
-                    centerY + 50 * this.dialogTree.scale
-                );
-                this.dialogTree.scene.time.addEvent({
-                    delay: 500,
-                    callback: () => this.pressAnyKeyToContinueText.on('pointerdown', () => {
-                        this.dialogTree.sequences[this.dialogSequenceId].nextDialog();
-                    }),
-                    callbackScope: this,
-                    loop: false
-                });
+                ).setDepth(4);
             }
-        }  
+            this.nextDialogButton[0].setScrollFactor(0, 0);
+        }
 
         if (this.actor != undefined) 
         {
@@ -332,14 +320,19 @@ class Dialog
     endDialog()
     {
         this.textObject.destroy();
-        //this.dialog.scene.cameras.main.stopFollow();
+
         for (let i = 0; i < this.optionObjects.length; ++i)
         {
-            this.optionObjects[i].destroy();
+            this.optionObjects[i][2].destroy();
+            this.optionObjects[i][3].destroy();
         }
-        if (this.pressAnyKeyToContinueText != undefined)
+
+        if (this.nextDialogButton[0] != null) 
         {
-            this.pressAnyKeyToContinueText.destroy();
+            this.nextDialogButton[0].destroy();
+            this.nextDialogButton[1].destroy();
         }
+        this.dialogTree.scene.input.keyboard.off("keydown-X");
     }
 }
+

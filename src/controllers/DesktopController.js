@@ -11,7 +11,10 @@ export class DesktopController
             up: 'W',
             left: 'A',
             right: 'D',
-            down: 'S'
+            upArr: 'UP',
+            leftArr: 'LEFT',
+            rightArr: 'RIGHT',
+            space: 'SPACE'
         });
     }
 
@@ -19,7 +22,7 @@ export class DesktopController
     {
         if (this.player.status.allowHorizontal)
         {
-            if (this.cursors.left.isDown && 
+            if ((this.cursors.left.isDown || this.cursors.leftArr.isDown) && 
                 this.player.body.velocity.x > -this.player.status.maxVelocityX)
             {
                 this.player.setFlipX(false);
@@ -27,7 +30,7 @@ export class DesktopController
                     this.player.applyForce({ x: -this.player.status.moveForce, y: 0 });
                 }
             }
-            else if (this.cursors.right.isDown &&
+            else if ((this.cursors.right.isDown || this.cursors.rightArr.isDown) &&
                     this.player.body.velocity.x < this.player.status.maxVelocityX)
             {
                 this.player.setFlipX(true);
@@ -38,16 +41,15 @@ export class DesktopController
             }
         }
 
-        if (this.cursors.up.isDown && 
+        if ((this.cursors.up.isDown || this.cursors.upArr.isDown || this.cursors.space.isDown) && 
             this.player.status.canJump && 
             this.player.status.isTouching.down)
         {
-
             this.player.setVelocityY(-this.player.status.maxVelocityY);
-            this.player.canJump = false;
-            this.jumpCooldownTimer = this.scene.time.addEvent({
-                delay: 250,
-                callback: () => (this.player.canJump = true)
+            this.player.status.canJump = false;
+            this.scene.time.addEvent({
+                delay: 500,
+                callback: () => (this.player.status.canJump = true)
             });
         }
     }
@@ -97,4 +99,8 @@ export class DesktopController
     {
         this.scene.input.on('pointerdown', (pointer) => { this.player.shoot(pointer.worldX, pointer.worldY)});
     }
+
+    disable() {}
+
+    enable() {}
 }

@@ -13,9 +13,6 @@ export class Player extends Phaser.Physics.Matter.Sprite
         super(scene.matter.world, x, y, 'player');
         this.scene = scene;
         scene.add.existing(this);
-        scene.cameras.main.startFollow(this, false, 0.5, 0.5);
-        scene.cameras.main.setBounds(0, 0, scene.map.level[0].length * 32, scene.map.level.length * 32);
-
         //Status
         this.status = {
             health: 20,
@@ -27,7 +24,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             canJump: true,
             numOfBullets: 1,
             fireRate: .3, // 1 bullet every [fireRate] seconds
-            bulletSpacing: Math.PI/8, //In Radians
+            bulletSpacing: Math.PI/24, //In Radians
             isFireReloaded: true,
             jumpCooldownTimer: null,
             allowHorizontal: true,
@@ -80,21 +77,20 @@ export class Player extends Phaser.Physics.Matter.Sprite
             .setScale(1.5)
             .setFixedRotation()
             .setCollisionCategory(this.category)
-            .setDepth(1);
+            .setDepth(0);
 
         // Creating Controls/Cursors
         this.controller = scene.PhaserGame.isMobile ? new MobileController(scene, this) : new DesktopController(scene, this);
 
         //Creating Health Display
         this.healthSprite = scene.add.sprite(20, 20, 'hearts'); 
-        scene.add.existing(this.healthSprite);
-        this.healthSprite.setFrame(0).setScrollFactor(0, 0).setDepth(999);
+        this.healthSprite.setFrame(0).setScrollFactor(0, 0).setDepth(0);
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
-        this.displayHealth.setScrollFactor(0, 0);
+        this.displayHealth.setScrollFactor(0, 0).setDepth(0);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
-        this.gun.setDepth(999).setScale(2);
+        this.gun.setDepth(1).setScale(2);
     }
 
     update()
@@ -153,11 +149,11 @@ export class Player extends Phaser.Physics.Matter.Sprite
         
         if (this.status.health < 10)
         {
-            this.healthSprite.setFrame(2);
+            this.healthSprite.setFrame(1);
         }
         else if (this.status.health > 10)
         {
-            this.healthSprite.setFrame(1);
+            this.healthSprite.setFrame(0);
         }
         this.displayHealth.setText(this.status.health);
         if (this.status.health <= 0) 
@@ -171,11 +167,11 @@ export class Player extends Phaser.Physics.Matter.Sprite
         this.status.health = health;
         if (this.status.health < 10)
         {
-            this.healthSprite.setFrame(2);
+            this.healthSprite.setFrame(1);
         }
         else if (this.status.health > 10)
         {
-            this.healthSprite.setFrame(1);
+            this.healthSprite.setFrame(0);
         }
         this.displayHealth.setText(this.status.health);
     }
@@ -200,7 +196,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
     reloadGun()
     {
         this.status.isFireReloaded = false;
-        let timer = this.scene.time.addEvent({
+        this.scene.time.addEvent({
             delay: this.status.fireRate * 1000,
             callback: () => this.status.isFireReloaded = true,
             callbackScope: this,
