@@ -7,55 +7,62 @@ export class MobileController
         this.scene = scene;
         this.player = player;
 
-        scene.input.addPointer(3);
+        scene.input.addPointer(4);
 
-        this.moveControls = new Joystick(scene, 'base', 'thumb', 
-                                        (150 * scene.PhaserGame.scale), 
-                                        scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
-                                        90, 240);
+        this.movementControl = new Joystick(scene, 'base', 'thumb', 
+                                200, 530, 120, {x: 325, y: 325});
         this.fireControl = new Joystick(scene, 'gunbase', 'thumb', 
-                                        scene.cameras.main.width - (150 * scene.PhaserGame.scale), 
-                                        scene.cameras.main.height - (150 * scene.PhaserGame.scale), 
-                                        90, 240);
+                                        1065, 480, 60, {x: 165, y: 165});
     }
 
     update()
     {
         //Update Movements
-        if (this.moveControls.checkState())
+        if (this.player.status.allowHorizontal)
         {
-            let normalizedY = Math.sin(this.moveControls.getRotation());
-            let normalizedX = Math.cos(this.moveControls.getRotation());
-            
-            //If normalizedY is negative => jump
-            if (normalizedY < 0 && 
-                this.player.status.canJump && 
-                this.player.status.isTouching.down)
+            if (this.movementControl.checkState())
             {
-                this.player.setVelocityY(-this.player.status.maxVelocityY);
-                this.player.canJump = false;
-                this.jumpCooldownTimer = this.scene.time.addEvent({
-                    delay: 250,
-                    callback: () => (this.player.canJump = true)
-                });
-            }
-            //If normalizedX is negative => left
-            if (normalizedY > -(Math.sqrt(3))/2 && normalizedX <= 0 &&
-                this.player.body.velocity.x > -this.player.status.maxVelocityX)
-            {
-                this.player.setFlipX(false);
-                if (!this.player.status.isTouching.left) {
-                    this.player.applyForce({ x: -this.player.status.moveForce, y: 0 });
+                if (this.movementControl.thumb.y > this.movementControl.centerY) 
+                    this.movementControl.thumb.y = this.movementControl.centerY;
+
+                let normalizedX = Math.cos(this.movementControl.getRotation());
+                let speedScale = this.movementControl.getDistScale();
+
+                if (this.movementControl.centerY - this.movementControl.thumb.y > 40)
+                {
+                    if (this.player.status.canJump && 
+                        this.player.status.isTouching.down)
+                    {
+                        this.player.setVelocityY(-this.player.status.maxVelocityY);
+                        this.player.status.canJump = false;
+                        this.scene.time.addEvent({
+                            delay: 700,
+                            callback: () => (this.player.status.canJump = true)
+                        });
+                    }
                 }
-            }
-            //If normalizedX is positive => right
-            if (normalizedY > -(Math.sqrt(3))/2 && normalizedX > 0 &&
-                this.player.body.velocity.x < this.player.status.maxVelocityX)
-            {
-                this.player.setFlipX(true);
-                if (!this.player.status.isTouching.right) {
-                    this.player.applyForce({ x: this.player.status.moveForce, y: 0 });
-                }
+
+                if (!(this.movementControl.getRotation() > -(2*Math.PI / 3) &&
+                    this.movementControl.getRotation() < -(Math.PI / 3)))
+                {
+                    if (normalizedX <= 0 &&
+                        this.player.body.velocity.x > -this.player.status.maxVelocityX)
+                    {
+                        this.player.setFlipX(false);
+                        if (!this.player.status.isTouching.left) {
+                            this.player.applyForce({ x: -this.player.status.moveForce * speedScale, y: 0 });
+                        }
+                    }
+                    //If normalizedX is positive => right
+                    if (normalizedX > 0 &&
+                        this.player.body.velocity.x < this.player.status.maxVelocityX)
+                    {
+                        this.player.setFlipX(true);
+                        if (!this.player.status.isTouching.right) {
+                            this.player.applyForce({ x: this.player.status.moveForce * speedScale, y: 0 });
+                        }
+                    }
+                };
             }
         }
 
@@ -65,10 +72,37 @@ export class MobileController
             let normalizedY = Math.sin(this.fireControl.getRotation());
             let normalizedX = Math.cos(this.fireControl.getRotation());
 
-            //console.log(normalizedX + " " + normalizedY);
-
             this.player.shoot(normalizedX + this.player.x, normalizedY + this.player.y);
         }
+    }
+
+    updateGun()
+    {
+        let normalizedY = Math.sin(this.fireControl.getRotation());
+        let normalizedX = Math.cos(this.fireControl.getRotation());
+
+        let rotation = Math.atan2(normalizedY, normalizedX);
+        this.player.gun.setPosition(this.player.x + normalizedX * 35, this.player.y + normalizedY * 35);
+        this.player.gun.setRotation(rotation);
+        if (normalizedX < 0)
+        {
+            this.player.gun.setFlipY(true);
+        } else
+        {
+            this.player.gun.setFlipY(false);
+        }
+    }
+
+    disable()
+    {
+        this.movementControl.disable();
+        this.fireControl.disable();
+    }
+
+    enable()
+    {
+        this.movementControl.enable();
+        this.fireControl.enable();
     }
 }
 

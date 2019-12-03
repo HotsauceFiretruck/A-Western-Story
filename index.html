@@ -1,26 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+<head> 
     <title>A Western Story</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <link href='https://fonts.googleapis.com/css?family=Actor' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css?family=Ewert&display=swap" rel="stylesheet">
-  </head>
-  <body style="background-image: url('assets/menuScreen.png')">
-    <audio autoplay loop src="assets/menuMusic.mp3">Audio Tag is not supported in your browser.</audio>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <style>
+        h2 {
+            text-align:center;
+        }
 
-    <div id="title">A WESTERN STORY</div>
+        #input-box {
+            width: 300px;
+            height: 125px;
+            padding: 5px 20px 20px 10px;
+            position: absolute;
+            left:calc(50% - 150px);
+            box-sizing: border-box;
+            border-radius: 10px;
+            background: #577e7f;
+            border: 4px solid #000000;
+            border-radius: 6px;
+            font-family: "Courier New", serif;
+        }
 
-    <div class="buttonWrap">
-      <button class="button" onclick="window.location.href = 'https://hotsaucefiretruck.github.io/A-Western-Story/campaign.html'">Play Campaign</button> 
-    </div>
-    <div class="buttonWrap">
-      <button class="button">Play Arena</button>
-    </div>
-    <div class="buttonWrap">
-      <button class="button" onclick="window.location.href = 'https://github.com/HotsauceFiretruck/A-Western-Story'">Credits</button>
-    </div>
+        #input-box input {
+            margin: 0px 0px 18px 0px;
+            width: 100%;
+            padding: 8px 4px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
 
-  </body>
+    <!--Setting up Game-->
+    <script src="./lib/phaser.min.js"></script> <!--Hopefully this will shorten the load time.-->
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+    <script src="./lib/phaser-matter-collision-plugin.min.js"></script>
+    <script src="./lib/rexvirtualjoystickplugin.min.js"></script>
+
+    <script type="module" src="./src/Game.js"></script>
+
+</head>
+<body>
+    <div id="phaser-div"></div>
+    <div id="input-box" style="display: none">
+        <h4>Enter a username</h4>
+        <input type="text" name="username" placeholder="username" maxlength="20"><br/>
+    </div>
+</body>
 </html>
