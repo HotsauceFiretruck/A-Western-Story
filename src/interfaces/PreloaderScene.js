@@ -143,8 +143,6 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('waterTower', 'assets/Structures/WaterTower.png');
         this.load.image('house', 'assets/Structures/House.png');
 
-        this.load.audio('cartheftmusic', 'assets/Music/CarTheft.mp3');
-
         this.load.image('playButton', 'assets/Buttons/PlayButton.png');
         this.load.image('tutorialButton', 'assets/Buttons/TutorialButton.png');
         this.load.image('nxtlvlButton', 'assets/Buttons/NextLevelButton.png');
