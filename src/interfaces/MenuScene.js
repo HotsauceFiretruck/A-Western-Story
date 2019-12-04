@@ -12,8 +12,12 @@ export class MenuScene extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
         this.add.image(600, 150, 'title').setDisplaySize(1100, 85);
 
-        let playButton = new Button(this, 600, 300, 'playButton', () => {
+        let playButton = new Button(this, 475, 300, 'playButton', () => {
             this.scene.start('lvl-select');
+        }).setScale(2).setInteractive();
+      
+        let bonusButton = new Button(this, 725, 300, 'bonusButton', () => {
+            this.scene.start('bonuslvl-select');
         }).setScale(2).setInteractive();
 
         let arenabtn = new Button(this, 475, 375, 'arenabtn', () => {
@@ -42,7 +46,6 @@ export class MenuScene extends Phaser.Scene {
         this.scale.on('enterfullscreen', () =>
         {
             this.add.text(0, 0, "Fullscreen Mode Entered Successfully.");
-        });
     
         window.document.title = "A Western Story";
     }   
