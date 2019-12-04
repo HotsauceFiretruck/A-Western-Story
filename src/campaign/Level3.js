@@ -125,7 +125,6 @@ export class Level3 extends BaseLevel
                 this.countdown -= 10;
                 this.timerGraphic.clear();
                 this.timerGraphic.fillStyle(0xF7EA6D, 1);
-                console.log(this.time.now);
                 this.timerGraphic.beginPath();
                 this.timerGraphic.moveTo(570, 24);
                 this.timerGraphic.arc(570, 24, 20, -Math.PI/2, -Math.PI/2-(timeStep*this.countdown), true);
