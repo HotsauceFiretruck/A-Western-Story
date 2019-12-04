@@ -57,10 +57,7 @@ export class Button
         });
         this.sprite.on('pointerover', () => {
             // Slight tint when hovering
-            if (this.pointerWentDown) 
-                this.sprite.setTint(DARK_TINT);
-            else 
-                this.sprite.setTint(SLIGHT_TINT);
+            this.sprite.setTint(SLIGHT_TINT);
         });
         this.sprite.on('pointerout', () => {
             this.sprite.clearTint();
