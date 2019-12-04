@@ -169,6 +169,7 @@ export class PreloaderScene extends Phaser.Scene
 
     create()
     {
+        this.input.setDefaultCursor('url(assets/Textures/CursorGunRough.png) 33 0, auto');
         this.scene.start('menu-scene');
     }
 }
