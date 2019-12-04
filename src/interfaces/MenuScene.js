@@ -11,9 +11,10 @@ export class MenuScene extends Phaser.Scene {
         this.add.image(600, 150, 'title').setDisplaySize(1100, 85);
 
         let fullscreenButton = this.add.image(1150, 50, 'fullscreenButton').setScale(2).setInteractive();
-        let playButton = this.add.sprite(600, 300, 'playButton').setScale(2).setInteractive();
+        let playButton = this.add.sprite(475, 300, 'playButton').setScale(2).setInteractive();
         let tutorialBtn = this.add.sprite(725, 375, 'tutorialButton').setScale(2).setInteractive();
         let arenabtn = this.add.sprite(475, 375, 'arenabtn').setScale(2).setInteractive();
+        let bonusButton = this.add.sprite(725, 300, 'bonusButton').setScale(2).setInteractive();
 
         fullscreenButton.on('pointerup', () => {
             if (this.scale.isFullscreen) {
@@ -71,6 +72,16 @@ export class MenuScene extends Phaser.Scene {
         tutorialBtn.on('pointerout', function (event) {
             this.clearTint();
         });
+
+        bonusButton.on('pointerdown', (event) => {
+            this.scene.start('bonuslvl-select');
+        })
+        bonusButton.on('pointerover', function (event) {
+            this.setTint(616161);
+        })
+        bonusButton.on('pointerout', function (event) {
+            this.clearTint();
+        })
     
         window.document.title = "A Western Story";
     }   
