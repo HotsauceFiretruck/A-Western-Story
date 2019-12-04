@@ -67,10 +67,26 @@ export class Level3 extends BaseLevel
         this.isLevelEnded = false;
         this.dialogSetup();
     }
-    startGame(){
+
+    startGame()
+    {
         this.dialogTree.sequences[0].nextDialog();
-        this.countdown = 45;
-        let timer = this.add.text(560, 20, this.countdown, {color:'#DC143C'}).setScale(1.5);
+        this.countdown = 4500;
+
+        let timeStep = (2*Math.PI)/this.countdown;
+        
+        this.timerGraphic = this.add.graphics().setScrollFactor(0, 0);
+        this.timerGraphic.fillStyle(0xF7EA6D, 1);
+
+        this.timerGraphic.beginPath();
+        this.timerGraphic.moveTo(570, 24);
+        this.timerGraphic.arc(570, 24, 20, -Math.PI/2, -Math.PI/2, true);
+        this.timerGraphic.closePath();
+
+        this.timerGraphic.fillPath();
+
+        let timer = this.add.text(560, 16, this.countdown/100, {color:'#07213E', fontStyle: 'bold'}).setScrollFactor(0, 0);
+        
         this.time.addEvent({
             delay: 45000,
             callback: () => this.isLevelEnded = true,
@@ -82,8 +98,8 @@ export class Level3 extends BaseLevel
             delay: 1000,
             callback: () => {
                 if(!this.isLevelEnded){
-                    this.countdown -= 1;
-                    timer.setText(this.countdown);
+                    timer.setText(Math.round(this.countdown/100));
+
                     let random = Math.random()*3;
                     let platform1 = new Platform(this, 4, 50, 17-Math.floor(random +2), 0, Math.floor(random +2), 32, 32);
                     if(Math.random() > .3)
@@ -101,8 +117,25 @@ export class Level3 extends BaseLevel
             },
             callbackScope: this,
             loop: true
-            
         });
+
+        this.time.addEvent({
+            delay: 100,
+            callback: () => {   
+                this.countdown -= 10;
+                this.timerGraphic.clear();
+                this.timerGraphic.fillStyle(0xF7EA6D, 1);
+                console.log(this.time.now);
+                this.timerGraphic.beginPath();
+                this.timerGraphic.moveTo(570, 24);
+                this.timerGraphic.arc(570, 24, 20, -Math.PI/2, -Math.PI/2-(timeStep*this.countdown), true);
+                this.timerGraphic.closePath();
+
+                this.timerGraphic.fillPath();
+            },
+            callbackScope: this,
+            loop: true
+        })
     }
 
     cameraFollowEntity(entity)
@@ -132,17 +165,10 @@ export class Level3 extends BaseLevel
 
     update ()
     {
-
         //Update bullets
         for (let i = 0; i < this.projectiles.list.length; i++)
         {
             this.projectiles.list[i].update();
-        }
-
-        //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
-            this.enemies.list[i].update();
         }
 
         for(let i = 0; i < this.platformCreation.length; i++)
@@ -163,8 +189,6 @@ export class Level3 extends BaseLevel
         {
             this.scene.start('level-4');
         }
-
-
     }
 
     loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 
