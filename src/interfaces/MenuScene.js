@@ -1,3 +1,5 @@
+import { Button } from "../entities/Button.js"
+
 export class MenuScene extends Phaser.Scene {
     constructor(PhaserGame)
     {
@@ -10,12 +12,19 @@ export class MenuScene extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
         this.add.image(600, 150, 'title').setDisplaySize(1100, 85);
 
-        let fullscreenButton = this.add.image(1150, 50, 'fullscreenButton').setScale(2).setInteractive();
-        let playButton = this.add.sprite(600, 300, 'playButton').setScale(2).setInteractive();
-        let tutorialBtn = this.add.sprite(725, 375, 'tutorialButton').setScale(2).setInteractive();
-        let arenabtn = this.add.sprite(475, 375, 'arenabtn').setScale(2).setInteractive();
+        let playButton = new Button(this, 600, 300, 'playButton', () => {
+            this.scene.start('lvl-select');
+        }).setScale(2).setInteractive();
 
-        fullscreenButton.on('pointerup', () => {
+        let arenabtn = new Button(this, 475, 375, 'arenabtn', () => {
+            this.scene.start('name-scene');
+        }).setScale(2).setInteractive();
+
+        let tutorialBtn = new Button(this, 725, 375, 'tutorialButton', () => {
+            this.scene.start('level-tutorial');
+        }).setScale(2).setInteractive();
+
+        let fullscreenButton = new Button(this, 1150, 50, 'fullscreenButton', () => {
             if (this.scale.isFullscreen) {
                 this.scale.stopFullscreen();
             } 
@@ -23,7 +32,7 @@ export class MenuScene extends Phaser.Scene {
                 this.scale.startFullscreen();
                 this.scale.mode = Phaser.Scale.FIT;
             }
-        });       
+        }).setScale(2).setInteractive();   
 
         this.scale.on('fullscreenunsupported', () =>
         {
@@ -33,43 +42,6 @@ export class MenuScene extends Phaser.Scene {
         this.scale.on('enterfullscreen', () =>
         {
             this.add.text(0, 0, "Fullscreen Mode Entered Successfully.");
-        });
-
-        fullscreenButton.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        fullscreenButton.on('pointerout', function (event) {
-            this.clearTint();
-        });
-
-        playButton.on('pointerdown', () => {
-            this.scene.start('lvl-select');
-        });
-        playButton.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        playButton.on('pointerout', function (event) {
-            this.clearTint();
-        });
-
-        arenabtn.on('pointerdown', (event) => {
-            this.scene.start('name-scene');
-        });
-        arenabtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        arenabtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
-
-        tutorialBtn.on('pointerdown', (event) => { 
-            this.scene.start('level-tutorial');
-        });
-        tutorialBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        tutorialBtn.on('pointerout', function (event) {
-            this.clearTint();
         });
     
         window.document.title = "A Western Story";

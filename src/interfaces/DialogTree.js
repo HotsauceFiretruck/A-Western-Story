@@ -1,3 +1,5 @@
+const numberKeyboard = ["ONE", "TWO", "THREE", "FOUR"];
+
 export class DialogTree
 {
     constructor(scene, centerX, centerY)
@@ -226,6 +228,12 @@ class Dialog
                 25,
                 0x2C2F30
             ).setScrollFactor(0, 0).setDepth(3);
+
+            
+            this.dialogTree.scene.input.keyboard.once("keydown-" + numberKeyboard[i-1], () => {
+                this.sequence.nextDialog();
+                this.optionObjects[i - 1][1]();
+            });
 
             rectangleObject.setPosition(
                 centerX, 
