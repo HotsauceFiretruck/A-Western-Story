@@ -5,6 +5,7 @@ import { Connection } from "./arena/Connection.js";
 import { ServerSelect } from "./arena/ServerSelect.js";
 import { MenuScene } from "./interfaces/MenuScene.js";
 import { LevelSelect } from "./interfaces/LevelSelect.js";
+import { BonusLevelSelect } from "./interfaces/BonusLevelSelect.js";
 import { PauseScene } from "./interfaces/PauseScene.js";
 import { NameScene } from "./arena/NameScene.js";
 import { ServerDisconnect } from "./arena/ServerDisconnect.js";
@@ -16,6 +17,7 @@ import { Level2 } from "./campaign/Level2.js";
 import { Level3 } from "./campaign/Level3.js";
 import { Level4 } from "./campaign/Level4.js";
 import { Level5 } from "./campaign/Level5.js";
+import { BonusLevel1 } from "./campaign/BonusLevel1.js";
 
 export class Game 
 {
@@ -35,6 +37,7 @@ export class Game
         let preloader = new PreloaderScene(this);
         let menu = new MenuScene(this);
         let levelSelect = new LevelSelect(this);
+        let bonusLevelSelect = new BonusLevelSelect(this);
         let pauseScene = new PauseScene(this);
         let death = new DeathScene(this);
 
@@ -45,6 +48,7 @@ export class Game
         let level3 = new Level3(this);
         let level4 = new Level4(this);
         let level5 = new Level5(this);
+        let bonuslevel1 = new BonusLevel1(this);
 
         //Arena stuff
         let nameInput = new NameScene(this, connection);
@@ -90,7 +94,7 @@ export class Game
             },
             
             scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, 
-                level1, level1P2, level2, level3, level4, level5, death,
+                bonusLevelSelect, level1, level1P2, level2, level3, level4, level5, bonuslevel1, death,
                 nameInput, serverList, levelArena, serverDisconnect]
 
         };
