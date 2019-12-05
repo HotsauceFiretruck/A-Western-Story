@@ -49,6 +49,24 @@ export class MenuScene extends Phaser.Scene {
 
         });
 
+        if (this.PhaserGame.isApple || true) {
+            this.add.text(600, 520, "Press the share button below and then Add to Homescreen" 
+            + "\nto get our game as a fullscreen app on your homescreen!", {
+                fontSize: '18px',
+                fill: 'FFF',
+                align: 'center',
+                stroke: 'FFF',
+                strokeThickness: 1
+            }).setOrigin(0.5);
+            this.add.text(600, 560, "↓", {
+                fontSize: '36px',
+                fill: 'FFF',
+                align: 'center',
+                stroke: 'FFF',
+                strokeThickness: 2
+            }).setOrigin(0.5);
+        }
+
         window.document.title = "A Western Story";
 
         this.input.keyboard.clearCaptures();
