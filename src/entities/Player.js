@@ -103,7 +103,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         this.controller.updateGun();
         
-        if (this.y > 600)
+        if (this.y > this.scene.map.level.length * 32)
         {
             this.death();
         }
