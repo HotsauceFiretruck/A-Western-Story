@@ -50,7 +50,7 @@ export class Game
         let level4 = new Level4(this);
         let level5 = new Level5(this);
         let bonuslevel1 = new BonusLevel1(this);
-        let BonusLevel2
+        let bonusLevel2 = new BonusLevel2(this);
 
         //Arena stuff
         let nameInput = new NameScene(this, connection);
@@ -96,7 +96,7 @@ export class Game
             },
             
             scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, 
-                bonusLevelSelect, level1, level1P2, level2, level3, level4, level5, bonuslevel1, death,
+                bonusLevelSelect, level1, level1P2, level2, level3, level4, level5, bonuslevel1, bonusLevel2, death,
                 nameInput, serverList, levelArena, serverDisconnect]
 
         };
