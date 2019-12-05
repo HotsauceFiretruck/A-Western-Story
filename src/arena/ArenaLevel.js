@@ -1,6 +1,7 @@
 import { ArenaPlayer } from "./ArenaPlayer.js";
 import { TileMap } from "../components/TileMap.js";
 import { BaseLevel } from "../core/BaseLevel.js";
+import { Button } from "../entities/Button.js";
 
 export class ArenaLevel extends BaseLevel
 {
@@ -53,8 +54,7 @@ export class ArenaLevel extends BaseLevel
         this.player.stageMode();
 
         //  Pause button
-        this.pauseBtn = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
-        this.pauseBtn.on('pointerdown', (event) => {
+        this.pauseBtn = new Button(this, 1150, 45, 'pauseButton', () => {
             this.scene.setVisible(false, 'level-arena');
             this.player.stageMode();
             this.player.name.destroy();
@@ -64,14 +64,7 @@ export class ArenaLevel extends BaseLevel
                 player: this.player,
                 sceneObject: this
             });
-        });
-        // Functions to tint the buttons on hover to look nice. :)
-        this.pauseBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.pauseBtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2.25).setInteractive().setScrollFactor(0,0);
 
         //Setup our players and listeners for the connection
         this.connection.setupPlayers(this, this.player);

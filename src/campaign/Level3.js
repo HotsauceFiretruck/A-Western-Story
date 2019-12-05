@@ -14,12 +14,14 @@ export class Level3 extends BaseLevel
 
     create()
     {
-        this.add.image(700, 525, 'house');
-        this.add.image(800, 525, 'house');
-        this.add.image(600, 200, 'cloud');
-        this.add.image(470, 125, 'cloud');
-        this.add.image(200, 210, 'cloud');
-        this.add.image(150, 525, 'cactus');
+        super.create();
+
+        this.addStaticImage('house', 700, 525);
+        this.addStaticImage('house', 800, 525);
+        this.addStaticImage('cloud', 600, 200);
+        this.addStaticImage('cloud', 470, 125);
+        this.addStaticImage('cloud', 200, 210);
+        this.addStaticImage('cactus', 150, 525);
         
 
         for(let i = -1; i < 40; i++){
@@ -27,8 +29,6 @@ export class Level3 extends BaseLevel
             new Platform(this, 2, i, 16, 0, 0, 32, 32);
 
         }
-
-        super.create();
 
         let groundLayer = 
         [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -59,44 +59,47 @@ export class Level3 extends BaseLevel
         // this.player = new Player(this, 300, 100);
         this.player.disableHorizontalMovement();
         this.player.status.maxVelocityY = 13;
-        this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4);
+        this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4).setDepth(-1);
 
         this.createTileMap('sand', groundLayer);
 
         this.platformCreation = [];
         this.isLevelEnded = false;
-
-        this.projectiles = {
-            category: 2, //telling what collision category these objects belong in
-            list: [] 
-        };
-
-        this.enemies = {
-            category: 4,
-            list: []
-        };
-
-        this.storyMessage = new DialogTree(this, 600, 100);
-        this.dialogSetup(this.storyMessage, this);
+        this.dialogSetup();
     }
-    startGame(scene){
-        this.storyMessage.sequences[0].nextDialog();
-        this.countdown = 45;
-        this.timer = scene.add.text(1150, 20, this.countdown, {color:'#DC143C'});
-        this.timer.setScale(1.5);
-        scene.time.addEvent({
+
+    startGame()
+    {
+        this.dialogTree.sequences[0].nextDialog();
+        this.countdown = 4500;
+
+        let timeStep = (2*Math.PI)/this.countdown;
+        
+        this.timerGraphic = this.add.graphics().setScrollFactor(0, 0);
+        this.timerGraphic.fillStyle(0xF7EA6D, 1);
+
+        this.timerGraphic.beginPath();
+        this.timerGraphic.moveTo(570, 24);
+        this.timerGraphic.arc(570, 24, 20, -Math.PI/2, -Math.PI/2, true);
+        this.timerGraphic.closePath();
+
+        this.timerGraphic.fillPath();
+
+        let timer = this.add.text(560, 16, this.countdown/100, {color:'#07213E', fontStyle: 'bold'}).setScrollFactor(0, 0);
+        
+        this.time.addEvent({
             delay: 45000,
             callback: () => this.isLevelEnded = true,
             callbackScope: this,
             loop: false
         });
 
-        scene.time.addEvent({
-            delay: 1000  ,
+        this.time.addEvent({
+            delay: 1000,
             callback: () => {
                 if(!this.isLevelEnded){
-                    this.countdown -= 1;
-                    this.timer.setText(this.countdown);
+                    timer.setText(Math.round(this.countdown/100));
+
                     let random = Math.random()*3;
                     let platform1 = new Platform(this, 4, 50, 17-Math.floor(random +2), 0, Math.floor(random +2), 32, 32);
                     if(Math.random() > .3)
@@ -114,8 +117,24 @@ export class Level3 extends BaseLevel
             },
             callbackScope: this,
             loop: true
-            
         });
+
+        this.time.addEvent({
+            delay: 100,
+            callback: () => {   
+                this.countdown -= 10;
+                this.timerGraphic.clear();
+                this.timerGraphic.fillStyle(0xF7EA6D, 1);
+                this.timerGraphic.beginPath();
+                this.timerGraphic.moveTo(570, 24);
+                this.timerGraphic.arc(570, 24, 20, -Math.PI/2, -Math.PI/2-(timeStep*this.countdown), true);
+                this.timerGraphic.closePath();
+
+                this.timerGraphic.fillPath();
+            },
+            callbackScope: this,
+            loop: true
+        })
     }
 
     cameraFollowEntity(entity)
@@ -124,38 +143,31 @@ export class Level3 extends BaseLevel
         this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
     }
 
-    dialogSetup(storyMessage, scene)
+    dialogSetup()
     {
-        let sequence0 = storyMessage.addSequence(); 
+        let sequence0 = this.dialogTree.addSequence(); 
 
          //dialogTree.addDialog(sequenceID, text, actor, options)
-        storyMessage.addDialog(sequence0, "Chase the sheriff!", this.player);
-        storyMessage.addDialog(sequence0, "Last 45 seconds... To survive!", this.player);
+        this.dialogTree.addDialog(sequence0, "Chase the sheriff!", this.player);
+        this.dialogTree.addDialog(sequence0, "Last 45 seconds... To survive!", this.player);
 
-        storyMessage.addDialog(sequence0, "Are you ready?", this.player,
+        this.dialogTree.addDialog(sequence0, "Are you ready?", this.player,
             [
-                ["I'm Ready!", ()=>{this.startGame(scene)}],
+                ["I'm Ready!", ()=>{this.startGame()}],
             ]
         );
 
-        storyMessage.playSequence(sequence0);
+        this.dialogTree.playSequence(sequence0);
     }
 
 
 
     update ()
     {
-
         //Update bullets
         for (let i = 0; i < this.projectiles.list.length; i++)
         {
             this.projectiles.list[i].update();
-        }
-
-        //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
-            this.enemies.list[i].update();
         }
 
         for(let i = 0; i < this.platformCreation.length; i++)
@@ -176,8 +188,6 @@ export class Level3 extends BaseLevel
         {
             this.scene.start('level-4');
         }
-
-
     }
 
     loopImage(imageKey, imageWidth, imageHeight, levelWidth, levelHeight, scale) 

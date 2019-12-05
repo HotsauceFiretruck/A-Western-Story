@@ -53,8 +53,8 @@ export class Level4 extends BaseLevel
         this.deadTree2 = this.addStaticImage('deadtree', 3000, 490).setScale(1.75);
         this.deadTree3 = this.addStaticImage('deadtree', 1450, 490).setScale(1.75);
         
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {this.switchToChurch()});
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {this.switchToChurch()});
         
         new Snake(this, 850, 575); 
         new Snake(this, 750, 575);
@@ -97,27 +97,122 @@ export class Level4 extends BaseLevel
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ];
 
         this.createTileMap('sand', levelChurch);
         this.loopBackground('background2', 720, 420, 1.45);
 
         this.church = this.addStaticImage('church', 1850, 317).setScale(2.25);
+        this.churchDoorBtn = this.addStaticImage('churchDoor', 1848, 514.5).setScale(2.25).setInteractive();
         this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
         this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
 
         this.setPlayerPosition(1400, 560);
 
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
+        this.nextLevelGoal.destroy();
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
 
         this.priest1 = new Priest(this, 1600, 525);
         this.priest2 = new Priest(this, 1700, 525);
         this.priest3 = new Priest(this, 1800, 525);
         this.priest4 = new Priest(this, 1900, 525);
 
+        this.churchDoorBtn.on('pointerdown', () => {
+            if(this.cameras.main.scrollX > 1140 && this.cameras.main.scrollX < 1365) {
+                this.dialogSetup4();
+            }
+        });
+
         this.dialogSetup2();
+    }
+
+    switchToInnerChurch()
+    {
+        this.clearAllPlatforms();
+        this.clearAllStaticEntities();
+        this.clearAllEnemies();
+        this.clearAllStaticImages();
+
+        let levelInnerChurch = 
+        [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]
+        ];
+
+        this.createTileMap('wood', levelInnerChurch);
+        this.loopBackground('woodBG', 720, 420, 1.45);
+
+        this.churchDoorBtn = this.addStaticImage('churchDoor', 600, 522).setScale(2.25).setInteractive();
+
+        this.churchDoorBtn.on('pointerdown', () => {
+            this.dialogSetup5();
+        });
+
+        this.setPlayerPosition(600, 560);
+    }
+
+    // Current Bugs/Things to do - 
+    // 3) Add something special or some easter egg inside the church. Ideas: Mr. Hotsauce statue, special minigame, just something stupid/meme
+    switchToDesert()
+    {
+        this.clearAllPlatforms();
+        this.clearAllStaticEntities();
+        this.clearAllEnemies();
+        this.clearAllStaticImages();
+
+        let levelDesert = 
+        [   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+
+        this.createTileMap('sand', levelDesert);
+        this.loopBackground('background2', 720, 420, 1.45);
+
+        this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
+        this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
+
+        this.nextLevelGoal.destroy();
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
+
+        this.setPlayerPosition(1854, 560);
+
+        this.time.delayedCall(150, this.dialogSetup6, [], this);
     }
 
     // Method used to 'move' the player to the town after completing the church section of the level.
@@ -173,6 +268,7 @@ export class Level4 extends BaseLevel
 
         this.setPlayerPosition(150, 525);
 
+        this.nextLevelGoal.destroy();
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
         this.nextLevelGoal.whenTouched(this.player, () => {this.scene.start('level-5');});
 
@@ -204,60 +300,97 @@ export class Level4 extends BaseLevel
     dialogSetup1()
     {
         // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let desertDialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = desertDialogTree.addSequence();
-        let sequence1 = desertDialogTree.addSequence();
-        let sequence2 = desertDialogTree.addSequence();
-        desertDialogTree.addDialog(sequence0, "Your horse has died.", this.player);
-        desertDialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
-        desertDialogTree.addDialog(sequence0, "Good luck.", this.player,
+        let sequence0 = this.dialogTree.addSequence();
+        let sequence1 = this.dialogTree.addSequence();
+        let sequence2 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(sequence0, "Your horse has died.", this.player);
+        this.dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
+        this.dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {desertDialogTree.playSequence(1);}],
-                ["...", () => {desertDialogTree.playSequence(2);
+                ["Thanks?", () => {this.dialogTree.playSequence(sequence1);}],
+                ["...", () => {this.dialogTree.playSequence(sequence2);
                 }],
             ]
         );
-        desertDialogTree.addDialog(sequence1, "You're welcome. :)");
-        desertDialogTree.addDialog(sequence2, ":(");
-        desertDialogTree.playSequence(sequence0);
+        this.dialogTree.addDialog(sequence1, "You're welcome. :)");
+        this.dialogTree.addDialog(sequence2, ":(");
+        this.dialogTree.playSequence(sequence0);
     }
 
     dialogSetup2()
     {
-        // This creates and displays the dialog boxes seen at the top of the screen at certain points in the level.
-        let churchDialogTree = new DialogTree(this, 600, 100);
-        let sequence0 = churchDialogTree.addSequence();
-        let sequence1 = churchDialogTree.addSequence();
-        let sequence2 = churchDialogTree.addSequence();
-        churchDialogTree.addDialog(sequence0, "You've stumbled across an old church.", this.player);
-        churchDialogTree.addDialog(sequence0, "There are some priests outside who seem to be saying something to you.");
-        churchDialogTree.addDialog(sequence0, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
+        let sequence3 = this.dialogTree.addSequence();
+        let sequence4 = this.dialogTree.addSequence();
+        let sequence5 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(sequence3, "You've stumbled across an old church.", this.player);
+        this.dialogTree.addDialog(sequence3, "There are some priests outside who seem to be saying something to you.", this.player);
+        this.dialogTree.addDialog(sequence3, "'Do you have a moment to speak about our lord and saviour Mr. Hotsauce?' -The Priests", this.player,
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                churchDialogTree.playSequence(1);  
+                this.dialogTree.playSequence(sequence4);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 this.flight = new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {churchDialogTree.playSequence(2);
-            }],
-        ]
-        );
-        churchDialogTree.addDialog(sequence1, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)");
-        churchDialogTree.addDialog(sequence2, "How unfortunate.");
-        churchDialogTree.playSequence(sequence0);
+            ["No.", () => {this.dialogTree.playSequence(sequence5);
+            }]
+        ]);
+        this.dialogTree.addDialog(sequence4, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)", this.player);
+        this.dialogTree.addDialog(sequence5, "How unfortunate.", this.player);
+        this.dialogTree.playSequence(sequence3);
     }
 
     dialogSetup3()
     {
-        let townDialogTree = new DialogTree(this, 600, 100);
-        let townSequence0 = townDialogTree.addSequence();
-        townDialogTree.addDialog(townSequence0, "You've made it back to town.", this.player);
-        townDialogTree.addDialog(townSequence0, "Unfortunately, it seems the sheriff isn't here.", this.player);
-        townDialogTree.addDialog(townSequence0, "You'll have to look further to see if you can find him.", this.player);
-        townDialogTree.playSequence(townSequence0);
+        let sequence6 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(sequence6, "You've made it back to town.", this.player);
+        this.dialogTree.addDialog(sequence6, "Unfortunately, it seems the sheriff isn't here.", this.player);
+        this.dialogTree.addDialog(sequence6, "You'll have to look further to see if you can find him.", this.player);
+        this.dialogTree.playSequence(sequence6);
+    }
+
+    dialogSetup4()
+    {
+        let churchDoorPrompt = this.dialogTree.addSequence();
+        let okthen = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(okthen, "Maybe another time.");
+        this.dialogTree.addDialog(churchDoorPrompt, "Would you like to enter the church?", this.player, 
+        [
+            ["Yes", () => {
+                this.switchToInnerChurch();
+            }],
+            ["No", () => {
+                this.dialogTree.playSequence(okthen);
+            }]
+        ]);
+        this.dialogTree.playSequence(churchDoorPrompt);
+    }
+
+    dialogSetup5()
+    {
+        let churchDoorExitPrompt = this.dialogTree.addSequence();
+        let okthen2 = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(okthen2, "Maybe another time.");
+        this.dialogTree.addDialog(churchDoorExitPrompt, "Would you like to exit the church?", this.player, 
+        [
+            ["Yes", () => {
+                this.switchToDesert();
+            }],
+            ["No", () => {
+                this.dialogTree.playSequence(okthen2);
+            }]
+        ]);
+        this.dialogTree.playSequence(churchDoorExitPrompt);
+    }
+
+    dialogSetup6()
+    {
+        let odd = this.dialogTree.addSequence();
+        this.dialogTree.addDialog(odd, "The church and its remaining priests seem to have disappeared.");
+        this.dialogTree.addDialog(odd, "Odd.");
+        this.dialogTree.playSequence(odd);
     }
 }

@@ -1,3 +1,5 @@
+import { Button } from "../entities/Button.js";
+
 export class NameScene extends Phaser.Scene {
     constructor(PhaserGame, connection)
     {
@@ -23,10 +25,7 @@ export class NameScene extends Phaser.Scene {
         this.scaleBox(scale);
 
         // Creating buttons on screen
-        let playBtn = this.add.sprite(600, 400, 'playButton').setScale(2).setInteractive();
-
-        // Adding functionality to buttons. Like click events and color change on hover.
-        playBtn.on('pointerdown', (event) => {
+        let playBtn = new Button(this, 600, 400, 'playButton', () => {
             //Hide the name box
             document.getElementById('input-box').style.display = 'none';
             //Set the player name
@@ -34,13 +33,7 @@ export class NameScene extends Phaser.Scene {
             this.connection.setUsername(username.trim());
             //Start the select screen
             this.scene.start('server-select');
-        });
-        playBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        playBtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
 
         window.document.title = "A Western Story - Arena";
     }
