@@ -49,7 +49,7 @@ export class MenuScene extends Phaser.Scene {
 
         });
 
-        if (this.PhaserGame.isApple || true) {
+        if (this.PhaserGame.isApple) {
             this.add.text(600, 520, "Press the share button below and then Add to Homescreen" 
             + "\nto get our game as a fullscreen app on your homescreen!", {
                 fontSize: '18px',
