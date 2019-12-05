@@ -46,7 +46,9 @@ export class MenuScene extends Phaser.Scene {
         this.scale.on('enterfullscreen', () =>
         {
             this.add.text(0, 0, "Fullscreen Mode Entered Successfully.");
-    
+
+        });
+
         window.document.title = "A Western Story";
     }   
 }
