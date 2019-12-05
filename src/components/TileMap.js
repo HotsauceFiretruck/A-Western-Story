@@ -2,25 +2,18 @@ import { Platform } from "./Platform.js";
 
 export class TileMap
 {
-    constructor(scene, levelArray, tileWidth, tileHeight, imageKey)
+    constructor(scene, tileWidth, tileHeight)
     {
         this.scene = scene;
-        this.level = levelArray;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
-        this.imageKey = imageKey;
-
-        this.levelWidth = levelArray[0].length * tileWidth;
-        this.levelHeight = levelArray.length * tileHeight;
+        this.level = [[]];
 
         this.platforms = {
             category: 2,
             collision: [1, 4],
             list: []
         };
-
-        this.finishedLoadTile = [];
-        this.searchTiles();
     }
 
     searchTiles()
@@ -29,7 +22,7 @@ export class TileMap
         {
             for (let x = 0; x < this.level[y].length; x++)
             {
-                if (this.level[y][x] == 1 && !this.isArrayinArray(this.finishedLoadTile, [y, x]))
+                if (this.level[y][x] == 1 && !this.isArrayinArray(this.loadedTiles, [y, x]))
                 {
                     this.setSurround(x, y);
                 }
@@ -65,7 +58,7 @@ export class TileMap
 
         for (let x = fromX; x < this.level[atY].length; x++)
         {
-            if (this.level[atY][x] == 1 && !this.isArrayinArray(this.finishedLoadTile, [atY, x])) //If the tile is grass and not in finishedLoadTile
+            if (this.level[atY][x] == 1 && !this.isArrayinArray(this.loadedTiles, [atY, x])) //If the tile is grass and not in finishedLoadTile
             {
                 width += 1;
             }
@@ -83,29 +76,48 @@ export class TileMap
         {
             for (let x = fromX; x < fromX + width; x++)
             {
-                this.finishedLoadTile.push([atY, x]);
+                this.loadedTiles.push([atY, x]);
             }
         }
         return width;
     }
 
-    deleteAllPlatforms() {
-        for(let i = 0; i < this.platforms.list.length; ++i) {
-            this.platforms.list[i].destroy();
-        }
-        this.platforms.list = [];
-    }
-
     generateBounds(fromTileX, fromTileY, toTileX, toTileY)
     {
-        let platf = new Platform(this.scene, this.platforms.category, 
+        let platform = new Platform(this.scene, this.platforms.category, 
                                  fromTileX, fromTileY, 
                                  toTileX - fromTileX, toTileY - fromTileY,
                                  this.tileWidth, this.tileHeight);
 
-        platf.addSprite(this.imageKey);
+        platform.addSprite(this.imageKey);
         
-        this.platforms.list.push(platf);
+        this.platforms.list.push(platform);
+    }
+
+    generateTileMap(tileImageKey, tileWidth, tileHeight, tileMap)
+    {
+        if (this.platforms.list.length != 0)
+        {
+            this.deleteAllPlatforms();
+        }
+
+        this.level = tileMap;
+        this.imageKey = tileImageKey;
+        this.levelWidth = tileMap[0].length * tileWidth;
+        this.levelHeight = tileMap.length * tileHeight;
+        this.loadedTiles = [];
+        
+        this.searchTiles();
+
+        this.scene.cameraFollowEntity(this.scene.getPlayer());
+    }
+    
+    deleteAllPlatforms() {
+        for(let i = 0; i < this.platforms.list.length; ++i) 
+        {
+            this.platforms.list[i].destroy();
+        }
+        this.platforms.list = [];
     }
 
     enableKinematicAll(vX, vY)

@@ -1,3 +1,5 @@
+import { Button } from "../entities/Button.js";
+
 export class DeathScene extends Phaser.Scene
 {
     constructor(PhaserGame)
@@ -12,23 +14,28 @@ export class DeathScene extends Phaser.Scene
     init(data)
     {
         this.previousScene = data.scene;
+        this.player = data.player;
+        this.sceneObject = data.sceneObject;
     }
 
     create()
     {
-        let scale = this.PhaserGame.scale;
+        this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
 
-        this.add.image(600 * scale, 300 * scale, 'death').setDisplaySize(1200 * scale, 600 * scale);
+        let returnToMenu = new Button(this, 600, 370, 'returnButton', () => {
+            if (this.previousScene !== 'level-arena') {
+                this.scene.stop(this.previousScene);
+                this.scene.start('menu-scene');
+            } else if (this.previousScene === 'level-arena') {
+                this.sceneObject.connection.cleanup();
+                this.scene.stop('level-arena');
+                this.scene.start('server-select');
+            }
+        }).setScale(3).setInteractive();
 
-        let returnToMenu = this.add.image(600 * scale, 370 * scale, 'returnButton')
-                        .setDisplaySize(360 * scale, 90 * scale)
-                        .setInteractive();
-        returnToMenu.on('pointerdown', () => {this.scene.start('menu-scene');});
-
-        let respawn = this.add.image(600 * scale, 230 * scale, 'respawnButton')
-                        .setDisplaySize(360 * scale, 90 * scale)
-                        .setInteractive();
-        respawn.on('pointerdown', () => {this.respawn()});
+        let respawn = new Button(this, 600, 230, 'respawnButton', () => {
+            this.respawn()
+        }).setScale(3).setInteractive();
     }
 
     respawn()

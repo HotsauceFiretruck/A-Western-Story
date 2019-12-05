@@ -1,3 +1,5 @@
+import { Button } from "../entities/Button.js"
+
 export class MenuScene extends Phaser.Scene {
     constructor(PhaserGame)
     {
@@ -7,34 +9,48 @@ export class MenuScene extends Phaser.Scene {
 
     create()
     {
-        let scale = this.PhaserGame.scale;
+        this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
+        this.add.image(600, 150, 'title').setDisplaySize(1100, 85);
 
-        this.add.image(600 * scale, 300 * scale, 'bg').setDisplaySize(1200 * scale, 600 * scale);
-        this.add.image(600 * scale, 150 * scale, 'title').setDisplaySize(1100 * scale, 85 * scale);
-
-        this.playbtn = this.add.sprite(600 * scale, 300 * scale, 'playbtn').setScale(2 * scale).setInteractive();
-        this.tutorialBtn = this.add.sprite(600 * scale, 390 * scale, 'tutorialbtn').setScale(2 * scale).setInteractive();
-
-        this.playbtn.on('pointerdown', (event) => {
+        let playButton = new Button(this, 475, 300, 'playButton', () => {
             this.scene.start('lvl-select');
-        });
-        this.playbtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        })
-        this.playbtn.on('pointerout', function (event) {
-            this.clearTint();
-        })
+        }).setScale(2).setInteractive();
+      
+        let bonusButton = new Button(this, 725, 300, 'bonusButton', () => {
+            this.scene.start('bonuslvl-select');
+        }).setScale(2).setInteractive();
 
-        this.tutorialBtn.on('pointerdown', (event) => { 
-            document.getElementById('menuMusic').pause();
+        let arenabtn = new Button(this, 475, 375, 'arenabtn', () => {
+            this.scene.start('name-scene');
+        }).setScale(2).setInteractive();
+
+        let tutorialBtn = new Button(this, 725, 375, 'tutorialButton', () => {
             this.scene.start('level-tutorial');
-        })
-        this.tutorialBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        })
-        this.tutorialBtn.on('pointerout', function (event) {
-            this.clearTint();
-        })
-    }
+        }).setScale(2).setInteractive();
 
+        let fullscreenButton = new Button(this, 1150, 50, 'fullscreenButton', () => {
+            if (this.scale.isFullscreen) {
+                this.scale.stopFullscreen();
+            } 
+            else {
+                this.scale.startFullscreen();
+                this.scale.mode = Phaser.Scale.FIT;
+            }
+        }).setScale(2).setInteractive();   
+
+        this.scale.on('fullscreenunsupported', () =>
+        {
+            this.add.text(0, 0, "Fullscreen Unsupported Error.");
+        });
+
+        this.scale.on('enterfullscreen', () =>
+        {
+            this.add.text(0, 0, "Fullscreen Mode Entered Successfully.");
+
+        });
+
+        window.document.title = "A Western Story";
+
+        this.input.keyboard.clearCaptures();
+    }   
 }

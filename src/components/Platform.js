@@ -52,8 +52,9 @@ export class Platform
             for (let x = this.fromTileX; x <= this.toTileX; x++)
             {
                 this.image.push(this.scene.add.image(this.pixelWidthPerTile * (x + 1/2), 
-                                                     this.pixelHeightPerTile * (y + 1/2), image));
+                                                     this.pixelHeightPerTile * (y + 1/2), image).setDepth(-1));
             }
+            if (y == this.fromTileY && (image == 'sand' || image == 'grass' || image == 'cracked-brick')) image = image + '2';
         }
     }
 
