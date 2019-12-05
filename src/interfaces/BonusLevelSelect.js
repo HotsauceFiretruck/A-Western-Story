@@ -12,7 +12,7 @@ export class BonusLevelSelect extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         this.lvl1Button = new Button(this, 300, 300, 'lvl1Button', () => {
-            this.scene.start('bonuslevel-1');
+            this.scene.start('bonuslevel-2');
         }).setScale(4).setInteractive();
 
         window.document.title = "A Western Story - Campaign";

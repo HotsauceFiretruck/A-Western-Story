@@ -18,6 +18,7 @@ import { Level3 } from "./campaign/Level3.js";
 import { Level4 } from "./campaign/Level4.js";
 import { Level5 } from "./campaign/Level5.js";
 import { BonusLevel1 } from "./campaign/BonusLevel1.js";
+import { BonusLevel2 } from "./campaign/Nic's_Bonus_Level.js";
 
 export class Game 
 {
@@ -49,6 +50,7 @@ export class Game
         let level4 = new Level4(this);
         let level5 = new Level5(this);
         let bonuslevel1 = new BonusLevel1(this);
+        let BonusLevel2
 
         //Arena stuff
         let nameInput = new NameScene(this, connection);
