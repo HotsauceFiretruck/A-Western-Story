@@ -1,4 +1,5 @@
 import { Connection } from "./Connection.js";
+import { Button } from "../entities/Button.js";
 
 export class ServerSelect extends Phaser.Scene {
     constructor(PhaserGame, connection)
@@ -14,80 +15,40 @@ export class ServerSelect extends Phaser.Scene {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen
-        this.svr1Btn = this.add.sprite(300, 200, 'svr1btn').setScale(2).setInteractive();
-        this.svr2Btn = this.add.sprite(600, 200, 'svr2btn').setScale(2).setInteractive();
-        this.svr3Btn = this.add.sprite(900, 200, 'svr3btn').setScale(2).setInteractive();
-        this.svr4Btn = this.add.sprite(450, 275, 'svr4btn').setScale(2).setInteractive();
-        this.svr5Btn = this.add.sprite(750, 275, 'svr5btn').setScale(2).setInteractive();
-
-        this.returnBtn = this.add.sprite(600, 425, 'returnButton').setScale(2).setInteractive();
-
-        // Adding functionality to buttons. Like click events and color change on hover.
-        this.svr1Btn.on('pointerdown', (event) => {
+        this.svr1Btn = new Button(this, 300, 200, 'svr1btn', () => {
             //Set the server IP based on the button & start the level
             this.connection.setServer("https://western-server.herokuapp.com");
             this.scene.start('level-arena');
-        });
-        this.svr1Btn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.svr1Btn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
 
-        this.svr2Btn.on('pointerdown', (event) => {
+        this.svr2Btn = new Button(this, 600, 200, 'svr2btn', () => {
+            //Set the server IP based on the button & start the level
             this.connection.setServer("https://western-server2.herokuapp.com");
             this.scene.start('level-arena');
-        });
-        this.svr2Btn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.svr2Btn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
 
-        this.svr3Btn.on('pointerdown', (event) => {
+        this.svr3Btn = new Button(this, 900, 200, 'svr3btn', () => {
+            //Set the server IP based on the button & start the level
             this.connection.setServer("https://western-server3.herokuapp.com");
             this.scene.start('level-arena');
-        });
-        this.svr3Btn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.svr3Btn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
 
-        this.svr4Btn.on('pointerdown', (event) => {
+        this.svr4Btn = new Button(this, 450, 275, 'svr4btn', () => {
+            //Set the server IP based on the button & start the level
             this.connection.setServer("https://western-server4.herokuapp.com");
             this.scene.start('level-arena');
-        });
-        this.svr4Btn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.svr4Btn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
 
-        this.svr5Btn.on('pointerdown', (event) => {
+        this.svr5Btn = new Button(this, 750, 275, 'svr5btn', () => {
+            //Set the server IP based on the button & start the level
             this.connection.setServer("https://western-server5.herokuapp.com");
             this.scene.start('level-arena');
-        });
-        this.svr5Btn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.svr5Btn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
 
-        this.returnBtn.on('pointerdown', (event) => {
+        this.returnBtn = new Button(this, 600, 425, 'returnButton', () => {
             this.scene.start('menu-scene');
-        });
-        this.returnBtn.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.returnBtn.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2).setInteractive();
+
     }
 
     getServer() {

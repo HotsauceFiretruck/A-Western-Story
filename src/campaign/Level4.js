@@ -53,8 +53,8 @@ export class Level4 extends BaseLevel
         this.deadTree2 = this.addStaticImage('deadtree', 3000, 490).setScale(1.75);
         this.deadTree3 = this.addStaticImage('deadtree', 1450, 490).setScale(1.75);
         
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {this.switchToChurch()});
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {this.switchToChurch()});
         
         new Snake(this, 850, 575); 
         new Snake(this, 750, 575);
@@ -110,8 +110,9 @@ export class Level4 extends BaseLevel
 
         this.setPlayerPosition(1400, 560);
 
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
+        this.nextLevelGoal.destroy();
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
 
         this.priest1 = new Priest(this, 1600, 525);
         this.priest2 = new Priest(this, 1700, 525);
@@ -205,8 +206,9 @@ export class Level4 extends BaseLevel
         this.deadTreeChurch = this.addStaticImage('deadtree', 1550, 488).setScale(1.75);
         this.bigcrateChurch = this.addStaticImage('crate', 2120, 532).setScale(.9);
 
-        let nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
-        nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
+        this.nextLevelGoal.destroy();
+        this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 525, 410).setScale(.25);
+        this.nextLevelGoal.whenTouched(this.player, () => {this.switchToTown();});
 
         this.setPlayerPosition(1854, 560);
 
@@ -266,6 +268,7 @@ export class Level4 extends BaseLevel
 
         this.setPlayerPosition(150, 525);
 
+        this.nextLevelGoal.destroy();
         this.nextLevelGoal = new Area(this, 'signPost', 3200, 525, 510, 400).setScale(.25);
         this.nextLevelGoal.whenTouched(this.player, () => {this.scene.start('level-5');});
 
@@ -304,8 +307,8 @@ export class Level4 extends BaseLevel
         this.dialogTree.addDialog(sequence0, "You'll have to get through the desert to get back to town.", this.player);
         this.dialogTree.addDialog(sequence0, "Good luck.", this.player,
             [
-                ["Thanks?", () => {this.dialogTree.playSequence(1);}],
-                ["...", () => {this.dialogTree.playSequence(2);
+                ["Thanks?", () => {this.dialogTree.playSequence(sequence1);}],
+                ["...", () => {this.dialogTree.playSequence(sequence2);
                 }],
             ]
         );
@@ -325,14 +328,14 @@ export class Level4 extends BaseLevel
         [
             // Depending on answer here, the player may or may not receive a power up. Yes for powerup No for no powerup. :)
             ["Of course!", () => {
-                this.dialogTree.playSequence(4);  
+                this.dialogTree.playSequence(sequence4);  
                 this.priest1.death();
                 this.priest2.death();
                 this.priest3.death();
                 this.priest4.death();
                 this.flight = new Flight(this, 'flight', 150, 200);
             }],
-            ["No.", () => {this.dialogTree.playSequence(5);
+            ["No.", () => {this.dialogTree.playSequence(sequence5);
             }]
         ]);
         this.dialogTree.addDialog(sequence4, "We appreciate the politeness! For this we shall spare your life.\nAlso if you walk back the way you came you might find a special gift. :)", this.player);
