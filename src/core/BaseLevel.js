@@ -1,6 +1,7 @@
 import { Player } from "../entities/Player.js";
 import { TileMap } from "../components/TileMap.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
+import { Button } from "../entities/Button.js";
 
 /*
     The base level for all levels
@@ -54,19 +55,11 @@ export class BaseLevel extends Phaser.Scene
 
         this.dialogTree = new DialogTree(this, 600, 100);
 
-        let pauseButton = this.add.sprite(1150, 45, 'pauseButton').setScale(2.25).setInteractive().setScrollFactor(0,0);
-        pauseButton.on('pointerdown', (event) => {
+        let pauseButton = new Button(this, 1150, 45, 'pauseButton', () => {
             this.scene.pause(this.scene.key);
             this.scene.setVisible(false, this.scene.key);
             this.scene.launch('pause-scene', {scene: this.scene.key});
-        });
-        // Functions to tint the buttons on hover to look nice. :)
-        pauseButton.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        pauseButton.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(2.25).setInteractive().setScrollFactor(0,0);
     }
 
     update()
