@@ -100,6 +100,8 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('clear', 'assets/Textures/Clear.png');
         this.load.image('cactus3', 'assets/Textures/Cactus3.png');
         this.load.image('wood', 'assets/Textures/Wood.png');
+        this.load.image('brick', 'assets/Textures/Bricks.png');
+        this.load.image('cracked-brick', 'assets/Textures/CrackedBricks.png');
 
         this.load.image('player', 'assets/Sprites/Player.png');
         this.load.image('bullet', 'assets/Sprites/Bullet.png');
