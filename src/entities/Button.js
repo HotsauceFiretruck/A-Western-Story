@@ -35,6 +35,12 @@ export class Button
 
     setScrollFactor(x, y) {
         this.sprite.setScrollFactor(x, y);
+        return this;
+    }
+
+    setDepth(depth) {
+        this.sprite.setDepth(depth);
+        return this;
     }
 
     addListeners() {
