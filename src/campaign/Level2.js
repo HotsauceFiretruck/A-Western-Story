@@ -65,10 +65,13 @@ export class Level2 extends BaseLevel
 
         this.setPlayerPosition(300, level.length * 30);
 
-        //Adding cloods
-        for(var i = 0; i < 15; i++)
+        //Adding 15 cloods
+        //Larger num = lower clouds (make sure it doesn't clip with the level map)
+        var cloudHeight = level.length * 16;
+        var numClouds = 15;
+        for(var i = 0; i < numClouds; i++)
         {
-            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * (level.length * 16)) + 32), level[0].length * 32);
+            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * cloudHeight) + 32), level[0].length * 32);
         }
         
         new Enemy(this, 608, level.length * 30);
