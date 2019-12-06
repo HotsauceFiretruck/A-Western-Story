@@ -27,6 +27,8 @@ export class Game
     {
         this.MatterPhysics = Phaser.Physics.Matter.Matter;
         this.isMobile = false;
+        this.isApple = false;
+        this.isAndroid = false;
 
         //Detecting the Device's Size and Set Max
         let defaultWidth = 1200;
@@ -115,6 +117,12 @@ export class Game
             game.device.os.windowsPhone)
         {
             this.isMobile = true;
+        }
+        if (game.device.os.iOS || game.device.os.iPhone) {
+            this.isApple = true;
+        }
+        else if (game.device.os.android) {
+            this.isAndroid = true;
         }
     }
 }
