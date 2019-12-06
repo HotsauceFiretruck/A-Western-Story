@@ -11,9 +11,9 @@ Presentation --> http://bit.ly/2O39QQI
 Hello and welcome to the GitHub repository for _A Western Story_, a web based game developed by the HotsauceFiretruck programming team from West High School. We are based in Davenport, Iowa, and this project was created to be showcased at Byte Jam 2019 at Indian Hills Community College. 
 
 ## Contributors
-John Brosius - Mentor/Teacher
+[John Brosius](https://github.com/brosius02) - Mentor/Teacher
 
-__Programmers:__
+__Members:__
 * [Nhan Tran](https://github.com/tranqnhan)
 * [Ethan Hancock](https://github.com/ETRulz)
 * [Austin Leuenhagen](https://github.com/Lui798)
@@ -21,6 +21,8 @@ __Programmers:__
 * [Logan Gosch](https://github.com/logan-gosch)
 * [Dustin Cornelison](https://github.com/CodingSyntax)
 * [Aaron Lang](https://github.com/alang2002)
+* [Nic Hendley](https://github.com/nhendley10547)
+* [Noah Giles](https://github.com/NoahGiles)
 
 
 ## Built With
@@ -30,5 +32,3 @@ __Programmers:__
 * [Phaser.io](https://phaser.io) - Game Framework
 * [JavaScript](https://www.javascript.com) - Programming Language
 * [Visual Studio Code](https://code.visualstudio.com) - IDE
-
-## How to Contribute
