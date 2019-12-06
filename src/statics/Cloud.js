@@ -19,7 +19,7 @@ export class Cloud
     {
         if (!this.isOnStage && !this.removed)
         {
-            this.centerX -= Math.sqrt(this.centerY) / 15;
+            this.centerX -= Math.sqrt(this.centerY) / 20;
             if(this.centerX < (cloudWidth / 2) * -1)
             {
                 this.centerX = this.levelWidth + cloudWidth;

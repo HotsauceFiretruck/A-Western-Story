@@ -68,5 +68,7 @@ export class MenuScene extends Phaser.Scene {
         }
 
         window.document.title = "A Western Story";
+
+        this.input.keyboard.clearCaptures();
     }   
 }

@@ -13,6 +13,7 @@ export class Button
         // Variable used to only run pointerup function if pointer went down before that
         this.pointerWentDown = false;
         this.func = func;
+        this.setDepth(1);
 
         this.addListeners();
     }
@@ -38,8 +39,9 @@ export class Button
         return this;
     }
 
-    setDepth(depth) {
-        this.sprite.setDepth(depth);
+    setDepth(number)
+    {
+        this.sprite.setDepth(number);
         return this;
     }
 
