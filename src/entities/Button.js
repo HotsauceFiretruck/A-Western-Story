@@ -13,6 +13,7 @@ export class Button
         // Variable used to only run pointerup function if pointer went down before that
         this.pointerWentDown = false;
         this.func = func;
+        this.setDepth(1);
 
         this.addListeners();
     }
@@ -35,6 +36,13 @@ export class Button
 
     setScrollFactor(x, y) {
         this.sprite.setScrollFactor(x, y);
+        return this;
+    }
+
+    setDepth(number)
+    {
+        this.sprite.setDepth(number);
+        return this;
     }
 
     addListeners() {
