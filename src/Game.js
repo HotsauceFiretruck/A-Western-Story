@@ -19,6 +19,7 @@ import { Level4 } from "./campaign/Level4.js";
 import { Level5 } from "./campaign/Level5.js";
 import { BonusLevel1 } from "./campaign/BonusLevel1.js";
 import { BonusLevel2 } from "./campaign/Nic's_Bonus_Level.js";
+import { BonusLevel4 } from "./campaign/BonusLevel4.js";
 
 export class Game 
 {
@@ -53,6 +54,7 @@ export class Game
         let level5 = new Level5(this);
         let bonuslevel1 = new BonusLevel1(this);
         let bonusLevel2 = new BonusLevel2(this);
+        let bonusLevel4 = new BonusLevel4(this);
 
         //Arena stuff
         let nameInput = new NameScene(this, connection);
@@ -97,9 +99,10 @@ export class Game
                 ]
             },
             
-            scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, 
-                bonusLevelSelect, level1, level1P2, level2, level3, level4, level5, bonuslevel1, bonusLevel2, death,
-                nameInput, serverList, levelArena, serverDisconnect]
+            scene: [preloader, menu, pauseScene, levelTutorial, levelSelect, bonusLevelSelect, 
+                    level1, level1P2, level2, level3, level4, level5, 
+                    bonuslevel1, bonusLevel2, bonusLevel4, 
+                    death, nameInput, serverList, levelArena, serverDisconnect]
 
         };
 
