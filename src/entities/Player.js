@@ -84,10 +84,10 @@ export class Player extends Phaser.Physics.Matter.Sprite
 
         //Creating Health Display
         this.healthSprite = scene.add.sprite(20, 20, 'hearts'); 
-        this.healthSprite.setFrame(0).setScrollFactor(0, 0).setDepth(0);
+        this.healthSprite.setFrame(0).setScrollFactor(0, 0).setDepth(1);
 
         this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#BB002A'});
-        this.displayHealth.setScrollFactor(0, 0).setDepth(0);
+        this.displayHealth.setScrollFactor(0, 0).setDepth(1);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
         this.gun.setDepth(1).setScale(2);

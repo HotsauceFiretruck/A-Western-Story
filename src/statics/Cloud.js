@@ -12,7 +12,6 @@ export class Cloud
         this.centerY = centerY;
         this.levelWidth = levelWidth;
         this.image = scene.add.image(centerX, centerY, 'cloud');
-        
         scene.statics.list.push(this);
     }
 
