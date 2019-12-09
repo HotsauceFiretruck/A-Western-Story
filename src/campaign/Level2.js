@@ -3,7 +3,7 @@ import { Enemy } from "../entities/Enemy.js";
 import { Area } from "../components/Area.js";
 import { DialogTree } from "../interfaces/DialogTree.js";
 import { FinalEnemy } from "../entities/FinalEnemy.js";
-import { Cloud } from "../statics/Cloud.js";
+import { Cloud2 } from "../statics/Cloud2.js";
 
 var interval;
 var scene;
@@ -71,7 +71,7 @@ export class Level2 extends BaseLevel
         var numClouds = 15;
         for(var i = 0; i < numClouds; i++)
         {
-            new Cloud(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * cloudHeight) + 32), level[0].length * 32);
+            new Cloud2(this, Math.floor(Math.random() * (level[0].length * 32)), Math.floor((Math.random() * cloudHeight) + 32), level[0].length * 32);
         }
         
         new Enemy(this, 608, level.length * 30);
