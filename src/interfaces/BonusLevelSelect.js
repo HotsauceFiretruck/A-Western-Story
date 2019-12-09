@@ -1,3 +1,5 @@
+import { Button } from "../entities/Button.js";
+
 export class BonusLevelSelect extends Phaser.Scene {
     constructor(PhaserGame)
     {
@@ -9,20 +11,13 @@ export class BonusLevelSelect extends Phaser.Scene {
     {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
-        // Creating buttons on screen
-        this.lvl1Button = this.add.sprite(600, 300, 'lvl1Button').setScale(4).setInteractive();
-
-        // Adding functionality to buttons. Like click events and color change on hover.
-        this.lvl1Button.on('pointerdown', (event) => {
-            //document.getElementById('menuMusic').pause();
+        this.lvl1Button = new Button(this, 300, 300, 'lvl1Button', () => {
             this.scene.start('bonuslevel-1');
-        });
-        this.lvl1Button.on('pointerover', function (event) {
-            this.setTint(616161);
-        });
-        this.lvl1Button.on('pointerout', function (event) {
-            this.clearTint();
-        });
+        }).setScale(4).setInteractive();
+
+        let lvl4Button = new Button(this, 700, 300, 'lvl4Button', () => {
+            this.scene.start('bonuslevel-4');
+        }).setScale(4).setInteractive();
 
         window.document.title = "A Western Story - Campaign";
     }
