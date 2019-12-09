@@ -30,7 +30,13 @@ export class Snake extends Enemy
             }
         }
 
-        
+        if (this.body.velocity.x < 0)
+        {
+            this.setFlipX(true);
+        } else
+        {
+            this.setFlipX(false);
+        }
     }
 
     damagePlayer()
