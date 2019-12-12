@@ -1,3 +1,5 @@
+import { Button } from "../entities/Button.js";
+
 const numberKeyboard = ["ONE", "TWO", "THREE", "FOUR"];
 
 export class DialogTree
@@ -273,15 +275,15 @@ class Dialog
         //Setting Signal To Next Dialog
         if (this.optionObjects.length == 0)
         {
-            this.nextDialogButton[1] = this.dialogTree.scene.add.image(
-                this.dialogTree.centerX + 400, 
-                this.dialogTree.centerY + 122, 'continueDialogButton'); 
-            this.nextDialogButton[1].setScrollFactor(0, 0).setScale(1.5).setDepth(4);
+            this.nextDialogButton[1] = new Button(this.dialogTree.scene, this.dialogTree.centerX + 400,
+                 this.dialogTree.centerY + 122, 'continueDialogButton', () => {
+                    this.sequence.nextDialog();
+                 }).setInteractive().setScrollFactor(0, 0).setScale(1.5).setDepth(4).sprite; 
 
             if (this.dialogTree.mobile)
             {
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
-                    this.nextDialogButton[1].x - 112, 
+                    this.nextDialogButton[1].x - 118, 
                     this.nextDialogButton[1].y - 10, 
                     "Press Me To Continue",
                     {
@@ -290,15 +292,6 @@ class Dialog
                         fontStyle: 'bold'
                     }
                 ).setDepth(4);
-
-                this.nextDialogButton[1].setInteractive();
-                this.nextDialogButton[1].on('pointerup', () => {this.sequence.nextDialog();});
-                this.nextDialogButton[1].on('pointerover', function() {
-                    this.setTint(616161);
-                })
-                this.nextDialogButton[1].on('pointerout', function() {
-                    this.clearTint();
-                })
             } 
             else 
             {

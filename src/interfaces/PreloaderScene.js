@@ -81,7 +81,7 @@ export class PreloaderScene extends Phaser.Scene
             this.load.image('gunbase', 'assets/Sprites/JoystickGunBase.png');
         }
         else {
-            this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
+            //this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         }
       
         this.load.image('background', 'assets/Backgrounds/Background.png');
