@@ -52,7 +52,11 @@ export class Cloud2
         var canvas = document.createElement("canvas");
         var ctx = canvas.getContext('2d');
 
-        
+        var arr = [];
+        for (var i = 0; i < 20; i++)
+        {
+            
+        }
         
         ctx.fillRect(10, 10, 1500, 1000);
     }
