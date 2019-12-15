@@ -17,6 +17,7 @@ export class Cloud
 
     update()
     {
+        this.image.destroy();
         if (!this.isOnStage && !this.removed)
         {
             this.centerX -= Math.sqrt(this.centerY) / 20;
@@ -24,7 +25,6 @@ export class Cloud
             {
                 this.centerX = this.levelWidth + cloudWidth;
             }
-            this.image.destroy();
             this.image = this.scene.add.image(this.centerX, this.centerY, 'cloud');
         }
     }
