@@ -19,7 +19,7 @@ export class Player extends Phaser.Physics.Matter.Sprite
             maxVelocityX: 3,
             maxVelocityY: 9,
             moveForce: 0.01,
-            nodamage: false,
+            damageFlag: true, //true means player is going to take damage.
             isTouching: { left: false, right: false, down: false },
             canJump: true,
             numOfBullets: 1,
@@ -138,11 +138,11 @@ export class Player extends Phaser.Physics.Matter.Sprite
     changeHealth(changeHealthBy)
     {
         this.status.health += changeHealthBy;
-        if (changeHealthBy < 0 && this.status.nodamage)
+        if (changeHealthBy < 0 && !this.status.damageFlag)
         {
             this.status.health -= changeHealthBy;
         }
-        if (changeHealthBy < 0 && !this.status.nodamage)
+        if (changeHealthBy < 0 && this.status.damageFlag)
         {
             this.damagedEffects();
         }
@@ -179,13 +179,13 @@ export class Player extends Phaser.Physics.Matter.Sprite
     damagedEffects()
     {
         this.alpha = .5;
-        this.status.nodamage = true;
+        this.status.damageFlag = false;
         let timer = this.scene.time.addEvent({
             delay: 1000,
             callback: () => 
             {
                 this.alpha = 1;
-                this.status.nodamage = false;
+                this.status.damageFlag = true;
             },
             callbackScope: this,
             loop: false
