@@ -1,0 +1,16 @@
+{
+  "name": "a-western-story",
+  "version": "1.0.0",
+  "description": "A Western Story Game",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HotsauceFiretruck/A-Western-Story.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/HotsauceFiretruck/A-Western-Story#readme",
+  "dependencies": {
+    "ecsy": "^0.2.1",
+    "phaser": "^3.21.0"
+  }
+}

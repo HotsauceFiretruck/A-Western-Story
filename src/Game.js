@@ -1,3 +1,5 @@
+import Phaser from 'phaser.js';
+
 import { ArenaLevel } from "./arena/ArenaLevel.js";
 import { DeathScene } from "./interfaces/DeathScene.js";
 import { PreloaderScene } from "./interfaces/PreloaderScene.js";
@@ -20,6 +22,8 @@ import { Level5 } from "./campaign/Level5.js";
 import { BonusLevel1 } from "./campaign/BonusLevel1.js";
 import { BonusLevel2 } from "./campaign/Nic's_Bonus_Level.js";
 import { BonusLevel4 } from "./campaign/BonusLevel4.js";
+
+var phaser = require('phaser');
 
 export class Game 
 {
