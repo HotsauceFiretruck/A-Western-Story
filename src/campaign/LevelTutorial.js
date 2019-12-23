@@ -1,7 +1,7 @@
 import { BaseLevel } from "../core/BaseLevel.js";
 import { Area } from "../components/Area.js";
 import { Enemy } from "../entities/Enemy.js";
-import { BaseEntity } from "../core/BaseEntity.js";
+import { Platform } from "../components/Platform.js";
 
 export class LevelTutorial extends BaseLevel
 {
@@ -51,8 +51,6 @@ export class LevelTutorial extends BaseLevel
 
         //You really don't need to set a variable to a function.
         new Enemy(this, 500, 200);
-
-        new BaseEntity(this, 500, 200);
 
         //Add an Area Example
         //Scene, ImageKey, CenterX (Position), CenterY (Position), Collision Body Width, Collision Body Height

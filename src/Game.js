@@ -71,7 +71,8 @@ export class Game
             physics: {
                 default: 'matter',
                 matter: {
-                    gravity: { y: 1.3}
+                    gravity: { y: 1.3},
+                    debug: true
                 }
             },
             scale: {
