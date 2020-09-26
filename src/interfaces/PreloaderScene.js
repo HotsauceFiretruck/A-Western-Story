@@ -1,13 +1,11 @@
-export class PreloaderScene extends Phaser.Scene
-{
-    constructor(PhaserGame)
-    {
-        super({key: "preloader-scene"});
-        this.PhaserGame = PhaserGame;
+import BrowserInfo from "../BrowserInfo.js";
+
+export class PreloaderScene extends Phaser.Scene {
+    constructor() {
+        super({ key: "preloader-scene" });
     }
 
-    loadProgress()
-    {
+    loadProgress() {
         let width = this.cameras.main.width;
         let height = this.cameras.main.height;
 
@@ -15,7 +13,7 @@ export class PreloaderScene extends Phaser.Scene
         let progressBox = this.add.graphics();
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(240, 270, 720, 50);
-        
+
         let loadingText = this.make.text({
             x: width / 2,
             y: height / 2 - 50,
@@ -26,7 +24,7 @@ export class PreloaderScene extends Phaser.Scene
             }
         });
         loadingText.setOrigin(0.5, 0.5);
-        
+
         let percentText = this.make.text({
             x: width / 2,
             y: height / 2 - 5,
@@ -37,7 +35,7 @@ export class PreloaderScene extends Phaser.Scene
             }
         });
         percentText.setOrigin(0.5, 0.5);
-        
+
         let assetText = this.make.text({
             x: width / 2,
             y: height / 2 + 50,
@@ -56,7 +54,7 @@ export class PreloaderScene extends Phaser.Scene
             progressBar.fillStyle(0xffffff, 1);
             progressBar.fillRect(250, 280, 700 * value, 30);
         });
-        
+
         this.load.on('fileprogress', function (file) {
             assetText.setText('Loading asset: ' + file.key);
         });
@@ -70,12 +68,10 @@ export class PreloaderScene extends Phaser.Scene
         });
     }
 
-    preload()
-    {
+    preload() {
         this.loadProgress();
 
-        if(this.PhaserGame.isMobile)
-        {
+        if (BrowserInfo.mobile) {
             this.load.image('thumb', 'assets/Sprites/JoystickThumb.png');
             this.load.image('base', 'assets/Sprites/JoystickBase.png');
             this.load.image('gunbase', 'assets/Sprites/JoystickGunBase.png');
@@ -83,7 +79,7 @@ export class PreloaderScene extends Phaser.Scene
         else {
             //this.load.audio('cartheftmusic', 'assets/CarTheft.mp3');
         }
-      
+
         this.load.image('background', 'assets/Backgrounds/Background.png');
         this.load.image('background2', 'assets/Backgrounds/Background2.png');
         this.load.image('background3', 'assets/Backgrounds/Background3.png');
@@ -129,7 +125,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('continueDialogButton', 'assets/Sprites/ContinueDialogButton.png');
         this.load.image('healthbarfront', 'assets/Sprites/BossHealthBar.png');
         this.load.image('dialogbg', 'assets/Sprites/DialogBackground.png');
-        this.load.spritesheet('hearts', 'assets/Sprites/Hearts.png',  {frameWidth: 50/3, frameHeight: 16});
+        this.load.spritesheet('hearts', 'assets/Sprites/Hearts.png', { frameWidth: 50 / 3, frameHeight: 16 });
 
         this.load.image('sheriffhouse', 'assets/Structures/SheriffHouse.png');
         this.load.image('northSign', 'assets/Structures/NorthSign.png');
@@ -160,7 +156,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('svr3btn', 'assets/Buttons/Server3Button.png');
         this.load.image('svr4btn', 'assets/Buttons/Server4Button.png');
         this.load.image('svr5btn', 'assets/Buttons/Server5Button.png');
-        this.load.image('arenabtn', 'assets/Buttons/ArenaButton.png'); 
+        this.load.image('arenabtn', 'assets/Buttons/ArenaButton.png');
         this.load.image('pauseButton', 'assets/Buttons/PauseButton.png');
         this.load.image('unpauseButton', 'assets/Buttons/UnpauseButton.png');
         this.load.image('fullscreenButton', 'assets/Buttons/FullscreenButton.png');
@@ -168,8 +164,7 @@ export class PreloaderScene extends Phaser.Scene
         this.load.image('respawnButton', 'assets/Buttons/RespawnButton.png');
     }
 
-    create()
-    {
+    create() {
         this.input.setDefaultCursor('url(assets/Textures/CursorGun.png) 16 16, auto');
         this.scene.start('menu-scene');
     }

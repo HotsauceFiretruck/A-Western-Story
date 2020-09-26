@@ -1,15 +1,12 @@
 import { Button } from "../entities/Button.js";
 
 export class NameScene extends Phaser.Scene {
-    constructor(PhaserGame, connection)
-    {
-        super({key:"name-scene"});
-        this.PhaserGame = PhaserGame;
+    constructor(connection) {
+        super({ key: "name-scene" });
         this.connection = connection;
     }
 
-    create()
-    {
+    create() {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // on resize listener

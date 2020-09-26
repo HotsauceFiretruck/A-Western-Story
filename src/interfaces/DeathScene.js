@@ -1,25 +1,18 @@
 import { Button } from "../entities/Button.js";
 
-export class DeathScene extends Phaser.Scene
-{
-    constructor(PhaserGame)
-    {
-        super({key:"death-scene"});
-
-        this.PhaserGame = PhaserGame;
-
+export class DeathScene extends Phaser.Scene {
+    constructor() {
+        super({ key: "death-scene" });
         this.previousScene = null;
     }
 
-    init(data)
-    {
+    init(data) {
         this.previousScene = data.scene;
         this.player = data.player;
         this.sceneObject = data.sceneObject;
     }
 
-    create()
-    {
+    create() {
         this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
 
         let returnToMenu = new Button(this, 600, 370, 'returnButton', () => {
@@ -38,8 +31,7 @@ export class DeathScene extends Phaser.Scene
         }).setScale(3).setInteractive();
     }
 
-    respawn()
-    {
+    respawn() {
         this.scene.start(this.previousScene);
     }
 }

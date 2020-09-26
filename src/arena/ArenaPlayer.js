@@ -1,14 +1,13 @@
 import { DesktopController } from "../controllers/DesktopController.js";
 import { MobileController } from "../controllers/MobileController.js";
+import BrowserInfo from "../BrowserInfo.js"
 
-export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
-{
+export class ArenaPlayer extends Phaser.Physics.Matter.Sprite {
     /* scene: Scene (Level)
        x: X position of player in level (pixel unit)
        y: Y position of player in level (pixel unit)
     */
-    constructor(scene, x, y, connection)
-    {
+    constructor(scene, x, y, connection) {
         super(scene.matter.world, x, y, 'player');
         this.scene = scene;
         this.connection = connection;
@@ -31,12 +30,12 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         };
 
         //Creating Collision Body and Sensors using Phaser.Matter engine
-        let { Body, Bodies} = scene.PhaserGame.MatterPhysics;
+        let { Body, Bodies } = Phaser.Physics.Matter.Matter;
 
         //Bodies.rectangle(centerX position IN the sprite, centerY position IN the sprite, 
         //                 width of the collision body, height of the collision body, {options});
-        let mainBody = Bodies.rectangle(0, 0, this.width * 0.7, this.height, {chamfer: 1});
-        
+        let mainBody = Bodies.rectangle(0, 0, this.width * 0.7, this.height, { chamfer: 1 });
+
         //Sensors: only for detecting, not for collision
         this.sensors = {
             bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
@@ -68,7 +67,7 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
             callback: this.onSensorCollide,
             context: this
         });
-        
+
         //Setting Sprite
         this.setExistingBody(compoundBody)
             .setPosition(x, y)
@@ -79,32 +78,29 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
             .setDepth(1);
 
         // Creating Controls/Cursors
-        this.controller = scene.PhaserGame.isMobile ? new MobileController(scene, this) : new DesktopController(scene, this);
+        this.controller = BrowserInfo.mobile ? new MobileController(scene, this) : new DesktopController(scene, this);
 
         //Creating Health Display
-        this.healthSprite = scene.add.sprite(20, 20, 'hearts'); 
+        this.healthSprite = scene.add.sprite(20, 20, 'hearts');
         scene.add.existing(this.healthSprite);
         this.healthSprite.setFrame(0).setScrollFactor(0, 0);
 
-        this.displayHealth = scene.add.text(30, 12, this.status.health, {color:'#DC143C'});
+        this.displayHealth = scene.add.text(30, 12, this.status.health, { color: '#DC143C' });
         this.displayHealth.setScrollFactor(0, 0);
 
         this.gun = scene.add.image(this.x, this.y, 'gun');
         this.gun.setDepth(1).setScale(2);
     }
 
-    update()
-    {
-        if (this.status.allowMove)
-        {
+    update() {
+        if (this.status.allowMove) {
             //Update Controls/Cursors
             this.controller.update();
         }
-        
+
         this.controller.updateGun();
 
-        if (this.y > 600)
-        {
+        if (this.y > 600) {
             this.death();
         }
     }
@@ -112,22 +108,19 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     //Sensor Update: ({bodyA: this collision body, bodyB: that collision body, pair: both collision body})
     onSensorCollide({ bodyA, bodyB, pair }) {
         if (bodyB.isSensor) return;
-        if (bodyA === this.sensors.left) 
-        {
-          this.status.isTouching.left = true;
-          if (pair.separation > 0.5) this.x += pair.separation - 0.5;
-        } 
-        else if (bodyA === this.sensors.right) 
-        {
-          this.status.isTouching.right = true;
-          if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
-        } 
-        else if (bodyA === this.sensors.bottom) 
-        {
-          this.status.isTouching.down = true;
+        if (bodyA === this.sensors.left) {
+            this.status.isTouching.left = true;
+            if (pair.separation > 0.5) this.x += pair.separation - 0.5;
+        }
+        else if (bodyA === this.sensors.right) {
+            this.status.isTouching.right = true;
+            if (pair.separation > 0.5) this.x -= pair.separation - 0.5;
+        }
+        else if (bodyA === this.sensors.bottom) {
+            this.status.isTouching.down = true;
         }
     }
-    
+
     resetTouching() {
         this.status.isTouching.left = false;
         this.status.isTouching.right = false;
@@ -135,53 +128,44 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
     }
 
     //Important for entities
-    changeHealth(changeHealthBy)
-    {
+    changeHealth(changeHealthBy) {
         this.status.health += changeHealthBy;
-        if (changeHealthBy < 0 && this.status.nodamage)
-        {
+        if (changeHealthBy < 0 && this.status.nodamage) {
             this.status.health -= changeHealthBy;
         }
-        if (changeHealthBy < 0 && !this.status.nodamage)
-        {
+        if (changeHealthBy < 0 && !this.status.nodamage) {
             this.damagedEffects();
         }
-        
-        if (this.status.health < 0)
-        {
+
+        if (this.status.health < 0) {
             this.status.health = 0;
             //death() // game over
         }
-        if (this.status.health < 10)
-        {
+        if (this.status.health < 10) {
             this.healthSprite.setFrame(2);
         }
         this.displayHealth.setText(this.status.health);
-        if (this.status.health <= 0) 
-        {
+        if (this.status.health <= 0) {
             this.death();
         }
     }
 
-    damagedEffects()
-    {
+    damagedEffects() {
         this.alpha = .5;
         this.status.nodamage = true;
         let timer = this.scene.time.addEvent({
             delay: 1000,
-            callback: () => 
-            {
+            callback: () => {
                 this.alpha = 1;
                 this.status.nodamage = false;
             },
             callbackScope: this,
             loop: false
         });
-        
+
     }
 
-    reloadGun()
-    {
+    reloadGun() {
         this.status.isFireReloaded = false;
         let timer = this.scene.time.addEvent({
             delay: this.status.fireRate * 1000,
@@ -191,64 +175,52 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
         });
     }
 
-    shoot(x, y)
-    {
-        if (this.status.isFireReloaded)
-        {
+    shoot(x, y) {
+        if (this.status.isFireReloaded) {
             this.scene.connection.shootBullet(this.x, this.y, x, y, this)
             //new Bullet(this.scene, this, this.x, this.y, x, y);
             this.reloadGun();
         }
     }
 
-    disableHorizontalMovement()
-    {
+    disableHorizontalMovement() {
         this.status.allowHorizontal = false;
     }
 
-    enableHorizontalMovement()
-    {
+    enableHorizontalMovement() {
         this.status.allowHorizontal = true;
     }
 
-    disableAllMovement()
-    {
+    disableAllMovement() {
         this.status.allowMove = false;
     }
 
-    enableAllMovement()
-    {
+    enableAllMovement() {
         this.status.allowMove = true;
     }
 
-    stageMode()
-    {
+    stageMode() {
         this.scene.cameras.main.stopFollow();
         this.disableAllMovement();
         this.healthSprite.setVisible(false);
         this.displayHealth.setVisible(false);
-        if (this.scene.PhaserGame.isMobile)
-        {
+        if (BrowserInfo.mobile) {
             this.controller.disable();
-        } 
-        else
-        {
+        }
+        else {
             this.controller.disableShoot();
         }
     }
 
-    playMode()
-    {
+    playMode() {
         this.scene.cameras.main.startFollow(this, false, 0.5, 0.5);
         this.enableAllMovement();
         this.healthSprite.setVisible(true);
         this.displayHealth.setVisible(true);
-        if (this.scene.PhaserGame.isMobile)
-        {
+        if (BrowserInfo.mobile) {
             this.controller.enable();
-        } 
-        else
-        {
+        }
+        else {
             this.controller.enableShoot();
         }
     }
@@ -278,9 +250,9 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite
             player: this,
             sceneObject: this.scene
         });
-        
+
         //this.destroy();
     }
 
-    
+
 }

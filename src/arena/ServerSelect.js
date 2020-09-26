@@ -2,16 +2,12 @@ import { Connection } from "./Connection.js";
 import { Button } from "../entities/Button.js";
 
 export class ServerSelect extends Phaser.Scene {
-    constructor(PhaserGame, connection)
-    {
-        super({key:"server-select"});
-        this.PhaserGame = PhaserGame;
-
+    constructor(connection) {
+        super({ key: "server-select" });
         this.connection = connection;
     }
 
-    create()
-    {
+    create() {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen

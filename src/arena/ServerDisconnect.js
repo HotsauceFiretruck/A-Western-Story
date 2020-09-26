@@ -1,22 +1,18 @@
 export class ServerDisconnect extends Phaser.Scene {
-    constructor(PhaserGame, connection)
-    {
-        super({key:"server-disconnect"});
-        this.PhaserGame = PhaserGame;
+    constructor(connection) {
+        super({ key: "server-disconnect" });
         this.connection = connection;
         this.previousScene = null;
         this.previousKey = null;
     }
 
-    init(data)
-    {
+    init(data) {
         this.previousKey = data.key;
         this.previousScene = data.scene;
         this.errorMessage = data.message;
     }
 
-    create()
-    {
+    create() {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen
