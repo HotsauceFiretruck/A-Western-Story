@@ -1,14 +1,11 @@
 import { Button } from "../entities/Button.js"
 
 export class LevelSelect extends Phaser.Scene {
-    constructor(PhaserGame)
-    {
-        super({key:"lvl-select"});
-        this.PhaserGame = PhaserGame;
+    constructor() {
+        super({ key: "lvl-select" });
     }
 
-    create()
-    {
+    create() {
         this.add.image(600, 300, 'bg').setDisplaySize(1200, 600);
 
         // Creating buttons on screen

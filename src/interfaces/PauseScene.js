@@ -1,22 +1,18 @@
 import { Button } from "../entities/Button.js";
 
 export class PauseScene extends Phaser.Scene {
-    constructor(PhaserGame)
-    {
-        super({key:"pause-scene"});
-        this.PhaserGame = PhaserGame;
+    constructor() {
+        super({ key: "pause-scene" });
         this.previousScene = null;
     }
 
-    init(data)
-    {
+    init(data) {
         this.previousScene = data.scene;
         this.player = data.player;
         this.sceneObject = data.sceneObject;
     }
 
-    create()
-    {
+    create() {
         this.pauseScreen = this.add.image(600, 300, 'death').setDisplaySize(1200, 600);
         this.unPauseBtn = new Button(this, 600, 250, 'unpauseButton', () => {
             if (this.previousScene !== 'level-arena') {
@@ -28,7 +24,7 @@ export class PauseScene extends Phaser.Scene {
             this.scene.resume(this.previousScene);
             this.scene.stop('pause-scene');
         }).setScale(5).setInteractive();
-        
+
         this.returnToMenu = new Button(this, 600, 390, 'returnButton', () => {
             if (this.previousScene !== 'level-arena') {
                 this.scene.stop(this.previousScene);

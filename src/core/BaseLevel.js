@@ -6,48 +6,45 @@ import { Button } from "../entities/Button.js";
 /*
     The base level for all levels
 */
-export class BaseLevel extends Phaser.Scene
-{
-    constructor(phaserGame, levelKey)
-    {
-        super({key: levelKey});
-        this.PhaserGame = phaserGame;
+export class BaseLevel extends Phaser.Scene {
+    constructor(levelKey) {
+        super({ key: levelKey });
+
     }
 
-    create()
-    {
-        let defaultTileMap = 
-        [   
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-        ];
+    create() {
+        let defaultTileMap =
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ];
 
         this.map = new TileMap(this, 32, 32);
 
         this.images = [];
 
-        this.projectiles = {category: 2, list: []};
+        this.projectiles = { category: 2, list: [] };
 
-        this.enemies = {category: 4, list: []};
+        this.enemies = { category: 4, list: [] };
 
-        this.statics = {list: []};
+        this.statics = { list: [] };
 
         this.player = new Player(this, 0, 0);
 
@@ -58,33 +55,28 @@ export class BaseLevel extends Phaser.Scene
         let pauseButton = new Button(this, 1150, 45, 'pauseButton', () => {
             this.scene.pause(this.scene.key);
             this.scene.setVisible(false, this.scene.key);
-            this.scene.launch('pause-scene', {scene: this.scene.key});
-        }).setScale(2.25).setInteractive().setScrollFactor(0,0);
+            this.scene.launch('pause-scene', { scene: this.scene.key });
+        }).setScale(2.25).setInteractive().setScrollFactor(0, 0);
     }
 
-    update()
-    {
+    update() {
         //Update platforms
-        for (let i = 0; i < this.map.platforms.list.length; ++i)
-        {
+        for (let i = 0; i < this.map.platforms.list.length; ++i) {
             this.map.platforms.list[i]
         }
 
         //Update bullets
-        for (let i = 0; i < this.projectiles.list.length; i++)
-        {
+        for (let i = 0; i < this.projectiles.list.length; i++) {
             this.projectiles.list[i].update();
         }
 
         //Update enemies
-        for (let i = 0; i < this.enemies.list.length; i++)
-        {
+        for (let i = 0; i < this.enemies.list.length; i++) {
             this.enemies.list[i].update();
         }
 
         //Update all statics
-        for (let i = 0; i < this.statics.list.length; i++)
-        {
+        for (let i = 0; i < this.statics.list.length; i++) {
             this.statics.list[i].update();
         }
 
@@ -92,16 +84,13 @@ export class BaseLevel extends Phaser.Scene
         this.player.update();
     }
 
-    cameraFollowEntity(entity)
-    {
+    cameraFollowEntity(entity) {
         this.cameras.main.startFollow(entity, false, 0.5, 0.5);
         this.cameras.main.setBounds(0, 0, this.map.level[0].length * 32, this.map.level.length * 32);
     }
 
-    setPlayer(player)
-    {
-        if (this.player != null)
-        {
+    setPlayer(player) {
+        if (this.player != null) {
             this.player.destroy();
             this.player.gun.destroy();
             this.player.displayHealth.destroy();
@@ -110,18 +99,15 @@ export class BaseLevel extends Phaser.Scene
     }
 
     //Only use this when it is absolutely necessary
-    getPlayer()
-    {
+    getPlayer() {
         return this.player;
     }
 
-    setPlayerPosition(x, y)
-    {
+    setPlayerPosition(x, y) {
         this.player.setPosition(x, y);
     }
 
-    setPlayerHealth(health)
-    {
+    setPlayerHealth(health) {
         this.player.setHealth(health);
     }
 
@@ -136,47 +122,37 @@ export class BaseLevel extends Phaser.Scene
         this.map.generateTileMap(tileImageKey, 32, 32, tileMap);
     }
 
-    clearAllEnemies()
-    {
-        while(this.enemies.list.length > 0)
-        {
+    clearAllEnemies() {
+        while (this.enemies.list.length > 0) {
             this.enemies.list[0].death();
         }
     }
 
-    clearAllStaticEntities()
-    {
-        while(this.statics.list.length > 0)
-        {
+    clearAllStaticEntities() {
+        while (this.statics.list.length > 0) {
             this.statics.list[0].remove();
         }
     }
 
-    clearAllPlatforms()
-    {
+    clearAllPlatforms() {
         this.map.deleteAllPlatforms();
     }
 
-    clearAllProjectiles()
-    {
-        for (let i = 0; i < this.projectiles.list.length; ++i)
-        {
+    clearAllProjectiles() {
+        for (let i = 0; i < this.projectiles.list.length; ++i) {
             this.projectiles.list[i].destroy();
         }
         this.projectiles.list = [];
     }
 
-    addStaticImage(imageKey, x, y)
-    {
+    addStaticImage(imageKey, x, y) {
         let image = this.add.image(x, y, imageKey).setDepth(-2);
         this.images.push(image);
         return image;
     }
 
-    clearAllStaticImages()
-    {
-        for (let i = 0; i < this.images.length; ++i)
-        {
+    clearAllStaticImages() {
+        for (let i = 0; i < this.images.length; ++i) {
             this.images[i].destroy();
         }
         this.images = [];
@@ -191,26 +167,23 @@ export class BaseLevel extends Phaser.Scene
         levelHeight: the height of the level in pixels
         scale: how large you what the image to be display onscreen
     */
-   loopBackground(backgroundImageKey, imageWidth, imageHeight, scale) 
-   {
-       let maxWidth = Math.max(this.cameras.main.worldView.width, this.map.level[0].length * 32);
-       let maxHeight = Math.max(this.cameras.main.worldView.height, this.map.level.length * 32);
+    loopBackground(backgroundImageKey, imageWidth, imageHeight, scale) {
+        let maxWidth = Math.max(this.cameras.main.worldView.width, this.map.level[0].length * 32);
+        let maxHeight = Math.max(this.cameras.main.worldView.height, this.map.level.length * 32);
 
-       let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
-       let heightRatio = maxHeight / (imageHeight * scale);
+        let widthRatio = maxWidth / (imageWidth * scale); //Getting the ratio between level size and background image size
+        let heightRatio = maxHeight / (imageHeight * scale);
 
-       let numberOfWidth = Math.ceil(widthRatio);
-       let numberOfHeight = Math.ceil(heightRatio);
+        let numberOfWidth = Math.ceil(widthRatio);
+        let numberOfHeight = Math.ceil(heightRatio);
 
-       for (let w = 0; w < numberOfWidth; ++w)
-       {
-           for (let h = 0; h < numberOfHeight; ++h)
-           {
-               let backgroundImage = new Phaser.GameObjects.Image(this, 0, 0, backgroundImageKey);
-               backgroundImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale).setDepth(-3);
-               this.add.existing(backgroundImage);
-               this.images.push(backgroundImage);
-           }
-       }
-   }
+        for (let w = 0; w < numberOfWidth; ++w) {
+            for (let h = 0; h < numberOfHeight; ++h) {
+                let backgroundImage = new Phaser.GameObjects.Image(this, 0, 0, backgroundImageKey);
+                backgroundImage.setOrigin(0, 0).setScale(scale).setPosition(imageWidth * w * scale, imageHeight * h * scale).setDepth(-3);
+                this.add.existing(backgroundImage);
+                this.images.push(backgroundImage);
+            }
+        }
+    }
 }

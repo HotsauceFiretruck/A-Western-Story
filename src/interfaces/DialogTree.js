@@ -1,13 +1,12 @@
 import { Button } from "../entities/Button.js";
+import BrowserInfo from "../BrowserInfo.js";
 
 const numberKeyboard = ["ONE", "TWO", "THREE", "FOUR"];
 
-export class DialogTree
-{
-    constructor(scene, centerX, centerY)
-    {
+export class DialogTree {
+    constructor(scene, centerX, centerY) {
         this.scene = scene;
-        this.mobile = scene.PhaserGame.isMobile;
+        this.mobile = BrowserInfo.mobile;
         this.centerX = centerX;
         this.centerY = centerY;
 
@@ -17,39 +16,31 @@ export class DialogTree
         this.sequences = [];
         this.queue = [];
     }
-    
-    startTree()
-    {
+
+    startTree() {
         //Play Dialog ----
         this.isTreeEnded = false;
         this.dialogBackground = this.scene.add.image(this.centerX, this.centerY, 'dialogbg');
         this.dialogBackground.setScale(4).setScrollFactor(0, 0).setDepth(2);
 
-        if (this.scene.projectiles != undefined)
-        {
-            for (let i = 0; i < this.scene.projectiles.list.length; i++)
-            {
+        if (this.scene.projectiles != undefined) {
+            for (let i = 0; i < this.scene.projectiles.list.length; i++) {
                 this.scene.projectiles.list[i].destroy();
             }
         }
 
-        if (this.scene.enemies != undefined)
-        {
-            for (let i = 0; i < this.scene.enemies.list.length; i++)
-            {
+        if (this.scene.enemies != undefined) {
+            for (let i = 0; i < this.scene.enemies.list.length; i++) {
                 this.scene.enemies.list[i].stageMode();
             }
         }
 
-        if (this.scene.player != undefined)
-        {
+        if (this.scene.player != undefined) {
             this.scene.player.stageMode(); // player set on stage --> disable everything.
         }
 
-        if (this.scene.statics != undefined)
-        {
-            for (let i = 0; i < this.scene.statics.list.length; i++)
-            {
+        if (this.scene.statics != undefined) {
+            for (let i = 0; i < this.scene.statics.list.length; i++) {
                 this.scene.statics.list[i].stageMode();
             }
         }
@@ -57,19 +48,15 @@ export class DialogTree
 
     //Add a new dialog sequence
     //Return the dialog sequence id
-    addSequence()
-    {
+    addSequence() {
         this.sequences.push(new Sequence(this));
         return this.sequences.length - 1;
     }
 
-    addDialog(sequenceId, dialogText, actor, options)
-    {
+    addDialog(sequenceId, dialogText, actor, options) {
         let newDialog = new Dialog(this, this.sequences[sequenceId], dialogText, actor);
-        if (options != undefined)
-        {
-            for (let i = 0; i < options.length; i++)
-            {
+        if (options != undefined) {
+            for (let i = 0; i < options.length; i++) {
                 newDialog.addOption(options[i][0], options[i][1]);
             }
         }
@@ -77,50 +64,41 @@ export class DialogTree
     }
 
     //Stop current sequence and plays new sequence
-    playSequence(sequenceId)
-    {
+    playSequence(sequenceId) {
         if (this.isTreeEnded) this.startTree();
         this.dialogBackground.setVisible(true);
         this.sequences[sequenceId].playSequence();
         this.currentSequence = this.sequences[sequenceId];
     }
 
-    setMethod(method)
-    {
+    setMethod(method) {
         this.method = method;
     }
 
-    endTree()
-    {
+    endTree() {
         this.currentSequence = null;
         this.scene.input.keyboard.off("keydown-X");
         this.dialogBackground.setVisible(false);
         this.isTreeEnded = true;
 
         //if there is no more sequences, activate things
-        if (this.scene.enemies != undefined)
-        {
-            for (let i = 0; i < this.scene.enemies.list.length; i++)
-            {
+        if (this.scene.enemies != undefined) {
+            for (let i = 0; i < this.scene.enemies.list.length; i++) {
                 this.scene.enemies.list[i].playMode();
             }
         }
 
-        if (this.scene.player != undefined)
-        {
+        if (this.scene.player != undefined) {
             this.scene.player.playMode();
         }
 
-        if (this.scene.statics != undefined)
-        {
-            for (let i = 0; i < this.scene.statics.list.length; i++)
-            {
+        if (this.scene.statics != undefined) {
+            for (let i = 0; i < this.scene.statics.list.length; i++) {
                 this.scene.statics.list[i].playMode();
             }
         }
 
-        if (this.method != undefined)
-        {
+        if (this.method != undefined) {
             this.method();
         }
     }
@@ -128,47 +106,40 @@ export class DialogTree
 
 //Sequence
 
-class Sequence
-{
-    constructor(dialogTree)
-    {
+class Sequence {
+    constructor(dialogTree) {
         this.dialogTree = dialogTree;
         this.onDialogNumber = 0;
         this.currentDialog = null;
         this.dialogs = [];
     }
 
-    addDialog(dialog)
-    {
+    addDialog(dialog) {
         this.dialogs.push(dialog);
     }
 
-    playSequence()
-    {
+    playSequence() {
         this.onDialogNumber = 0;
         this.currentDialog = this.dialogs[this.onDialogNumber];
         this.currentDialog.displayDialog();
     }
 
-    endSequence()
-    {
+    endSequence() {
         if (this.currentDialog != null || this.currentDialog != undefined) this.currentDialog.endDialog();
         this.dialogTree.scene.input.keyboard.off("keydown-X");
         this.dialogTree.endTree();
     }
 
     //Do not call this outside of this file for any reasons.
-    nextDialog()
-    {
+    nextDialog() {
         this.onDialogNumber++;
-        if (this.onDialogNumber >= this.dialogs.length)
-        {
+        if (this.onDialogNumber >= this.dialogs.length) {
             this.endSequence();
             return;
         }
-        
+
         if (this.currentDialog != null || this.currentDialog != undefined) this.currentDialog.endDialog();
-        
+
         this.currentDialog = this.dialogs[this.onDialogNumber];
         this.currentDialog.displayDialog();
     }
@@ -176,10 +147,8 @@ class Sequence
 
 //Dialog
 
-class Dialog
-{
-    constructor(dialogTree, dialogSequence, text, actor)
-    {
+class Dialog {
+    constructor(dialogTree, dialogSequence, text, actor) {
         this.optionObjects = []; // [text, callback, textObject, rectangleObject]
         this.nextDialogButton = [null, null]; //[text, image]
         this.textObject = null;
@@ -191,13 +160,11 @@ class Dialog
     }
 
     //Activate another sequence when chosen
-    addOption(text, callback)
-    {
+    addOption(text, callback) {
         this.optionObjects.push([text, callback, null, null]);
     }
 
-    displayDialog()
-    {   
+    displayDialog() {
         //Setup
         let spacing = 40;
 
@@ -205,12 +172,12 @@ class Dialog
 
         let centerY = this.dialogTree.centerY;
         let centerX = this.dialogTree.centerX;
-        let startY = centerY - (spacing/2) * (numberOfLines - 1) - 10;
+        let startY = centerY - (spacing / 2) * (numberOfLines - 1) - 10;
 
         //Create Text Objects
         this.textObject = this.dialogTree.scene.add.text(
-            0, 
-            0, 
+            0,
+            0,
             this.text,
             {
                 fontFamily: 'Courier',
@@ -221,8 +188,7 @@ class Dialog
 
         this.textObject.setPosition(centerX - this.textObject.displayWidth / 2, startY);
 
-        for (let i = 1; i < numberOfLines; ++i)
-        {
+        for (let i = 1; i < numberOfLines; ++i) {
             let rectangleObject = this.dialogTree.scene.add.rectangle(
                 0,
                 0,
@@ -231,14 +197,14 @@ class Dialog
                 0x2C2F30
             ).setScrollFactor(0, 0).setDepth(3);
 
-            
-            this.dialogTree.scene.input.keyboard.once("keydown-" + numberKeyboard[i-1], () => {
+
+            this.dialogTree.scene.input.keyboard.once("keydown-" + numberKeyboard[i - 1], () => {
                 this.sequence.nextDialog();
                 this.optionObjects[i - 1][1]();
             });
 
             rectangleObject.setPosition(
-                centerX, 
+                centerX,
                 startY + (spacing * i) + 10
             );
 
@@ -247,9 +213,9 @@ class Dialog
                 this.optionObjects[i - 1][1]();
             });
 
-            rectangleObject.on('pointerover', () => {rectangleObject.setFillStyle(0x616161);});
-            rectangleObject.on('pointerout', () => {rectangleObject.setFillStyle(0x2C2F30);});
-            
+            rectangleObject.on('pointerover', () => { rectangleObject.setFillStyle(0x616161); });
+            rectangleObject.on('pointerout', () => { rectangleObject.setFillStyle(0x2C2F30); });
+
             let textObject = this.dialogTree.scene.add.text(
                 0,
                 0,
@@ -259,12 +225,12 @@ class Dialog
                     fontSize: 20,
                     fontStyle: "bold",
                     fontColor: "white",
-                   // backgroundColor: "#323c39"
+                    // backgroundColor: "#323c39"
                 }
             ).setScrollFactor(0, 0).setDepth(3);
 
             textObject.setPosition(
-                (centerX - textObject.displayWidth / 2), 
+                (centerX - textObject.displayWidth / 2),
                 startY + (spacing * i)
             );
 
@@ -273,18 +239,16 @@ class Dialog
         }
 
         //Setting Signal To Next Dialog
-        if (this.optionObjects.length == 0)
-        {
+        if (this.optionObjects.length == 0) {
             this.nextDialogButton[1] = new Button(this.dialogTree.scene, this.dialogTree.centerX + 400,
-                 this.dialogTree.centerY + 122, 'continueDialogButton', () => {
+                this.dialogTree.centerY + 122, 'continueDialogButton', () => {
                     this.sequence.nextDialog();
-                 }).setInteractive().setScrollFactor(0, 0).setScale(1.5).setDepth(4).sprite; 
+                }).setInteractive().setScrollFactor(0, 0).setScale(1.5).setDepth(4).sprite;
 
-            if (this.dialogTree.mobile)
-            {
+            if (this.dialogTree.mobile) {
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
-                    this.nextDialogButton[1].x - 118, 
-                    this.nextDialogButton[1].y - 10, 
+                    this.nextDialogButton[1].x - 118,
+                    this.nextDialogButton[1].y - 10,
                     "Press Me To Continue",
                     {
                         fontFamily: 'Courier',
@@ -292,14 +256,13 @@ class Dialog
                         fontStyle: 'bold'
                     }
                 ).setDepth(4);
-            } 
-            else 
-            {
-                this.dialogTree.scene.input.keyboard.on("keydown-X", () => {this.sequence.nextDialog();});
-            
+            }
+            else {
+                this.dialogTree.scene.input.keyboard.on("keydown-X", () => { this.sequence.nextDialog(); });
+
                 this.nextDialogButton[0] = this.dialogTree.scene.add.text(
-                    this.nextDialogButton[1].x - 112, 
-                    this.nextDialogButton[1].y - 10, 
+                    this.nextDialogButton[1].x - 112,
+                    this.nextDialogButton[1].y - 10,
                     "Press X To Continue",
                     {
                         fontFamily: 'Courier',
@@ -311,25 +274,21 @@ class Dialog
             this.nextDialogButton[0].setScrollFactor(0, 0);
         }
 
-        if (this.actor != undefined) 
-        {
+        if (this.actor != undefined) {
             //this.dialogTree.scene.cameras.main.setZoom(2);
             this.dialogTree.scene.cameras.main.startFollow(this.actor, false, 0.5, 0.5);
         }
     }
 
-    endDialog()
-    {
+    endDialog() {
         this.textObject.destroy();
 
-        for (let i = 0; i < this.optionObjects.length; ++i)
-        {
+        for (let i = 0; i < this.optionObjects.length; ++i) {
             this.optionObjects[i][2].destroy();
             this.optionObjects[i][3].destroy();
         }
 
-        if (this.nextDialogButton[0] != null) 
-        {
+        if (this.nextDialogButton[0] != null) {
             this.nextDialogButton[0].destroy();
             this.nextDialogButton[1].destroy();
         }
