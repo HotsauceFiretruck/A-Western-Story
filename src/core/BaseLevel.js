@@ -9,6 +9,7 @@ import { Button } from "../entities/Button.js";
 export class BaseLevel extends Phaser.Scene {
     constructor(levelKey) {
         super({ key: levelKey });
+
     }
 
     create() {

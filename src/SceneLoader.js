@@ -9,7 +9,6 @@ import { BonusLevelSelect } from "./interfaces/BonusLevelSelect.js";
 import { PauseScene } from "./interfaces/PauseScene.js";
 import { NameScene } from "./arena/NameScene.js";
 import { ServerDisconnect } from "./arena/ServerDisconnect.js";
-
 import { LevelTutorial } from "./campaign/LevelTutorial.js";
 import { Level1 } from "./campaign/Level1.js";
 import { Level1P2 } from "./campaign/Level1P2.js";
@@ -23,7 +22,7 @@ import { BonusLevel4 } from "./campaign/BonusLevel4.js";
 
 class SceneLoader {
     constructor() {
-        this.scenes = [].concat(this.loadInterfaces(), this.loadCampaign(), this.loadArena(), this.loadBonuses());
+        this.scenes = [...this.loadInterfaces(), ...this.loadCampaign(), ...this.loadArena(), ...this.loadBonuses()];
     }
 
     loadInterfaces() {
