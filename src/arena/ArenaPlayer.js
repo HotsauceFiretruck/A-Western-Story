@@ -16,8 +16,8 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite {
         //Status
         this.status = {
             health: 20,
-            maxVelocityX: 3,
-            maxVelocityY: 9,
+            maxVelocityX: 4,
+            maxVelocityY: 15,
             moveForce: 0.01,
             nodamage: false,
             isTouching: { left: false, right: false, down: false },
@@ -30,20 +30,23 @@ export class ArenaPlayer extends Phaser.Physics.Matter.Sprite {
         };
 
         //Creating Collision Body and Sensors using Phaser.Matter engine
-        let { Body, Bodies } = Phaser.Physics.Matter.Matter;
+        const { Body, Bodies } = Phaser.Physics.Matter.Matter;
+
+        const rel_x = this.width / 2;
+        const rel_y = this.height / 2;
 
         //Bodies.rectangle(centerX position IN the sprite, centerY position IN the sprite, 
         //                 width of the collision body, height of the collision body, {options});
-        let mainBody = Bodies.rectangle(0, 0, this.width * 0.7, this.height, { chamfer: 1 });
+        const mainBody = Bodies.rectangle(rel_x, rel_y, this.width * 0.7, this.height, { chamfer: 1 });
 
         //Sensors: only for detecting, not for collision
         this.sensors = {
-            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
-            left: Bodies.rectangle(-this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true }),
-            right: Bodies.rectangle(this.width * 0.35, 0, 2, this.height * 0.5, { isSensor: true })
+            bottom: Bodies.rectangle(rel_x, rel_y + this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
+            left: Bodies.rectangle(rel_x - this.width * 0.35, rel_y, 2, this.height * 0.5, { isSensor: true }),
+            right: Bodies.rectangle(rel_x + this.width * 0.35, rel_y, 2, this.height * 0.5, { isSensor: true })
         };
 
-        let compoundBody = Body.create({
+        const compoundBody = Body.create({
             parts: [mainBody, this.sensors.bottom, this.sensors.left, this.sensors.right],
             frictionStatic: 0,
             frictionAir: 0.03,

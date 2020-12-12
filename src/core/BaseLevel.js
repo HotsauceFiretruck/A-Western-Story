@@ -60,11 +60,6 @@ export class BaseLevel extends Phaser.Scene {
     }
 
     update() {
-        //Update platforms
-        for (let i = 0; i < this.map.platforms.list.length; ++i) {
-            this.map.platforms.list[i]
-        }
-
         //Update bullets
         for (let i = 0; i < this.projectiles.list.length; i++) {
             this.projectiles.list[i].update();

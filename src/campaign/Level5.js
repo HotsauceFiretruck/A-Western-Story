@@ -117,7 +117,7 @@ export class Level5 extends BaseLevel {
 
         this.setPlayerPosition(100, 500);
         this.getPlayer().status.maxVelocityX = 4;
-        this.getPlayer().status.maxVelocityY = 9;
+        this.getPlayer().status.maxVelocityY = this.getPlayer().status.maxVelocityY + 10;
         this.getPlayer().playMode();
 
         for (let i = 0; i < 50; ++i) {

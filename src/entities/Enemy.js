@@ -28,13 +28,18 @@ export class Enemy extends Phaser.Physics.Matter.Sprite {
         //Add Collision Body
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
 
-        let mainBody = Bodies.rectangle
-            (0, 0, this.width * 0.7, this.height, { chamfer: 1 });
+        const rel_x = this.width / 2;
+        const rel_y = this.height / 2;
 
+        //Bodies.rectangle(x, y position from top left, 
+        //                 width of the collision body, height of the collision body, {options});
+        const mainBody = Bodies.rectangle(rel_x, rel_y, this.width * 0.7, this.height, { chamfer: 1 });
+
+        //Sensors: only for detecting, not for collision
         this.sensors = {
-            bottom: Bodies.rectangle(0, this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
-            left: Bodies.rectangle(-this.width * 0.35, 0, sensew == undefined ? 2 : sensew, senseh == undefined ? this.height * 0.5 : this.height * senseh, { isSensor: true }),
-            right: Bodies.rectangle(this.width * 0.35, 0, sensew == undefined ? 2 : sensew, senseh == undefined ? this.height * 0.5 : this.height * senseh, { isSensor: true })
+            bottom: Bodies.rectangle(rel_x, rel_y + this.height * 0.5, this.width * 0.4, 2, { isSensor: true }),
+            left: Bodies.rectangle(rel_x - this.width * 0.35, rel_y, sensew == undefined ? 2 : sensew, senseh == undefined ? this.height * 0.5 : this.height * senseh, { isSensor: true }),
+            right: Bodies.rectangle(rel_x + this.width * 0.35, rel_y, sensew == undefined ? 2 : sensew, senseh == undefined ? this.height * 0.5 : this.height * senseh, { isSensor: true })
         };
 
         let compoundBody = Body.create({
