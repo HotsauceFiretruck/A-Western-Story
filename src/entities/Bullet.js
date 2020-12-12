@@ -47,7 +47,7 @@ export class Bullet {
         });
 
         //Set a speed value
-        let speed = 10;
+        const speed = 15;
 
         //Normalize Vector X, Y and Multiply by Speed
         let distX = toX - fromX;

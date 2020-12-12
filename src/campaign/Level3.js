@@ -55,7 +55,7 @@ export class Level3 extends BaseLevel {
         this.setPlayerPosition(300, 100);
         // this.player = new Player(this, 300, 100);
         this.player.disableHorizontalMovement();
-        this.player.status.maxVelocityY = 13;
+        this.player.status.maxVelocityY = this.player.status.maxVelocityY + 7;
         this.horse = this.add.image(this.player.x, this.player.y, 'horse2').setScale(4).setDepth(-1);
 
         this.createTileMap('sand', groundLayer);
