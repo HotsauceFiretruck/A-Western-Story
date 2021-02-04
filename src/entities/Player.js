@@ -16,7 +16,7 @@ export class Player extends Phaser.Physics.Matter.Sprite {
         this.status = {
             health: 20,
             maxVelocityX: 4,
-            maxVelocityY: 18,
+            maxVelocityY: 9,
             moveForce: 0.01,
             nodamage: false,
             isTouching: { left: false, right: false, down: false },
